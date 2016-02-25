@@ -1,0 +1,20 @@
+C:\Users\Valued Customer\Desktop\Project Rioman\LevelDesigner2\LevelDesigner2\bin\Debug\LevelDesigner2.exe
+C:\Users\Valued Customer\Desktop\Project Rioman\LevelDesigner2\LevelDesigner2\bin\Debug\LevelDesigner2.pdb
+C:\Users\Valued Customer\Desktop\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Valued Customer\Desktop\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\WindowsFormsApplication1.dialogbox.resources
+C:\Users\Valued Customer\Desktop\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\WindowsFormsApplication1.Form1.resources
+C:\Users\Valued Customer\Desktop\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Valued Customer\Desktop\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\LevelDesigner2.csproj.GenerateResource.Cache
+C:\Users\Valued Customer\Desktop\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\LevelDesigner2.exe
+C:\Users\Valued Customer\Desktop\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\LevelDesigner2.pdb
+C:\Users\Valued Customer\Desktop\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\WindowsFormsApplication1.help.resources
+C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\LevelDesigner2.exe
+C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\LevelDesigner2.pdb
+C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\LevelDesigner2\LevelDesigner2\bin\Debug\LevelDesigner2.exe
+C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\LevelDesigner2\LevelDesigner2\bin\Debug\LevelDesigner2.pdb
+C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\LevelDesigner2.csprojResolveAssemblyReference.cache
+C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\WindowsFormsApplication1.dialogbox.resources
+C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\WindowsFormsApplication1.Form1.resources
+C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\WindowsFormsApplication1.help.resources
+C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\LevelDesigner2\LevelDesigner2\obj\Debug\LevelDesigner2.csproj.GenerateResource.Cache

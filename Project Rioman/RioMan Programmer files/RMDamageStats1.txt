@@ -1,0 +1,67 @@
+The maximum HP (life bar) of Rio Man is 27 HP (or "blocks").
+________________________________________
+COLLISION DAMAGE
+
+- ANY Type of Collision, or run into attack, will cause 4 HP to Rio Man. This does for ALL [boss/regular/final boss] types of collisions!
+
+This means that from collision damage alone, Rio Man will be able to take up to 7 hits before dying.
+
+Damage Counters Based On Normal Enemies and Fire
+
+- Projectile Attacks will cause a range of 3-5 HP depending on the size of projectile fired.
+
+Small Fire - 3 HP
+Medium Fire - 4 HP
+Large Fire - 5 HP
+
+- Environmental Hazards or Elemental Attacks [non-OHKO] from the Field will cause 3 HP to Rio Man
+________________________________________
+Boss Damage Calculations
+________________________________________
+
+Robot Masters!
+Inferno Man *Kenny*
+Attack 1 - Causes 3 HP in Damage regardless of attack in up or down direction
+Flaming Slash - Causes 6 HP in Damage if connects
+
+Poster Man *Armory*
+Attack 1 - Causes 2 HP in Damage
+Spammy Post - Causes 3 HP per hit of post
+
+
+Aurora Man *Rundas*
+Aurora Arrow - Causes 4 HP per Attack
+
+Toxic Man *Nux*
+Toxic Paint Brush (Attack 1) - Causes 2 HP in damage and (causes Rio Man to slow down by 50% for 3 secs, if possible)
+Machine Attack - Causes 7 HP in damage if Rio Man collides with stationary attack
+
+
+Lurker Man *Aosth*
+Attack 1 - Causes 3 HP in Damage
+Attack 2 - Causes 5 HP in Damage
+Lurker Attack - Causes damage relative to the last attack (may just do 4 HP however)
+
+
+Clover man *Ace*
+Clover Shield - Causes 5 HP if Rio Man collides if shield is thrown
+
+
+Geo Girl *TTK*
+Earth Punch 1 - Causes 4 HP if hit by first form of attack
+Earth Punch 2 - Causes 2 HP if hit by shards of attack
+
+
+Bunny Man *PFM*
+H. Seagull - Causes 5 HP to Rio Man if connects
+________________________________________
+Restoration Items appling to Hit Points
+________________________________________
+
+Small Orbs - Small Orbs will regenerate 3 HP to Rio Man on contact with the item. This restores 1/9th of the total MaxHP, and is the most common health restoring in the item.
+
+Large Orbs - Large Orbs will regenerate 9 HP to Rio Man on contact with the item. This restores 1/3rd of the total MaxHP, and more rare than Small Orbs to the health items or appears many times where great danger awaits for aid.
+
+E Tank - E Tanks can be bought at the store and will restore 100% of Max HP to Rio Man if used. They can also be found on stage sometimes in extreme danger begins to arise.
+
+M  Tank - Same effects a E-Tanks, but not found on the stage and could only collect 1 tank, but it makes all weapon energy to 100% as well.

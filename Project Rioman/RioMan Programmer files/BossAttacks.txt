@@ -1,0 +1,27 @@
+Inferno Man:
+He will stop jumping and shoot 5 flames upwards and will fall onto the ground in random spots.
+Inferno Slash: He slashes his sword, sending a flame slash your way.
+
+Poster Man:
+He jumps up and will shoot 7 fast pieces of paper at you.
+Triple Post: Fires three shots at once, one forward, one at a upward angle, another at a downward angle.
+
+Aurora Man:
+Aurora Arrow: Will shoot many arrows in random directions.
+
+Toxic Man:
+Machine Paint Blob: Will send a blob at you doing damage.
+Toxic Paint Brush: Slows down the enemy if it hits.
+
+Lurker Man:
+He will just dash in many random directions
+Lurker's Shadow: All attacks delivered to Lurker Man will be halved.
+
+Clover Man:
+Clover Shield: Reflects projectiles, and then shoots shield.
+
+Geo Girl:
+Terra Punch: Will pick up a brick, throw it up and punch it. Getting hit by the whole brick will do lots of damage. Once it hits a wall, it will split into 4, in which the damage given will be reduced.
+
+Bunny Man:
+Hurricane Seagulls: They home in on targets.
