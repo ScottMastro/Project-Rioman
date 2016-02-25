@@ -12,10 +12,8 @@ namespace Project_Rioman
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Viewport viewportrect;
-        KeyboardState previouskeyboardstate;
-        int gamestatus;
-        int previousgamestatus;
+        Viewport viewportRect;
+        KeyboardState previousKeyboardState;
 
         Color backgroundcolor;
         Rioman rioman;
@@ -23,15 +21,13 @@ namespace Project_Rioman
         Levels Level = new Levels();
         Weapons Weapons;
 
-        bool pause;
-        int lives;
-
 
         public Main()
         {
             graphics = new GraphicsDeviceManager(this);
             //graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
+
         }
 
         /// <summary>
@@ -51,26 +47,20 @@ namespace Project_Rioman
         /// </summary>
         protected override void LoadContent()
         {
-            previousgamestatus = -1;
-
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            viewportrect = graphics.GraphicsDevice.Viewport;
-
-            gamestatus = 18;
+            viewportRect = graphics.GraphicsDevice.Viewport;
+            GameState.getInstance();
             backgroundcolor = Color.Black;
 
             Audio.LoadAudio(Content);
             Health.LoadHealth(Content);
             Save.LoadContent(Content);
-
             Level.LoadLevelResources(Content);
 
             Weapons = new Weapons(Content);
-            pause = false;
-            lives = 3;
 
             Opening.LoadOpening(Content);
-            StageSelection.LoadStageSelection(Content, viewportrect);
+            StageSelection.LoadStageSelection(Content, viewportRect);
 
             rioman = new Rioman(Content, new Rectangle(70, 400, 48, 48), 4);
 
@@ -98,115 +88,110 @@ namespace Project_Rioman
 
             if (keyboardstate.IsKeyDown(Keys.Escape))
                 this.Exit();
-            if (keyboardstate.IsKeyDown(Keys.F11) && !previouskeyboardstate.IsKeyDown(Keys.F11))
+            if (keyboardstate.IsKeyDown(Keys.F11) && !previousKeyboardState.IsKeyDown(Keys.F11))
                 this.graphics.ToggleFullScreen();
 
-            if (lives < 1 && !rioman.iswarping)
-            {
-                gamestatus = 2;
-                lives = 3;
-            }
 
-            if (gamestatus == 0)
+            if (GameState.GetState() == 0)
             {
                 Opening.FadeIn();
 
-                if (keyboardstate.IsKeyDown(Keys.Up) && !previouskeyboardstate.IsKeyDown(Keys.Up))
+                if (keyboardstate.IsKeyDown(Keys.Up) && !previousKeyboardState.IsKeyDown(Keys.Up))
                     Opening.ChangeText(true);
-                else if (keyboardstate.IsKeyDown(Keys.Down) && !previouskeyboardstate.IsKeyDown(Keys.Down))
+                else if (keyboardstate.IsKeyDown(Keys.Down) && !previousKeyboardState.IsKeyDown(Keys.Down))
                     Opening.ChangeText(false);
 
                 if (keyboardstate.IsKeyDown(Keys.Enter))
-                    gamestatus = Opening.ChangeGameStatus();
+                    GameState.SetState(Opening.ChangeGameStatus());
             }
-            else if (gamestatus == 1)
+            else if (GameState.GetState() == 1)
             {
                 backgroundcolor = new Color(164, 11, 0);
 
-                if (keyboardstate.IsKeyDown(Keys.Up) && !previouskeyboardstate.IsKeyDown(Keys.Up))
+                if (keyboardstate.IsKeyDown(Keys.Up) && !previousKeyboardState.IsKeyDown(Keys.Up))
                     StageSelection.MoveSelector(0, -1);
-                else if (keyboardstate.IsKeyDown(Keys.Down) && !previouskeyboardstate.IsKeyDown(Keys.Down))
+                else if (keyboardstate.IsKeyDown(Keys.Down) && !previousKeyboardState.IsKeyDown(Keys.Down))
                     StageSelection.MoveSelector(0, 1);
 
-                if (keyboardstate.IsKeyDown(Keys.Right) && !previouskeyboardstate.IsKeyDown(Keys.Right))
+                if (keyboardstate.IsKeyDown(Keys.Right) && !previousKeyboardState.IsKeyDown(Keys.Right))
                     StageSelection.MoveSelector(1, 0);
-                else if (keyboardstate.IsKeyDown(Keys.Left) && !previouskeyboardstate.IsKeyDown(Keys.Left))
+                else if (keyboardstate.IsKeyDown(Keys.Left) && !previousKeyboardState.IsKeyDown(Keys.Left))
                     StageSelection.MoveSelector(-1, 0);
 
-                if (keyboardstate.IsKeyDown(Keys.Enter) && !previouskeyboardstate.IsKeyDown(Keys.Enter))
-                    gamestatus = StageSelection.SelectLevel();
+                if (keyboardstate.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter))
+                    GameState.SetState(StageSelection.SelectLevel());
             }
-            else if (gamestatus == 2)
+            else if (GameState.GetState() == 2)
             {
                 backgroundcolor = Color.Black;
-                Save.Change(keyboardstate, previouskeyboardstate);
+                Save.Change(keyboardstate, previousKeyboardState);
 
-                if (keyboardstate.IsKeyDown(Keys.Enter) && !previouskeyboardstate.IsKeyDown(Keys.Enter) && !Save.save)
-                    gamestatus = 1;
+                if (keyboardstate.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter) && !Save.save)
+                    GameState.SetState(1);
             }
-            else if (gamestatus > 100)
+            else if (GameState.GetState() > 100)
             {
-                gamestatus = StageSelection.DoDance(gameTime, gamestatus, viewportrect);
+                GameState.SetState(StageSelection.DoDance(gameTime, GameState.GetState(), viewportRect));
             }
-            else if (gamestatus >= 10 && gamestatus < 100)
+            else if (GameState.GetState() >= 10 && GameState.GetState() < 100)
             {
                 if (!Level.go && !rioman.iswarping)
                     ChangeLevel();
 
-                else if (Level.go && !Level.dooropening && !Level.closedoornow && !Level.scrolling && !pause && !rioman.iswarping
+                else if (Level.go && !Level.dooropening && !Level.closedoornow && !Level.scrolling && !GameState.IsPaused() && !rioman.iswarping
                     && !Health.healthincrease && Level.bosses[Level.activelevel].intro >= 3)
                 {
-                    Level.UpdateTiles(rioman, gameTime, viewportrect);
+                    Level.UpdateTiles(rioman, gameTime, viewportRect);
                     Level.EnemyCollision(bullet, rioman);
 
-                    rioman.BackwardScroll(Level, viewportrect);
+                    rioman.BackwardScroll(Level, viewportRect);
 
-                    rioman.Moving(keyboardstate, previouskeyboardstate, Level, gameTime.ElapsedGameTime.TotalSeconds);
+                    rioman.Moving(keyboardstate, previousKeyboardState, Level, gameTime.ElapsedGameTime.TotalSeconds);
                     rioman.Update(gameTime.ElapsedGameTime.TotalSeconds);
 
-                    Level.UpdateEnemies(rioman, gameTime, viewportrect);
-                    bool selectionscreen = Level.bosses[Level.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportrect, rioman);
+                    Level.UpdateEnemies(rioman, gameTime, viewportRect);
+                    bool selectionscreen = Level.bosses[Level.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportRect, rioman);
 
                     if (selectionscreen)
                     {
                         Level.go = false;
-                        gamestatus = 1;
+                        GameState.SetState(1);
                     }
 
-                    if (keyboardstate.IsKeyDown(Keys.Z) && !previouskeyboardstate.IsKeyDown(Keys.Z))
+                    if (keyboardstate.IsKeyDown(Keys.Z) && !previousKeyboardState.IsKeyDown(Keys.Z))
                         rioman.Shooting(bullet);
 
                     if (!rioman.ispaused)
                     {
                         foreach (Bullet blt in bullet)
-                            blt.BulletUpdate(viewportrect.Width);
+                            blt.BulletUpdate(viewportRect.Width);
                     }
 
-                    Level.CheckDeath(viewportrect, rioman);
+                    Level.CheckDeath(viewportRect, rioman);
 
                     if (Level.lifechange != 0)
                     {
-                        lives += Level.lifechange;
+                        rioman.state.AdjustLivesByX(Level.lifechange);
                         Level.lifechange = 0;
                     }
 
                     if (!Level.stoprightscreenmovement && !Level.stopleftscreenmovement)
-                        Level.CenterRioman(viewportrect, rioman);
+                        Level.CenterRioman(viewportRect, rioman);
                 }
                 else if (Health.healthincrease)
                     Health.IncreaseHealth(gameTime.ElapsedGameTime.TotalSeconds);
                 else if (Level.dooropening)
                     Level.OpenDoor();
                 else if (Level.scrolling)
-                    Level.Scroll(rioman, viewportrect);
+                    Level.Scroll(rioman, viewportRect);
                 else if (Level.closedoornow)
-                    Level.CloseDoor(rioman, viewportrect);
-                else if (pause)
-                    Weapons.ChangeActiveWeapon(keyboardstate, previouskeyboardstate);
+                    Level.CloseDoor(rioman, viewportRect);
+                else if (GameState.IsPaused())
+                    Weapons.ChangeActiveWeapon(keyboardstate, previousKeyboardState);
                 else if (rioman.iswarping)
                     rioman.Warp();
                 else if (Level.bosses[Level.activelevel].intro < 3)
-                    Level.bosses[Level.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportrect, rioman);
+                    Level.bosses[Level.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportRect, rioman);
 
                 if (Level.killbullets)
                 {
@@ -218,10 +203,10 @@ namespace Project_Rioman
 
                 if (!Level.dooropening && !Level.doorclosing && !Level.closedoornow)
                 {
-                    if (keyboardstate.IsKeyDown(Keys.Enter) && !previouskeyboardstate.IsKeyDown(Keys.Enter))
+                    if (keyboardstate.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter))
                     {
-                        pause = !pause;
-                        if (pause)
+                        GameState.SwitchPause();
+                        if (GameState.IsPaused())
                             Audio.jump3.Play(0.5f, 0.5f, 0f);
                         else
                             Audio.jump3.Play(0.5f, -0.5f, 0f);
@@ -232,20 +217,19 @@ namespace Project_Rioman
             // if (previousgamestatus != gamestatus)
             //    Audio.ChangeActiveSong(gamestatus);
 
-            previouskeyboardstate = keyboardstate;
-            previousgamestatus = gamestatus;
+            previousKeyboardState = keyboardstate;
 
             base.Update(gameTime);
         }
 
         private void ChangeLevel()
         {
-            Level.NewLevel(gamestatus, Content);
+            Level.NewLevel(GameState.GetState(), Content);
 
             if (Level.go)
             {
                 backgroundcolor = Level.backgroundcolour;
-                Level.CenterRioman(viewportrect);
+                Level.CenterRioman(viewportRect);
                 rioman.location.X = Convert.ToInt32(Level.startpos.X);
                 rioman.location.Y = -100;
                 Level.CreateWall();
@@ -275,30 +259,30 @@ namespace Project_Rioman
 
             spriteBatch.Begin();
 
-            if (gamestatus == 0)
+            if (GameState.GetState() == 0)
             {
-                spriteBatch.Draw(Opening.title, new Vector2((viewportrect.Width - Opening.title.Width) / 2, viewportrect.Height / 6), Opening.fade);
-                spriteBatch.Draw(Opening.activetext, new Vector2((viewportrect.Width - Opening.activetext.Width) / 2, viewportrect.Height * 2 / 3), Opening.fade);
+                spriteBatch.Draw(Opening.title, new Vector2((viewportRect.Width - Opening.title.Width) / 2, viewportRect.Height / 6), Opening.fade);
+                spriteBatch.Draw(Opening.activetext, new Vector2((viewportRect.Width - Opening.activetext.Width) / 2, viewportRect.Height * 2 / 3), Opening.fade);
             }
-            else if (gamestatus == 1)
+            else if (GameState.GetState() == 1)
             {
-                spriteBatch.Draw(StageSelection.background, new Vector2((viewportrect.Width - StageSelection.background.Width) / 2,
-                    (viewportrect.Height - StageSelection.background.Height) / 2), Color.White);
+                spriteBatch.Draw(StageSelection.background, new Vector2((viewportRect.Width - StageSelection.background.Width) / 2,
+                    (viewportRect.Height - StageSelection.background.Height) / 2), Color.White);
 
                 StageSelection.DrawIcons(spriteBatch);
             }
-            else if (gamestatus == 2)
+            else if (GameState.GetState() == 2)
             {
-                Save.DrawSaveScreen(spriteBatch, viewportrect);
+                Save.DrawSaveScreen(spriteBatch, viewportRect);
             }
-            else if (gamestatus > 100)
+            else if (GameState.GetState() > 100)
             {
                 spriteBatch.Draw(StageSelection.stars, StageSelection.starsloc[0], Color.White);
                 spriteBatch.Draw(StageSelection.stars, StageSelection.starsloc[1], Color.White);
                 spriteBatch.Draw(StageSelection.activemiddle, StageSelection.activemiddleloc, Color.White);
                 spriteBatch.Draw(StageSelection.activeintro, StageSelection.activeintroloc, Color.White);
             }
-            else if (gamestatus >= 10 && gamestatus < 100)
+            else if (GameState.GetState() >= 10 && GameState.GetState() < 100)
             {
                 if (Level.go || rioman.iswarping)
                 {
@@ -323,8 +307,8 @@ namespace Project_Rioman
                     Health.DrawHealth(spriteBatch);
                 }
 
-                if (pause)
-                    Weapons.DrawPause(spriteBatch, lives);
+                if (GameState.IsPaused())
+                    Weapons.DrawPause(spriteBatch, rioman.state.GetLives());
             }
 
             spriteBatch.End();
