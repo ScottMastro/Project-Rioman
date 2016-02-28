@@ -9,7 +9,6 @@ namespace Project_Rioman
 {
     class Rioman
     {
-        public RiomanState state;
         public Texture2D sprite;
         public SpriteEffects direction;
         public Texture2D walksprite;
@@ -66,7 +65,6 @@ namespace Project_Rioman
 
         public Rioman(ContentManager content, Rectangle loc, int wlkframes)
         {
-            state = new RiomanState();
 
             sprite = content.Load<Texture2D>("Video\\rioman\\riomanrun");
             standgunsprite = content.Load<Texture2D>("Video\\rioman\\riomanstandgun");
