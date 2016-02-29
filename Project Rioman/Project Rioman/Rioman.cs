@@ -15,8 +15,6 @@ namespace Project_Rioman
         public Texture2D sprite;
         public SpriteEffects direction;
         public Texture2D stand;
-        Texture2D[] run = new Texture2D[3];
-        Texture2D[] runShoot = new Texture2D[4];
         Texture2D jumpsprite;
         Texture2D jumpgunsprite;
         Texture2D climb;
@@ -32,11 +30,6 @@ namespace Project_Rioman
         //     hitBox = new Rectangle(6, 6, 44, 48);
 
         public Rectangle drawRect;
-
-        int frame;
-        double animationtime;
-        bool reverseanimation;
-        int walkframes;
 
         Texture2D hit;
         bool ishit;
@@ -65,7 +58,7 @@ namespace Project_Rioman
         public bool climbdown;
         public int warpy;
 
-        public Rioman(ContentManager content, Rectangle loc, int wlkframes)
+        public Rioman(ContentManager content)
         {
             state = new RiomanState();
             anim = new RiomanAnimation(content, state);
@@ -85,13 +78,8 @@ namespace Project_Rioman
 
             for (int i = 1; i <= 4; i++)
                 warp[i-1] = content.Load<Texture2D>("Video\\rioman\\warp" + i.ToString());
-            for (int i = 1; i <= 3; i++)
-                run[i-1] = content.Load<Texture2D>("Video\\rioman\\riomanrun" + i.ToString());
-            for (int i = 1; i <= 4; i++)
-                runShoot[i-1] = content.Load<Texture2D>("Video\\rioman\\riomanrungun" + i.ToString());
 
-            walkframes = wlkframes;
-            location = loc;
+            location = new Rectangle(70, 400, 44, 48);
             sprite = stand;
             drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
 
@@ -101,9 +89,6 @@ namespace Project_Rioman
 
         public void Reset()
         {
-            frame = 1;
-            animationtime = 0;
-            reverseanimation = false;
 
             isfalling = false;
             isclimbing = false;
@@ -163,7 +148,7 @@ namespace Project_Rioman
             }
         }
 
-        public void Moving(KeyboardState keyboardstate, KeyboardState previouskeyboardstate, Levels level, double deltaTime)
+        public void Moving(KeyboardState keyboardstate, KeyboardState previouskeyboardstate, Level level, double deltaTime)
         {
             if (!stopx && !ispaused)
             {
@@ -264,7 +249,7 @@ namespace Project_Rioman
             }
         }
 
-        public void BackwardScroll(Levels level, Viewport vpr)
+        public void BackwardScroll(Level level, Viewport vpr)
         {
             if (level.stoprightscreenmovement)
             {
@@ -299,7 +284,6 @@ namespace Project_Rioman
                 {
                     Audio.shoot1.Play(0.5f, 0f, 0f);
                     state.Shoot();
-                    animationtime = 2;
                     if (direction == SpriteEffects.FlipHorizontally)
                         bullet[num].BulletSpawn(location.X - 20, location.Center.Y - 8, direction);
                     else
@@ -320,7 +304,6 @@ namespace Project_Rioman
             jumptime = 0;
             isfalling = true;
             touchedground = false;
-            animationtime = 0;
             touchtime = 0;
             location.Y -= 8;
         }
@@ -522,7 +505,6 @@ namespace Project_Rioman
                 touchedground = false;
 
             sprite = jumpsprite;
-            frame = 1;
 
             if (state.IsShooting())
                 sprite = jumpgunsprite;

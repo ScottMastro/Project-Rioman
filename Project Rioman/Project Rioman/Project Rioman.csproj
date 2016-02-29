@@ -108,7 +108,9 @@
     <Compile Include="GameState.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Health.cs" />
-    <Compile Include="Levels.cs" />
+    <Compile Include="Level.cs" />
+    <Compile Include="LevelLoader.cs" />
+    <Compile Include="LevelManager.cs" />
     <Compile Include="Pickup.cs" />
     <Compile Include="RiomanAnimation.cs" />
     <Compile Include="RiomanState.cs" />

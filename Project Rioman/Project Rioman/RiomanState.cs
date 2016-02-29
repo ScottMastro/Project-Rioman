@@ -8,7 +8,7 @@ namespace Project_Rioman
 {
     class RiomanState
     {
-        private enum State { running, standing};
+        private enum State {running, standing, jumping, falling};
         private State state;
 
         private bool shooting;      
@@ -59,10 +59,15 @@ namespace Project_Rioman
 
         public bool IsRunning() { return state == State.running; }
         public bool IsStanding() { return state == State.standing; }
+        public bool IsJumping() { return state == State.jumping; }
+        public bool IsFalling() { return state == State.falling; }
         public bool IsShooting() { return shooting; }
 
         public void Run() { state = State.running; }
         public void Stand() { state = State.standing; }
+        public void Jump() { state = State.jumping; }
+        public void Fall() { state = State.falling; }
+
         public void Shoot() {
             shooting = true;
             shootTime = 0;  }

@@ -24,7 +24,7 @@ namespace Project_Rioman
         static GameState()
         {
             prevState = -1;
-            state = 0;
+            state = 13;
             pause = false;
 
         }
