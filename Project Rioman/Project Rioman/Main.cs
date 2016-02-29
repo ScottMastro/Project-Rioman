@@ -296,7 +296,10 @@ namespace Project_Rioman
                             spriteBatch.Draw(blt.sprite, blt.location, Color.White);
                     }
 
-                    spriteBatch.Draw(rioman.sprite, rioman.location, rioman.sourcerect, Color.White, 0f, new Vector2(rioman.sourcerect.Width / 2,
+                    spriteBatch.Draw(rioman.sprite,
+                        new Rectangle(rioman.location.X, rioman.location.Y,
+                        rioman.drawRect.Width, rioman.drawRect.Height),
+                        rioman.drawRect, Color.White, 0f, new Vector2(rioman.drawRect.Width / 2,
                         0f), rioman.direction, 0f);
 
                     rioman.DrawHit(spriteBatch);

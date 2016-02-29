@@ -10,11 +10,13 @@ namespace Project_Rioman
     class Rioman
     {
         public RiomanState state;
+        public RiomanAnimation anim;
+
         public Texture2D sprite;
         public SpriteEffects direction;
-        public Texture2D walksprite;
-        Texture2D standgunsprite;
-        Texture2D walkgunsprite;
+        public Texture2D stand;
+        Texture2D[] run = new Texture2D[3];
+        Texture2D[] runShoot = new Texture2D[4];
         Texture2D jumpsprite;
         Texture2D jumpgunsprite;
         Texture2D climb;
@@ -26,7 +28,10 @@ namespace Project_Rioman
         public Texture2D climbtop;
 
         public Rectangle location;
-        public Rectangle sourcerect;
+     //   public Rectangle hitBox;
+        //     hitBox = new Rectangle(6, 6, 44, 48);
+
+        public Rectangle drawRect;
 
         int frame;
         double animationtime;
@@ -41,9 +46,6 @@ namespace Project_Rioman
         double hittime;
 
         public bool iswarping;
-        public bool isrunning;
-        public bool isshooting;
-        public bool isstanding;
         public bool isfalling;
         public bool isjumping;
         public bool isclimbing;
@@ -52,7 +54,6 @@ namespace Project_Rioman
         public bool touchedground;
 
         public double climbtime;
-        public double shoottime;
         public double falltime;
         public double jumptime;
         public double invincibletime;
@@ -67,10 +68,10 @@ namespace Project_Rioman
         public Rioman(ContentManager content, Rectangle loc, int wlkframes)
         {
             state = new RiomanState();
+            anim = new RiomanAnimation(content, state);
 
-            sprite = content.Load<Texture2D>("Video\\rioman\\riomanrun");
-            standgunsprite = content.Load<Texture2D>("Video\\rioman\\riomanstandgun");
-            walkgunsprite = content.Load<Texture2D>("Video\\rioman\\riomanrungun");
+
+            stand = content.Load<Texture2D>("Video\\rioman\\riomanstand");
             jumpsprite = content.Load<Texture2D>("Video\\rioman\\riomanjump");
             jumpgunsprite = content.Load<Texture2D>("Video\\rioman\\riomanjumpgun");
             climb = content.Load<Texture2D>("Video\\rioman\\riomanclimb");
@@ -82,13 +83,18 @@ namespace Project_Rioman
             hit = content.Load<Texture2D>("Video\\rioman\\hit");
             direction = SpriteEffects.None;
 
-            for (int i = 0; i <= 3; i++)
-                warp[i] = content.Load<Texture2D>("Video\\rioman\\warp" + (1 + i).ToString());
+            for (int i = 1; i <= 4; i++)
+                warp[i-1] = content.Load<Texture2D>("Video\\rioman\\warp" + i.ToString());
+            for (int i = 1; i <= 3; i++)
+                run[i-1] = content.Load<Texture2D>("Video\\rioman\\riomanrun" + i.ToString());
+            for (int i = 1; i <= 4; i++)
+                runShoot[i-1] = content.Load<Texture2D>("Video\\rioman\\riomanrungun" + i.ToString());
 
             walkframes = wlkframes;
-            sourcerect = Animation.GetSourceRect(sprite.Width / wlkframes, sprite.Height);
             location = loc;
-            walksprite = sprite;
+            sprite = stand;
+            drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
+
 
             Reset();
         }
@@ -99,9 +105,6 @@ namespace Project_Rioman
             animationtime = 0;
             reverseanimation = false;
 
-            isrunning = false;
-            isshooting = false;
-            isstanding = true;
             isfalling = false;
             isclimbing = false;
             isinvincible = false;
@@ -109,7 +112,6 @@ namespace Project_Rioman
             stopx = false;
 
             direction = SpriteEffects.None;
-            shoottime = 0;
             falltime = 0;
             jumptime = 0;
             invincibletime = 0;
@@ -118,41 +120,41 @@ namespace Project_Rioman
             touchtime = 0;
         }
 
-        public void Update(double elapsedtime)
+        public Texture2D GetSprite() { return anim.GetSprite(); }
+
+        public void Update(double deltaTime)
         {
             if (ispaused)
-                Pause(elapsedtime);
+                Pause(deltaTime);
             else
             {
+
+                state.Update(deltaTime);
+                anim.Update(deltaTime);
+
                 if (!isfalling)
                     falltime = 0;
 
                 if (isclimbing)
-                    Climb(elapsedtime);
+                    Climb();
                 else if (isjumping)
-                    Jump(elapsedtime);
+                    Jump(deltaTime);
                 else if (isfalling)
-                    Fall(elapsedtime);
-                else if (isrunning && !isshooting)
-                    Walk(elapsedtime);
-                else if (isrunning && isshooting)
-                    WalkGun(elapsedtime);
-                else if (isshooting && isstanding)
-                    StandGun(elapsedtime);
+                    Fall(deltaTime);
                 else
-                    Stand(elapsedtime);
+                    sprite = GetSprite();
 
                 if (isinvincible)
-                    Invincible(elapsedtime);
+                    Invincible(deltaTime);
 
                 if (ishit)
-                    Hit(elapsedtime);
+                    Hit(deltaTime);
             }
         }
 
-        public void Pause(double elapsedtime)
+        public void Pause(double deltaTime)
         {
-            pausetime += elapsedtime;
+            pausetime += deltaTime;
 
             if (pausetime > 3)
             {
@@ -161,22 +163,18 @@ namespace Project_Rioman
             }
         }
 
-        public void Moving(KeyboardState keyboardstate, KeyboardState previouskeyboardstate, Levels level, double elapsedtime)
+        public void Moving(KeyboardState keyboardstate, KeyboardState previouskeyboardstate, Levels level, double deltaTime)
         {
-            isrunning = false;
-
             if (!stopx && !ispaused)
             {
                 if (keyboardstate.IsKeyDown(Keys.Right) && !isclimbing && !level.stoprightxmovement)
                 {
                     if (!level.stopleftscreenmovement && !level.stoprightscreenmovement)
                     {
-                        isrunning = true;
                         level.MoveStuff(-3, 0);
                     }
                     else if (level.stoprightscreenmovement || level.stopleftscreenmovement)
                     {
-                        isrunning = true;
                         location.X += 3;
                     }
 
@@ -186,12 +184,10 @@ namespace Project_Rioman
                 {
                     if (!level.stopleftscreenmovement && !level.stoprightscreenmovement)
                     {
-                        isrunning = true;
                         level.MoveStuff(3, 0);
                     }
                     else if (level.stopleftscreenmovement || level.stoprightscreenmovement)
                     {
-                        isrunning = true;
                         location.X -= 3;
                     }
 
@@ -214,13 +210,13 @@ namespace Project_Rioman
                 else if (keyboardstate.IsKeyDown(Keys.Up) && isclimbing)
                 {
                     location.Y -= 3;
-                    climbtime += elapsedtime;
+                    climbtime += deltaTime;
                     climbdown = false;
                 }
                 else if (keyboardstate.IsKeyDown(Keys.Down) && isclimbing)
                 {
                     location.Y += 3;
-                    climbtime += elapsedtime;
+                    climbtime += deltaTime;
                     climbdown = true;
                 }
 
@@ -302,21 +298,14 @@ namespace Project_Rioman
                 if (flag)
                 {
                     Audio.shoot1.Play(0.5f, 0f, 0f);
-                    isshooting = true;
+                    state.Shoot();
                     animationtime = 2;
-                    shoottime = 0;
                     if (direction == SpriteEffects.FlipHorizontally)
                         bullet[num].BulletSpawn(location.X - 20, location.Center.Y - 8, direction);
                     else
                         bullet[num].BulletSpawn(location.X + 20, location.Center.Y - 8, direction);
                 }
             }
-        }
-
-        private void LocationRect()
-        {
-            location.Width = sourcerect.Width;
-            location.Height = sourcerect.Height;
         }
 
         public void Hit()
@@ -336,10 +325,10 @@ namespace Project_Rioman
             location.Y -= 8;
         }
 
-        private void Hit(double elapsedtime)
+        private void Hit(double deltaTime)
         {
             hitloc = new Rectangle(location.X - hitloc.Width / 2, location.Center.Y - hitloc.Height / 2, hit.Width / 3, hit.Height);
-            hittime += elapsedtime;
+            hittime += deltaTime;
 
             if (hittime > 0.05 && hitframe == 3)
             {
@@ -352,7 +341,6 @@ namespace Project_Rioman
             {
                 bool fake = false;
                 hittime = 0;
-                hitsource = Animation.GetSourceRect(3, ref hitframe, hit.Width, hit.Height, ref fake);
             }
         }
 
@@ -378,16 +366,14 @@ namespace Project_Rioman
             {
                 stopx = true;
                 sprite = airhit;
-                sourcerect = Animation.GetSourceRect(sprite.Width, sprite.Height);
-                LocationRect();
+
             }
             else if (touchedground && touchtime < 0.3)
             {
                 stopx = true;
                 touchtime += elapsetime;
                 sprite = groundhit;
-                sourcerect = Animation.GetSourceRect(sprite.Width, sprite.Height);
-                LocationRect();
+
             }
 
             for (double i = 0; i <= 2; i += 0.2)
@@ -431,8 +417,7 @@ namespace Project_Rioman
                 if (sprite != warp[1] && sprite != warp[2] && sprite != warp[3])
                     sprite = warp[0];
 
-                sourcerect = Animation.GetSourceRect(sprite.Width, sprite.Height);
-                LocationRect();
+
 
                 location.Y += 15;
 
@@ -452,8 +437,7 @@ namespace Project_Rioman
                         iswarping = false;
                     }
 
-                    sourcerect = Animation.GetSourceRect(sprite.Width, sprite.Height);
-                    LocationRect();
+
                 }
             }
 
@@ -469,15 +453,13 @@ namespace Project_Rioman
                 else if (sprite == warp[1])
                     sprite = warp[0];
 
-                sourcerect = Animation.GetSourceRect(sprite.Width, sprite.Height);
-                LocationRect();
+
 
                 if (sprite == warp[0])
                 {
                     sprite = warp[0];
 
-                    sourcerect = Animation.GetSourceRect(sprite.Width, sprite.Height);
-                    LocationRect();
+
 
                     location.Y -= 15;
 
@@ -490,12 +472,10 @@ namespace Project_Rioman
             }
         }
 
-        private void Climb(double elapsedtime)
+        private void Climb()
         {
-            if (isshooting)
-                shoottime += elapsedtime;
 
-            if (isshooting && sprite != climbtop)
+            if (state.IsShooting() && sprite != climbtop)
                 sprite = climbgun;
             else if (climbtime > 0.175)
                 sprite = climbflip;
@@ -505,31 +485,23 @@ namespace Project_Rioman
             if (climbtime > 0.35)
                 climbtime = 0;
 
-            if (shoottime > 0.25)
-            {
-                isshooting = false;
-                shoottime = 0;
-            }
-
-            sourcerect = Animation.GetSourceRect(sprite.Width, sprite.Height);
-            LocationRect();
         }
 
-        private void Fall(double elapsedtime)
+        private void Fall(double deltaTime)
         {
-            falltime += elapsedtime;
+            falltime += deltaTime;
 
             if (falltime * 30 > 10)
                 location.Y += 10;
             else
                 location.Y += Convert.ToInt32(falltime * 30);
 
-            JumpOrFall(elapsedtime);
+            JumpOrFall(deltaTime);
         }
 
-        private void Jump(double elapsedtime)
+        private void Jump(double deltaTime)
         {
-            jumptime += elapsedtime;
+            jumptime += deltaTime;
             if (jumptime < 0.4)
             {
                 location.Y -= Convert.ToInt32(10 - jumptime * 22);
@@ -541,10 +513,10 @@ namespace Project_Rioman
                 jumptime = 0;
             }
 
-            JumpOrFall(elapsedtime);
+            JumpOrFall(deltaTime);
         }
 
-        private void JumpOrFall(double elapsedtime)
+        private void JumpOrFall(double deltaTime)
         {
             if (!isinvincible)
                 touchedground = false;
@@ -552,92 +524,12 @@ namespace Project_Rioman
             sprite = jumpsprite;
             frame = 1;
 
-            if (isshooting)
-            {
+            if (state.IsShooting())
                 sprite = jumpgunsprite;
-                shoottime += elapsedtime;
-            }
+            
 
-            sourcerect = Animation.GetSourceRect(sprite.Width, sprite.Height);
-            LocationRect();
 
-            if (shoottime > 0.5)
-            {
-                isshooting = false;
-                shoottime = 0;
-            }
         }
 
-        private void Stand(double elapsedtime)
-        {
-            isstanding = true;
-            sprite = walksprite;
-            frame = 0;
-
-            reverseanimation = false;
-            sourcerect = Animation.GetSourceRect(walkframes, ref frame, walksprite.Width, walksprite.Height, ref reverseanimation);
-
-            LocationRect();
-        }
-
-        private void Walk(double elapsedtime)
-        {
-            isstanding = false;
-            sprite = walksprite;
-
-            animationtime += elapsedtime;
-            if (animationtime > 0.1)
-            {
-                sourcerect = Animation.GetSourceRect(walkframes, ref frame, walksprite.Width, walksprite.Height, ref reverseanimation);
-                animationtime = 0;
-            }
-
-            if (frame == 1)
-            {
-                sourcerect = Animation.GetSourceRect(walkframes, ref frame, walksprite.Width, walksprite.Height, ref reverseanimation);
-                sourcerect = Animation.GetSourceRect(walkframes, ref frame, walksprite.Width, walksprite.Height, ref reverseanimation);
-            }
-
-            LocationRect();
-        }
-
-        private void StandGun(double elapsedtime)
-        {
-            isstanding = true;
-            sprite = standgunsprite;
-            sourcerect = Animation.GetSourceRect(standgunsprite.Width, standgunsprite.Height);
-
-            LocationRect();
-            shoottime += elapsedtime;
-
-            if (shoottime > 0.5)
-            {
-                isshooting = false;
-                shoottime = 0;
-            }
-        }
-
-        private void WalkGun(double elapsedtime)
-        {
-            sprite = walkgunsprite;
-
-            animationtime += elapsedtime;
-            shoottime += elapsedtime;
-
-            if (animationtime > 0.1)
-            {
-                sourcerect = Animation.GetSourceRect(4, ref frame, walkgunsprite.Width, walkgunsprite.Height, ref reverseanimation);
-                animationtime = 0;
-            }
-
-            if (shoottime > 0.5)
-            {
-                isshooting = false;
-                shoottime = 0;
-                animationtime = 2;
-            }
-
-            LocationRect();
-        }
     }
 }

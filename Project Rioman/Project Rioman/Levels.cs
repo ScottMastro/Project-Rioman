@@ -623,8 +623,8 @@ namespace Project_Rioman
             bool bossfalling = true;
 
             Rectangle temprect = rioman.location;
-            rioman.location.Width = rioman.walksprite.Width / 4;
-            rioman.location.Height = rioman.walksprite.Height;
+            rioman.location.Width = rioman.stand.Width/2;
+            rioman.location.Height = rioman.stand.Height;
 
             rioman.location.X -= rioman.location.Width / 2;
 

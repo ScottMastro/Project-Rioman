@@ -104,11 +104,13 @@
     <Compile Include="Audio.cs" />
     <Compile Include="Boss.cs" />
     <Compile Include="Bullet.cs" />
+    <Compile Include="Constant.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Health.cs" />
     <Compile Include="Levels.cs" />
     <Compile Include="Pickup.cs" />
+    <Compile Include="RiomanAnimation.cs" />
     <Compile Include="RiomanState.cs" />
     <Compile Include="Save.cs" />
     <Compile Include="StageSelection.cs" />
@@ -176,6 +178,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>if exist "$(TargetPath).locked" del "$(TargetPath).locked"
+   if not exist "$(TargetPath).locked" move "$(TargetPath)" "$(TargetPath).locked"</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
