@@ -58,6 +58,8 @@ namespace Project_Rioman
             Audio.LoadAudio(Content);
             Health.LoadHealth(Content);
             Save.LoadContent(Content);
+            Opening.LoadContent(Content);
+
             levelLoader.LoadLevelContent(Content);
             for (int i = 1; i <= 9; i++)
                 level[i-1] = levelLoader.Load(i, Content);
@@ -65,7 +67,6 @@ namespace Project_Rioman
 
             Weapons = new Weapons(Content);
 
-            Opening.LoadOpening(Content);
             StageSelection.LoadStageSelection(Content, viewportRect);
 
             rioman = new Rioman(Content);
@@ -92,24 +93,14 @@ namespace Project_Rioman
         {
             KeyboardState keyboardstate = Keyboard.GetState();
 
-            if (keyboardstate.IsKeyDown(Keys.Escape))
+            if (keyboardstate.IsKeyDown(Constant.END_GAME))
                 this.Exit();
-            if (keyboardstate.IsKeyDown(Keys.F11) && !previousKeyboardState.IsKeyDown(Keys.F11))
+            if (keyboardstate.IsKeyDown(Constant.FULL_SCREEN) && !previousKeyboardState.IsKeyDown(Constant.FULL_SCREEN))
                 this.graphics.ToggleFullScreen();
 
 
-            if (GameState.GetState() == 0)
-            {
-                Opening.FadeIn();
-
-                if (keyboardstate.IsKeyDown(Keys.Up) && !previousKeyboardState.IsKeyDown(Keys.Up))
-                    Opening.ChangeText(true);
-                else if (keyboardstate.IsKeyDown(Keys.Down) && !previousKeyboardState.IsKeyDown(Keys.Down))
-                    Opening.ChangeText(false);
-
-                if (keyboardstate.IsKeyDown(Keys.Enter))
-                    GameState.SetState(Opening.ChangeGameStatus());
-            }
+            if (GameState.GetState() == Constant.TITLE_SCREEN)
+                Opening.Update();
             else if (GameState.GetState() == 1)
             {
                 backgroundcolor = new Color(164, 11, 0);
@@ -264,11 +255,8 @@ namespace Project_Rioman
 
             spriteBatch.Begin();
 
-            if (GameState.GetState() == 0)
-            {
-                spriteBatch.Draw(Opening.title, new Vector2((viewportRect.Width - Opening.title.Width) / 2, viewportRect.Height / 6), Opening.fade);
-                spriteBatch.Draw(Opening.activetext, new Vector2((viewportRect.Width - Opening.activetext.Width) / 2, viewportRect.Height * 2 / 3), Opening.fade);
-            }
+            if (GameState.GetState() == Constant.TITLE_SCREEN)
+                Opening.Draw(spriteBatch, viewportRect);
             else if (GameState.GetState() == 1)
             {
                 spriteBatch.Draw(StageSelection.background, new Vector2((viewportRect.Width - StageSelection.background.Width) / 2,

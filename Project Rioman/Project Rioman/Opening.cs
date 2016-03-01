@@ -1,60 +1,86 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Input;
 
 namespace Project_Rioman
 {
     public static class Opening
     {
-        public static Texture2D title;
-        static Texture2D text1;
-        static Texture2D text2;
-        public static Texture2D activetext;
-        public static Color fade;
+        private static Texture2D title;
+        private static Texture2D newGame;
+        private static Texture2D loadGame;
+        private enum State { newGame, loadGame };
+        private static State state;
 
-        static public void LoadOpening(ContentManager content)
+        private static Color fade;
+        private static KeyboardState prevKeyboardState;
+
+        static public void LoadContent(ContentManager content)
         {
             title = content.Load<Texture2D>("Video\\opening\\RioManlogo");
-            text1 = content.Load<Texture2D>("Video\\opening\\text1");
-            text2 = content.Load<Texture2D>("Video\\opening\\text2");
+            newGame = content.Load<Texture2D>("Video\\opening\\text1");
+            loadGame = content.Load<Texture2D>("Video\\opening\\text2");
 
-            activetext = text1;
+            state = State.newGame;
 
             fade = new Color(255, 255, 255, 0);
+            prevKeyboardState = new KeyboardState();
+        }
+
+        static public void Update()
+        {
+            FadeIn();
+            HandleInput();
+
+        }
+
+        static public void Draw(SpriteBatch spriteBatch, Viewport viewportRect)
+        {
+            spriteBatch.Draw(title, new Vector2((viewportRect.Width - Opening.title.Width) / 2, viewportRect.Height / 6), fade);
+
+            Texture2D sprite = (state == State.newGame ? newGame : loadGame);
+
+            spriteBatch.Draw(sprite, new Vector2((viewportRect.Width - sprite.Width) / 2, viewportRect.Height * 2 / 3), fade);
         }
 
         static public void FadeIn()
         {
-            if (fade.A < 254)
+            if (fade.A <= 253)
                 fade.A += 2;
         }
 
-        static public void ChangeText(bool one)
-        {
-            if (!one && activetext == text1 || one && activetext == text2)
+        static public void HandleInput() { 
+
+            KeyboardState keyboardState = Keyboard.GetState();
+
+            if (keyboardState.IsKeyDown(Constant.UP) && !prevKeyboardState.IsKeyDown(Constant.UP) ||
+                keyboardState.IsKeyDown(Constant.DOWN) && !prevKeyboardState.IsKeyDown(Constant.DOWN))
+            {
                 Audio.selection.Play(0.5f, 0f, 0f);
+                if (state == State.newGame)
+                    state = State.loadGame;
+                else
+                    state = State.newGame;
+            }
 
-            activetext = text2;
+            if (keyboardState.IsKeyDown(Constant.CONFIRM))
+                GameState.SetState(ChangeGameStatus());
 
-            if (one)
-                 activetext = text1;    
 
+            prevKeyboardState = keyboardState;
         }
 
         static public int ChangeGameStatus()
         {
-            int status;
 
-            if (activetext == text1)
-                status = 1;
+            if (state == State.newGame)
+                return Constant.SELECTION_SCREEN;
             else
-                status = 2;
+                return Constant.LOAD_SCREEN;
 
-            return status;
         }
+
+
     }
 }

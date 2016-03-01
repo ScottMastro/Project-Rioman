@@ -12,6 +12,7 @@ namespace Project_Rioman
         public static Keys FULL_SCREEN { get { return Keys.F11; } }
 
         public static Keys PAUSE { get { return Keys.Enter; } }
+        public static Keys CONFIRM { get { return Keys.Enter; } }
 
         public static Keys SHOOT { get { return Keys.Z; } }
         public static Keys JUMP { get { return Keys.X; } }
@@ -20,6 +21,13 @@ namespace Project_Rioman
         public static Keys RIGHT { get { return Keys.Right; } }
         public static Keys UP { get { return Keys.Up; } }
         public static Keys DOWN { get { return Keys.Down; } }
+
+
+
+        public static int TITLE_SCREEN = 0;
+        public static int SELECTION_SCREEN = 1;
+        public static int LOAD_SCREEN = 2;
+
 
     }
 }
