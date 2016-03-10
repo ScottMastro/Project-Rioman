@@ -59,6 +59,8 @@ namespace Project_Rioman
             Health.LoadHealth(Content);
             Save.LoadContent(Content);
             Opening.LoadContent(Content);
+            StageSelection.LoadContent(Content, viewportRect);
+
 
             levelLoader.LoadLevelContent(Content);
             for (int i = 1; i <= 9; i++)
@@ -67,7 +69,6 @@ namespace Project_Rioman
 
             Weapons = new Weapons(Content);
 
-            StageSelection.LoadStageSelection(Content, viewportRect);
 
             rioman = new Rioman(Content);
 
@@ -98,45 +99,33 @@ namespace Project_Rioman
             if (keyboardstate.IsKeyDown(Constant.FULL_SCREEN) && !previousKeyboardState.IsKeyDown(Constant.FULL_SCREEN))
                 this.graphics.ToggleFullScreen();
 
+            backgroundcolor = Color.Black;
 
             if (GameState.GetState() == Constant.TITLE_SCREEN)
                 Opening.Update();
-            else if (GameState.GetState() == 1)
+            else if (GameState.GetState() == Constant.SELECTION_SCREEN)
             {
+                StageSelection.Update();
                 backgroundcolor = new Color(164, 11, 0);
 
-                if (keyboardstate.IsKeyDown(Keys.Up) && !previousKeyboardState.IsKeyDown(Keys.Up))
-                    StageSelection.MoveSelector(0, -1);
-                else if (keyboardstate.IsKeyDown(Keys.Down) && !previousKeyboardState.IsKeyDown(Keys.Down))
-                    StageSelection.MoveSelector(0, 1);
-
-                if (keyboardstate.IsKeyDown(Keys.Right) && !previousKeyboardState.IsKeyDown(Keys.Right))
-                    StageSelection.MoveSelector(1, 0);
-                else if (keyboardstate.IsKeyDown(Keys.Left) && !previousKeyboardState.IsKeyDown(Keys.Left))
-                    StageSelection.MoveSelector(-1, 0);
-
-                if (keyboardstate.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter))
-                    GameState.SetState(StageSelection.SelectLevel());
             }
             else if (GameState.GetState() == 2)
             {
-                backgroundcolor = Color.Black;
+                //TODO: save logic
                 Save.Change(keyboardstate, previousKeyboardState);
 
                 if (keyboardstate.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter) && !Save.save)
-                    GameState.SetState(1);
+                    GameState.SetState(Constant.SELECTION_SCREEN);
             }
             else if (GameState.GetState() > 100)
-            {
-                GameState.SetState(StageSelection.DoDance(gameTime, GameState.GetState(), viewportRect));
-            }
+                StageSelection.DoDance(gameTime, viewportRect);
             else if (GameState.GetState() >= 10 && GameState.GetState() < 100)
             {
                 if (!currentLevel.go && !rioman.iswarping)
                     ChangeLevel();
 
                 else if (currentLevel.go && !currentLevel.dooropening && !currentLevel.closedoornow && !currentLevel.scrolling && !GameState.IsPaused() && !rioman.iswarping
-                    && !Health.healthincrease && currentLevel.bosses[currentLevel.activelevel].intro >= 3)
+                    && !Health.HealthIncreasing() && currentLevel.bosses[currentLevel.activelevel].intro >= 3)
                 {
                     currentLevel.UpdateTiles(rioman, gameTime, viewportRect);
                     currentLevel.EnemyCollision(bullet, rioman);
@@ -152,10 +141,10 @@ namespace Project_Rioman
                     if (selectionscreen)
                     {
                         currentLevel.go = false;
-                        GameState.SetState(1);
+                        GameState.SetState(Constant.SELECTION_SCREEN);
                     }
 
-                    if (keyboardstate.IsKeyDown(Keys.Z) && !previousKeyboardState.IsKeyDown(Keys.Z))
+                    if (keyboardstate.IsKeyDown(Constant.SHOOT) && !previousKeyboardState.IsKeyDown(Constant.SHOOT))
                         rioman.Shooting(bullet);
 
                     if (!rioman.ispaused)
@@ -175,8 +164,8 @@ namespace Project_Rioman
                     if (!currentLevel.stoprightscreenmovement && !currentLevel.stopleftscreenmovement)
                         currentLevel.CenterRioman(viewportRect, rioman);
                 }
-                else if (Health.healthincrease)
-                    Health.IncreaseHealth(gameTime.ElapsedGameTime.TotalSeconds);
+                else if (Health.HealthIncreasing())
+                    Health.UpdateHealth(gameTime.ElapsedGameTime.TotalSeconds);
                 else if (currentLevel.dooropening)
                     currentLevel.OpenDoor();
                 else if (currentLevel.scrolling)
@@ -237,8 +226,8 @@ namespace Project_Rioman
                 foreach (Bullet blt in bullet)
                     blt.alive = false;
 
-                Health.health = 27;
-                Health.drawbosshealth = false;
+                Health.SetHealth(27);
+                Health.SetDrawBossHealth(false);
                 rioman.iswarping = true;
                 rioman.warpy = Convert.ToInt32(currentLevel.startpos.Y);
                 Audio.warp.Play(0.5f, 0f, 0f);
@@ -257,24 +246,14 @@ namespace Project_Rioman
 
             if (GameState.GetState() == Constant.TITLE_SCREEN)
                 Opening.Draw(spriteBatch, viewportRect);
-            else if (GameState.GetState() == 1)
-            {
-                spriteBatch.Draw(StageSelection.background, new Vector2((viewportRect.Width - StageSelection.background.Width) / 2,
-                    (viewportRect.Height - StageSelection.background.Height) / 2), Color.White);
-
-                StageSelection.DrawIcons(spriteBatch);
-            }
+            else if (GameState.GetState() == Constant.SELECTION_SCREEN)
+                StageSelection.Draw(spriteBatch, viewportRect);
             else if (GameState.GetState() == 2)
             {
                 Save.DrawSaveScreen(spriteBatch, viewportRect);
             }
             else if (GameState.GetState() > 100)
-            {
-                spriteBatch.Draw(StageSelection.stars, StageSelection.starsloc[0], Color.White);
-                spriteBatch.Draw(StageSelection.stars, StageSelection.starsloc[1], Color.White);
-                spriteBatch.Draw(StageSelection.activemiddle, StageSelection.activemiddleloc, Color.White);
-                spriteBatch.Draw(StageSelection.activeintro, StageSelection.activeintroloc, Color.White);
-            }
+                StageSelection.DrawDance(spriteBatch, viewportRect);
             else if (GameState.GetState() >= 10 && GameState.GetState() < 100)
             {
                 if (currentLevel.go || rioman.iswarping)

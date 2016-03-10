@@ -238,7 +238,7 @@ namespace Project_Rioman
             {
                 if (!rioman.isinvincible && rioman.location.Intersects(collisionrect))
                 {
-                    Health.health -= coldamage;
+                    Health.AdjustHealth(-coldamage);
                     rioman.Hit();
 
                     if (rioman.location.Left < collisionrect.Left)
@@ -254,9 +254,9 @@ namespace Project_Rioman
                         bulletalive[i] = false;
 
                         if (attacktype[i] == 1)
-                            Health.health -= atk1damage;
+                            Health.AdjustHealth(-atk1damage);
                         else if (attacktype[i] == 2)
-                            Health.health -= atk2damage;
+                            Health.AdjustHealth(-atk2damage);
 
                         rioman.Hit();
 
@@ -279,7 +279,7 @@ namespace Project_Rioman
                             if (!canthurt)
                             {
                                 hit = true;
-                                Health.bosshealth--;
+                                Health.AdjustBossHealth(-1);
                             }
                             blt.alive = false;
                         }
@@ -291,7 +291,7 @@ namespace Project_Rioman
                             if (!canthurt)
                             {
                                 hit = true;
-                                Health.bosshealth--;
+                                Health.AdjustBossHealth(-1);
                             }
                             blt.alive = false;
                         }
@@ -431,7 +431,7 @@ namespace Project_Rioman
             }
             else if (isalive)
             {
-                if (Health.bosshealth <= 0)
+                if (Health.GetBossHealth() <= 0)
                 {
                     for (int i = 0; i <= 19; i++)
                         bulletalive[i] = false;

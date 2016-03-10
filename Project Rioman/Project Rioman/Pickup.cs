@@ -129,7 +129,9 @@ namespace Project_Rioman
                 if (rioman.location.Intersects(location))
                 {
                     if (type == 13)
-                        Health.lifeplus++;
+                    {                     
+                        //add life
+                    }
                     else if (type == 14)
                         Health.StartIncreaseHealth(10);
                     else if (type == 15)

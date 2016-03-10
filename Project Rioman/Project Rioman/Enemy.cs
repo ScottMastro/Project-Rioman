@@ -49,7 +49,7 @@ namespace Project_Rioman
         {
             if (!rioman.isinvincible && totems[number].collisionrect.Intersects(rioman.location) && totems[number].isalive)
             {
-                Health.health -= damage;
+                Health.AdjustHealth(-damage);
                 rioman.Hit();
 
                 if (rioman.location.Left < totems[number].location.Left)
@@ -89,7 +89,7 @@ namespace Project_Rioman
         {
             if (!rioman.isinvincible && totems[number].bulletcollision.Intersects(rioman.location) && totems[number].bulletalive)
             {
-                Health.health -= totems[number].damage;
+                Health.AdjustHealth(-totems[number].damage);
                 rioman.Hit();
 
                 if (rioman.location.Left < totems[number].location.Left)
@@ -103,7 +103,7 @@ namespace Project_Rioman
         {
             if (!rioman.isinvincible && carts[number].collisionrect.Intersects(rioman.location) && carts[number].isalive)
             {
-                Health.health -= damage;
+                Health.AdjustHealth(-damage);
                 rioman.Hit();
 
                 if (rioman.location.Left < carts[number].location.Left)

@@ -6,25 +6,22 @@ namespace Project_Rioman
 {
     static class Health
     {
-        static Texture2D healthbar;
-        static Texture2D healthpoint;
-        public static int health;
-        public static bool healthincrease;
-        static double increasetime;
-        static int increaseamount;
+        private static Texture2D healthbar;
+        private static Texture2D healthpoint;
+        private static int health;
+        private static bool healthIncrease;
+        private static double increasetime;
+        private static int increaseAmount;
 
-        public static bool drawbosshealth;
-        public static int bosshealth;
-        public static Color bosshealthcolour;
-
-        public static int lifeplus;
+        private static bool drawBossHealth;
+        private static int bossHealth;
+        private static Color bosshealthcolour;
 
         public static void LoadHealth(ContentManager content)
         {
             healthbar = content.Load<Texture2D>("Video\\pause\\bar");
             healthpoint = content.Load<Texture2D>("Video\\pause\\health");
             health = 27;
-            lifeplus = 0;
         }
 
         public static void DrawHealth(SpriteBatch spriteBatch)
@@ -35,11 +32,11 @@ namespace Project_Rioman
                 spriteBatch.Draw(healthpoint, new Vector2(50, 50 + healthbar.Height -
                     (healthpoint.Height - 2) * i), Color.White);
 
-            if (drawbosshealth)
+            if (drawBossHealth)
             {
                 spriteBatch.Draw(healthbar, new Vector2(75, 52), Color.White);
 
-                for (int i = 1; i <= bosshealth; i++)
+                for (int i = 1; i <= bossHealth; i++)
                     spriteBatch.Draw(healthpoint, new Vector2(75, 50 + healthbar.Height -
                         (healthpoint.Height - 2) * i), bosshealthcolour);
             }
@@ -47,27 +44,27 @@ namespace Project_Rioman
 
         public static void StartIncreaseHealth(int amount)
         {
-            increaseamount = amount;
-            healthincrease = true;
+            increaseAmount = amount;
+            healthIncrease = true;
             increasetime = 0;
         }
 
-        public static void IncreaseHealth(double elapsedtime)
+        public static void UpdateHealth(double elapsedtime)
         {
             increasetime += elapsedtime;
 
             if (increasetime > 0.05)
             {
                 increasetime = 0;
-                increaseamount--;
+                increaseAmount--;
 
                 if (health < 27)
                     health++;
 
-                if (health >= 27 || increaseamount <= 0)
+                if (health >= 27 || increaseAmount <= 0)
                 {
-                    healthincrease = false;
-                    increaseamount = 0;
+                    healthIncrease = false;
+                    increaseAmount = 0;
                 }
             }
         }
@@ -75,19 +72,31 @@ namespace Project_Rioman
         public static void BossHealth(Color healthcolour)
         {
             bosshealthcolour = healthcolour;
-            drawbosshealth = true;
+            drawBossHealth = true;
         }
 
         public static int BossHealth()
         {
             int done = 2;
-            bosshealth++;
+            bossHealth++;
 
-            if (bosshealth >= 27)
+            if (bossHealth >= 27)
                 done = 3;
 
             return done;
 
         }
+
+        public static void SetDrawBossHealth(bool b) { drawBossHealth = b; }
+        public static bool GetDrawBossHealth() { return drawBossHealth; }
+        public static void AdjustBossHealth(int x) { bossHealth += x; }
+        public static int GetBossHealth() { return bossHealth; }
+
+
+        public static void IncreaseHealth(int amount) { increaseAmount = amount; }
+        public static void AdjustHealth(int amount) { health += amount; }
+        public static int GetHealth() { return health; }
+        public static void SetHealth(int x) { health = x; }
+        public static bool HealthIncreasing() { return healthIncrease; }
     }
 }

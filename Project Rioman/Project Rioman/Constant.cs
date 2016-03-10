@@ -28,6 +28,15 @@ namespace Project_Rioman
         public static int SELECTION_SCREEN = 1;
         public static int LOAD_SCREEN = 2;
 
+        public static int AURORAMAN = 11;
+        public static int BUNNYMAN = 18;
+        public static int CLOVERMAN = 17;
+        public static int GEOGIRL = 10;
+        public static int INFERNOMAN = 13;
+        public static int LURKERMAN = 12;
+        public static int POSTERMAN = 15;
+        public static int TOXICMAN = 16;
+        public static int MUSH = 14;
 
     }
 }

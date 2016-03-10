@@ -1,46 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Project_Rioman
 {
     static class StageSelection
     {
-        public static Texture2D background;
-        public static Texture2D AuroraMan;
-        public static Texture2D BunnyMan;
-        public static Texture2D CloverMan;
-        public static Texture2D GeoGirl;
-        public static Texture2D InfernoMan;
-        public static Texture2D LurkerMan;
-        public static Texture2D PosterMan;
-        public static Texture2D ToxicMan;
-        public static Texture2D Mush;
-        public static Texture2D selector;
-        public static Texture2D static1;
-        public static Texture2D static2;
-        public static Texture2D static3;
-        public static Vector2[,] location = new Vector2[3, 3];
-        static int selectorx, selectory = 0;
 
-        public static Texture2D stars;
-        public static Vector2[] starsloc = new Vector2[2];
-        public static Texture2D[] middle = new Texture2D[5];
-        public static Texture2D activemiddle;
-        public static Vector2 activemiddleloc;
-        public static Texture2D[] intro = new Texture2D[10];
-        public static Texture2D activeintro;
-        public static Vector2 activeintroloc;
-        public static double elapsedtime;
+        private static Texture2D selectBackground;
+        private static Texture2D AuroraMan;
+        private static Texture2D BunnyMan;
+        private static Texture2D CloverMan;
+        private static Texture2D GeoGirl;
+        private static Texture2D InfernoMan;
+        private static Texture2D LurkerMan;
+        private static Texture2D PosterMan;
+        private static Texture2D ToxicMan;
+        private static Texture2D Mush;
+        private static Texture2D selector;
+        private static Texture2D static1;
+        private static Texture2D static2;
+        private static Texture2D static3;
 
+        private static Vector2[,] location = new Vector2[3, 3];
+        private static int selectorX, selectorY;
 
-        static public void LoadStageSelection(ContentManager content, Viewport viewportrect)
+        private static Texture2D stars;
+        private static Vector2[] starsloc = new Vector2[2];
+
+        private static Texture2D[] band = new Texture2D[5];
+        private static int bandFrame;
+        private static Vector2 bandLocation;
+
+        private static Texture2D[] characterIntro = new Texture2D[10];
+        private static Texture2D currentCharacter;
+        private static Vector2 currentCharacterLocation;
+        private static double elapsedtime;
+
+        private static bool confirmLock;
+        private static KeyboardState prevKeyboardState;
+
+        static public void LoadContent(ContentManager content, Viewport viewportrect)
         {
-            background = content.Load<Texture2D>("Video\\stageselection\\ScreenSelectBackground");
+            selectBackground = content.Load<Texture2D>("Video\\stageselection\\ScreenSelectBackground");
             AuroraMan = content.Load<Texture2D>("Video\\stageselection\\ssAuroraMan");
             BunnyMan = content.Load<Texture2D>("Video\\stageselection\\ssBunnyMan");
             CloverMan = content.Load<Texture2D>("Video\\stageselection\\ssCloverMan");
@@ -61,26 +65,54 @@ namespace Project_Rioman
 
             for (int i = 0; i <= 4; i++)
             {
-                middle[i] = content.Load<Texture2D>("Video\\stageselection\\middlepart" + (i + 1).ToString());
+                band[i] = content.Load<Texture2D>("Video\\stageselection\\middlepart" + (i + 1).ToString());
             }
-            activemiddle = middle[0];
-            activemiddleloc = new Vector2(0, 0);
-
+            
             for (int j = 1; j <= 9; j++)
             {
-                intro[j] = content.Load<Texture2D>("Video\\stageselection\\intro" + j.ToString());
+                characterIntro[j] = content.Load<Texture2D>("Video\\stageselection\\intro" + j.ToString());
             }
-            activeintro = intro[1];
-            activeintroloc = new Vector2(-200, 0);
+          
 
             for (int r = 0; r <= 2; r++)
             {
                 for (int c = 0; c <= 2; c++)
                 {
-                    location[r, c] = new Vector2(((viewportrect.Width - background.Width) / 2) + r * 130 + 84,
-                    ((viewportrect.Height - background.Height) / 2) + c * 128 + 36);
+                    location[r, c] = new Vector2(((viewportrect.Width - selectBackground.Width) / 2) + r * 130 + 84,
+                    ((viewportrect.Height - selectBackground.Height) / 2) + c * 128 + 36);
                 }
             }
+
+            Reset();
+
+        }
+
+        static private void Reset()
+        {
+            prevKeyboardState = new KeyboardState();
+            confirmLock = true;
+            selectorX = 0; selectorY = 0;
+
+            elapsedtime = 0;
+            bandFrame = 0;
+            bandLocation = new Vector2(0, 0);
+
+            currentCharacter = characterIntro[1];
+            currentCharacterLocation = new Vector2(-200, 0);
+        }
+
+        static public void Update()
+        {
+            HandleInput();
+        }
+
+        static public void Draw(SpriteBatch spriteBatch, Viewport viewportRect)
+        {
+
+            spriteBatch.Draw(selectBackground, new Vector2((viewportRect.Width - selectBackground.Width) / 2,
+                (viewportRect.Height - selectBackground.Height) / 2), Color.White);
+
+            DrawIcons(spriteBatch);
         }
 
         static public void DrawIcons(SpriteBatch spriteBatch)
@@ -95,82 +127,95 @@ namespace Project_Rioman
             spriteBatch.Draw(PosterMan, location[1, 2], Color.White);
             spriteBatch.Draw(BunnyMan, location[2, 2], Color.White);
 
-            spriteBatch.Draw(selector, location[selectorx, selectory], Color.White);
+            spriteBatch.Draw(selector, location[selectorX, selectorY], Color.White);
         }
 
-        static public void MoveSelector(int xdir, int ydir)
+        static public void HandleInput()
         {
-            if (selectorx > 0 && xdir < 0 || selectorx < 2 && xdir > 0)
-            {
-                selectorx += xdir;
-                Audio.selection.Play(0.5f, 0f, 0f);
-            }
 
-            if (selectory > 0 && ydir < 0 || selectory < 2 && ydir > 0)
-            {
-                selectory += ydir;
+            KeyboardState keyboardState = Keyboard.GetState();
+
+            //check to see if confirm button has been let go since the opening screen
+            if (!keyboardState.IsKeyDown(Constant.CONFIRM))
+                confirmLock = false;
+
+            int initSelectorX = selectorX;
+            int initSelectorY = selectorY;
+
+            if (keyboardState.IsKeyDown(Constant.UP) && !prevKeyboardState.IsKeyDown(Constant.UP))
+                selectorY = Math.Max(0, selectorY - 1);
+            else if (keyboardState.IsKeyDown(Constant.DOWN) && !prevKeyboardState.IsKeyDown(Constant.DOWN))
+                selectorY = Math.Min(2, selectorY + 1);
+            if (keyboardState.IsKeyDown(Constant.LEFT) && !prevKeyboardState.IsKeyDown(Constant.LEFT))
+                selectorX = Math.Max(0, selectorX - 1);
+            else if (keyboardState.IsKeyDown(Constant.RIGHT) && !prevKeyboardState.IsKeyDown(Constant.RIGHT))
+                selectorX = Math.Min(2, selectorX + 1);
+
+            if (initSelectorX != selectorX || initSelectorY != selectorY)
                 Audio.selection.Play(0.5f, 0f, 0f);
-            }
+
+            if (keyboardState.IsKeyDown(Constant.CONFIRM) && !prevKeyboardState.IsKeyDown(Constant.CONFIRM) &&
+                !confirmLock)
+                GameState.SetState(SelectLevel());
+
+            prevKeyboardState = keyboardState;
         }
 
         static public int SelectLevel()
         {
-            int gamestatus = 1;
-
-            if (selectorx == 0)
+            if (selectorX == 0)
             {
-                if (selectory == 0)
-                    gamestatus = 10;
-                else if (selectory == 1)
-                    gamestatus = 11;
-                else if (selectory == 2)
-                    gamestatus = 12;
+                if (selectorY == 0)
+                    return Constant.GEOGIRL + 100;
+                else if (selectorY == 1)
+                    return Constant.AURORAMAN + 100;
+                else if (selectorY == 2)
+                    return Constant.LURKERMAN + 100;
             }
-            else if (selectorx == 1)
+            else if (selectorX == 1)
             {
-                if (selectory == 0)
-                    gamestatus = 13;
-                else if (selectory == 1)
-                    gamestatus = 14;
-                else if (selectory == 2)
-                    gamestatus = 15;
+                if (selectorY == 0)
+                    return Constant.INFERNOMAN + 100;
+                else if (selectorY == 1)
+                    return Constant.MUSH + 100;
+                else if (selectorY == 2)
+                    return Constant.POSTERMAN + 100;
             }
-            else if (selectorx == 2)
+            else if (selectorX == 2)
             {
-                if (selectory == 0)
-                    gamestatus = 16;
-                else if (selectory == 1)
-                    gamestatus = 17;
-                else if (selectory == 2)
-                    gamestatus = 18;
+                if (selectorY == 0)
+                    return Constant.TOXICMAN + 100;
+                else if (selectorY == 1)
+                    return Constant.CLOVERMAN + 100;
+                else if (selectorY == 2)
+                    return Constant.BUNNYMAN + 100;
             }
 
-            if (gamestatus != 1)
-                gamestatus += 100;
-
-            return gamestatus;
+            return 1;
         }
 
-        static public int DoDance(GameTime gameTime, int gamestatus, Viewport viewportrect)
+        static public void DoDance(GameTime gameTime, Viewport viewportrect)
         {
+            int gameState = GameState.GetState();
+
             elapsedtime += gameTime.ElapsedGameTime.TotalSeconds;
 
             if (elapsedtime > 0.4)
-                activemiddle = middle[4];
+                bandFrame = 4;
             else if (elapsedtime > 0.3)
-                activemiddle = middle[3];
+                bandFrame = 3;
             else if (elapsedtime > 0.2)
-                activemiddle = middle[2];
+                bandFrame = 2;
             else if (elapsedtime > 0.1)
-                activemiddle = middle[1];
+                bandFrame = 1;
 
-            activemiddleloc = new Vector2(0, (viewportrect.Height - activemiddle.Height) / 2);
-            activeintroloc.Y = (activemiddle.Height - activeintro.Height) / 2 + activemiddleloc.Y;
+            bandLocation = new Vector2(0, (viewportrect.Height - band[bandFrame].Height) / 2);
+            currentCharacterLocation.Y = (band[bandFrame].Height - currentCharacter.Height) / 2 + bandLocation.Y;
 
-            if (elapsedtime > 0.4 && activeintroloc.X + activeintro.Width / 2 < viewportrect.Width / 2)
+            if (elapsedtime > 0.4 && currentCharacterLocation.X + currentCharacter.Width / 2 < viewportrect.Width / 2)
             {
-                activeintro = intro[gamestatus - 109];
-                activeintroloc.X += 4;
+                currentCharacter = characterIntro[gameState - 109];
+                currentCharacterLocation.X += 4;
             }
 
             starsloc[0].X += 25;
@@ -184,15 +229,20 @@ namespace Project_Rioman
 
             if (elapsedtime > 5)
             {
-                gamestatus -= 100;
-                activemiddle = middle[0];
-                activeintroloc.X = -200;
-                elapsedtime = 0;
+                GameState.SetState(gameState - 100);
+                currentCharacterLocation.X = -200;
+                Reset();
             }
 
+        }
 
+        public static void DrawDance(SpriteBatch spriteBatch, Viewport viewportRect)
+        {
+            spriteBatch.Draw(stars, starsloc[0], Color.White);
+            spriteBatch.Draw(stars, starsloc[1], Color.White);
+            spriteBatch.Draw(band[bandFrame], bandLocation, Color.White);
+            spriteBatch.Draw(currentCharacter, currentCharacterLocation, Color.White);
 
-            return gamestatus;
         }
     }
 }

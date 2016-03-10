@@ -645,7 +645,7 @@ namespace Project_Rioman
 
         public void CheckDeath(Viewport viewportrect, Rioman rioman)
         {
-            if (rioman.location.Y > viewportrect.Height + 100 || Health.health <= 0)
+            if (rioman.location.Y > viewportrect.Height + 100 || Health.GetHealth() <= 0)
             {
                 go = false;
                 lifechange = -1;
@@ -760,7 +760,7 @@ namespace Project_Rioman
                         rioman.ispaused = true;
                     else if (enemies[i].type != 302)
                     {
-                        Health.health -= enemies[i].damage;
+                        Health.AdjustHealth( -enemies[i].damage);
                         rioman.Hit();
 
                         if (rioman.location.Left < enemies[i].location.Left)
@@ -775,7 +775,7 @@ namespace Project_Rioman
                     {
                         if (enemies[i].othertime <= 2 && enemies[i].othertime <= 2 && enemies[i].bool1)
                         {
-                            Health.health -= enemies[i].damage;
+                            Health.AdjustHealth(-enemies[i].damage);
                             rioman.Hit();
                         }
                     }
@@ -803,7 +803,7 @@ namespace Project_Rioman
                         {
                             enemies[i].bulletalive[j] = false;
                             enemies[i].bullettime[j] = 0;
-                            Health.health -= 3;
+                            Health.AdjustHealth(-3);
                             stopleftxmovement = false;
                             stoprightxmovement = false;
 
@@ -832,7 +832,7 @@ namespace Project_Rioman
                             else if (k == 2)
                                 enemies[i].other[k].X = 1000;
 
-                            Health.health -= enemies[i].damage;
+                            Health.AdjustHealth(-enemies[i].damage);
                             stopleftxmovement = false;
                             stoprightxmovement = false;
 
