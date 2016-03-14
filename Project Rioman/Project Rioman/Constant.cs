@@ -38,5 +38,33 @@ namespace Project_Rioman
         public static int TOXICMAN = 16;
         public static int MUSH = 14;
 
+
+        public static int TileNumberToType(int tileNumber)
+        {
+            int type = -1;
+
+            if (tileNumber >= 110 && tileNumber <= 113)
+                type = 0;
+            if (tileNumber >= 1 && tileNumber <= 6 || tileNumber == 15 || tileNumber == 16)
+                type = 1;
+            if (tileNumber >= 103 && tileNumber <= 105 || tileNumber == 109)
+                type = 1;
+            if (tileNumber >= 39 && tileNumber <= 45 || tileNumber >= 50 && tileNumber <= 55)
+                type = 1;
+            if (tileNumber == 58)
+                type = 4;
+            if (tileNumber == 102 || tileNumber == 7 || tileNumber == 8)
+                type = 2;
+            if (tileNumber == 108 || tileNumber == 9)
+                type = 3;
+            if (tileNumber == 107)
+                type = 4;
+            if (tileNumber == 106)
+                type = 5;
+            if (tileNumber >= 318 && tileNumber <= 321)
+                type = 6;
+
+            return type;
+        }
     }
 }

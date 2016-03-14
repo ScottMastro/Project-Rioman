@@ -14,7 +14,7 @@ namespace Project_Rioman
 
     class Tile
     {
-        public Texture2D sprite;
+        private Texture2D sprite;
         public Texture2D[] frames;
 
         public int tile;
@@ -25,20 +25,19 @@ namespace Project_Rioman
         public Rectangle nocollisionrect;
         public Rectangle leftside;
         public Rectangle rightside;
-        public Rectangle scrollrect;
 
         public double fadetime;
         public double animationtime;
 
-        public bool isopening;
+        public bool isOpening;
         public bool isclosing;
-        public bool istop;
+        public bool isTop;
 
-        public Tile(Texture2D spr, int tl, int typ, int y, int x)
+        public Tile(Texture2D texture, int tileNumber, int tileType, int y, int x, ContentManager content)
         {
-            sprite = spr;
-            tile = tl;
-            type = typ;
+            sprite = texture;
+            tile = tileNumber;
+            type = tileType;
 
             location = new Rectangle(x, y, 32, 32);
 
@@ -48,11 +47,25 @@ namespace Project_Rioman
             leftside = new Rectangle(x, y + 4, 8, 16);
             rightside = new Rectangle(x + 16, y + 4, 8, 16);
 
-            isopening = false;
-            istop = false;
+            isOpening = false;
+            isTop = false;
+
+            CheckLoadFrames(content);
         }
 
-        public void TileFrames(ContentManager content, int frm)
+        private void CheckLoadFrames(ContentManager content)
+        {
+            if (tile == 177 || tile == 178)
+                LoadFrames(content, 2);
+            if (tile == 106 || tile == 130 || tile == 160 || tile == 223)
+                LoadFrames(content, 3);
+            if (tile == 56)
+                LoadFrames(content, 4);
+            if (tile == 102)
+                LoadFrames(content, 9);
+        }
+
+        public void LoadFrames(ContentManager content, int frm)
         {
             frames = new Texture2D[frm];
             frames[0] = sprite;
@@ -84,12 +97,6 @@ namespace Project_Rioman
             leftside.Y += y;
             rightside.X += x;
             rightside.Y += y;
-
-            if (type == 6)
-            {
-                scrollrect.X += x;
-                scrollrect.Y += y;
-            }
         }
 
         public void Fade(GameTime gameTime)
@@ -141,10 +148,11 @@ namespace Project_Rioman
                 sprite = frames[1];
         }
 
-        public void Scroller(Rectangle scroll)
+        public void Draw(SpriteBatch spriteBatch) 
         {
-            scrollrect = new Rectangle();
-            scrollrect = scroll;
+            if (type != 6 && type >= 0)
+                spriteBatch.Draw(sprite, location, Color.White);
+
         }
     }
 }

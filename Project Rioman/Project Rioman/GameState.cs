@@ -35,6 +35,7 @@ namespace Project_Rioman
 
 
         public static int GetState() { return state; }
+        public static int GetLevel() { return state - 9; }
         public static void SetState(int value) {
             prevState = state;
             state = value; }

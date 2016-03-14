@@ -184,7 +184,7 @@ namespace Project_Rioman
         Cart[] carts = new Cart[4];
         Random r = new Random();
 
-        public Enemy(int typ, int x, int y)
+        public Enemy(int typ, int x, int y, ContentManager content)
         {
             type = typ;
             location = new Rectangle(x, y, 0, 0);
@@ -192,6 +192,54 @@ namespace Project_Rioman
 
             if (type == 309)
                 location.Y += 4;
+
+            SetEnemyCharacteristics(content);
+        }
+
+        private void SetEnemyCharacteristics(ContentManager content)
+        {
+            if (type == 297)
+                TotemSprites(content, "troubling-totem", "ttbullets0", "ttbullets1", "ttbullets2", "ttbullets3");
+            else if (type == 298)
+                EnemySprites(content, 4, "neo-luckystand", 2, true, "neo-luckybullet", 1, "neo-luckyattack", 1, "neo-luckyjump", 1, false, 10, 4);
+            else if (type == 299)
+                EnemySprites(content, 1, "kronos", 10, false, "", 0, "", 0, "", 0, true, 10, 0);
+            else if (type == 300)
+                EnemySprites(content, 3, "Purin", 3, true, "Purinbullets", 4, "Purinjump", 2, "", 0, false, 3, 2);
+            else if (type == 301)
+                EnemySprites(content, 4, "mousehead", 1, true, "mousebullet", 3, "mousebody", 3, "mousetail", 3, true, 25, 5);
+            else if (type == 302)
+                EnemySprites(content, 1, "flipside", 1, false, "", 0, "", 0, "", 0, true, 0, 27);
+            else if (type == 303)
+                EnemySprites(content, 3, "Mace-botball", 1, false, "Mace-botstring", 1, "Mace-bot", 1, "", 0, true, 4, 6);
+            else if (type == 304)
+                EnemySprites(content, 2, "7R06D0R", 3, true, "7R06D0Rbullet", 3, "", 0, "", 0, true, 25, 5);
+            else if (type == 305)
+                EnemySprites(content, 3, "spikebomb", 2, false, "spikebullet", 1, "spikebulletangle", 1, "", 0, true, 5, 3);
+            else if (type == 306)
+                EnemySprites(content, 2, "MaliciousMushMech", 2, false, "mmmbullet", 1, "", 0, "", 0, false, 5, 4);
+            else if (type == 307)
+                EnemySprites(content, 2, "ToxicMushMech", 2, false, "mmmbullet", 1, "", 0, "", 0, false, 6, 7);
+            else if (type == 308)
+                EnemySprites(content, 2, "ChanceBomb", 6, false, "explosion", 12, "", 0, "", 0, true, 0, 2);
+            else if (type == 309)
+                EnemySprites(content, 3, "zarroc-Clone", 1, true, "zcbullet", 1, "zarroc-Clone2", 1, "", 0, true, 3, 2);
+            else if (type == 310)
+                EnemySprites(content, 1, "deux-kama", 1, false, "", 0, "", 0, "", 0, true, 0, 5);
+            else if (type == 311)
+                EnemySprites(content, 1, "serverbot", 4, false, "", 0, "", 0, "", 0, false, 4, 4);
+            else if (type == 312)
+                EnemySprites(content, 1, "Mega-hopper", 6, false, "", 0, "", 0, "", 0, false, 6, 6);
+            else if (type == 313)
+                EnemySprites(content, 2, "dozer-bot", 2, true, "dbbullets", 1, "", 0, "", 0, false, 7, 27);
+            else if (type == 314)
+                EnemySprites(content, 2, "Blacky", 3, true, "blackbullet", 1, "", 0, "", 0, true, 5, 3);
+            else if (type == 315)
+                EnemySprites(content, 1, "hellicoptor", 2, false, "", 0, "", 0, "", 0, true, 4, 4);
+            else if (type == 316)
+                EnemySprites(content, 2, "P1-H8R", 1, true, "P1-H8Rbullets", 1, "", 0, "", 0, true, 4, 3);
+            else if (type == 317)
+                EnemySprites(content, 2, "Macks", 1, true, "mkbullets", 3, "", 0, "", 0, false, 5, 4);
         }
 
         public void EnemySprites(ContentManager content, int spritesheets, string fileloc1, int frames1, bool bullets,

@@ -513,5 +513,11 @@ namespace Project_Rioman
 
         }
 
+
+        public void Move(int x, int y)
+        {
+            location.X += x;
+            location.Y += y;
+        }
     }
 }

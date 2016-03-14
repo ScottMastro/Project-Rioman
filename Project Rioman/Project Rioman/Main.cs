@@ -16,21 +16,13 @@ namespace Project_Rioman
         KeyboardState previousKeyboardState;
 
         Color backgroundcolor;
-        Rioman rioman;
-        Bullet[] bullet = new Bullet[3];
-        Level currentLevel;
-        LevelLoader levelLoader = new LevelLoader();
-        Level[] level = new Level[9];
-
-        Weapons Weapons;
-
+        GameLogic gameLogic = new GameLogic();
 
         public Main()
         {
             graphics = new GraphicsDeviceManager(this);
             //graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
-
         }
 
         /// <summary>
@@ -56,24 +48,10 @@ namespace Project_Rioman
             backgroundcolor = Color.Black;
 
             Audio.LoadAudio(Content);
-            Health.LoadHealth(Content);
             Save.LoadContent(Content);
             Opening.LoadContent(Content);
             StageSelection.LoadContent(Content, viewportRect);
-
-
-            levelLoader.LoadLevelContent(Content);
-            for (int i = 1; i <= 9; i++)
-                level[i-1] = levelLoader.Load(i, Content);
-            currentLevel = level[3];
-
-            Weapons = new Weapons(Content);
-
-
-            rioman = new Rioman(Content);
-
-            for (int i = 0; i <= 2; i++)
-                bullet[i] = new Bullet(Content.Load<Texture2D>("Video\\bullet"));
+            gameLogic.LoadContent(Content, viewportRect);
 
         }
 
@@ -92,6 +70,8 @@ namespace Project_Rioman
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
+
             KeyboardState keyboardstate = Keyboard.GetState();
 
             if (keyboardstate.IsKeyDown(Constant.END_GAME))
@@ -120,85 +100,8 @@ namespace Project_Rioman
             else if (GameState.GetState() > 100)
                 StageSelection.DoDance(gameTime, viewportRect);
             else if (GameState.GetState() >= 10 && GameState.GetState() < 100)
-            {
-                if (!currentLevel.go && !rioman.iswarping)
-                    ChangeLevel();
+                gameLogic.Update(gameTime);
 
-                else if (currentLevel.go && !currentLevel.dooropening && !currentLevel.closedoornow && !currentLevel.scrolling && !GameState.IsPaused() && !rioman.iswarping
-                    && !Health.HealthIncreasing() && currentLevel.bosses[currentLevel.activelevel].intro >= 3)
-                {
-                    currentLevel.UpdateTiles(rioman, gameTime, viewportRect);
-                    currentLevel.EnemyCollision(bullet, rioman);
-
-                    rioman.BackwardScroll(currentLevel, viewportRect);
-
-                    rioman.Moving(keyboardstate, previousKeyboardState, currentLevel, gameTime.ElapsedGameTime.TotalSeconds);
-                    rioman.Update(gameTime.ElapsedGameTime.TotalSeconds);
-
-                    currentLevel.UpdateEnemies(rioman, gameTime, viewportRect);
-                    bool selectionscreen = currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportRect, rioman);
-
-                    if (selectionscreen)
-                    {
-                        currentLevel.go = false;
-                        GameState.SetState(Constant.SELECTION_SCREEN);
-                    }
-
-                    if (keyboardstate.IsKeyDown(Constant.SHOOT) && !previousKeyboardState.IsKeyDown(Constant.SHOOT))
-                        rioman.Shooting(bullet);
-
-                    if (!rioman.ispaused)
-                    {
-                        foreach (Bullet blt in bullet)
-                            blt.BulletUpdate(viewportRect.Width);
-                    }
-
-                    currentLevel.CheckDeath(viewportRect, rioman);
-
-                    if (currentLevel.lifechange != 0)
-                    {
-                        rioman.state.AdjustLivesByX(currentLevel.lifechange);
-                        currentLevel.lifechange = 0;
-                    }
-
-                    if (!currentLevel.stoprightscreenmovement && !currentLevel.stopleftscreenmovement)
-                        currentLevel.CenterRioman(viewportRect, rioman);
-                }
-                else if (Health.HealthIncreasing())
-                    Health.UpdateHealth(gameTime.ElapsedGameTime.TotalSeconds);
-                else if (currentLevel.dooropening)
-                    currentLevel.OpenDoor();
-                else if (currentLevel.scrolling)
-                    currentLevel.Scroll(rioman, viewportRect);
-                else if (currentLevel.closedoornow)
-                    currentLevel.CloseDoor(rioman, viewportRect);
-                else if (GameState.IsPaused())
-                    Weapons.ChangeActiveWeapon(keyboardstate, previousKeyboardState);
-                else if (rioman.iswarping)
-                    rioman.Warp();
-                else if (currentLevel.bosses[currentLevel.activelevel].intro < 3)
-                    currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportRect, rioman);
-
-                if (currentLevel.killbullets)
-                {
-                    for (int i = 0; i <= 2; i++)
-                        bullet[i].alive = false;
-
-                    currentLevel.killbullets = false;
-                }
-
-                if (!currentLevel.dooropening && !currentLevel.doorclosing && !currentLevel.closedoornow)
-                {
-                    if (keyboardstate.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter))
-                    {
-                        GameState.SwitchPause();
-                        if (GameState.IsPaused())
-                            Audio.jump3.Play(0.5f, 0.5f, 0f);
-                        else
-                            Audio.jump3.Play(0.5f, -0.5f, 0f);
-                    }
-                }
-            }
 
             // if (previousgamestatus != gamestatus)
             //    Audio.ChangeActiveSong(gamestatus);
@@ -208,31 +111,7 @@ namespace Project_Rioman
             base.Update(gameTime);
         }
 
-        private void ChangeLevel()
-        {
-            currentLevel = level[GameState.GetState() - 9];
-            currentLevel.go = true;
- 
-                backgroundcolor = currentLevel.backgroundcolour;
-                currentLevel.CenterRioman(viewportRect);
-                rioman.location.X = Convert.ToInt32(currentLevel.startpos.X);
-                rioman.location.Y = -100;
-                currentLevel.CreateWall();
-                currentLevel.Scroller();
-                currentLevel.TileFader();
-                currentLevel.LadderForm();
-                currentLevel.TileFrames(Content);
-
-                foreach (Bullet blt in bullet)
-                    blt.alive = false;
-
-                Health.SetHealth(27);
-                Health.SetDrawBossHealth(false);
-                rioman.iswarping = true;
-                rioman.warpy = Convert.ToInt32(currentLevel.startpos.Y);
-                Audio.warp.Play(0.5f, 0f, 0f);
-
-        }
+     
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -249,42 +128,11 @@ namespace Project_Rioman
             else if (GameState.GetState() == Constant.SELECTION_SCREEN)
                 StageSelection.Draw(spriteBatch, viewportRect);
             else if (GameState.GetState() == 2)
-            {
                 Save.DrawSaveScreen(spriteBatch, viewportRect);
-            }
             else if (GameState.GetState() > 100)
                 StageSelection.DrawDance(spriteBatch, viewportRect);
             else if (GameState.GetState() >= 10 && GameState.GetState() < 100)
-            {
-                if (currentLevel.go || rioman.iswarping)
-                {
-                    currentLevel.DrawTiles(spriteBatch, rioman.iswarping);
-                    currentLevel.bosses[currentLevel.activelevel].Draw(spriteBatch);
-                    currentLevel.DrawEnemies(spriteBatch);
-
-                    foreach (Bullet blt in bullet)
-                    {
-                        if (blt.alive)
-                            spriteBatch.Draw(blt.sprite, blt.location, Color.White);
-                    }
-
-                    spriteBatch.Draw(rioman.sprite,
-                        new Rectangle(rioman.location.X, rioman.location.Y,
-                        rioman.drawRect.Width, rioman.drawRect.Height),
-                        rioman.drawRect, Color.White, 0f, new Vector2(rioman.drawRect.Width / 2,
-                        0f), rioman.direction, 0f);
-
-                    rioman.DrawHit(spriteBatch);
-
-                    for (int i = 0; i <= 9; i++)
-                        currentLevel.pickups[i].Draw(spriteBatch);
-
-                    Health.DrawHealth(spriteBatch);
-                }
-
-                if (GameState.IsPaused())
-                    Weapons.DrawPause(spriteBatch, rioman.state.GetLives());
-            }
+                gameLogic.Draw(spriteBatch, viewportRect);
 
             spriteBatch.End();
 
