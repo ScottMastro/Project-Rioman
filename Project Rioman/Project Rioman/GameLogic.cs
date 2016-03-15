@@ -151,6 +151,9 @@ namespace Project_Rioman
                         player.drawRect, Color.White, 0f, new Vector2(player.drawRect.Width / 2,
                         0f), player.direction, 0f);
 
+              //      spriteBatch.Draw(player.sprite, player.Left, Color.AliceBlue);
+              //      spriteBatch.Draw(player.sprite, player.Right, Color.AliceBlue);
+
                     player.DrawHit(spriteBatch);
 
                     for (int i = 0; i <= 9; i++)
@@ -173,7 +176,6 @@ namespace Project_Rioman
             currentLevel.CenterRioman(viewportRect);
             player.location.X = Convert.ToInt32(currentLevel.startpos.X);
             player.location.Y = -100;
-            currentLevel.CreateWall();
             currentLevel.TileFader();
             currentLevel.LadderForm();
 

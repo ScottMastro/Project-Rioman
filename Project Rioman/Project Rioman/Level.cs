@@ -10,7 +10,6 @@ namespace Project_Rioman
 
         private Tile[,] tiles;
 
-
         public int activelevel;
 
         public Color backgroundcolour;
@@ -94,7 +93,8 @@ namespace Project_Rioman
 
             scrollingRect = new Rectangle();
             scrollers = MakeScroller();
-            
+
+
         }
 
 
@@ -276,13 +276,54 @@ namespace Project_Rioman
 
             int xoffset = Convert.ToInt32(middle - rioman.location.X);
 
-            rioman.location.X = middle;
+            rioman.MoveToX(middle);
 
             MoveStuff(xoffset, 0);
         }
 
+        private void UpdateCollisions(Rioman rioman, Viewport viewportRect)
+        {
+            foreach (Tile tle in tiles)
+            {
+                if (tle != null)
+                {
+                    if (tle.type == 1)
+                    {
+                        if (rioman.Right.Intersects(tle.left))
+                        {
+                            stoprightxmovement = true;
+                            rioman.invincibledirection = 0;
+                        }
 
-        public void Update(Rioman rioman, GameTime gameTime, Viewport viewportrect)
+                        if (rioman.Left.Intersects(tle.right))
+                        {
+                            stopleftxmovement = true;
+                            rioman.invincibledirection = 0;
+                        }
+
+                        if (rioman.Head.Intersects(tle.bottom)) { 
+                            rioman.isjumping = false;
+                            rioman.jumptime = 0;
+                        }
+
+                    }
+                    else if (tle.type == 2)
+                    {
+                        if (rioman.location.Intersects(tle.location) && !rioman.isinvincible)
+                        {
+                            go = false;
+                            lifechange = -1;
+                            rioman.iswarping = true;
+                            rioman.warpy = -100;
+                            Audio.die.Play(0.5f, 1f, 0f);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        public void Update(Rioman rioman, GameTime gameTime, Viewport viewportRect)
         {
             bool collisionflag = false;
             bool climbing = false;
@@ -299,22 +340,18 @@ namespace Project_Rioman
 
             rioman.location.X -= rioman.location.Width / 2;
 
-           UpdateScrollers(rioman, viewportrect);
-             
+            UpdateScrollers(rioman, viewportRect);
+            UpdateCollisions(rioman, viewportRect);
+
             foreach (Tile tle in tiles)
             {
                 if (tle != null)
                 {
 
 
-                    if (tle.type == 2 && rioman.location.Intersects(tle.nocollisionrect) && !rioman.isinvincible)
-                    {
-                        go = false;
-                        lifechange = -1;
-                        rioman.iswarping = true;
-                        rioman.warpy = -100;
-                        Audio.die.Play(0.5f, 1f, 0f);
-                    }
+
+
+
 
                     if (tle.type == 3 && rioman.location.Intersects(tle.nocollisionrect))
                         climbing = true;
@@ -347,28 +384,11 @@ namespace Project_Rioman
                                 rioman.touchedground = true;
                             }
                         }
-                        else if (rioman.location.Intersects(tle.nocollisionrect) && !rioman.location.Intersects(tle.leftside)
-                            && !rioman.location.Intersects(tle.rightside))
-                        {
-                            rioman.isjumping = false;
-                            rioman.jumptime = 0;
-                        }
 
-                        //  if (tle.rightside.Intersects(tle.collisionrect) && tle.leftside.Intersects(tle.collisionrect))
-                        // {
-                        if (rioman.location.Intersects(tle.leftside))
-                        {
-                            stoprightxmovement = true;
-                            rioman.invincibledirection = 0;
-                        }
 
-                        if (rioman.location.Intersects(tle.rightside))
-                        {
-                            stopleftxmovement = true;
-                            rioman.invincibledirection = 0;
-                        }
-                        // }
                     }
+
+
 
                     if (tle.type == 4 && rioman.location.Intersects(tle.location))
                         OpenDoor(tle);
@@ -414,9 +434,9 @@ namespace Project_Rioman
                                     }
                                 }
 
-                                if (enemies[i].location.Intersects(tle.leftside) && tle.type != 3)
+                                if (enemies[i].location.Intersects(tle.top) && tle.type != 3)
                                     enemies[i].direction = SpriteEffects.None;
-                                else if (enemies[i].location.Intersects(tle.rightside) && tle.type != 3)
+                                else if (enemies[i].location.Intersects(tle.bottom) && tle.type != 3)
                                     enemies[i].direction = SpriteEffects.FlipHorizontally;
                             }
                         }
@@ -439,14 +459,15 @@ namespace Project_Rioman
 
                         if (bosses[activelevel].boss == 3)
                         {
-                            if (bosses[activelevel].location.Intersects(tle.leftside) && tle.type != 3)
+                            if (bosses[activelevel].location.Intersects(tle.top) && tle.type != 3)
                                 bosses[activelevel].direction = SpriteEffects.None;
-                            else if (bosses[activelevel].location.Intersects(tle.rightside) && tle.type != 3)
+                            else if (bosses[activelevel].location.Intersects(tle.bottom) && tle.type != 3)
                                 bosses[activelevel].direction = SpriteEffects.FlipHorizontally;
                         }
                     }
                 }
             }
+            
 
             for (int i = 0; i <= numberOfEnemies; i++)
                 enemies[i].isfalling = !enemycollision[i];
@@ -469,7 +490,7 @@ namespace Project_Rioman
             }
 
             foreach (Pickup pickup in pickups)
-                pickup.PickupUpdate(rioman, viewportrect);
+                pickup.PickupUpdate(rioman, viewportRect);
 
             rioman.location.X += rioman.location.Width / 2;
 
@@ -496,56 +517,7 @@ namespace Project_Rioman
             }
             fadetiles = 0;
         }
-
-        public void CreateWall()
-        {
-            for (int r = 1; r <= height; r++)
-            {
-                for (int c = 0; c <= width; c++)
-                {
-                    if (tiles[r, c] != null && tiles[r + 1, c] != null && tiles[r + 1, c].type == tiles[r, c].type && tiles[r, c].type != 3)
-                    {
-                        tiles[r, c].collisionrect.X = -1000;
-                        tiles[r, c].nocollisionrect.X = -1000;
-                        tiles[r, c].rightside = new Rectangle(tiles[r, c].location.X + 16, tiles[r, c].location.Y + 4, 16, 32);
-                        tiles[r, c].leftside = new Rectangle(tiles[r, c].location.X, tiles[r, c].location.Y + 4, 16, 32);
-                    }
-                }
-            }
-
-            for (int r = 0; r <= height; r++)
-            {
-                for (int c = 1; c <= width; c++)
-                {
-                    if (tiles[r, c] != null)
-                    {
-                        if (tiles[r, c + 1] != null && tiles[r, c - 1] != null &&
-                            tiles[r, c + 1].type == tiles[r, c].type && tiles[r, c - 1].type == tiles[r, c].type)
-                        {
-                            tiles[r, c].collisionrect = new Rectangle(tiles[r, c].location.X, tiles[r, c].location.Y, 32, 16);
-                            tiles[r, c].nocollisionrect = new Rectangle(tiles[r, c].location.X, tiles[r, c].location.Y + 16, 32, 16);
-                            tiles[r, c].rightside.X = -100;
-                            tiles[r, c].leftside.X = -100;
-                        }
-                        else if (tiles[r, c + 1] != null && tiles[r, c + 1].type == tiles[r, c].type)
-                        {
-                            tiles[r, c].collisionrect.Width = 20;
-                            tiles[r, c].nocollisionrect.Width = 20;
-                            tiles[r, c].rightside.X = -100;
-                        }
-                        else if (tiles[r, c - 1] != null && tiles[r, c - 1].type == tiles[r, c].type)
-                        {
-                            tiles[r, c].collisionrect.Width = 20;
-                            tiles[r, c].collisionrect.X = tiles[r, c].location.X;
-                            tiles[r, c].nocollisionrect.Width = 20;
-                            tiles[r, c].nocollisionrect.X = tiles[r, c].location.X;
-                            tiles[r, c].leftside.X = -100;
-                        }
-                    }
-                }
-            }
-        }
-
+        
 
        
 
@@ -554,14 +526,13 @@ namespace Project_Rioman
             foreach (Tile tle in tiles)
             {
                 if (tle != null)
-                    tle.MoveTiles(x, y);
+                    tle.Move(x, y);
             }
 
 
             for(int i = 0; i<= scrollers.Length -1; i++)
                 scrollers[i].Move(x, y);
-            
-            
+
 
             foreach (Pickup pickup in pickups)
             {
@@ -644,7 +615,7 @@ namespace Project_Rioman
                         else
                         {
                             open = false;
-                            tiles[r, c].MoveTiles(0, -2);
+                            tiles[r, c].Move(0, -2);
                             playsound = true;
                         }
                     }
@@ -675,12 +646,12 @@ namespace Project_Rioman
                         {
                             tiles[r, c].isclosing = false;
                             tiles[r, c].type = 1;
-                            CreateWall();
+                          //  CreateWall();
                         }
                         else
                         {
                             close = false;
-                            tiles[r, c].MoveTiles(0, 2);
+                            tiles[r, c].Move(0, 2);
                             playsound = true;
                         }
                     }

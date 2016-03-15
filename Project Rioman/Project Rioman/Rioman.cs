@@ -26,6 +26,7 @@ namespace Project_Rioman
         public Texture2D climbtop;
 
         public Rectangle location;
+
      //   public Rectangle hitBox;
         //     hitBox = new Rectangle(6, 6, 44, 48);
 
@@ -79,10 +80,10 @@ namespace Project_Rioman
             for (int i = 1; i <= 4; i++)
                 warp[i-1] = content.Load<Texture2D>("Video\\rioman\\warp" + i.ToString());
 
-            location = new Rectangle(70, 400, 44, 48);
             sprite = stand;
-            drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
 
+            drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
+            location = new Rectangle(70, 400, sprite.Width, sprite.Height);
 
             Reset();
         }
@@ -160,7 +161,7 @@ namespace Project_Rioman
                     }
                     else if (level.stoprightscreenmovement || level.stopleftscreenmovement)
                     {
-                        location.X += 3;
+                        Move(3, 0);
                     }
 
                     direction = SpriteEffects.None;
@@ -173,7 +174,7 @@ namespace Project_Rioman
                     }
                     else if (level.stopleftscreenmovement || level.stoprightscreenmovement)
                     {
-                        location.X -= 3;
+                        Move(-3, 0);
                     }
 
                     direction = SpriteEffects.FlipHorizontally;
@@ -185,7 +186,7 @@ namespace Project_Rioman
 
                     if (result.Width != 0)
                     {
-                        location.Y -= 10;
+                        Move(0, -10);
                         isclimbing = true;
                         isfalling = false;
                         isjumping = false;
@@ -194,13 +195,13 @@ namespace Project_Rioman
                 }
                 else if (keyboardstate.IsKeyDown(Keys.Up) && isclimbing)
                 {
-                    location.Y -= 3;
+                    Move(0, -3);
                     climbtime += deltaTime;
                     climbdown = false;
                 }
                 else if (keyboardstate.IsKeyDown(Keys.Down) && isclimbing)
                 {
-                    location.Y += 3;
+                    Move(0, -3);
                     climbtime += deltaTime;
                     climbdown = true;
                 }
@@ -216,7 +217,7 @@ namespace Project_Rioman
                     if (result.Width != 0)
                     {
                         sprite = climbtop;
-                        location.Y += 20;
+                        Move(0, 20);
                         isclimbing = true;
                         isfalling = false;
                         isjumping = false;
@@ -228,7 +229,7 @@ namespace Project_Rioman
                 {
                     isclimbing = false;
                     climbtime = 0;
-                    location.Y -= 4;
+                    Move(0, -4);
                     isjumping = true;
                 }
 
@@ -305,7 +306,7 @@ namespace Project_Rioman
             isfalling = true;
             touchedground = false;
             touchtime = 0;
-            location.Y -= 8;
+            Move(0, -8);
         }
 
         private void Hit(double deltaTime)
@@ -342,7 +343,8 @@ namespace Project_Rioman
             {
                 stopx = true;
                 location.X += invincibledirection;
-                location.Y -= 4;
+                Move(0, -4);
+
             }
 
             if (isfalling && !touchedground)
@@ -402,11 +404,11 @@ namespace Project_Rioman
 
 
 
-                location.Y += 15;
+                Move(0, 15);
 
                 if (location.Y >= warpy)
                 {
-                    location.Y = warpy;
+                    MoveToY(warpy);
 
                     if (sprite == warp[0])
                         sprite = warp[1];
@@ -443,8 +445,7 @@ namespace Project_Rioman
                     sprite = warp[0];
 
 
-
-                    location.Y -= 15;
+                    Move(0, -15);
 
                     if (location.Y <= warpy)
                     {
@@ -475,9 +476,10 @@ namespace Project_Rioman
             falltime += deltaTime;
 
             if (falltime * 30 > 10)
-                location.Y += 10;
+                Move(0, 10);
             else
-                location.Y += Convert.ToInt32(falltime * 30);
+                Move(0, Convert.ToInt32(falltime * 30));
+
 
             JumpOrFall(deltaTime);
         }
@@ -487,7 +489,8 @@ namespace Project_Rioman
             jumptime += deltaTime;
             if (jumptime < 0.4)
             {
-                location.Y -= Convert.ToInt32(10 - jumptime * 22);
+                Move(0, -Convert.ToInt32(10 - jumptime * 22));
+
             }
             else
             {
@@ -513,11 +516,26 @@ namespace Project_Rioman
 
         }
 
+        public Rectangle Left { get { return new Rectangle(location.X, location.Y + 6, 10, 34); ; } }
+        public Rectangle Head { get { return new Rectangle(location.X + 10, location.Y, 36, 32); ; } }
+        public Rectangle Feet { get { return new Rectangle(location.X + 8, location.Y + 42, 40, 12); ; } }
+        public Rectangle Right { get { return new Rectangle(location.X +location.Width -10, location.Y + 6, 10, 34); ; } }
 
         public void Move(int x, int y)
         {
             location.X += x;
             location.Y += y;
         }
+
+        public void MoveToX(int x)
+        {
+            location.X = x;
+        }
+
+        public void MoveToY(int y)
+        {
+            location.Y = y;
+        }
+
     }
 }

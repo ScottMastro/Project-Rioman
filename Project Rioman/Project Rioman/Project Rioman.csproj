@@ -122,6 +122,8 @@
     <Compile Include="Main.cs" />
     <Compile Include="Rioman.cs" />
     <Compile Include="Tile.cs" />
+    <Compile Include="TileSegment.cs" />
+    <Compile Include="Wall.cs" />
     <Compile Include="Weapons.cs" />
   </ItemGroup>
   <ItemGroup>

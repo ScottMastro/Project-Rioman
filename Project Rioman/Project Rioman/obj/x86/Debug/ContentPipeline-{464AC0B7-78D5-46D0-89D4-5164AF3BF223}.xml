@@ -3437,7 +3437,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\riomanclimb.xnb</Output>
-      <Time>2016-02-28T19:10:22.6536303-05:00</Time>
+      <Time>2016-03-14T21:39:40.283178-04:00</Time>
     </Item>
     <Item>
       <Source>Video\rioman\riomanclimbgun.png</Source>
@@ -3446,7 +3446,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\riomanclimbgun.xnb</Output>
-      <Time>2016-02-28T19:09:35.6969977-05:00</Time>
+      <Time>2016-03-14T21:44:06.6096469-04:00</Time>
     </Item>
     <Item>
       <Source>Video\rioman\riomanclimbtop.png</Source>
@@ -3455,7 +3455,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\riomanclimbtop.xnb</Output>
-      <Time>2016-02-28T19:09:06.6614543-05:00</Time>
+      <Time>2016-03-14T21:47:22.8846542-04:00</Time>
     </Item>
     <Item>
       <Source>Video\rioman\riomanclimbflop.png</Source>
@@ -3464,7 +3464,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\riomanclimbflop.xnb</Output>
-      <Time>2016-02-28T19:10:09.6022176-05:00</Time>
+      <Time>2016-03-14T21:40:59.6224366-04:00</Time>
     </Item>
     <Item>
       <Source>Video\pause\weapon0.png</Source>
