@@ -78,7 +78,7 @@ namespace Project_Rioman
             }
             else if (state.IsRunning())
             {
-                if(state.IsShooting())
+                if (state.IsShooting())
                 {
                     UpdateFrame(deltaTime, 4);
                     sprite = runShoot[frame];
@@ -89,6 +89,18 @@ namespace Project_Rioman
                     sprite = run[frame];
                 }
             }
+            else if (state.IsJumping() || state.IsFalling())
+            {
+                if (state.IsShooting())
+                    sprite = jumpShoot;
+                else
+                    sprite = jump;
+            }
+            else if (state.IsClimbing())
+            {
+                //TODO
+            }
+            
         }
 
         private void UpdateFrame(double deltaTime, int nFrames)

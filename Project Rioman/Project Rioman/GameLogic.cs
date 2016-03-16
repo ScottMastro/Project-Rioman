@@ -57,8 +57,7 @@ namespace Project_Rioman
 
                 player.BackwardScroll(currentLevel, viewportRect);
 
-                player.Moving(keyboardState, prevKeyboardState, currentLevel, gameTime.ElapsedGameTime.TotalSeconds);
-                player.Update(gameTime.ElapsedGameTime.TotalSeconds);
+                player.Update(gameTime.ElapsedGameTime.TotalSeconds, currentLevel);
 
                 currentLevel.UpdateEnemies(player, gameTime, viewportRect);
                 bool selectionscreen = currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportRect, player);
@@ -154,7 +153,6 @@ namespace Project_Rioman
               //      spriteBatch.Draw(player.sprite, player.Left, Color.AliceBlue);
               //      spriteBatch.Draw(player.sprite, player.Right, Color.AliceBlue);
 
-                    player.DrawHit(spriteBatch);
 
                     for (int i = 0; i <= 9; i++)
                         currentLevel.pickups[i].Draw(spriteBatch);

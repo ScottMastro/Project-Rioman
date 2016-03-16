@@ -302,7 +302,7 @@ namespace Project_Rioman
                         }
 
                         if (rioman.Head.Intersects(tle.bottom)) { 
-                            rioman.isjumping = false;
+                            rioman.state.Stand();
                             rioman.jumptime = 0;
                         }
 
@@ -318,6 +318,14 @@ namespace Project_Rioman
                             Audio.die.Play(0.5f, 1f, 0f);
                         }
                     }
+                    else if (tle.type == 4)
+                    {
+                        if (rioman.location.Intersects(tle.location))
+                            OpenDoor(tle);
+
+                    }
+
+
                 }
             }
         }
@@ -356,7 +364,7 @@ namespace Project_Rioman
                     if (tle.type == 3 && rioman.location.Intersects(tle.nocollisionrect))
                         climbing = true;
 
-                    if (tle.type == 3 && rioman.isclimbing && rioman.location.Intersects(new Rectangle(tle.location.X, tle.location.Y, 32, 20))
+                    if (tle.type == 3 && rioman.state.IsClimbing() && rioman.Feet.Intersects(tle.bottom)
                         && tle.isTop && !rioman.climbdown)
                     {
                         rioman.sprite = rioman.climbtop;
@@ -375,13 +383,13 @@ namespace Project_Rioman
                         {
                             collisionflag = true;
                             rioman.location.Y = tle.location.Y - rioman.location.Height + 2;
-                            rioman.isclimbing = false;
                             rioman.climbtime = 0;
 
                             if (rioman.isfalling)
                             {
                                 Audio.land.Play(0.5f, 0f, 0f);
                                 rioman.touchedground = true;
+                                rioman.state.Stand();
                             }
                         }
 
@@ -390,8 +398,7 @@ namespace Project_Rioman
 
 
 
-                    if (tle.type == 4 && rioman.location.Intersects(tle.location))
-                        OpenDoor(tle);
+
 
                     if (tle.type == 5)
                         tle.Fade(gameTime);
@@ -478,13 +485,15 @@ namespace Project_Rioman
                 {
                     if (tle != null && tle.type == 3 && rioman.location.Intersects(tle.collisionrect) && !rioman.location.Intersects(tle.nocollisionrect))
                     {
-                        rioman.isclimbing = false;
                         rioman.location.Y = tle.location.Y - rioman.location.Height + 2;
                         rioman.climbtime = 0;
                         collisionflag = true;
 
                         if (rioman.isfalling)
+                        {
                             Audio.land.Play(0.5f, 0f, 0f);
+                            rioman.state.Stand();
+                        }
                     }
                 }
             }
