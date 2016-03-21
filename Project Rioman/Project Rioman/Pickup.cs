@@ -98,7 +98,7 @@ namespace Project_Rioman
 
                 onground = false;
 
-                if (rioman.location.Intersects(location))
+                if (rioman.Location.Intersects(location))
                     isalive = false;
             }
             else
@@ -126,7 +126,7 @@ namespace Project_Rioman
 
                 onground = false;
 
-                if (rioman.location.Intersects(location))
+                if (rioman.Location.Intersects(location))
                 {
                     if (type == 13)
                     {                     

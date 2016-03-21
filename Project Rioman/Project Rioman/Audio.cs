@@ -34,7 +34,7 @@ namespace Project_Rioman
         public static SoundEffect land;
         public static SoundEffect selection;
         public static SoundEffect die;
-        public static SoundEffect warp;
+        private static SoundEffect warp;
         public static SoundEffect pickup;
 
         public static void LoadAudio(ContentManager content)
@@ -103,6 +103,17 @@ namespace Project_Rioman
                 ChangeActiveSong(posterman);
             else if (part == 18)
                 ChangeActiveSong(bunnyman);
+        }
+
+        public static void PlayWarp()
+        {
+
+            if (Audio.activesoundeffect == null || Audio.activesoundeffect.State != SoundState.Playing)
+            {
+                Audio.activesoundeffect = Audio.pickup.CreateInstance();
+                Audio.activesoundeffect.Volume = Constant.VOLUME;
+                Audio.activesoundeffect.Play();
+            }
         }
     }
 }

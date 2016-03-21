@@ -22,7 +22,7 @@ namespace Project_Rioman
         public static Keys UP { get { return Keys.Up; } }
         public static Keys DOWN { get { return Keys.Down; } }
 
-
+        public static float VOLUME = 0.4f;
 
         public static int TITLE_SCREEN = 0;
         public static int SELECTION_SCREEN = 1;

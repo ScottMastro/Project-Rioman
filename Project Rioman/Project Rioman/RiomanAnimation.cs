@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -22,10 +23,14 @@ namespace Project_Rioman
         private Texture2D[] warp = new Texture2D[4];
         private Texture2D[] run = new Texture2D[3];
         private Texture2D[] runShoot = new Texture2D[4];
-
-        private int warpFrame;
         private Texture2D climbTop;
 
+        public SpriteEffects direction;
+
+        private int warpFrame;
+        private double warpFrameTime;
+
+        private double climbShootTime;
         private double climbTime;
         private int climbDirection;
 
@@ -61,15 +66,28 @@ namespace Project_Rioman
                 runShoot[i - 1] = content.Load<Texture2D>("Video\\rioman\\riomanrungun" + i.ToString());
 
             sprite = stand;
-
+            Reset();
         }
 
         private void Reset()
         {
+            direction = SpriteEffects.None;
+
             climbDirection = 0;
             climbTime = 0;
+            climbShootTime = 0;
             frame = 0;
+            warpFrame = 0;
             sprite = stand;
+        }
+
+        public void Draw(SpriteBatch spriteBatch, Rectangle location)
+        {
+            Rectangle locationRect = new Rectangle(location.X, location.Y, sprite.Width, sprite.Height);
+            Rectangle drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
+
+            spriteBatch.Draw(sprite, locationRect, drawRect, Color.White, 0f, new Vector2(sprite.Width / 2, 0f), direction, 0f);
+
         }
 
         public void Update(double deltaTime)
@@ -106,7 +124,46 @@ namespace Project_Rioman
                 AnimateClimbing(deltaTime);
             }
 
-            UpdateShooting(deltaTime);
+            GetDirection();
+            AnimateWarping(deltaTime);
+        }
+
+        private void GetDirection()
+        {
+            if(!state.IsWarping() && !state.IsClimbing())
+            {
+                KeyboardState k = Keyboard.GetState();
+                if (k.IsKeyDown(Constant.RIGHT))
+                    direction = SpriteEffects.None;
+                if (k.IsKeyDown(Constant.LEFT))
+                    direction = SpriteEffects.FlipHorizontally;
+
+            }
+        }
+
+        private void AnimateWarping(double deltaTime)
+        {
+            if (state.IsWarping())
+                sprite = warp[0];
+            
+            if (state.IsWarping() && state.IsAnimateWarp())
+            {
+                warpFrameTime += deltaTime;
+                if (warpFrameTime > 0.06)
+                {
+                    warpFrameTime = 0;
+                    warpFrame++;
+
+                    if (warpFrame > 3)
+                    {
+                        warpFrame = 0;
+                        state.SetAnimateWarp(false);
+                        state.StopWarping();
+                    }
+                }
+
+                sprite = warp[warpFrame];
+            }
         }
 
         private void AnimateClimbing(double deltaTime)
@@ -121,10 +178,23 @@ namespace Project_Rioman
                 sprite = climbFlip;
 
             if (state.IsShooting() && !state.IsClimbTop())
+            {
                 sprite = climbShoot;
+
+                if (upDownPress)
+                    climbShootTime += deltaTime;
+
+                if (climbShootTime > 0.175)
+                {
+                    state.StopShooting();
+                    climbShootTime = 0;
+                }
+
+            }
 
             else if (upDownPress && climbTime > 0.175)
             {
+                climbShootTime = 0;
                 climbTime = 0;
                 climbDirection++;
                 if (climbDirection > 1)
@@ -133,11 +203,6 @@ namespace Project_Rioman
 
             if (state.IsClimbTop())
                 sprite = climbTop;
-        }
-
-        private void UpdateShooting(double deltaTime)
-        {
-
         }
 
         private void UpdateFrame(double deltaTime, int nFrames)
@@ -155,6 +220,6 @@ namespace Project_Rioman
         }
 
         public Texture2D GetSprite() { return sprite; }
-
+        public bool FacingRight() { return direction == SpriteEffects.None; }
     }
 }

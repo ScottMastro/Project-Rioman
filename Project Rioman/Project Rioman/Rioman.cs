@@ -13,17 +13,12 @@ namespace Project_Rioman
         public RiomanAnimation anim;
 
         public Texture2D sprite;
-        public SpriteEffects direction;
         public Texture2D stand;
 
         Texture2D airhit;
         Texture2D groundhit;
-        Texture2D[] warp = new Texture2D[4];
 
-        public Rectangle location;
-
-
-        public Rectangle drawRect;
+        private Rectangle location;
 
         Texture2D hit;
         bool ishit;
@@ -32,7 +27,6 @@ namespace Project_Rioman
         int hitframe;
         double hittime;
 
-        public bool iswarping;
         public bool isfalling;
         public bool isinvincible;
         public bool ispaused;
@@ -46,10 +40,12 @@ namespace Project_Rioman
 
         public bool stopx;
         public bool climbDown;
-        public int warpy;
+        private int warpY;
 
         private bool stopRightMovement;
         private bool stopLeftMovement;
+
+        private const int WARP_SPEED = 15;
 
         private KeyboardState previousKeyboardState;
 
@@ -63,15 +59,10 @@ namespace Project_Rioman
             airhit = content.Load<Texture2D>("Video\\rioman\\hitair");
             groundhit = content.Load<Texture2D>("Video\\rioman\\hitground");
             hit = content.Load<Texture2D>("Video\\rioman\\hit");
-            direction = SpriteEffects.None;
-
-            for (int i = 1; i <= 4; i++)
-                warp[i-1] = content.Load<Texture2D>("Video\\rioman\\warp" + i.ToString());
 
             sprite = stand;
 
-            drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
-            location = new Rectangle(70, 400, sprite.Width, sprite.Height);
+            location = new Rectangle(70, 400, sprite.Width / 2, sprite.Height);
 
             Reset();
         }
@@ -87,12 +78,16 @@ namespace Project_Rioman
             stopLeftMovement = false;
             stopRightMovement = false;
 
-            direction = SpriteEffects.None;
             falltime = 0;
             invincibletime = 0;
             hittime = 0;
             pausetime = 0;
             touchtime = 0;
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            anim.Draw(spriteBatch, location);
         }
 
 
@@ -116,8 +111,10 @@ namespace Project_Rioman
                     Jump(keyboardState, level);
                 else if (isfalling)
                     Fall(deltaTime, keyboardState, level);
-               else if (state.IsRunning() || state.IsStanding())
+                else if (state.IsRunning() || state.IsStanding())
                     Stand(keyboardState, level);
+                else if (state.IsWarping())
+                    Warp();
 
                 sprite = GetSprite();
 
@@ -159,12 +156,6 @@ namespace Project_Rioman
                 climbDown = true;
             }
 
-            if (keyboardState.IsKeyDown(Constant.LEFT))
-                direction = SpriteEffects.FlipHorizontally;
-            if (keyboardState.IsKeyDown(Constant.RIGHT))
-                direction = SpriteEffects.None;
-
-
         }
 
         private void Fall(double deltaTime, KeyboardState keyboardState, Level level)
@@ -202,8 +193,6 @@ namespace Project_Rioman
                     level.MoveStuff(-3, 0);
                 else if (level.stoprightscreenmovement || level.stopleftscreenmovement)
                     Move(3, 0);
-
-                direction = SpriteEffects.None;
             }
             else if (keyboardState.IsKeyDown(Constant.LEFT) && !stopLeftMovement)
             {
@@ -212,7 +201,6 @@ namespace Project_Rioman
                 else if (level.stopleftscreenmovement || level.stoprightscreenmovement)
                     Move(-3, 0);
 
-                direction = SpriteEffects.FlipHorizontally;
             }
         }
 
@@ -250,10 +238,35 @@ namespace Project_Rioman
 
         }
 
+        private void Warp()
+        {
+            if (warpY > 0)
+            {
+                Audio.PlayWarp();
+
+                Move(0, WARP_SPEED);
+
+                if (location.Y >= warpY)
+                {
+                    MoveToY(warpY);
+                    state.SetAnimateWarp(true);
+                }
+            }
+        }
+
+        public void Die()
+        {
+            state.Warp();
+            Reset();
+            Audio.die.Play(0.5f, 1f, 0f);
+
+        }
+
         public Rectangle Left { get { return new Rectangle(location.X, location.Y + 6, 10, 34); } }
         public Rectangle Head { get { return new Rectangle(location.X + 10, location.Y, 36, 32); } }
         public Rectangle Feet { get { return new Rectangle(location.X + 8, location.Y + 42, 40, 12); } }
         public Rectangle Right { get { return new Rectangle(location.X + location.Width - 10, location.Y + 6, 10, 34); } }
+        public Rectangle Location { get { return location; } }
 
         public void Move(int x, int y)
         {
@@ -276,7 +289,9 @@ namespace Project_Rioman
         public Texture2D GetSprite() { return anim.GetSprite(); }
         public void AtLadderTop() { state.SetClimbTopState(true); }
         public void BelowLadderTop() { state.SetClimbTopState(false); }
-
+        public void SetStartYPos(int y) { warpY = y; }
+        public bool IsWarping() { return state.IsWarping(); }
+        public void StartWarp() { state.Warp(); }
 
 
 
@@ -343,10 +358,10 @@ namespace Project_Rioman
                 {
                     Audio.shoot1.Play(0.5f, 0f, 0f);
                     state.Shoot();
-                    if (direction == SpriteEffects.FlipHorizontally)
-                        bullet[num].BulletSpawn(location.X - 20, location.Center.Y - 8, direction);
+                    if (!anim.FacingRight())
+                        bullet[num].BulletSpawn(location.X - 20, location.Center.Y - 8, SpriteEffects.FlipHorizontally);
                     else
-                        bullet[num].BulletSpawn(location.X + 20, location.Center.Y - 8, direction);
+                        bullet[num].BulletSpawn(location.X + 20, location.Center.Y - 8, SpriteEffects.None);
                 }
             }
         }
@@ -434,83 +449,6 @@ namespace Project_Rioman
                 touchtime = 10;
             }
         }
-
-
-        public void Warp()
-        {
-            if (ishit)
-            {
-                ishit = false;
-                hittime = 0;
-                hitframe = 0;
-            }
-
-            if (warpy > 0)
-            {
-                if (Audio.activesoundeffect == null || Audio.activesoundeffect.State != SoundState.Playing)
-                {
-                    Audio.activesoundeffect = Audio.pickup.CreateInstance();
-                    Audio.activesoundeffect.Volume = 0.5f;
-                    Audio.activesoundeffect.Play();
-                }
-
-                if (sprite != warp[1] && sprite != warp[2] && sprite != warp[3])
-                    sprite = warp[0];
-
-
-
-                Move(0, 15);
-
-                if (location.Y >= warpy)
-                {
-                    MoveToY(warpy);
-
-                    if (sprite == warp[0])
-                        sprite = warp[1];
-                    else if (sprite == warp[1])
-                        sprite = warp[2];
-                    else if (sprite == warp[2])
-                        sprite = warp[3];
-                    else if (sprite == warp[3])
-                    {
-                        Reset();
-                        iswarping = false;
-                    }
-
-
-                }
-            }
-
-            if (warpy < 0)
-            {
-
-                if (sprite != warp[0] && sprite != warp[1] && sprite != warp[2] && sprite != warp[3])
-                    sprite = warp[3];
-                else if (sprite == warp[3])
-                    sprite = warp[2];
-                else if (sprite == warp[2])
-                    sprite = warp[1];
-                else if (sprite == warp[1])
-                    sprite = warp[0];
-
-
-
-                if (sprite == warp[0])
-                {
-                    sprite = warp[0];
-
-
-                    Move(0, -15);
-
-                    if (location.Y <= warpy)
-                    {
-                        Reset();
-                        iswarping = false;
-                    }
-                }
-            }
-        }
-
 
 
     }

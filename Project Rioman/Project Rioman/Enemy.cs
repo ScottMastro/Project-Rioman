@@ -47,12 +47,12 @@ namespace Project_Rioman
 
         public void TotemCollision(int number, Rioman rioman)
         {
-            if (!rioman.isinvincible && totems[number].collisionrect.Intersects(rioman.location) && totems[number].isalive)
+            if (!rioman.isinvincible && totems[number].collisionrect.Intersects(rioman.Location) && totems[number].isalive)
             {
                 Health.AdjustHealth(-damage);
                 rioman.Hit();
 
-                if (rioman.location.Left < totems[number].location.Left)
+                if (rioman.Location.Left < totems[number].location.Left)
                     rioman.invincibledirection = -3;
                 else
                     rioman.invincibledirection = 3;
@@ -87,12 +87,12 @@ namespace Project_Rioman
 
         public void TotemCollision(int number, Rioman rioman, bool bulletcollision)
         {
-            if (!rioman.isinvincible && totems[number].bulletcollision.Intersects(rioman.location) && totems[number].bulletalive)
+            if (!rioman.isinvincible && totems[number].bulletcollision.Intersects(rioman.Location) && totems[number].bulletalive)
             {
                 Health.AdjustHealth(-totems[number].damage);
                 rioman.Hit();
 
-                if (rioman.location.Left < totems[number].location.Left)
+                if (rioman.Location.Left < totems[number].location.Left)
                     rioman.invincibledirection = -3;
                 else
                     rioman.invincibledirection = 3;
@@ -101,12 +101,12 @@ namespace Project_Rioman
 
         public void CartCollision(int number, Rioman rioman)
         {
-            if (!rioman.isinvincible && carts[number].collisionrect.Intersects(rioman.location) && carts[number].isalive)
+            if (!rioman.isinvincible && carts[number].collisionrect.Intersects(rioman.Location) && carts[number].isalive)
             {
                 Health.AdjustHealth(-damage);
                 rioman.Hit();
 
-                if (rioman.location.Left < carts[number].location.Left)
+                if (rioman.Location.Left < carts[number].location.Left)
                     rioman.invincibledirection = -3;
                 else
                     rioman.invincibledirection = 3;
@@ -619,14 +619,14 @@ namespace Project_Rioman
 
                     if (!rioman.ispaused && !bool1)
                     {
-                        if (rioman.location.Center.X < location.Center.X)
+                        if (rioman.Location.Center.X < location.Center.X)
                             location.X -= 1;
-                        else if (rioman.location.Center.X > location.Center.X)
+                        else if (rioman.Location.Center.X > location.Center.X)
                             location.X += 1;
 
-                        if (rioman.location.Center.Y < location.Center.Y)
+                        if (rioman.Location.Center.Y < location.Center.Y)
                             location.Y -= 1;
-                        else if (rioman.location.Center.Y > location.Center.Y)
+                        else if (rioman.Location.Center.Y > location.Center.Y)
                             location.Y += 1;
                     }
                     else
@@ -922,19 +922,19 @@ namespace Project_Rioman
 
                             float angle = 0f;
 
-                            if (rioman.location.X < location.Center.X)
+                            if (rioman.Location.X < location.Center.X)
                             {
                                 direction = SpriteEffects.None;
-                                angle = float.Parse(Convert.ToString(Math.Atan(((double)location.Y + 20 - (double)rioman.location.Center.Y) / ((double)location.X - (double)rioman.location.X))));
-                                if (rioman.location.X < location.X)
+                                angle = float.Parse(Convert.ToString(Math.Atan(((double)location.Y + 20 - (double)rioman.Location.Center.Y) / ((double)location.X - (double)rioman.Location.X))));
+                                if (rioman.Location.X < location.X)
                                     angle -= float.Parse(Convert.ToString(Math.PI));
                                 Shoot(location.X, location.Y + 20, float.Parse(Convert.ToString(10 * (Math.Cos(angle)))), float.Parse(Convert.ToString(10 * (Math.Sin(angle)))), angle);
                             }
-                            else if (rioman.location.Right > location.Center.X)
+                            else if (rioman.Location.Right > location.Center.X)
                             {
                                 direction = SpriteEffects.FlipHorizontally;
-                                angle = float.Parse(Convert.ToString(Math.Atan(((double)location.Y + 20 - (double)rioman.location.Center.Y) / ((double)location.Right - (double)rioman.location.X))));
-                                if (rioman.location.X < location.Right)
+                                angle = float.Parse(Convert.ToString(Math.Atan(((double)location.Y + 20 - (double)rioman.Location.Center.Y) / ((double)location.Right - (double)rioman.Location.X))));
+                                if (rioman.Location.X < location.Right)
                                     angle -= float.Parse(Convert.ToString(Math.PI));
                                 Shoot(location.Right, location.Y + 20, float.Parse(Convert.ToString(10 * (Math.Cos(angle)))), float.Parse(Convert.ToString(10 * (Math.Sin(angle)))), angle);
                             }
@@ -942,9 +942,9 @@ namespace Project_Rioman
 
                         bool1 = true;
 
-                        if (rioman.location.X < location.Center.X)
+                        if (rioman.Location.X < location.Center.X)
                             direction = SpriteEffects.None;
-                        else if (rioman.location.Right > location.Center.X)
+                        else if (rioman.Location.Right > location.Center.X)
                             direction = SpriteEffects.FlipHorizontally;
 
                         if (othertime > 3.5)
@@ -991,8 +991,8 @@ namespace Project_Rioman
                         otherrotation[7] = float.Parse(Convert.ToString(Math.PI));
                     }
 
-                    if (bool1 || Math.Abs(rioman.location.X - location.Center.X) < 100
-                        && Math.Abs(rioman.location.Center.Y - location.Center.Y) < 100)
+                    if (bool1 || Math.Abs(rioman.Location.X - location.Center.X) < 100
+                        && Math.Abs(rioman.Location.Center.Y - location.Center.Y) < 100)
                     {
                         bool1 = true;
                         othertime += elapsedtime;
@@ -1009,8 +1009,8 @@ namespace Project_Rioman
                         other[7].X += 8;
                         other[7].Y += 8;
                     }
-                    else if (Math.Abs(rioman.location.X - location.Center.X) < 200
-                         && Math.Abs(rioman.location.Center.Y - location.Center.Y) < 200)
+                    else if (Math.Abs(rioman.Location.X - location.Center.X) < 200
+                         && Math.Abs(rioman.Location.Center.Y - location.Center.Y) < 200)
                     {
                         activeframe[0] = 1;
                         reverseanimation[0] = false;
@@ -1034,7 +1034,7 @@ namespace Project_Rioman
                 {
                     collisionrect = new Rectangle(location.X + 30, location.Y + 10, location.Width - 10, location.Height);
 
-                    if (Math.Abs(rioman.location.Y - location.Y) < 50 && Math.Abs(rioman.location.X - location.X) < 200)
+                    if (Math.Abs(rioman.Location.Y - location.Y) < 50 && Math.Abs(rioman.Location.X - location.X) < 200)
                         bool1 = true;
 
                     if (isfalling || isjumping)
@@ -1050,8 +1050,8 @@ namespace Project_Rioman
                         Animate(elapsedtime, 0);
                     }
 
-                    if (Math.Abs(rioman.location.X - location.X) < 200 && othertime2 > 0.5 &&
-                        Math.Abs(rioman.location.Y - location.Y) < 200 && !isfalling)
+                    if (Math.Abs(rioman.Location.X - location.X) < 200 && othertime2 > 0.5 &&
+                        Math.Abs(rioman.Location.Y - location.Y) < 200 && !isfalling)
                     {
                         isjumping = true;
                         othertime2 = 0;
@@ -1201,9 +1201,9 @@ namespace Project_Rioman
                     origin.X = location.Width / 2;
                     sourcerect = Animation.GetSourceRect(spritesheet[sprite].Width, spritesheet[sprite].Height);
 
-                    if (rioman.location.X < location.Center.X)
+                    if (rioman.Location.X < location.Center.X)
                         direction = SpriteEffects.FlipHorizontally;
-                    else if (rioman.location.Right > location.Center.X)
+                    else if (rioman.Location.Right > location.Center.X)
                         direction = SpriteEffects.None;
                 }
                 else if (type == 310)
@@ -1230,14 +1230,14 @@ namespace Project_Rioman
 
                     if (animationtime == 0)
                     {
-                        if (Math.Abs(rioman.location.Y - location.Y) < 50)
+                        if (Math.Abs(rioman.Location.Y - location.Y) < 50)
                         {
-                            if (rioman.location.Left <= location.Left)
+                            if (rioman.Location.Left <= location.Left)
                             {
                                 direction = SpriteEffects.None;
                                 location.X -= 9;
                             }
-                            else if (rioman.location.Right >= location.Right)
+                            else if (rioman.Location.Right >= location.Right)
                             {
                                 direction = SpriteEffects.FlipHorizontally;
                                 location.X += 9;
@@ -1346,9 +1346,9 @@ namespace Project_Rioman
                         Animate(elapsedtime, 0.2);
                     }
 
-                    if (rioman.location.X < location.Center.X)
+                    if (rioman.Location.X < location.Center.X)
                         direction = SpriteEffects.None;
-                    else if (rioman.location.Right > location.Center.X)
+                    else if (rioman.Location.Right > location.Center.X)
                         direction = SpriteEffects.FlipHorizontally;
                 }
                 else if (type == 315)
@@ -1357,20 +1357,20 @@ namespace Project_Rioman
                         location.Width / 2 - 10, location.Height / 2);
                     Animate(elapsedtime, 0.2);
 
-                    if (rioman.location.Left <= location.Left)
+                    if (rioman.Location.Left <= location.Left)
                     {
                         direction = SpriteEffects.None;
                         location.X -= 2;
                     }
-                    else if (rioman.location.Right >= location.Right)
+                    else if (rioman.Location.Right >= location.Right)
                     {
                         direction = SpriteEffects.FlipHorizontally;
                         location.X += 2;
                     }
 
-                    if (rioman.location.Center.Y <= location.Center.Y)
+                    if (rioman.Location.Center.Y <= location.Center.Y)
                         location.Y -= 1;
-                    else if (rioman.location.Center.Y >= location.Center.Y)
+                    else if (rioman.Location.Center.Y >= location.Center.Y)
                         location.Y += 1;
 
                 }
@@ -1379,16 +1379,16 @@ namespace Project_Rioman
                     collisionrect = new Rectangle(location.X + 10, location.Y + 14, 41, 10);
                     sourcerect = Animation.GetSourceRect(spritesheet[0].Width, spritesheet[0].Height);
 
-                    if (Math.Abs(location.X - rioman.location.X) < 200)
+                    if (Math.Abs(location.X - rioman.Location.X) < 200)
                     {
-                        if (location.Y > 0 && rioman.location.Y < location.Bottom + 20)
+                        if (location.Y > 0 && rioman.Location.Y < location.Bottom + 20)
                             location.Y--;
-                        else if (rioman.location.Y > location.Bottom + 20)
+                        else if (rioman.Location.Y > location.Bottom + 20)
                             location.Y++;
 
-                        if (location.Center.X > rioman.location.X)
+                        if (location.Center.X > rioman.Location.X)
                             location.X--;
-                        else if (location.Center.X < rioman.location.X)
+                        else if (location.Center.X < rioman.Location.X)
                             location.X++;
                     }
 
@@ -1407,20 +1407,20 @@ namespace Project_Rioman
 
                     if (isfalling)
                     {
-                        if (rioman.location.Center.Y > location.Center.Y)
+                        if (rioman.Location.Center.Y > location.Center.Y)
                             location.Y++;
-                        else if (rioman.location.Center.Y < location.Center.Y)
+                        else if (rioman.Location.Center.Y < location.Center.Y)
                             location.Y--;
                     }
                     else
                     {
-                        if (rioman.location.Center.Y < location.Center.Y && !bool1)
+                        if (rioman.Location.Center.Y < location.Center.Y && !bool1)
                             location.Y--;
-                        if (rioman.location.Center.Y > location.Center.Y && bool1)
+                        if (rioman.Location.Center.Y > location.Center.Y && bool1)
                             location.Y++;
                     }
 
-                    if (rioman.location.Center.X > location.Center.X)
+                    if (rioman.Location.Center.X > location.Center.X)
                         direction = SpriteEffects.FlipHorizontally;
                     else
                         direction = SpriteEffects.None;

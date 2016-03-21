@@ -46,13 +46,16 @@ namespace Project_Rioman
         {
             KeyboardState keyboardState = Keyboard.GetState();
 
-            if (!currentLevel.go && !player.iswarping)
+            if (!currentLevel.go && !player.IsWarping())
                 ChangeLevel();
 
-            if (currentLevel.go && !currentLevel.dooropening && !currentLevel.closedoornow && !currentLevel.isScrolling && !GameState.IsPaused() && !player.iswarping
+            if (currentLevel.go && !currentLevel.dooropening && !currentLevel.closedoornow && !currentLevel.isScrolling && !GameState.IsPaused()
                    && !Health.HealthIncreasing() && currentLevel.bosses[currentLevel.activelevel].intro >= 3)
             {
-                currentLevel.Update(player, gameTime, viewportRect);
+
+                if(!player.IsWarping())
+                    currentLevel.Update(player, gameTime, viewportRect);
+
                 currentLevel.EnemyCollision(bullet, player);
 
                 player.BackwardScroll(currentLevel, viewportRect);
@@ -98,8 +101,6 @@ namespace Project_Rioman
                 currentLevel.CloseDoor(player, viewportRect);
   //          else if (GameState.IsPaused())
       //          Weapons.ChangeActiveWeapon(keyboardState, prevKeyboardState);     //TODO: weapons
-            else if (player.iswarping)
-                player.Warp();
             else if (currentLevel.bosses[currentLevel.activelevel].intro < 3)
                 currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportRect, player);
 
@@ -132,9 +133,9 @@ namespace Project_Rioman
 
             if (currentLevel != null)
             {
-                if (currentLevel.go || player.iswarping)
+                if (currentLevel.go)
                 {
-                    currentLevel.DrawTiles(spriteBatch, player.iswarping);
+                    currentLevel.DrawTiles(spriteBatch);
                     currentLevel.bosses[currentLevel.activelevel].Draw(spriteBatch);
                     currentLevel.DrawEnemies(spriteBatch);
 
@@ -144,11 +145,7 @@ namespace Project_Rioman
                             spriteBatch.Draw(blt.sprite, blt.location, Color.White);
                     }
 
-                    spriteBatch.Draw(player.sprite,
-                        new Rectangle(player.location.X, player.location.Y,
-                        player.drawRect.Width, player.drawRect.Height),
-                        player.drawRect, Color.White, 0f, new Vector2(player.drawRect.Width / 2,
-                        0f), player.direction, 0f);
+                    player.Draw(spriteBatch);
 
               //      spriteBatch.Draw(player.sprite, player.Left, Color.AliceBlue);
               //      spriteBatch.Draw(player.sprite, player.Right, Color.AliceBlue);
@@ -172,8 +169,10 @@ namespace Project_Rioman
             currentLevel.go = true;
 
             currentLevel.CenterRioman(viewportRect);
-            player.location.X = Convert.ToInt32(currentLevel.startpos.X);
-            player.location.Y = -100;
+            player.MoveToX(Convert.ToInt32(currentLevel.startpos.X));
+            player.MoveToY(-100);
+            player.SetStartYPos(Convert.ToInt32(currentLevel.startpos.Y));
+
             currentLevel.TileFader();
             currentLevel.LadderForm();
 
@@ -182,9 +181,7 @@ namespace Project_Rioman
 
             Health.SetHealth(27);
             Health.SetDrawBossHealth(false);
-            player.iswarping = true;
-            player.warpy = Convert.ToInt32(currentLevel.startpos.Y);
-            Audio.warp.Play(0.5f, 0f, 0f);
+            player.StartWarp();
 
         }
     }

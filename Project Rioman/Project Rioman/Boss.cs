@@ -236,12 +236,12 @@ namespace Project_Rioman
         {
             if (isalive)
             {
-                if (!rioman.isinvincible && rioman.location.Intersects(collisionrect))
+                if (!rioman.isinvincible && rioman.Location.Intersects(collisionrect))
                 {
                     Health.AdjustHealth(-coldamage);
                     rioman.Hit();
 
-                    if (rioman.location.Left < collisionrect.Left)
+                    if (rioman.Location.Left < collisionrect.Left)
                         rioman.invincibledirection = -3;
                     else
                         rioman.invincibledirection = 3;
@@ -249,7 +249,7 @@ namespace Project_Rioman
 
                 for (int i = 0; i <= 19; i++)
                 {
-                    if (bulletalive[i] && !rioman.isinvincible && rioman.location.Intersects(bulletloc[i]))
+                    if (bulletalive[i] && !rioman.isinvincible && rioman.Location.Intersects(bulletloc[i]))
                     {
                         bulletalive[i] = false;
 
@@ -260,7 +260,7 @@ namespace Project_Rioman
 
                         rioman.Hit();
 
-                        if (rioman.location.Left < bulletloc[i].Left)
+                        if (rioman.Location.Left < bulletloc[i].Left)
                             rioman.invincibledirection = -3;
                         else
                             rioman.invincibledirection = 3;
@@ -529,7 +529,7 @@ namespace Project_Rioman
         {
             if (othertime == 0)
             {
-                if (rioman.location.X < location.Center.X)
+                if (rioman.Location.X < location.Center.X)
                     direction = SpriteEffects.None;
                 else
                     direction = SpriteEffects.FlipHorizontally;
@@ -694,7 +694,7 @@ namespace Project_Rioman
                 {
                     SpriteEffects se = direction;
 
-                    if (rioman.location.X < location.Center.X)
+                    if (rioman.Location.X < location.Center.X)
                         direction = SpriteEffects.None;
                     else
                         direction = SpriteEffects.FlipHorizontally;
@@ -721,7 +721,7 @@ namespace Project_Rioman
                 {
                     SpriteEffects se = direction;
 
-                    if (rioman.location.X < location.Center.X)
+                    if (rioman.Location.X < location.Center.X)
                         direction = SpriteEffects.None;
                     else
                         direction = SpriteEffects.FlipHorizontally;
