@@ -15,15 +15,10 @@ namespace Project_Rioman
         public Texture2D sprite;
         public SpriteEffects direction;
         public Texture2D stand;
-        Texture2D jumpsprite;
-        Texture2D jumpgunsprite;
-        Texture2D climb;
-        Texture2D climbflip;
-        Texture2D climbgun;
+
         Texture2D airhit;
         Texture2D groundhit;
         Texture2D[] warp = new Texture2D[4];
-        public Texture2D climbtop;
 
         public Rectangle location;
 
@@ -43,33 +38,28 @@ namespace Project_Rioman
         public bool ispaused;
         public bool touchedground;
 
-        public double climbtime;
         public double falltime;
-        public double jumptime;
         public double invincibletime;
         public double pausetime;
         public double touchtime;
         public int invincibledirection;
 
         public bool stopx;
-        public bool climbdown;
+        public bool climbDown;
         public int warpy;
+
+        private bool stopRightMovement;
+        private bool stopLeftMovement;
 
         private KeyboardState previousKeyboardState;
 
         public Rioman(ContentManager content)
         {
-            state = new RiomanState();
+            state = new RiomanState(this);
             anim = new RiomanAnimation(content, state);
 
 
             stand = content.Load<Texture2D>("Video\\rioman\\riomanstand");
-            jumpsprite = content.Load<Texture2D>("Video\\rioman\\riomanjump");
-            jumpgunsprite = content.Load<Texture2D>("Video\\rioman\\riomanjumpgun");
-            climb = content.Load<Texture2D>("Video\\rioman\\riomanclimb");
-            climbgun = content.Load<Texture2D>("Video\\rioman\\riomanclimbgun");
-            climbtop = content.Load<Texture2D>("Video\\rioman\\riomanclimbtop");
-            climbflip = content.Load<Texture2D>("Video\\rioman\\riomanclimbflop");
             airhit = content.Load<Texture2D>("Video\\rioman\\hitair");
             groundhit = content.Load<Texture2D>("Video\\rioman\\hitground");
             hit = content.Load<Texture2D>("Video\\rioman\\hit");
@@ -94,16 +84,17 @@ namespace Project_Rioman
             touchedground = false;
             stopx = false;
 
+            stopLeftMovement = false;
+            stopRightMovement = false;
+
             direction = SpriteEffects.None;
             falltime = 0;
-            jumptime = 0;
             invincibletime = 0;
             hittime = 0;
             pausetime = 0;
             touchtime = 0;
         }
 
-        public Texture2D GetSprite() { return anim.GetSprite(); }
 
         public void Update(double deltaTime, Level level)
         {
@@ -115,7 +106,6 @@ namespace Project_Rioman
             {
 
                 state.Update(deltaTime);
-                anim.Update(deltaTime);
 
                 if (!isfalling)
                     falltime = 0;
@@ -123,72 +113,50 @@ namespace Project_Rioman
                 if (state.IsClimbing())
                     Climb(deltaTime, keyboardState, level);
                 else if (state.IsJumping())
-                    Jump(deltaTime, keyboardState, level);
+                    Jump(keyboardState, level);
                 else if (isfalling)
                     Fall(deltaTime, keyboardState, level);
                else if (state.IsRunning() || state.IsStanding())
                     Stand(keyboardState, level);
 
-                if (!state.IsClimbing())
-                    sprite = GetSprite();
+                sprite = GetSprite();
 
                 if (isinvincible)
                     Invincible(deltaTime);
 
                 if (ishit)
                     Hit(deltaTime);
+
+
+                stopLeftMovement = false;
+                stopRightMovement = false;
+
+                anim.Update(deltaTime);
+
             }
+
 
             previousKeyboardState = keyboardState;
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
         private void Stand(KeyboardState keyboardState, Level level)
         {
             HorizontalMovement(keyboardState, level);
             CheckClimb(keyboardState, level);
 
-            CheckJump(keyboardState, level);
-
         }
 
         private void Climb(double deltaTime, KeyboardState keyboardState, Level level)
         {
-            CheckJump(keyboardState, level);
-
-            if (state.IsShooting() && sprite != climbtop)
-                sprite = climbgun;
-            else if (climbtime > 0.175)
-                sprite = climbflip;
-            else if (sprite != climbtop)
-                sprite = climb;
-
-            if (climbtime > 0.35)
-                climbtime = 0;
-
-
             if (keyboardState.IsKeyDown(Constant.UP))
             {
                 Move(0, -3);
-                climbtime += deltaTime;
-                climbdown = false;
+                climbDown = false;
             }
             else if (keyboardState.IsKeyDown(Constant.DOWN))
             {
                 Move(0, 3);
-                climbtime += deltaTime;
-                climbdown = true;
+                climbDown = true;
             }
 
             if (keyboardState.IsKeyDown(Constant.LEFT))
@@ -196,12 +164,7 @@ namespace Project_Rioman
             if (keyboardState.IsKeyDown(Constant.RIGHT))
                 direction = SpriteEffects.None;
 
-            if (keyboardState.IsKeyDown(Constant.JUMP) && !previousKeyboardState.IsKeyDown(Constant.JUMP))
-            {
-                state.Jump();
-                jumptime = 0.2;
-                climbtime = 0;
-            }
+
         }
 
         private void Fall(double deltaTime, KeyboardState keyboardState, Level level)
@@ -220,34 +183,118 @@ namespace Project_Rioman
             touchedground = false;
         }
 
-        private void Jump(double deltaTime, KeyboardState keyboardState, Level level)
+        private void Jump(KeyboardState keyboardState, Level level)
         {
 
             HorizontalMovement(keyboardState, level);
             CheckClimb(keyboardState, level);
 
-            if (!keyboardState.IsKeyDown(Constant.JUMP) && jumptime > 0.1)
-            {
-                jumptime = 0;
-                isfalling = true;
-                state.Fall();
-            }
+            Move(0, -Convert.ToInt32(10 - state.GetJumpTime() * 22));
 
-            jumptime += deltaTime;
-            if (jumptime < 0.4)
-            {
-                Move(0, -Convert.ToInt32(10 - jumptime * 22));
-
-            }
-            else
-            {
-                isfalling = true;
-                state.Fall();
-                jumptime = 0;
-            }
-
-            touchedground = false;
         }
+
+
+        private void HorizontalMovement(KeyboardState keyboardState, Level level)
+        {
+            if (keyboardState.IsKeyDown(Constant.RIGHT) && !stopRightMovement)
+            {
+                if (!level.stopleftscreenmovement && !level.stoprightscreenmovement)
+                    level.MoveStuff(-3, 0);
+                else if (level.stoprightscreenmovement || level.stopleftscreenmovement)
+                    Move(3, 0);
+
+                direction = SpriteEffects.None;
+            }
+            else if (keyboardState.IsKeyDown(Constant.LEFT) && !stopLeftMovement)
+            {
+                if (!level.stopleftscreenmovement && !level.stoprightscreenmovement)
+                    level.MoveStuff(3, 0);
+                else if (level.stopleftscreenmovement || level.stoprightscreenmovement)
+                    Move(-3, 0);
+
+                direction = SpriteEffects.FlipHorizontally;
+            }
+        }
+
+
+
+        private void CheckClimb(KeyboardState keyboardState, Level level)
+        {
+
+            if (keyboardState.IsKeyDown(Constant.UP))
+            {
+                Rectangle result = level.CheckClimb(location, location.X, true, ref location);
+
+                if (result.Width != 0)
+                {
+                    Move(0, -10);
+                    state.Climb();
+                    falltime = 0;
+                    isfalling = false;
+                    climbDown = false;
+                }
+            }
+
+
+            if (keyboardState.IsKeyDown(Constant.DOWN) && !previousKeyboardState.IsKeyDown(Constant.DOWN))
+            {
+                Rectangle result = level.CheckClimb(location, location.X, false, ref location);
+                if (result.Width != 0)
+                {
+                    Move(0, 20);
+                    state.Climb();
+                    isfalling = false;
+                    climbDown = true;
+                }
+            }
+
+        }
+
+        public Rectangle Left { get { return new Rectangle(location.X, location.Y + 6, 10, 34); } }
+        public Rectangle Head { get { return new Rectangle(location.X + 10, location.Y, 36, 32); } }
+        public Rectangle Feet { get { return new Rectangle(location.X + 8, location.Y + 42, 40, 12); } }
+        public Rectangle Right { get { return new Rectangle(location.X + location.Width - 10, location.Y + 6, 10, 34); } }
+
+        public void Move(int x, int y)
+        {
+            location.X += x;
+            location.Y += y;
+        }
+
+        public void MoveToX(int x)
+        {
+            location.X = x;
+        }
+
+        public void MoveToY(int y)
+        {
+            location.Y = y;
+        }
+
+        public void StopRightMovement() { stopRightMovement = true; }
+        public void StopLeftMovement() { stopLeftMovement = true; }
+        public Texture2D GetSprite() { return anim.GetSprite(); }
+        public void AtLadderTop() { state.SetClimbTopState(true); }
+        public void BelowLadderTop() { state.SetClimbTopState(false); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //TODO: Refactor this stuff V V V V V V V
 
         public void Pause(double deltaTime)
         {
@@ -285,7 +332,7 @@ namespace Project_Rioman
 
                 for (int i = 0; i <= 2; i++)
                 {
-                    if (!bullet[i].alive && sprite != climbtop)
+                    if (!bullet[i].alive && !state.IsClimbTop())
                     {
                         flag = true;
                         num = i;
@@ -304,73 +351,6 @@ namespace Project_Rioman
             }
         }
 
-        private void HorizontalMovement(KeyboardState keyboardState, Level level)
-        {
-            if (keyboardState.IsKeyDown(Constant.RIGHT) && !level.stoprightxmovement)
-            {
-                if (!level.stopleftscreenmovement && !level.stoprightscreenmovement)
-                    level.MoveStuff(-3, 0);
-                else if (level.stoprightscreenmovement || level.stopleftscreenmovement)
-                    Move(3, 0);
-
-                direction = SpriteEffects.None;
-            }
-            else if (keyboardState.IsKeyDown(Constant.LEFT) && !level.stopleftxmovement)
-            {
-                if (!level.stopleftscreenmovement && !level.stoprightscreenmovement)
-                    level.MoveStuff(3, 0);
-                else if (level.stopleftscreenmovement || level.stoprightscreenmovement)
-                    Move(-3, 0);
-
-                direction = SpriteEffects.FlipHorizontally;
-            }
-        }
-
-        private void CheckJump(KeyboardState keyboardState, Level level)
-        {
-            if (keyboardState.IsKeyDown(Constant.JUMP) && !previousKeyboardState.IsKeyDown(Constant.JUMP))
-            {
-                climbtime = 0;
-                Move(0, -4);
-                state.Jump();
-            }
-
-        }
-
-        private void CheckClimb(KeyboardState keyboardState, Level level)
-        {
-
-            if (keyboardState.IsKeyDown(Constant.UP))
-            {
-                Rectangle result = level.CheckClimb(location, location.X, true, ref location);
-
-                if (result.Width != 0)
-                {
-                    Move(0, -10);
-                    state.Climb();
-                    jumptime = 0;
-                    falltime = 0;
-                    isfalling = false;
-                    climbdown = false;
-                }
-            }
-
-
-            if (keyboardState.IsKeyDown(Constant.DOWN) && !previousKeyboardState.IsKeyDown(Constant.DOWN))
-            {
-                Rectangle result = level.CheckClimb(location, location.X, false, ref location);
-                if (result.Width != 0)
-                {
-                    sprite = climbtop;
-                    Move(0, 20);
-                    state.Climb();
-                    isfalling = false;
-                    climbdown = true;
-                }
-            }
-
-        }
-
         public void Hit()
         {
             ishit = true;
@@ -378,7 +358,6 @@ namespace Project_Rioman
             pausetime = 0;
             stopx = true;
             isinvincible = true;
-            jumptime = 0;
             isfalling = true;
             touchedground = false;
             touchtime = 0;
@@ -532,26 +511,7 @@ namespace Project_Rioman
             }
         }
 
-        public Rectangle Left { get { return new Rectangle(location.X, location.Y + 6, 10, 34); ; } }
-        public Rectangle Head { get { return new Rectangle(location.X + 10, location.Y, 36, 32); ; } }
-        public Rectangle Feet { get { return new Rectangle(location.X + 8, location.Y + 42, 40, 12); ; } }
-        public Rectangle Right { get { return new Rectangle(location.X +location.Width -10, location.Y + 6, 10, 34); ; } }
 
-        public void Move(int x, int y)
-        {
-            location.X += x;
-            location.Y += y;
-        }
-
-        public void MoveToX(int x)
-        {
-            location.X = x;
-        }
-
-        public void MoveToY(int y)
-        {
-            location.Y = y;
-        }
 
     }
 }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Project_Rioman
 {
@@ -30,6 +26,9 @@ namespace Project_Rioman
         private int warpFrame;
         private Texture2D climbTop;
 
+        private double climbTime;
+        private int climbDirection;
+
         private int frame;
         private double frameTime;
         private const double FRAME_TIME = 0.15;
@@ -49,6 +48,10 @@ namespace Project_Rioman
             airHit = content.Load<Texture2D>("Video\\rioman\\hitair");
             groundHit = content.Load<Texture2D>("Video\\rioman\\hitground");
             hit = content.Load<Texture2D>("Video\\rioman\\hit");
+            climb = content.Load<Texture2D>("Video\\rioman\\riomanclimb");
+            climbShoot = content.Load<Texture2D>("Video\\rioman\\riomanclimbgun");
+            climbTop = content.Load<Texture2D>("Video\\rioman\\riomanclimbtop");
+            climbFlip = content.Load<Texture2D>("Video\\rioman\\riomanclimbflop");
 
             for (int i = 1; i <= 4; i++)
                 warp[i - 1] = content.Load<Texture2D>("Video\\rioman\\warp" + i.ToString());
@@ -63,6 +66,8 @@ namespace Project_Rioman
 
         private void Reset()
         {
+            climbDirection = 0;
+            climbTime = 0;
             frame = 0;
             sprite = stand;
         }
@@ -98,9 +103,41 @@ namespace Project_Rioman
             }
             else if (state.IsClimbing())
             {
-                //TODO
+                AnimateClimbing(deltaTime);
             }
-            
+
+            UpdateShooting(deltaTime);
+        }
+
+        private void AnimateClimbing(double deltaTime)
+        {
+            climbTime += deltaTime;
+            KeyboardState k = Keyboard.GetState();
+            bool upDownPress = k.IsKeyDown(Constant.UP) || k.IsKeyDown(Constant.DOWN);
+
+            if (climbDirection == 0)
+                sprite = climb;
+            else
+                sprite = climbFlip;
+
+            if (state.IsShooting() && !state.IsClimbTop())
+                sprite = climbShoot;
+
+            else if (upDownPress && climbTime > 0.175)
+            {
+                climbTime = 0;
+                climbDirection++;
+                if (climbDirection > 1)
+                    climbDirection = 0;
+            }
+
+            if (state.IsClimbTop())
+                sprite = climbTop;
+        }
+
+        private void UpdateShooting(double deltaTime)
+        {
+
         }
 
         private void UpdateFrame(double deltaTime, int nFrames)

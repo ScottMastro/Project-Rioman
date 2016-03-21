@@ -23,8 +23,6 @@ namespace Project_Rioman
         public Boss[] bosses = new Boss[17];
         int numberOfEnemies;
 
-        public bool stopleftxmovement;
-        public bool stoprightxmovement;
         public bool stopleftscreenmovement;
         public bool stoprightscreenmovement;
 
@@ -55,7 +53,7 @@ namespace Project_Rioman
                 active = true;
             }
 
-            public void Move (int x, int y)
+            public void Move(int x, int y)
             {
                 scrollRect.X += x;
                 scrollRect.Y += y;
@@ -256,7 +254,7 @@ namespace Project_Rioman
             }
 
         }
-        
+
 
         public void CenterRioman(Viewport viewportrect)
         {
@@ -281,7 +279,7 @@ namespace Project_Rioman
             MoveStuff(xoffset, 0);
         }
 
-        private void UpdateCollisions(Rioman rioman, Viewport viewportRect)
+        public void InteractWithLevel(Rioman rioman)
         {
             foreach (Tile tle in tiles)
             {
@@ -291,19 +289,19 @@ namespace Project_Rioman
                     {
                         if (rioman.Right.Intersects(tle.left))
                         {
-                            stoprightxmovement = true;
+                            rioman.StopRightMovement();
                             rioman.invincibledirection = 0;
                         }
 
                         if (rioman.Left.Intersects(tle.right))
                         {
-                            stopleftxmovement = true;
+                            rioman.StopLeftMovement();
                             rioman.invincibledirection = 0;
                         }
 
-                        if (rioman.Head.Intersects(tle.bottom)) { 
+                        if (rioman.Head.Intersects(tle.bottom) && !rioman.state.IsClimbing())
+                        {
                             rioman.state.Stand();
-                            rioman.jumptime = 0;
                         }
 
                     }
@@ -335,8 +333,7 @@ namespace Project_Rioman
         {
             bool collisionflag = false;
             bool climbing = false;
-            stopleftxmovement = false;
-            stoprightxmovement = false;
+            bool climbTop = false;
             stopleftscreenmovement = false;
             stoprightscreenmovement = false;
             bool[] enemycollision = new bool[numberOfEnemies + 1];
@@ -349,8 +346,7 @@ namespace Project_Rioman
             rioman.location.X -= rioman.location.Width / 2;
 
             UpdateScrollers(rioman, viewportRect);
-            UpdateCollisions(rioman, viewportRect);
-
+            InteractWithLevel(rioman);
             foreach (Tile tle in tiles)
             {
                 if (tle != null)
@@ -362,13 +358,16 @@ namespace Project_Rioman
 
 
                     if (tle.type == 3 && rioman.location.Intersects(tle.nocollisionrect))
-                        climbing = true;
-
-                    if (tle.type == 3 && rioman.state.IsClimbing() && rioman.Feet.Intersects(tle.bottom)
-                        && tle.isTop && !rioman.climbdown)
                     {
-                        rioman.sprite = rioman.climbtop;
-                        rioman.climbtime = 0;
+                        climbing = true;
+                    }
+
+                    if (tle.type == 3 && rioman.state.IsClimbing() && rioman.location.Intersects(tle.top)
+                        && tle.isTop && !rioman.climbDown)
+                    {
+                        climbTop = true;
+
+
                     }
 
                     if (tle.type == 1 || tle.type == 4 || tle.type == 5)
@@ -383,7 +382,6 @@ namespace Project_Rioman
                         {
                             collisionflag = true;
                             rioman.location.Y = tle.location.Y - rioman.location.Height + 2;
-                            rioman.climbtime = 0;
 
                             if (rioman.isfalling)
                             {
@@ -474,7 +472,7 @@ namespace Project_Rioman
                     }
                 }
             }
-            
+
 
             for (int i = 0; i <= numberOfEnemies; i++)
                 enemies[i].isfalling = !enemycollision[i];
@@ -486,7 +484,6 @@ namespace Project_Rioman
                     if (tle != null && tle.type == 3 && rioman.location.Intersects(tle.collisionrect) && !rioman.location.Intersects(tle.nocollisionrect))
                     {
                         rioman.location.Y = tle.location.Y - rioman.location.Height + 2;
-                        rioman.climbtime = 0;
                         collisionflag = true;
 
                         if (rioman.isfalling)
@@ -507,6 +504,12 @@ namespace Project_Rioman
                 rioman.location = temprect;
 
             rioman.isfalling = !collisionflag;
+
+            if (climbTop)
+                rioman.AtLadderTop();
+            else
+                rioman.BelowLadderTop();
+
         }
 
 
@@ -526,9 +529,9 @@ namespace Project_Rioman
             }
             fadetiles = 0;
         }
-        
 
-       
+
+
 
         public void MoveStuff(int x, int y)
         {
@@ -539,7 +542,7 @@ namespace Project_Rioman
             }
 
 
-            for(int i = 0; i<= scrollers.Length -1; i++)
+            for (int i = 0; i <= scrollers.Length - 1; i++)
                 scrollers[i].Move(x, y);
 
 
@@ -655,7 +658,7 @@ namespace Project_Rioman
                         {
                             tiles[r, c].isclosing = false;
                             tiles[r, c].type = 1;
-                          //  CreateWall();
+                            //  CreateWall();
                         }
                         else
                         {
@@ -855,8 +858,6 @@ namespace Project_Rioman
                             enemies[i].bulletalive[j] = false;
                             enemies[i].bullettime[j] = 0;
                             Health.AdjustHealth(-3);
-                            stopleftxmovement = false;
-                            stoprightxmovement = false;
 
                             rioman.Hit();
 
@@ -884,8 +885,7 @@ namespace Project_Rioman
                                 enemies[i].other[k].X = 1000;
 
                             Health.AdjustHealth(-enemies[i].damage);
-                            stopleftxmovement = false;
-                            stoprightxmovement = false;
+
 
                             rioman.Hit();
 
