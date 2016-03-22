@@ -120,5 +120,10 @@ namespace Project_Rioman
         {
             Audio.land.Play(Constant.VOLUME, 0f, 0f);
         }
+
+        public static void PlayDoor()
+        {
+            Audio.jump2.Play(Constant.VOLUME, -1f, 0f);
+        }
     }
 }

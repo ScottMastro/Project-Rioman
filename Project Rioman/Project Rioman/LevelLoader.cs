@@ -117,7 +117,7 @@ namespace Project_Rioman
 
             //tile is a tile
             if (type >= 0)
-                tiles[r, c] = new Tile(tileSprites[value], value, type, r * 32, c * 32, content);
+                tiles[r, c] = new Tile(tileSprites[value], value, type, r, c, content);
 
             //tile is an enemy
             if (value >= 297 && value <= 317)

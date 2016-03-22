@@ -96,9 +96,9 @@ namespace Project_Rioman
             else
                spriteBatch.Draw(sprite, locationRect, drawRect, Color.White, 0f, new Vector2(sprite.Width / 2, 0f), direction, 0f);
 
-            spriteBatch.Draw(debug[0], r.Hitbox, Color.White);
 
             /* debugging boxes
+            spriteBatch.Draw(debug[0], r.Hitbox, Color.White);
             spriteBatch.Draw(debug[0], r.Head, Color.White);
             spriteBatch.Draw(debug[1], r.Feet, Color.White);
             spriteBatch.Draw(debug[2], r.Left, Color.White);

@@ -49,7 +49,7 @@ namespace Project_Rioman
             if (!currentLevel.go && !player.IsWarping())
                 ChangeLevel();
 
-            if (currentLevel.go && !currentLevel.dooropening && !currentLevel.closedoornow && !currentLevel.isScrolling && !GameState.IsPaused()
+            if (currentLevel.go && !currentLevel.IsBusy() && !currentLevel.isScrolling && !GameState.IsPaused()
                    && !Health.HealthIncreasing() && currentLevel.bosses[currentLevel.activelevel].intro >= 3)
             {
 
@@ -93,12 +93,10 @@ namespace Project_Rioman
             }
             else if (Health.HealthIncreasing())
                 Health.UpdateHealth(gameTime.ElapsedGameTime.TotalSeconds);
-            else if (currentLevel.dooropening)
-                currentLevel.OpenDoor();
+            else if (currentLevel.IsBusy())
+                currentLevel.BusyUpdate();
             else if (currentLevel.isScrolling)
                 currentLevel.Scroll(player, viewportRect);
-            else if (currentLevel.closedoornow)
-                currentLevel.CloseDoor(player, viewportRect);
   //          else if (GameState.IsPaused())
       //          Weapons.ChangeActiveWeapon(keyboardState, prevKeyboardState);     //TODO: weapons
             else if (currentLevel.bosses[currentLevel.activelevel].intro < 3)
@@ -112,7 +110,7 @@ namespace Project_Rioman
                 currentLevel.killbullets = false;
             }
 
-            if (!currentLevel.dooropening && !currentLevel.doorclosing && !currentLevel.closedoornow)
+            if (!currentLevel.IsBusy())
             {
                 if (keyboardState.IsKeyDown(Constant.PAUSE) && !prevKeyboardState.IsKeyDown(Constant.PAUSE))
                 {

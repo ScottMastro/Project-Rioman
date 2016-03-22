@@ -27,13 +27,17 @@ namespace Project_Rioman
         public bool stoprightscreenmovement;
 
         int fadetiles;
-        public bool dooropening;
-        public bool doorclosing;
-        public bool closedoornow;
+        private int doorStopY;
+        private Tile doorTop;
+        private bool doorOpening;
+        private bool closeDoor;
+        private bool doorClosing;
         public bool isScrolling;
         public bool killbullets;
 
         private const int SCROLL_SPEED = 10;
+        private const int DOOR_SPEED = 2;
+
         int yscroll;
         int xscroll;
         public Rectangle scrollingRect;
@@ -91,7 +95,7 @@ namespace Project_Rioman
 
             scrollingRect = new Rectangle();
             scrollers = MakeScroller();
-
+            doorOpening = false;
 
         }
 
@@ -176,11 +180,11 @@ namespace Project_Rioman
                     else if (tle.type == 4)
                     {
                         if (rioman.Hitbox.Intersects(tle.location))
-                            OpenDoor(tle);
+                            StartOpenDoor(tle);
 
                     }
 
-                    if (tle.type == 3 && tle.isTop && rioman.IsClimbing() && rioman.Feet.Intersects(tle.top) )
+                    if (tle.type == 3 && tle.isTop && rioman.IsClimbing() && rioman.Feet.Intersects(tle.top))
                     {
                         climbTop = true;
                     }
@@ -348,8 +352,8 @@ namespace Project_Rioman
             if (xscrollamount <= 0 || yscrollamount <= 0)
             {
 
-                if (doorclosing)
-                    closedoornow = true;
+                if (closeDoor)
+                    doorClosing = true;
                 isScrolling = false;
                 stopleftscreenmovement = true;
                 stoprightscreenmovement = true;
@@ -358,9 +362,122 @@ namespace Project_Rioman
 
         }
 
+        public bool IsBusy()
+        {
+            return doorOpening || doorClosing;
+        }
+
+        public void BusyUpdate()
+        {
+            if (doorOpening)
+                OpenDoor();
+            if (doorClosing)
+                CloseDoor();
+        }
 
 
+        private void StartOpenDoor(Tile tle)
+        {
+            doorTop = tle;
+            doorOpening = true;
 
+            int row = tle.Row;
+            int column = tle.Column;
+
+            //Check for door tiles above tle
+            while (true)
+            {
+                if (row > 0 && tiles[row - 1, column] != null && tiles[row - 1, column].type == 4)
+                {
+                    doorTop = tiles[row - 1, column];
+                    row--;
+                }
+                else
+                    break;
+            }
+
+            doorStopY = doorTop.Y - Constant.TILE_SIZE;
+        }
+
+        private void OpenDoor()
+        {
+            bool stillOpening = false;
+
+            int row = doorTop.Row;
+            int column = doorTop.Column;
+
+            while (true)
+            {
+                if (row < height && tiles[row, column] != null && tiles[row, column].type == 4)
+                {
+                    if(tiles[row, column].Y > doorStopY)
+                    {
+                        stillOpening = true;
+                        tiles[row, column].Move(0, -DOOR_SPEED);
+                    }
+                    
+                    row++;
+                }
+                else
+                    break;
+            }
+
+            if (stillOpening)
+                Audio.PlayDoor();
+            else
+            {
+                doorOpening = false;
+                closeDoor = true;
+            }
+        }
+
+
+        public void CloseDoor()
+        {
+            bool stillClosing = false;
+
+            int row = doorTop.Row;
+            int column = doorTop.Column;
+
+            while (true)
+            {
+                if (row < height && tiles[row, column] != null && tiles[row, column].type == 4)
+                {
+                    if (row > 0 && tiles[row - 1, column] != null &&
+                        tiles[row, column].Y < tiles[row - 1, column].location.Bottom)
+                    {
+                        stillClosing = true;
+                        tiles[row, column].Move(0, DOOR_SPEED);
+                    }                        
+
+                    row++;
+                }
+                else
+                    break;
+            }
+
+            if (stillClosing)
+                Audio.PlayDoor();
+            else
+            {
+                closeDoor = false;
+                doorClosing = false;
+
+                //make door a wall
+                row = doorTop.Row;
+
+                while (true)
+                {
+                    if (row < height && tiles[row, column] != null && tiles[row, column].type == 4)
+                    {
+                        tiles[row, column].ChangeType(1);
+                        row++;
+                    }
+                    else
+                        break;
+                }
+            }
+        }
 
 
 
@@ -551,123 +668,8 @@ namespace Project_Rioman
             scrollingRect.Y += y;
         }
 
-        public void OpenDoor(Tile tle)
-        {
-            int row = 0, column = 0;
-
-            for (int r = 0; r <= height; r++)
-            {
-                for (int c = 1; c <= width; c++)
-                {
-                    if (tiles[r, c] == tle)
-                    {
-                        row = r;
-                        column = c;
-                    }
-                }
-            }
-
-            int temprow = row;
-
-            while (true)
-            {
-                if (row > 0 && tiles[row - 1, column] != null && tiles[row - 1, column].type == 4)
-                {
-                    tiles[row, column].isOpening = true;
-                    row--;
-                }
-                else
-                {
-                    tiles[row, column].isOpening = true;
-                    row = temprow;
-                    break;
-                }
-
-                dooropening = true;
-            }
-
-            while (true)
-            {
-                if (row < height && tiles[row + 1, column] != null && tiles[row + 1, column].type == 4)
-                {
-                    tiles[row + 1, column].isOpening = true;
-                    row++;
-                }
-                else
-                    break;
-            }
-        }
-
-        public void OpenDoor()
-        {
-            bool open = true;
-            bool playsound = false;
-
-            for (int r = 0; r <= height; r++)
-            {
-                for (int c = 1; c <= width; c++)
-                {
-                    if (tiles[r, c] != null && tiles[r, c].type == 4 && tiles[r, c].isOpening)
-                    {
-                        if (tiles[r - 1, c] == null || !tiles[r - 1, c].isOpening && tiles[r, c].location.Y <= tiles[r - 1, c].location.Y)
-                        {
-                            tiles[r, c].isOpening = false;
-                            tiles[r, c].isclosing = true;
-                        }
-                        else
-                        {
-                            open = false;
-                            tiles[r, c].Move(0, -2);
-                            playsound = true;
-                        }
-                    }
-                }
-            }
-
-            if (playsound)
-                Audio.jump2.Play(0.5f, -1f, 0f);
-            if (open)
-            {
-                dooropening = false;
-                doorclosing = true;
-            }
-        }
-
-        public void CloseDoor(Rioman rioman, Viewport viewportrect)
-        {
-            bool close = true;
-            bool playsound = false;
-
-            for (int r = 0; r <= height; r++)
-            {
-                for (int c = 1; c <= width; c++)
-                {
-                    if (tiles[r, c] != null && tiles[r, c].type == 4 && tiles[r, c].isclosing)
-                    {
-                        if (tiles[r - 1, c] == null || !tiles[r - 1, c].isclosing && tiles[r, c].location.Y >= tiles[r - 1, c].location.Bottom)
-                        {
-                            tiles[r, c].isclosing = false;
-                            tiles[r, c].type = 1;
-                            //  CreateWall();
-                        }
-                        else
-                        {
-                            close = false;
-                            tiles[r, c].Move(0, 2);
-                            playsound = true;
-                        }
-                    }
-                }
-            }
-
-            if (playsound)
-                Audio.jump2.Play(0.5f, -1f, 0f);
-            if (close)
-            {
-                doorclosing = false;
-                closedoornow = false;
-            }
-        }
+        
+        
 
         public void LadderForm()
         {

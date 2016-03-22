@@ -15,6 +15,9 @@ namespace Project_Rioman
     class Tile
     {
         private Texture2D sprite;
+        private int row;
+        private int column;
+
         public Texture2D[] frames;
 
         public int tile;
@@ -31,17 +34,21 @@ namespace Project_Rioman
         public double fadetime;
         public double animationtime;
 
-        public bool isOpening;
-        public bool isclosing;
         public bool isTop;
 
-        public Tile(Texture2D texture, int tileNumber, int tileType, int y, int x, ContentManager content)
+        public Tile(Texture2D texture, int tileNumber, int tileType, int r, int c, ContentManager content)
         {
             sprite = texture;
             tile = tileNumber;
             type = tileType;
 
-            location = new Rectangle(x, y, 32, 32);
+            row = r;
+            column = c;
+
+            int y = row * Constant.TILE_SIZE;
+            int x = column * Constant.TILE_SIZE;
+
+            location = new Rectangle(x, y, Constant.TILE_SIZE, Constant.TILE_SIZE);
 
             floor = new Rectangle(x + 12, y, 16, 4);
             ignoreFloor = new Rectangle(x, y + 16, 32, 16);
@@ -51,8 +58,6 @@ namespace Project_Rioman
             left = new Rectangle(x, y, location.Width/2, location.Height);
             right = new Rectangle(x + location.Width / 2, y, location.Width/2, location.Height);
 
-
-            isOpening = false;
             isTop = false;
 
             CheckLoadFrames(content);
@@ -166,8 +171,10 @@ namespace Project_Rioman
 
         public int X { get { return location.X; } }
         public int Y { get { return location.Y; } }
+        public int Row { get { return row; } }
+        public int Column { get { return column; } }
         public int Width  { get { return location.Width; } }
-
+        public void ChangeType(int newType) { type = newType; }
 
     }
 }
