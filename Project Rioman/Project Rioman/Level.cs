@@ -96,6 +96,122 @@ namespace Project_Rioman
         }
 
 
+        public void DrawTiles(SpriteBatch spriteBatch)
+        {
+            for (int r = 0; r <= height; r++)
+            {
+                for (int c = 0; c <= width; c++)
+                {
+                    if (tiles[r, c] != null)
+                        tiles[r, c].Draw(spriteBatch);
+                }
+            }
+
+        }
+
+
+        public void CenterRioman(Viewport viewportrect)
+        {
+            Vector2 middle = new Vector2(viewportrect.Width / 2, viewportrect.Height - 32 * 4);
+
+            int xoffset = Convert.ToInt32(middle.X - startpos.X);
+            int yoffset = Convert.ToInt32(middle.Y - startpos.Y);
+
+            startpos = middle;
+
+            MoveStuff(xoffset, yoffset);
+        }
+
+        public void CenterRioman(Viewport viewportrect, Rioman rioman)
+        {
+            int middle = viewportrect.Width / 2;
+
+            int xoffset = Convert.ToInt32(middle - rioman.Location.X);
+
+            rioman.MoveToX(middle);
+
+            MoveStuff(xoffset, 0);
+        }
+
+        public void InteractWithLevel(Rioman rioman)
+        {
+            bool climbTop = false;
+            bool onGround = false;
+
+            foreach (Tile tle in tiles)
+            {
+                if (tle != null)
+                {
+                    //limit player motion against solid tiles
+                    if (tle.type == 1)
+                    {
+                        if (rioman.Right.Intersects(tle.left))
+                        {
+                            rioman.StopRightMovement();
+                            rioman.invincibledirection = 0;
+                        }
+
+                        if (rioman.Left.Intersects(tle.right))
+                        {
+                            rioman.StopLeftMovement();
+                            rioman.invincibledirection = 0;
+                        }
+
+                        if (rioman.Head.Intersects(tle.bottom) && !rioman.IsClimbing())
+                        {
+                            rioman.state.Fall();
+                        }
+
+                    }
+                    //kill player
+                    else if (tle.type == 2)
+                    {
+                        if (rioman.Hitbox.Intersects(tle.location) && !rioman.isinvincible)
+                        {
+                            lifechange = -1;
+                            rioman.Die();
+                        }
+                    }
+                    //open door
+                    else if (tle.type == 4)
+                    {
+                        if (rioman.Hitbox.Intersects(tle.location))
+                            OpenDoor(tle);
+
+                    }
+
+                    if (tle.type == 3 && tle.isTop && rioman.IsClimbing() && rioman.Feet.Intersects(tle.top) )
+                    {
+                        climbTop = true;
+                    }
+
+                    if (tle.type == 1 || tle.type == 4 || tle.type == 5 || tle.type == 3 && tle.isTop)
+                    {
+
+                        if (!rioman.IsJumping() && rioman.Feet.Intersects(tle.floor) && !rioman.Feet.Intersects(tle.ignoreFloor))
+                        {
+                            onGround = true;
+                            rioman.MoveToY(tle.Y - rioman.Height + 8);
+
+                            if (rioman.IsFalling() || rioman.IsClimbing())
+                            {
+                                rioman.state.Stand();
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            if (!onGround && !rioman.IsJumping() && !rioman.IsClimbing())
+                rioman.state.Fall();
+
+            if (climbTop)
+                rioman.AtLadderTop();
+            else
+                rioman.BelowLadderTop();
+        }
+
         private Scroller[] MakeScroller()
         {
             Scroller[] s = new Scroller[100];
@@ -172,7 +288,7 @@ namespace Project_Rioman
             for (int i = 0; i <= scrollers.Length - 1; i++)
             {
 
-                if (scrollers[i].Intersects(rioman.Location))
+                if (scrollers[i].Intersects(rioman.Hitbox))
                 {
                     if (scrollers[i].direction == "up")
                         StartScroll(0, 1, scrollers[i], viewportrect);
@@ -242,121 +358,6 @@ namespace Project_Rioman
 
         }
 
-        public void DrawTiles(SpriteBatch spriteBatch)
-        {
-            for (int r = 0; r <= height; r++)
-            {
-                for (int c = 0; c <= width; c++)
-                {
-                    if (tiles[r, c] != null)
-                        tiles[r, c].Draw(spriteBatch);
-                }
-            }
-
-        }
-
-
-        public void CenterRioman(Viewport viewportrect)
-        {
-            Vector2 middle = new Vector2(viewportrect.Width / 2, viewportrect.Height - 32 * 4);
-
-            int xoffset = Convert.ToInt32(middle.X - startpos.X);
-            int yoffset = Convert.ToInt32(middle.Y - startpos.Y);
-
-            startpos = middle;
-
-            MoveStuff(xoffset, yoffset);
-        }
-
-        public void CenterRioman(Viewport viewportrect, Rioman rioman)
-        {
-            int middle = viewportrect.Width / 2;
-
-            int xoffset = Convert.ToInt32(middle - rioman.Location.X);
-
-            rioman.MoveToX(middle);
-
-            MoveStuff(xoffset, 0);
-        }
-
-        public void InteractWithLevel(Rioman rioman)
-        {
-            bool climbTop = false;
-            bool onGround = false;
-
-            foreach (Tile tle in tiles)
-            {
-                if (tle != null)
-                {
-                    if (tle.type == 1)
-                    {
-                        if (rioman.Right.Intersects(tle.left))
-                        {
-                            rioman.StopRightMovement();
-                            rioman.invincibledirection = 0;
-                        }
-
-                        if (rioman.Left.Intersects(tle.right))
-                        {
-                            rioman.StopLeftMovement();
-                            rioman.invincibledirection = 0;
-                        }
-
-                        if (rioman.Head.Intersects(tle.bottom) && !rioman.IsClimbing())
-                        {
-                            rioman.state.Stand();
-                        }
-
-                    }
-                    else if (tle.type == 2)
-                    {
-                        if (rioman.Location.Intersects(tle.location) && !rioman.isinvincible)
-                        {
-                            lifechange = -1;
-                            rioman.Die();
-                        }
-                    }
-                    else if (tle.type == 4)
-                    {
-                        if (rioman.Location.Intersects(tle.location))
-                            OpenDoor(tle);
-
-                    }
-
-                    if (tle.type == 3 && tle.isTop && rioman.IsClimbing() && rioman.Location.Intersects(tle.top) )
-                    {
-                        climbTop = true;
-                    }
-
-                    if (tle.type == 1 || tle.type == 4 || tle.type == 5 || tle.type == 3 && tle.isTop)
-                    {
-
-                        if (!rioman.IsJumping() && rioman.Feet.Intersects(tle.floor) && !rioman.Feet.Intersects(tle.ignoreFloor))
-                        {
-                            onGround = true;
-                            rioman.MoveToY(tle.Y - rioman.Height + 8);
-
-                            if (rioman.IsFalling() || rioman.IsClimbing())
-                            {
-                                rioman.state.Stand();
-                            }
-                        }
-
-                    }
-                }
-            }
-
-            if (!onGround && !rioman.IsJumping() && !rioman.IsClimbing())
-                rioman.state.Fall();
-
-            if (climbTop)
-                rioman.AtLadderTop();
-            else
-                rioman.BelowLadderTop();
-        }
-
-
-
 
 
 
@@ -390,7 +391,6 @@ namespace Project_Rioman
             bool[] enemycollision = new bool[numberOfEnemies + 1];
             bool bossfalling = true;
 
-            rioman.Move(-rioman.Location.Width / 2, 0);
 
             UpdateScrollers(rioman, viewportRect);
             InteractWithLevel(rioman);
@@ -423,7 +423,7 @@ namespace Project_Rioman
                     {
                         if (enemies[i].type == 302)
                         {
-                            if (enemies[i].isalive && !rioman.isinvincible && rioman.Location.Intersects(enemies[i].collisionrect)
+                            if (enemies[i].isalive && !rioman.isinvincible && rioman.Hitbox.Intersects(enemies[i].collisionrect)
                                 && Math.Abs(rioman.Location.Bottom - enemies[i].collisionrect.Y) < 10)
                             {
                                 rioman.MoveToY(enemies[i].collisionrect.Y - rioman.Location.Height + 2);
@@ -496,7 +496,6 @@ namespace Project_Rioman
             foreach (Pickup pickup in pickups)
                 pickup.PickupUpdate(rioman, viewportRect);
 
-            rioman.Move(rioman.Location.Width / 2, 0);
 
 
 
@@ -798,7 +797,7 @@ namespace Project_Rioman
                         }
                     }
                 }
-                if (enemies[i].isalive && !rioman.isinvincible && rioman.Location.Intersects(enemies[i].collisionrect))
+                if (enemies[i].isalive && !rioman.isinvincible && rioman.Hitbox.Intersects(enemies[i].collisionrect))
                 {
                     if (enemies[i].type == 299)
                         rioman.ispaused = true;
@@ -843,7 +842,7 @@ namespace Project_Rioman
 
                     if (enemies[i].bulletalive[j])
                     {
-                        if (!rioman.isinvincible && rioman.Location.Intersects(enemies[i].bulletloc[j]))
+                        if (!rioman.isinvincible && rioman.Hitbox.Intersects(enemies[i].bulletloc[j]))
                         {
                             enemies[i].bulletalive[j] = false;
                             enemies[i].bullettime[j] = 0;
@@ -863,7 +862,7 @@ namespace Project_Rioman
                 {
                     for (int k = 0; k <= 7; k++)
                     {
-                        if (!rioman.isinvincible && rioman.Location.Intersects(enemies[i].other[k]))
+                        if (!rioman.isinvincible && rioman.Hitbox.Intersects(enemies[i].other[k]))
                         {
                             if (k == 0 || k == 4 || k == 5)
                                 enemies[i].other[k].Y = -100;

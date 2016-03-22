@@ -30,7 +30,6 @@ namespace Project_Rioman
         public bool isinvincible;
         public bool ispaused;
 
-        public double falltime;
         public double invincibletime;
         public double pausetime;
         public double touchtime;
@@ -45,6 +44,8 @@ namespace Project_Rioman
         private bool stopLeftMovement;
 
         private const int WARP_SPEED = 15;
+        private const int MAX_FALL_SPEED = 10;
+
 
         private KeyboardState previousKeyboardState;
 
@@ -75,7 +76,6 @@ namespace Project_Rioman
             stopLeftMovement = false;
             stopRightMovement = false;
 
-            falltime = 0;
             invincibletime = 0;
             hittime = 0;
             pausetime = 0;
@@ -84,7 +84,7 @@ namespace Project_Rioman
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            anim.Draw(spriteBatch, location);
+            anim.Draw(spriteBatch, location, this);
         }
 
 
@@ -98,9 +98,6 @@ namespace Project_Rioman
             {
 
                 state.Update(deltaTime);
-
-                if (!state.IsFalling())
-                    falltime = 0;
 
                 if (state.IsClimbing())
                     Climb(deltaTime, keyboardState, level);
@@ -161,14 +158,11 @@ namespace Project_Rioman
             HorizontalMovement(keyboardState, level);
             CheckClimb(keyboardState, level);
 
-            falltime += deltaTime;
-
-            if (falltime * 30 > 10)
-                Move(0, 10);
+            if (state.GetFallTime() * 30 > MAX_FALL_SPEED)
+                Move(0, MAX_FALL_SPEED);
             else
-                Move(0, Convert.ToInt32(falltime * 30));
+                Move(0, Convert.ToInt32(state.GetFallTime() * 30));
 
-          //  touchedground = false;
         }
 
         private void Jump(KeyboardState keyboardState, Level level)
@@ -214,7 +208,6 @@ namespace Project_Rioman
                 {
                     Move(0, -10);
                     state.Climb();
-                    falltime = 0;
                     climbDown = false;
                 }
             }
@@ -259,10 +252,82 @@ namespace Project_Rioman
         }
 
         public int Height { get { return location.Height; } }
-        public Rectangle Left { get { return new Rectangle(location.X, location.Y + 6, 10, 34); } }
-        public Rectangle Head { get { return new Rectangle(location.X + 10, location.Y, 36, 32); } }
-        public Rectangle Feet { get { return new Rectangle(location.X + 8, location.Y + 42, 40, 12); } }
-        public Rectangle Right { get { return new Rectangle(location.X + location.Width - 10, location.Y + 6, 10, 34); } }
+
+
+        public Rectangle Hitbox
+        {
+            get
+            {
+
+                int shiftX = 0;
+
+                if (anim.FacingRight())
+                    shiftX = -24;
+                else
+                    shiftX = -8;
+
+                return new Rectangle(location.X + shiftX, location.Y + 10, 32, 42);
+            }
+        }
+        public Rectangle Left
+        {
+            get
+            {
+
+                int shiftX = 0;
+
+                if (anim.FacingRight())
+                    shiftX = -30;
+                else
+                    shiftX = -20;
+
+                return new Rectangle(location.X + shiftX, location.Y + 6, 10, 34);
+            }
+        }
+
+        public Rectangle Right {
+            get
+            {
+
+                int shiftX = 0;
+
+                if (anim.FacingRight())
+                    shiftX = -25;
+                else
+                    shiftX = -15;
+
+                return new Rectangle(location.X + location.Width + shiftX, location.Y + 6, 10, 34);
+            }
+        }
+
+        public Rectangle Head
+        {
+            get
+            {
+                int shiftX = 0;
+
+                if (anim.FacingRight())
+                    shiftX = -22;
+                else
+                    shiftX = -8;
+
+                return new Rectangle(location.X + shiftX, location.Y, 30, 20);
+
+            }
+        }
+        public Rectangle Feet
+        {
+            get
+            {
+                int shiftX = 0;
+
+                if (anim.FacingRight())
+                    shiftX = -22;
+                else
+                    shiftX = -8;
+                return new Rectangle(location.X + shiftX, location.Y + 42, 30, 12);
+            }
+        }
         public Rectangle Location { get { return location; } }
 
         public void Move(int x, int y)
@@ -379,7 +444,7 @@ namespace Project_Rioman
             stopx = true;
             isinvincible = true;
             state.Fall();
-          //  touchedground = false;
+            //  touchedground = false;
             touchtime = 0;
             Move(0, -8);
         }
@@ -450,7 +515,6 @@ namespace Project_Rioman
             if (state.IsClimbing())
             {
                 stopx = false;
-             //   touchedground = true;
                 touchtime = 10;
             }
         }

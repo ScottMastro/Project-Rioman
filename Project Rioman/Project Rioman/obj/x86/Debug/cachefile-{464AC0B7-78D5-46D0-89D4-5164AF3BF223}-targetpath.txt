@@ -607,3 +607,7 @@ Content\Audio\soundeffects\random.xnb
 Content\Audio\soundeffects\selection2.xnb
 Content\Audio\soundeffects\sierns.xnb
 Content\Audio\soundeffects\warp.xnb
+Content\Video\debug\debug1.xnb
+Content\Video\debug\debug2.xnb
+Content\Video\debug\debug3.xnb
+Content\Video\debug\debug4.xnb

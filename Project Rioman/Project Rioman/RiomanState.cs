@@ -15,6 +15,7 @@ namespace Project_Rioman
         private double shootTime;
 
         private double jumpTime;
+        private double fallTime;
 
         private bool hit;
 
@@ -40,12 +41,16 @@ namespace Project_Rioman
             state = State.standing;
             lives = 3;
             jumpTime = 0;
+            fallTime = 0;
         }
 
         public void Update(double deltaTime)
         {
 
             KeyboardState k = Keyboard.GetState();
+
+            if (!IsFalling())
+                fallTime = 0;
 
             switch (state)
             {
@@ -56,6 +61,9 @@ namespace Project_Rioman
                 case State.running:
                     CheckStand(k);
                     CheckJump(k);
+                    break;
+                case State.falling:
+                    UpdateFall(deltaTime);
                     break;
                 case State.jumping:
                     UpdateJump(k, deltaTime);
@@ -82,6 +90,12 @@ namespace Project_Rioman
 
             if (!k.IsKeyDown(Constant.JUMP) && jumpTime > 0.1 || jumpTime > 0.4)
                 Fall();
+
+        }
+
+        private void UpdateFall( double deltaTime)
+        {
+            fallTime += deltaTime;
 
         }
 
@@ -184,6 +198,8 @@ namespace Project_Rioman
         }
 
         public double GetJumpTime() { return jumpTime; }
+        public double GetFallTime() { return fallTime; }
+
         public bool IsClimbTop() { return climbTop == true; }
         public void SetClimbTopState(bool x) { climbTop = x; }
         public void SetAnimateWarp(bool x) { animateWarp = x; }

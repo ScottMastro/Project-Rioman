@@ -9,6 +9,8 @@ namespace Project_Rioman
     {
         private RiomanState state;
 
+        private Texture2D[] debug = new Texture2D[4];
+
         private Texture2D sprite;
         private Texture2D stand;
         private Texture2D standShoot;
@@ -41,6 +43,9 @@ namespace Project_Rioman
         public RiomanAnimation(ContentManager content, RiomanState s)
         {
             state = s;
+
+            for (int i = 1; i <= 4; i++)
+                debug[i - 1] = content.Load<Texture2D>("Video\\debug\\debug" + i.ToString());
 
             stand = content.Load<Texture2D>("Video\\rioman\\riomanstand");
             standShoot = content.Load<Texture2D>("Video\\rioman\\riomanstandgun");
@@ -81,7 +86,7 @@ namespace Project_Rioman
             sprite = stand;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Rectangle location)
+        public void Draw(SpriteBatch spriteBatch, Rectangle location, Rioman r)
         {
             Rectangle locationRect = new Rectangle(location.X, location.Y, sprite.Width, sprite.Height);
             Rectangle drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
@@ -90,6 +95,16 @@ namespace Project_Rioman
                 spriteBatch.Draw(sprite, locationRect, drawRect, Color.White, 0f, new Vector2(sprite.Width / 2, 0f), SpriteEffects.None, 0f);
             else
                spriteBatch.Draw(sprite, locationRect, drawRect, Color.White, 0f, new Vector2(sprite.Width / 2, 0f), direction, 0f);
+
+            spriteBatch.Draw(debug[0], r.Hitbox, Color.White);
+
+            /* debugging boxes
+            spriteBatch.Draw(debug[0], r.Head, Color.White);
+            spriteBatch.Draw(debug[1], r.Feet, Color.White);
+            spriteBatch.Draw(debug[2], r.Left, Color.White);
+            spriteBatch.Draw(debug[3], r.Right, Color.White);
+            */
+
 
         }
 
