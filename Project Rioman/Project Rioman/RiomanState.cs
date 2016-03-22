@@ -78,20 +78,10 @@ namespace Project_Rioman
 
         private void UpdateJump(KeyboardState k, double deltaTime)
         {
-            if (!k.IsKeyDown(Constant.JUMP) && jumpTime > 0.1)
-            {
-                player.isfalling = true;
-                Fall();
-            }
-
             jumpTime += deltaTime;
-            if (jumpTime > 0.4)
-            {
-                player.isfalling = true;
-                Fall();
-            }
 
-            player.touchedground = false;
+            if (!k.IsKeyDown(Constant.JUMP) && jumpTime > 0.1 || jumpTime > 0.4)
+                Fall();
 
         }
 
@@ -134,7 +124,14 @@ namespace Project_Rioman
         public void Stand()
         {
             if (!IsWarping())
+            {
+                if (IsFalling() || IsClimbing())
+                    Audio.PlayLand();
+
                 state = State.standing;
+
+
+            }
         }
 
         public void Jump()

@@ -169,10 +169,9 @@ namespace Project_Rioman
             currentLevel.go = true;
 
             currentLevel.CenterRioman(viewportRect);
-            player.MoveToX(Convert.ToInt32(currentLevel.startpos.X));
             player.MoveToY(-100);
-            player.SetStartYPos(Convert.ToInt32(currentLevel.startpos.Y));
-
+            player.MoveToX(Convert.ToInt32(currentLevel.startpos.X));
+            player.SetStartPos(Convert.ToInt32(currentLevel.startpos.X), Convert.ToInt32(currentLevel.startpos.Y));
             currentLevel.TileFader();
             currentLevel.LadderForm();
 

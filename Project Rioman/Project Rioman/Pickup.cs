@@ -144,7 +144,7 @@ namespace Project_Rioman
 
         public void PickupUpdate(Tile tile)
         {
-            if (tile.collisionrect.Intersects(location))
+            if (tile.floor.Intersects(location))
             {
                 onground = true;
                 location.Y = tile.location.Y - location.Height + 6;

@@ -115,5 +115,10 @@ namespace Project_Rioman
                 Audio.activesoundeffect.Play();
             }
         }
+
+        public static void PlayLand()
+        {
+            Audio.land.Play(Constant.VOLUME, 0f, 0f);
+        }
     }
 }

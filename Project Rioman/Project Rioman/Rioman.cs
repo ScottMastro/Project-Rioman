@@ -27,10 +27,8 @@ namespace Project_Rioman
         int hitframe;
         double hittime;
 
-        public bool isfalling;
         public bool isinvincible;
         public bool ispaused;
-        public bool touchedground;
 
         public double falltime;
         public double invincibletime;
@@ -40,7 +38,8 @@ namespace Project_Rioman
 
         public bool stopx;
         public bool climbDown;
-        private int warpY;
+        private int startPosX;
+        private int startPosY;
 
         private bool stopRightMovement;
         private bool stopLeftMovement;
@@ -70,9 +69,7 @@ namespace Project_Rioman
         public void Reset()
         {
 
-            isfalling = false;
             isinvincible = false;
-            touchedground = false;
             stopx = false;
 
             stopLeftMovement = false;
@@ -102,14 +99,14 @@ namespace Project_Rioman
 
                 state.Update(deltaTime);
 
-                if (!isfalling)
+                if (!state.IsFalling())
                     falltime = 0;
 
                 if (state.IsClimbing())
                     Climb(deltaTime, keyboardState, level);
                 else if (state.IsJumping())
                     Jump(keyboardState, level);
-                else if (isfalling)
+                else if (state.IsFalling())
                     Fall(deltaTime, keyboardState, level);
                 else if (state.IsRunning() || state.IsStanding())
                     Stand(keyboardState, level);
@@ -171,7 +168,7 @@ namespace Project_Rioman
             else
                 Move(0, Convert.ToInt32(falltime * 30));
 
-            touchedground = false;
+          //  touchedground = false;
         }
 
         private void Jump(KeyboardState keyboardState, Level level)
@@ -218,7 +215,6 @@ namespace Project_Rioman
                     Move(0, -10);
                     state.Climb();
                     falltime = 0;
-                    isfalling = false;
                     climbDown = false;
                 }
             }
@@ -231,7 +227,6 @@ namespace Project_Rioman
                 {
                     Move(0, 20);
                     state.Climb();
-                    isfalling = false;
                     climbDown = true;
                 }
             }
@@ -240,28 +235,30 @@ namespace Project_Rioman
 
         private void Warp()
         {
-            if (warpY > 0)
+            Audio.PlayWarp();
+
+            Move(0, WARP_SPEED);
+
+            if (location.Y >= startPosY)
             {
-                Audio.PlayWarp();
-
-                Move(0, WARP_SPEED);
-
-                if (location.Y >= warpY)
-                {
-                    MoveToY(warpY);
-                    state.SetAnimateWarp(true);
-                }
+                MoveToY(startPosY);
+                state.SetAnimateWarp(true);
             }
+
         }
 
         public void Die()
         {
+            MoveToY(-100);
+            MoveToX(startPosX);
+
             state.Warp();
             Reset();
-            Audio.die.Play(0.5f, 1f, 0f);
+            Audio.die.Play(Constant.VOLUME, 1f, 0f);
 
         }
 
+        public int Height { get { return location.Height; } }
         public Rectangle Left { get { return new Rectangle(location.X, location.Y + 6, 10, 34); } }
         public Rectangle Head { get { return new Rectangle(location.X + 10, location.Y, 36, 32); } }
         public Rectangle Feet { get { return new Rectangle(location.X + 8, location.Y + 42, 40, 12); } }
@@ -289,8 +286,16 @@ namespace Project_Rioman
         public Texture2D GetSprite() { return anim.GetSprite(); }
         public void AtLadderTop() { state.SetClimbTopState(true); }
         public void BelowLadderTop() { state.SetClimbTopState(false); }
-        public void SetStartYPos(int y) { warpY = y; }
+        public void SetStartPos(int x, int y)
+        {
+            startPosX = x;
+            startPosY = y;
+        }
         public bool IsWarping() { return state.IsWarping(); }
+        public bool IsFalling() { return state.IsFalling(); }
+        public bool IsClimbing() { return state.IsClimbing(); }
+        public bool IsJumping() { return state.IsJumping(); }
+
         public void StartWarp() { state.Warp(); }
 
 
@@ -373,8 +378,8 @@ namespace Project_Rioman
             pausetime = 0;
             stopx = true;
             isinvincible = true;
-            isfalling = true;
-            touchedground = false;
+            state.Fall();
+          //  touchedground = false;
             touchtime = 0;
             Move(0, -8);
         }
@@ -408,7 +413,7 @@ namespace Project_Rioman
             invincibletime += elapsetime;
             stopx = false;
 
-            if (invincibletime < 0.5 && !touchedground)
+            if (invincibletime < 0.5) // && !touchedground)
             {
                 stopx = true;
                 location.X += invincibledirection;
@@ -416,13 +421,13 @@ namespace Project_Rioman
 
             }
 
-            if (isfalling && !touchedground)
+            if (state.IsFalling()) // && !touchedground)
             {
                 stopx = true;
                 sprite = airhit;
 
             }
-            else if (touchedground && touchtime < 0.3)
+            else if (touchtime < 0.3) // && touchedground)
             {
                 stopx = true;
                 touchtime += elapsetime;
@@ -445,7 +450,7 @@ namespace Project_Rioman
             if (state.IsClimbing())
             {
                 stopx = false;
-                touchedground = true;
+             //   touchedground = true;
                 touchtime = 10;
             }
         }

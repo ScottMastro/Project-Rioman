@@ -86,7 +86,10 @@ namespace Project_Rioman
             Rectangle locationRect = new Rectangle(location.X, location.Y, sprite.Width, sprite.Height);
             Rectangle drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
 
-            spriteBatch.Draw(sprite, locationRect, drawRect, Color.White, 0f, new Vector2(sprite.Width / 2, 0f), direction, 0f);
+            if(state.IsClimbing() && !state.IsShooting())
+                spriteBatch.Draw(sprite, locationRect, drawRect, Color.White, 0f, new Vector2(sprite.Width / 2, 0f), SpriteEffects.None, 0f);
+            else
+               spriteBatch.Draw(sprite, locationRect, drawRect, Color.White, 0f, new Vector2(sprite.Width / 2, 0f), direction, 0f);
 
         }
 
@@ -130,7 +133,7 @@ namespace Project_Rioman
 
         private void GetDirection()
         {
-            if(!state.IsWarping() && !state.IsClimbing())
+            if(!state.IsWarping())
             {
                 KeyboardState k = Keyboard.GetState();
                 if (k.IsKeyDown(Constant.RIGHT))
@@ -187,6 +190,12 @@ namespace Project_Rioman
                 if (climbShootTime > 0.175)
                 {
                     state.StopShooting();
+
+                    if (climbDirection == 0)
+                        sprite = climb;
+                    else
+                        sprite = climbFlip;
+
                     climbShootTime = 0;
                 }
 

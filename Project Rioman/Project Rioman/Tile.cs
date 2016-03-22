@@ -21,8 +21,8 @@ namespace Project_Rioman
         public int type;
 
         public Rectangle location;
-        public Rectangle collisionrect;
-        public Rectangle nocollisionrect;
+        public Rectangle floor;
+        public Rectangle ignoreFloor;
         public Rectangle left;
         public Rectangle right;
         public Rectangle top;
@@ -43,8 +43,8 @@ namespace Project_Rioman
 
             location = new Rectangle(x, y, 32, 32);
 
-            collisionrect = new Rectangle(x + 12, y, 16, 4);
-            nocollisionrect = new Rectangle(x, y + 16, 32, 16);
+            floor = new Rectangle(x + 12, y, 16, 4);
+            ignoreFloor = new Rectangle(x, y + 16, 32, 16);
 
             top = new Rectangle(x, y, location.Width, location.Height/2);
             bottom = new Rectangle(x, y + location.Height / 2, location.Width, location.Height / 2);
@@ -94,10 +94,10 @@ namespace Project_Rioman
         {
             location.X += x;
             location.Y += y;
-            collisionrect.X += x;
-            collisionrect.Y += y;
-            nocollisionrect.X += x;
-            nocollisionrect.Y += y;
+            floor.X += x;
+            floor.Y += y;
+            ignoreFloor.X += x;
+            ignoreFloor.Y += y;
             top.X += x;
             top.Y += y;
             bottom.X += x;
