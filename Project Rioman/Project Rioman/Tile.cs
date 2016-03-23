@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Project_Rioman
 {
+    //type -1 = ignore
     //type 0 = decoration
     //type 1 = walkable
     //type 2 = death
@@ -22,14 +23,10 @@ namespace Project_Rioman
 
         public int tile;
         public int type;
+        private int originalType;
 
         public Rectangle location;
-        public Rectangle floor;
-        public Rectangle ignoreFloor;
-        public Rectangle left;
-        public Rectangle right;
-        public Rectangle top;
-        public Rectangle bottom;
+        private Rectangle originalLocation;
 
         public double fadetime;
         public double animationtime;
@@ -41,6 +38,7 @@ namespace Project_Rioman
             sprite = texture;
             tile = tileNumber;
             type = tileType;
+            originalType = type;
 
             row = r;
             column = c;
@@ -49,14 +47,7 @@ namespace Project_Rioman
             int x = column * Constant.TILE_SIZE;
 
             location = new Rectangle(x, y, Constant.TILE_SIZE, Constant.TILE_SIZE);
-
-            floor = new Rectangle(x + 12, y, 16, 4);
-            ignoreFloor = new Rectangle(x, y + 16, 32, 16);
-
-            top = new Rectangle(x, y, location.Width, location.Height/2);
-            bottom = new Rectangle(x, y + location.Height / 2, location.Width, location.Height / 2);
-            left = new Rectangle(x, y, location.Width/2, location.Height);
-            right = new Rectangle(x + location.Width / 2, y, location.Width/2, location.Height);
+            originalLocation = location;
 
             isTop = false;
 
@@ -73,6 +64,12 @@ namespace Project_Rioman
                 LoadFrames(content, 4);
             if (tile == 102)
                 LoadFrames(content, 9);
+        }
+
+        public void Reset()
+        {
+            type = originalType;
+            location = originalLocation;
         }
 
         public void LoadFrames(ContentManager content, int frm)
@@ -99,18 +96,6 @@ namespace Project_Rioman
         {
             location.X += x;
             location.Y += y;
-            floor.X += x;
-            floor.Y += y;
-            ignoreFloor.X += x;
-            ignoreFloor.Y += y;
-            top.X += x;
-            top.Y += y;
-            bottom.X += x;
-            bottom.Y += y;
-            left.X += x;
-            left.Y += y;
-            right.X += x;
-            right.Y += y;
         }
 
         public void Fade(GameTime gameTime)
@@ -162,7 +147,7 @@ namespace Project_Rioman
                 sprite = frames[1];
         }
 
-        public void Draw(SpriteBatch spriteBatch) 
+        public void Draw(SpriteBatch spriteBatch)
         {
             if (type != 6 && type >= 0)
                 spriteBatch.Draw(sprite, location, Color.White);
@@ -173,8 +158,14 @@ namespace Project_Rioman
         public int Y { get { return location.Y; } }
         public int Row { get { return row; } }
         public int Column { get { return column; } }
-        public int Width  { get { return location.Width; } }
+        public int Width { get { return location.Width; } }
         public void ChangeType(int newType) { type = newType; }
 
+        public Rectangle Top { get { return new Rectangle(location.X, location.Y, location.Width, location.Height / 2); } }
+        public Rectangle Floor { get { return new Rectangle(location.X + 12, location.Y, 16, 4); } }
+        public Rectangle IgnoreFloor { get { return new Rectangle(location.X, location.Y + 16, 32, 16); } }
+        public Rectangle Left { get { return new Rectangle(location.X, location.Y, location.Width / 2, location.Height); } }
+        public Rectangle Right { get { return new Rectangle(location.X + location.Width / 2, location.Y, location.Width / 2, location.Height); } }
+        public Rectangle Bottom { get { return new Rectangle(location.X, location.Y + location.Height / 2, location.Width, location.Height / 2); } }
     }
 }

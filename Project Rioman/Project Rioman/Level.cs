@@ -16,7 +16,7 @@ namespace Project_Rioman
         public int width;
         public int height;
         public bool go;
-        public Vector2 startpos;
+        private Vector2 startPos;
 
         public Enemy[] enemies = new Enemy[500];
         public Pickup[] pickups = new Pickup[10];
@@ -43,6 +43,7 @@ namespace Project_Rioman
         public Rectangle scrollingRect;
 
         private Scroller[] scrollers;
+        private Scroller[] originalScrollers;
 
         struct Scroller
         {
@@ -85,7 +86,7 @@ namespace Project_Rioman
             backgroundcolour = bg;
             this.width = width;
             this.height = height;
-            this.startpos = startpos;
+            this.startPos = startpos;
             this.tiles = tiles;
             this.enemies = enemies;
             numberOfEnemies = numEnemies;
@@ -93,12 +94,33 @@ namespace Project_Rioman
             this.bosses = bosses;
             go = false;
 
+
+
+        }
+
+        public void Reset()
+        {
+            ResetTiles();
+
             scrollingRect = new Rectangle();
             scrollers = MakeScroller();
+
             doorOpening = false;
 
         }
 
+        public void ResetTiles()
+        {
+            for (int r = 0; r <= height; r++)
+            {
+                for (int c = 0; c <= width; c++)
+                {
+                    if(tiles[r,c] != null)
+                    tiles[r, c].Reset();
+                }
+            }
+
+        }
 
         public void DrawTiles(SpriteBatch spriteBatch)
         {
@@ -112,19 +134,7 @@ namespace Project_Rioman
             }
 
         }
-
-
-        public void CenterRioman(Viewport viewportrect)
-        {
-            Vector2 middle = new Vector2(viewportrect.Width / 2, viewportrect.Height - 32 * 4);
-
-            int xoffset = Convert.ToInt32(middle.X - startpos.X);
-            int yoffset = Convert.ToInt32(middle.Y - startpos.Y);
-
-            startpos = middle;
-
-            MoveStuff(xoffset, yoffset);
-        }
+        
 
         public void CenterRioman(Viewport viewportrect, Rioman rioman)
         {
@@ -149,19 +159,19 @@ namespace Project_Rioman
                     //limit player motion against solid tiles
                     if (tle.type == 1)
                     {
-                        if (rioman.Right.Intersects(tle.left))
+                        if (rioman.Right.Intersects(tle.Left))
                         {
                             rioman.StopRightMovement();
                             rioman.invincibledirection = 0;
                         }
 
-                        if (rioman.Left.Intersects(tle.right))
+                        if (rioman.Left.Intersects(tle.Right))
                         {
                             rioman.StopLeftMovement();
                             rioman.invincibledirection = 0;
                         }
 
-                        if (rioman.Head.Intersects(tle.bottom) && !rioman.IsClimbing())
+                        if (rioman.Head.Intersects(tle.Bottom) && !rioman.IsClimbing())
                         {
                             rioman.state.Fall();
                         }
@@ -174,6 +184,7 @@ namespace Project_Rioman
                         {
                             lifechange = -1;
                             rioman.Die();
+                            go = false;
                         }
                     }
                     //open door
@@ -184,7 +195,7 @@ namespace Project_Rioman
 
                     }
 
-                    if (tle.type == 3 && tle.isTop && rioman.IsClimbing() && rioman.Feet.Intersects(tle.top))
+                    if (tle.type == 3 && tle.isTop && rioman.IsClimbing() && rioman.Feet.Intersects(tle.Top))
                     {
                         climbTop = true;
                     }
@@ -192,7 +203,7 @@ namespace Project_Rioman
                     if (tle.type == 1 || tle.type == 4 || tle.type == 5 || tle.type == 3 && tle.isTop)
                     {
 
-                        if (!rioman.IsJumping() && rioman.Feet.Intersects(tle.floor) && !rioman.Feet.Intersects(tle.ignoreFloor))
+                        if (!rioman.IsJumping() && rioman.Feet.Intersects(tle.Floor) && !rioman.Feet.Intersects(tle.IgnoreFloor))
                         {
                             onGround = true;
                             rioman.MoveToY(tle.Y - rioman.Height + 8);
@@ -257,9 +268,9 @@ namespace Project_Rioman
                             if (tiles[r + y, c + x] != null && tiles[r + y, c + x].tile == tiles[r, c].tile)
                             {
                                 scroll.Height = tiles[r + y, c + x].location.Y - tiles[r, c + x].location.Y;
-                                tiles[r + y, c + x] = null;
-                                tiles[r, c + x] = null;
-                                tiles[r + y, c] = null;
+                                tiles[r + y, c + x].type = -1;
+                                tiles[r, c + x].type = -1;
+                                tiles[r + y, c].type = -1;
                                 break;
                             }
                         }
@@ -479,16 +490,25 @@ namespace Project_Rioman
             }
         }
 
+        public void Play(Viewport viewport, Rioman player)
+        {
 
+            Reset();
+            go = true;
 
+            Vector2 centerPos = new Vector2(viewport.Width / 2, viewport.Height - 32 * 4);
 
+            int offsetX = Convert.ToInt32(centerPos.X - startPos.X);
+            int offsetY = Convert.ToInt32(centerPos.Y - startPos.Y);
 
+            MoveStuff(offsetX, offsetY);
 
+            player.MoveToY(-100);
+            player.MoveToX(Convert.ToInt32(centerPos.X));
+            player.SetStartPos(Convert.ToInt32(centerPos.X), Convert.ToInt32(centerPos.Y));
+            player.StartWarp();
 
-
-
-
-
+        }
 
 
 
@@ -551,14 +571,14 @@ namespace Project_Rioman
                         {
                             if (tle.type == 1 || tle.type == 3 && tle.isTop || tle.type == 4 || tle.type == 5)
                             {
-                                if (enemies[i].location.Intersects(tle.floor) && !enemies[i].location.Intersects(tle.ignoreFloor))
+                                if (enemies[i].location.Intersects(tle.Floor) && !enemies[i].location.Intersects(tle.IgnoreFloor))
                                 {
                                     if (enemies[i].type != 317)
                                         enemies[i].location.Y = tle.location.Y - enemies[i].location.Height + 2;
                                     enemycollision[i] = true;
                                     enemies[i].falltime = 0;
                                 }
-                                if (enemies[i].location.Intersects(tle.ignoreFloor))
+                                if (enemies[i].location.Intersects(tle.IgnoreFloor))
                                 {
                                     enemies[i].isjumping = false;
                                     enemies[i].othertime = 0;
@@ -570,9 +590,9 @@ namespace Project_Rioman
                                     }
                                 }
 
-                                if (enemies[i].location.Intersects(tle.top) && tle.type != 3)
+                                if (enemies[i].location.Intersects(tle.Top) && tle.type != 3)
                                     enemies[i].direction = SpriteEffects.None;
-                                else if (enemies[i].location.Intersects(tle.bottom) && tle.type != 3)
+                                else if (enemies[i].location.Intersects(tle.Bottom) && tle.type != 3)
                                     enemies[i].direction = SpriteEffects.FlipHorizontally;
                             }
                         }
@@ -582,7 +602,7 @@ namespace Project_Rioman
                     {
                         if (tle.type == 1 || tle.type == 3 && tle.isTop || tle.type == 4 || tle.type == 5)
                         {
-                            if (tle.type != 4 && bosses[activelevel].location.Intersects(tle.floor) && !bosses[activelevel].location.Intersects(tle.ignoreFloor))
+                            if (tle.type != 4 && bosses[activelevel].location.Intersects(tle.Floor) && !bosses[activelevel].location.Intersects(tle.IgnoreFloor))
                             {
                                 bosses[activelevel].location.Y = tle.location.Y - bosses[activelevel].location.Height + 2;
                                 bossfalling = false;
@@ -595,9 +615,9 @@ namespace Project_Rioman
 
                         if (bosses[activelevel].boss == 3)
                         {
-                            if (bosses[activelevel].location.Intersects(tle.top) && tle.type != 3)
+                            if (bosses[activelevel].location.Intersects(tle.Top) && tle.type != 3)
                                 bosses[activelevel].direction = SpriteEffects.None;
-                            else if (bosses[activelevel].location.Intersects(tle.bottom) && tle.type != 3)
+                            else if (bosses[activelevel].location.Intersects(tle.Bottom) && tle.type != 3)
                                 bosses[activelevel].direction = SpriteEffects.FlipHorizontally;
                         }
                     }
@@ -706,7 +726,7 @@ namespace Project_Rioman
 
             foreach (Tile tle in tiles)
             {
-                if (up && tle != null && tle.type == 3 && riolocation.Intersects(tle.floor) && riolocation.Intersects(tle.ignoreFloor))
+                if (up && tle != null && tle.type == 3 && riolocation.Intersects(tle.Floor) && riolocation.Intersects(tle.IgnoreFloor))
                 {
                     if (Math.Abs(riolocation.X - tle.location.Center.X) <= 16 && !okay)
                     {
@@ -718,7 +738,7 @@ namespace Project_Rioman
                     }
                 }
 
-                if (!up && tle != null && tle.type == 3 && riolocation.Intersects(tle.floor) && !riolocation.Intersects(tle.ignoreFloor) && tle.isTop)
+                if (!up && tle != null && tle.type == 3 && riolocation.Intersects(tle.Floor) && !riolocation.Intersects(tle.IgnoreFloor) && tle.isTop)
                 {
                     if (Math.Abs(riolocation.X - tle.location.Center.X) <= 16 && !okay)
                     {

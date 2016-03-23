@@ -44,9 +44,11 @@ namespace Project_Rioman
 
         public void Update(GameTime gameTime)
         {
+            Console.WriteLine(player.Location.X);
+
             KeyboardState keyboardState = Keyboard.GetState();
 
-            if (!currentLevel.go && !player.IsWarping())
+            if (!currentLevel.go)
                 ChangeLevel();
 
             if (currentLevel.go && !currentLevel.IsBusy() && !currentLevel.isScrolling && !GameState.IsPaused()
@@ -145,9 +147,6 @@ namespace Project_Rioman
 
                     player.Draw(spriteBatch);
 
-              //      spriteBatch.Draw(player.sprite, player.Left, Color.AliceBlue);
-              //      spriteBatch.Draw(player.sprite, player.Right, Color.AliceBlue);
-
 
                     for (int i = 0; i <= 9; i++)
                         currentLevel.pickups[i].Draw(spriteBatch);
@@ -164,12 +163,8 @@ namespace Project_Rioman
         private void ChangeLevel()
         {
             currentLevel = levels[GameState.GetLevel()];
-            currentLevel.go = true;
+            currentLevel.Play(viewportRect, player);
 
-            currentLevel.CenterRioman(viewportRect);
-            player.MoveToY(-100);
-            player.MoveToX(Convert.ToInt32(currentLevel.startpos.X));
-            player.SetStartPos(Convert.ToInt32(currentLevel.startpos.X), Convert.ToInt32(currentLevel.startpos.Y));
             currentLevel.TileFader();
             currentLevel.LadderForm();
 

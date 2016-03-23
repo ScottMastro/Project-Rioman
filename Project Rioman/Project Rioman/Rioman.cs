@@ -69,7 +69,6 @@ namespace Project_Rioman
 
         public void Reset()
         {
-
             isinvincible = false;
             stopx = false;
 
@@ -242,11 +241,8 @@ namespace Project_Rioman
 
         public void Die()
         {
-            MoveToY(-100);
-            MoveToX(startPosX);
-
-            state.Warp();
             Reset();
+            MoveToY(-100);
             Audio.die.Play(Constant.VOLUME, 1f, 0f);
 
         }
