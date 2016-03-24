@@ -8,7 +8,7 @@ namespace Project_Rioman
     class GameState
     {
 
-        //Singleton pattern so only one instance of gamestate is made
+        //Singleton pattern so only one instance of GameState is made
         private static volatile GameState instance;
         private GameState() { }
 

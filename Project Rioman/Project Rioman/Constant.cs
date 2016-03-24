@@ -40,6 +40,28 @@ namespace Project_Rioman
         public static int TOXICMAN = 16;
         public static int MUSH = 14;
 
+        public static int TOTEM = 297;
+        public static int NEOLUCKY = 298;
+        public static int KRONOS = 299;
+        public static int PURIN = 300;
+        public static int MOUSEHEAD = 301;
+        public static int FLIPSIDE = 302;
+        public static int MACEBOT = 303;
+        public static int R05D0R = 304;
+        public static int SPIKEBOMB = 305;
+        public static int MMUSHMECH = 306;
+        public static int TMUSHMECH = 307;
+        public static int CHANCEBOMB = 308;
+        public static int ZARROCCLONE = 309;
+        public static int DEUXKAMA = 310;
+        public static int SERVERBOT = 311;
+        public static int MEGAHOPPER = 312;
+        public static int DOZERBOT = 313;
+        public static int BLACKY = 314;
+        public static int HELLICOPTOR = 315;
+        public static int P1H8R = 316;
+        public static int MACKS = 317;
+        
 
         public static int TileNumberToType(int tileNumber)
         {

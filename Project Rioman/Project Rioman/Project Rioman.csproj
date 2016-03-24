@@ -100,6 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractEnemy.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="Audio.cs" />
     <Compile Include="Boss.cs" />

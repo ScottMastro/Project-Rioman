@@ -7,8 +7,6 @@ namespace Project_Rioman
 {
     class Enemy
     {
-        bool flag = false;
-
 
         struct Totem
         {
@@ -189,10 +187,6 @@ namespace Project_Rioman
 
         public Enemy(int typ, int r, int c, ContentManager content)
         {
-
-            if (typ == 298)
-                flag = true;
-
             type = typ;
 
             int y = r * Constant.TILE_SIZE;
@@ -511,9 +505,6 @@ namespace Project_Rioman
 
         public void UpdateEnemy(Rioman rioman, Viewport viewportrect, double elapsedtime)
         {
-
-            if (flag)
-                Console.WriteLine(location);
 
             AliveCheck(viewportrect);
 
