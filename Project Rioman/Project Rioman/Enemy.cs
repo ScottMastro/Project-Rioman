@@ -7,6 +7,9 @@ namespace Project_Rioman
 {
     class Enemy
     {
+        bool flag = false;
+
+
         struct Totem
         {
             public int type;
@@ -184,9 +187,17 @@ namespace Project_Rioman
         Cart[] carts = new Cart[4];
         Random r = new Random();
 
-        public Enemy(int typ, int x, int y, ContentManager content)
+        public Enemy(int typ, int r, int c, ContentManager content)
         {
+
+            if (typ == 298)
+                flag = true;
+
             type = typ;
+
+            int y = r * Constant.TILE_SIZE;
+            int x = c * Constant.TILE_SIZE;
+
             location = new Rectangle(x, y, 0, 0);
             startpos = location;
 
@@ -500,6 +511,10 @@ namespace Project_Rioman
 
         public void UpdateEnemy(Rioman rioman, Viewport viewportrect, double elapsedtime)
         {
+
+            if (flag)
+                Console.WriteLine(location);
+
             AliveCheck(viewportrect);
 
             if (isalive)

@@ -20,14 +20,13 @@ namespace Project_Rioman
         private Vector2 startPos;
 
         private Tile[,] tiles;
-        private Enemy[] enemies = new Enemy[500];
+        List<Enemy> enemies;
         private Pickup[] pickups = new Pickup[10];
         private Boss[] bosses = new Boss[17];
-        private int numEnemies;
 
         public LevelLoader() { }
 
-        public void LoadLevelContent (ContentManager content) {
+        public void LoadLevelContent(ContentManager content) {
 
             SetLetters();
 
@@ -89,7 +88,7 @@ namespace Project_Rioman
                 //Step2: Convert string to tiles
 
                 tiles = new Tile[height + 1, width + 1];
-                numEnemies = 0;
+                enemies = new List<Enemy>();
 
                 for (int r = 0; r <= height; r++)
                 {
@@ -103,8 +102,8 @@ namespace Project_Rioman
                 }
 
 
-                return new Level(backgroundColour, width, height, startPos, 
-                    tiles, enemies, numEnemies, pickups, bosses);
+                return new Level(backgroundColour, width, height, startPos, tiles, 
+                    enemies.ToArray(), pickups, bosses);
 
             }
 
@@ -122,8 +121,7 @@ namespace Project_Rioman
             //tile is an enemy
             if (value >= 297 && value <= 317)
             {
-                enemies[numEnemies] = new Enemy(value, c * 32, r * 32, content);
-                numEnemies++;
+                enemies.Add(new Enemy(value, r, c, content));
             }
 
             //tile is a boss

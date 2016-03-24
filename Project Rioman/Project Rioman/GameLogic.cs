@@ -35,20 +35,17 @@ namespace Project_Rioman
 
             levelLoader.LoadLevelContent(content);
 
-            for (int i = 1; i <= 9; i++)
-                levels[i - 1] = levelLoader.Load(i, content);
-            currentLevel = levels[3];
+            for (int i = 0; i <= 8; i++)
+                levels[i] = levelLoader.Load(i + 1, content);
 
             viewportRect = viewport;
         }
 
         public void Update(GameTime gameTime)
         {
-            Console.WriteLine(player.Location.X);
-
             KeyboardState keyboardState = Keyboard.GetState();
 
-            if (!currentLevel.go)
+            if (currentLevel == null || !currentLevel.go)
                 ChangeLevel();
 
             if (currentLevel.go && !currentLevel.IsBusy() && !currentLevel.isScrolling && !GameState.IsPaused()
@@ -162,7 +159,7 @@ namespace Project_Rioman
 
         private void ChangeLevel()
         {
-            currentLevel = levels[GameState.GetLevel()];
+            currentLevel = levels[GameState.GetLevel() - 1];
             currentLevel.Play(viewportRect, player);
 
             currentLevel.TileFader();

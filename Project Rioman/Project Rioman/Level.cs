@@ -18,7 +18,7 @@ namespace Project_Rioman
         public bool go;
         private Vector2 startPos;
 
-        public Enemy[] enemies = new Enemy[500];
+        public Enemy[] enemies;
         public Pickup[] pickups = new Pickup[10];
         public Boss[] bosses = new Boss[17];
         int numberOfEnemies;
@@ -43,7 +43,6 @@ namespace Project_Rioman
         public Rectangle scrollingRect;
 
         private Scroller[] scrollers;
-        private Scroller[] originalScrollers;
 
         struct Scroller
         {
@@ -81,7 +80,7 @@ namespace Project_Rioman
 
 
         public Level(Color bg, int width, int height, Vector2 startpos, Tile[,] tiles,
-            Enemy[] enemies, int numEnemies, Pickup[] pickups, Boss[] bosses)
+            Enemy[] enemies, Pickup[] pickups, Boss[] bosses)
         {
             backgroundcolour = bg;
             this.width = width;
@@ -89,7 +88,7 @@ namespace Project_Rioman
             this.startPos = startpos;
             this.tiles = tiles;
             this.enemies = enemies;
-            numberOfEnemies = numEnemies;
+            numberOfEnemies = enemies.Length;
             this.pickups = pickups;
             this.bosses = bosses;
             go = false;
@@ -556,7 +555,7 @@ namespace Project_Rioman
                     if (tle.tile == 102)
                         tle.Wave(gameTime);
 
-                    for (int i = 0; i <= numberOfEnemies; i++)
+                    for (int i = 0; i < numberOfEnemies; i++)
                     {
                         if (enemies[i].type == 302)
                         {
@@ -625,7 +624,7 @@ namespace Project_Rioman
             }
 
 
-            for (int i = 0; i <= numberOfEnemies; i++)
+            for (int i = 0; i < numberOfEnemies; i++)
                 enemies[i].isfalling = !enemycollision[i];
 
             
@@ -679,7 +678,7 @@ namespace Project_Rioman
                     pickup.MovePickup(x, y);
             }
 
-            for (int i = 0; i <= numberOfEnemies; i++)
+            for (int i = 0; i < numberOfEnemies; i++)
                 enemies[i].MoveEnemies(x, y);
 
             bosses[activelevel].Move(x, y);
@@ -759,10 +758,12 @@ namespace Project_Rioman
 
         public void UpdateEnemies(Rioman rioman, GameTime gameTime, Viewport viewportrect)
         {
-            for (int i = 0; i <= numberOfEnemies; i++)
-                enemies[i].UpdateEnemy(rioman, viewportrect, gameTime.ElapsedGameTime.TotalSeconds);
 
-            foreach (Pickup pickup in pickups)
+            for (int i = 0; i < numberOfEnemies; i++)
+            {
+                enemies[i].UpdateEnemy(rioman, viewportrect, gameTime.ElapsedGameTime.TotalSeconds);
+            }
+                foreach (Pickup pickup in pickups)
             {
                 if (pickup.isalive)
                     pickup.Animate(gameTime.ElapsedGameTime.TotalSeconds);
@@ -771,7 +772,7 @@ namespace Project_Rioman
 
         public void DrawEnemies(SpriteBatch spriteBatch)
         {
-            for (int i = 0; i <= numberOfEnemies; i++)
+            for (int i = 0; i < numberOfEnemies; i++)
                 enemies[i].Draw(spriteBatch, isScrolling);
         }
 
@@ -780,7 +781,7 @@ namespace Project_Rioman
             if (bosses[activelevel].isalive)
                 bosses[activelevel].Collision(bullets, rioman);
 
-            for (int i = 0; i <= numberOfEnemies; i++)
+            for (int i = 0; i < numberOfEnemies; i++)
             {
                 if (enemies[i].isalive)
                 {
