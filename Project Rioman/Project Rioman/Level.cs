@@ -18,7 +18,8 @@ namespace Project_Rioman
         public bool go;
         private Vector2 startPos;
 
-        public OldEnemy[] enemies;
+        public Enemy[] enemies;
+        private AbstractEnemy[] aenemy;
         public Pickup[] pickups = new Pickup[10];
         public Boss[] bosses = new Boss[17];
         int numberOfEnemies;
@@ -80,7 +81,7 @@ namespace Project_Rioman
 
 
         public Level(Color bg, int width, int height, Vector2 startpos, Tile[,] tiles,
-            OldEnemy[] enemies, Pickup[] pickups, Boss[] bosses)
+            Enemy[] enemies, AbstractEnemy[] ae, Pickup[] pickups, Boss[] bosses)
         {
             backgroundcolour = bg;
             this.width = width;
@@ -88,6 +89,7 @@ namespace Project_Rioman
             this.startPos = startpos;
             this.tiles = tiles;
             this.enemies = enemies;
+            aenemy = ae;
             numberOfEnemies = enemies.Length;
             this.pickups = pickups;
             this.bosses = bosses;
@@ -621,6 +623,18 @@ namespace Project_Rioman
                         }
                     }
                 }
+
+
+                if (tle != null)
+                {
+                    if (tle.type == 1 || tle.type == 3 && tle.isTop)
+                    {
+                        for (int e = 0; e <= aenemy.Length - 1; e++)
+                            if (aenemy[e].GetCollisionRect().Intersects(tle.Floor))
+                                aenemy[e].GroundCollision(tle.location.Y);
+                    }
+                }
+
             }
 
 
@@ -631,6 +645,7 @@ namespace Project_Rioman
 
             foreach (Pickup pickup in pickups)
                 pickup.PickupUpdate(rioman, viewportRect);
+
 
 
 
@@ -680,6 +695,9 @@ namespace Project_Rioman
 
             for (int i = 0; i < numberOfEnemies; i++)
                 enemies[i].MoveEnemies(x, y);
+
+            for (int i = 0; i < aenemy.Length; i++)
+                aenemy[i].Move(x, y);
 
             bosses[activelevel].Move(x, y);
 
@@ -756,17 +774,23 @@ namespace Project_Rioman
             return riolocation;
         }
 
-        public void UpdateEnemies(Rioman rioman, GameTime gameTime, Viewport viewportrect)
+        public void UpdateEnemies(Rioman rioman, double deltaTime, Viewport viewportrect)
         {
 
             for (int i = 0; i < numberOfEnemies; i++)
             {
-                enemies[i].UpdateEnemy(rioman, viewportrect, gameTime.ElapsedGameTime.TotalSeconds);
+                enemies[i].UpdateEnemy(rioman, viewportrect, deltaTime);
             }
-                foreach (Pickup pickup in pickups)
+
+            for (int i = 0; i < aenemy.Length; i++)
+            {
+                aenemy[i].Update(deltaTime);
+            }
+
+            foreach (Pickup pickup in pickups)
             {
                 if (pickup.isalive)
-                    pickup.Animate(gameTime.ElapsedGameTime.TotalSeconds);
+                    pickup.Animate(deltaTime);
             }
         }
 
@@ -774,6 +798,9 @@ namespace Project_Rioman
         {
             for (int i = 0; i < numberOfEnemies; i++)
                 enemies[i].Draw(spriteBatch, isScrolling);
+
+            for (int i = 0; i < aenemy.Length - 1; i++)
+                aenemy[i].Draw(spriteBatch);
         }
 
         public void EnemyCollision(Bullet[] bullets, Rioman rioman)

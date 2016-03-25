@@ -20,7 +20,8 @@ namespace Project_Rioman
         private Vector2 startPos;
 
         private Tile[,] tiles;
-        List<OldEnemy> enemies;
+        private List<Enemy> enemies;
+        private List<AbstractEnemy> aenemy;
         private Pickup[] pickups = new Pickup[10];
         private Boss[] bosses = new Boss[17];
 
@@ -88,7 +89,9 @@ namespace Project_Rioman
                 //Step2: Convert string to tiles
 
                 tiles = new Tile[height + 1, width + 1];
-                enemies = new List<OldEnemy>();
+                enemies = new List<Enemy>();
+                aenemy = new List<AbstractEnemy>();
+
 
                 for (int r = 0; r <= height; r++)
                 {
@@ -103,7 +106,7 @@ namespace Project_Rioman
 
 
                 return new Level(backgroundColour, width, height, startPos, tiles, 
-                    enemies.ToArray(), pickups, bosses);
+                    enemies.ToArray(), aenemy.ToArray(), pickups, bosses);
 
             }
 
@@ -119,9 +122,13 @@ namespace Project_Rioman
                 tiles[r, c] = new Tile(tileSprites[value], value, type, r, c, content);
 
             //tile is an enemy
-            if (value >= 297 && value <= 317)
+            if(value == 298)
             {
-                enemies.Add(new OldEnemy(value, r, c, content));
+                aenemy.Add(new Neolucky(value, r, c));
+            }
+            else if (value >= 297 && value <= 317)
+            {
+                enemies.Add(new Enemy(value, r, c, content));
             }
 
             //tile is a boss

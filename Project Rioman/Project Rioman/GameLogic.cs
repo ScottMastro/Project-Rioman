@@ -61,7 +61,7 @@ namespace Project_Rioman
 
                 player.Update(gameTime.ElapsedGameTime.TotalSeconds, currentLevel);
 
-                currentLevel.UpdateEnemies(player, gameTime, viewportRect);
+                currentLevel.UpdateEnemies(player, gameTime.ElapsedGameTime.TotalSeconds, viewportRect);
                 bool selectionscreen = currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportRect, player);
 
                 if (selectionscreen)
