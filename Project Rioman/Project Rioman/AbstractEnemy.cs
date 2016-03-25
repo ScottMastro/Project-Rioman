@@ -2,36 +2,38 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 
 namespace Project_Rioman
 {
     abstract class AbstractEnemy
     {
-        private int type;
-        private Rectangle location;
-        private Rectangle originalLocation;
-        private Rectangle hitbox;
+        protected int type;
+        protected Rectangle location;
+        protected Rectangle originalLocation;
+        protected Rectangle hitbox;
 
-        private Texture2D sprite;
-        private Rectangle drawRect;
+        protected Texture2D sprite;
+        protected Rectangle drawRect;
 
-        private bool isAlive;
-        private int health;
-        private int maxHealth;
+        protected bool isAlive;
+        protected int health;
+        protected int maxHealth;
+        protected int touchDamage;
 
-        public AbstractEnemy(int typ, int r, int c, ContentManager content)
+        public AbstractEnemy(int type, int r, int c)
         {
 
-            type = typ;
+            this.type = type;
 
             int y = r * Constant.TILE_SIZE;
             int x = c * Constant.TILE_SIZE;
 
             location = new Rectangle(x, y, 0, 0);
             originalLocation = location;
+
+            health = EnemyAttributes.GetMaxHealthAttribute(type);
+            touchDamage = EnemyAttributes.GetDamageAttribute(type);
 
         }
 

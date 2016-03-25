@@ -3,20 +3,21 @@ using System.Collections.Generic;
 
 namespace Project_Rioman
 {
-    static class EnemyAttributes
+    public static class EnemyAttributes
     {
 
-        Dictionary<int, int> maxHealth;
-        Dictionary<int, Texture2D> spriteSheet;
+        private static Dictionary<int, int> maxHealth;
+        private static Dictionary<int, int> damage;
 
-        public static EnemyAttributes()
+        static EnemyAttributes()
         {
-
+            Init();
         }
 
         private static void Init()
         {
             HealthInit();
+            DamageInit();
         }
 
         private static void HealthInit()
@@ -43,6 +44,45 @@ namespace Project_Rioman
             maxHealth.Add(Constant.P1H8R, 4);
             maxHealth.Add(Constant.MACKS, 5);
         }
+        private static void DamageInit()
+        {
+            damage.Add(Constant.TOTEM, 2);
+            damage.Add(Constant.NEOLUCKY, 4);
+            damage.Add(Constant.KRONOS, 0);
+            damage.Add(Constant.PURIN, 2);
+            damage.Add(Constant.MOUSEHEAD, 5);
+            damage.Add(Constant.FLIPSIDE, 500);
+            damage.Add(Constant.MACEBOT, 6);
+            damage.Add(Constant.TR05D0R, 5);
+            damage.Add(Constant.SPIKEBOMB, 3);
+            damage.Add(Constant.MMUSHMECH, 4);
+            damage.Add(Constant.TMUSHMECH, 7);
+            damage.Add(Constant.CHANCEBOMB, 2);
+            damage.Add(Constant.ZARROCCLONE, 2);
+            damage.Add(Constant.DEUXKAMA, 5);
+            damage.Add(Constant.SERVERBOT, 4);
+            damage.Add(Constant.MEGAHOPPER, 6);
+            damage.Add(Constant.DOZERBOT, 500);
+            damage.Add(Constant.BLACKY, 3);
+            damage.Add(Constant.HELLICOPTOR, 4);
+            damage.Add(Constant.P1H8R, 3);
+            damage.Add(Constant.MACKS, 4);
+        }
+       
+        public int GetDamageAttribute(int type)
+        {
+            int value;
+            damage.TryGetValue(type, out value);
 
+            return value;
+        }
+
+        public int GetMaxHealthAttribute(int type)
+        {
+            int value;
+            maxHealth.TryGetValue(type, out value);
+
+            return value;
+        }
     }
 }

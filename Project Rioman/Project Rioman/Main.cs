@@ -52,6 +52,7 @@ namespace Project_Rioman
             GameState.getInstance();
             backgroundcolor = Color.Black;
 
+            EnemyAttributes.LoadContent(Content);
             Audio.LoadAudio(Content);
             Save.LoadContent(Content);
             Opening.LoadContent(Content);

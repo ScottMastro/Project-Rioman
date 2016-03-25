@@ -47,7 +47,7 @@ namespace Project_Rioman
         public static int MOUSEHEAD = 301;
         public static int FLIPSIDE = 302;
         public static int MACEBOT = 303;
-        public static int R05D0R = 304;
+        public static int TR05D0R = 304;
         public static int SPIKEBOMB = 305;
         public static int MMUSHMECH = 306;
         public static int TMUSHMECH = 307;

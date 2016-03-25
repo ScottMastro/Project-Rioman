@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Project_Rioman
 {
-    class Enemy
+    class OldEnemy
     {
 
         struct Totem
@@ -185,7 +185,7 @@ namespace Project_Rioman
         Cart[] carts = new Cart[4];
         Random r = new Random();
 
-        public Enemy(int typ, int r, int c, ContentManager content)
+        public OldEnemy(int typ, int r, int c, ContentManager content)
         {
             type = typ;
 

@@ -106,9 +106,11 @@
     <Compile Include="Boss.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Constant.cs" />
+    <Compile Include="EnemyAttributes.cs" />
     <Compile Include="GameLogic.cs" />
     <Compile Include="GameState.cs" />
-    <Compile Include="Enemy.cs" />
+    <Compile Include="Neolucky.cs" />
+    <Compile Include="OldEnemy.cs" />
     <Compile Include="Health.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="LevelLoader.cs" />

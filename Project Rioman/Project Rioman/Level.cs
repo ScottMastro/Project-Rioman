@@ -18,7 +18,7 @@ namespace Project_Rioman
         public bool go;
         private Vector2 startPos;
 
-        public Enemy[] enemies;
+        public OldEnemy[] enemies;
         public Pickup[] pickups = new Pickup[10];
         public Boss[] bosses = new Boss[17];
         int numberOfEnemies;
@@ -80,7 +80,7 @@ namespace Project_Rioman
 
 
         public Level(Color bg, int width, int height, Vector2 startpos, Tile[,] tiles,
-            Enemy[] enemies, Pickup[] pickups, Boss[] bosses)
+            OldEnemy[] enemies, Pickup[] pickups, Boss[] bosses)
         {
             backgroundcolour = bg;
             this.width = width;

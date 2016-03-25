@@ -20,7 +20,7 @@ namespace Project_Rioman
         private Vector2 startPos;
 
         private Tile[,] tiles;
-        List<Enemy> enemies;
+        List<OldEnemy> enemies;
         private Pickup[] pickups = new Pickup[10];
         private Boss[] bosses = new Boss[17];
 
@@ -88,7 +88,7 @@ namespace Project_Rioman
                 //Step2: Convert string to tiles
 
                 tiles = new Tile[height + 1, width + 1];
-                enemies = new List<Enemy>();
+                enemies = new List<OldEnemy>();
 
                 for (int r = 0; r <= height; r++)
                 {
@@ -121,7 +121,7 @@ namespace Project_Rioman
             //tile is an enemy
             if (value >= 297 && value <= 317)
             {
-                enemies.Add(new Enemy(value, r, c, content));
+                enemies.Add(new OldEnemy(value, r, c, content));
             }
 
             //tile is a boss

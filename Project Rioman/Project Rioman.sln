@@ -7,11 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project Rioman", "Project R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project RiomanContent", "Project Rioman\Content\Project RiomanContent.contentproj", "{464AC0B7-78D5-46D0-89D4-5164AF3BF223}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{445DA23B-D92D-47B9-A3DE-FED847B703A1}"
-	ProjectSection(SolutionItems) = preProject
-		EnemyAttributes.cs = EnemyAttributes.cs
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
