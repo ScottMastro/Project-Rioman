@@ -10,6 +10,7 @@ namespace Project_Rioman
         public bool alive;
         public Rectangle location;
         int direction;
+        private int damage = 1;
 
         public Bullet(Texture2D bullet)
         {
@@ -44,6 +45,12 @@ namespace Project_Rioman
         {
             location.X += x;
             location.Y += y;
+        }
+
+        public int TakeDamage()
+        {
+            alive = false;
+            return damage;
         }
     }
 }

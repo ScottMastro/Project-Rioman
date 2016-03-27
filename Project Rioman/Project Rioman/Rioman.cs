@@ -91,43 +91,40 @@ namespace Project_Rioman
         {
             KeyboardState keyboardState = Keyboard.GetState();
 
-            if (ispaused)
-                Pause(deltaTime);
-            else
-            {
+            state.Update(deltaTime);
 
-                state.Update(deltaTime);
+            if (state.IsClimbing())
+                Climb(deltaTime, keyboardState, level);
+            else if (state.IsJumping())
+                Jump(keyboardState, level);
+            else if (state.IsFalling())
+                Fall(deltaTime, keyboardState, level);
+            else if (state.IsRunning() || state.IsStanding())
+                Stand(keyboardState, level);
+            else if (state.IsWarping())
+                Warp();
 
-                if (state.IsClimbing())
-                    Climb(deltaTime, keyboardState, level);
-                else if (state.IsJumping())
-                    Jump(keyboardState, level);
-                else if (state.IsFalling())
-                    Fall(deltaTime, keyboardState, level);
-                else if (state.IsRunning() || state.IsStanding())
-                    Stand(keyboardState, level);
-                else if (state.IsWarping())
-                    Warp();
+            sprite = GetSprite();
 
-                sprite = GetSprite();
+            if (isinvincible)
+                Invincible(deltaTime);
 
-                if (isinvincible)
-                    Invincible(deltaTime);
-
-                if (ishit)
-                    Hit(deltaTime);
+            if (ishit)
+                Hit(deltaTime);
 
 
-                stopLeftMovement = false;
-                stopRightMovement = false;
+            stopLeftMovement = false;
+            stopRightMovement = false;
 
-                anim.Update(deltaTime);
+            anim.Update(deltaTime);
 
-            }
+
 
 
             previousKeyboardState = keyboardState;
         }
+
+
 
         private void Stand(KeyboardState keyboardState, Level level)
         {
@@ -430,6 +427,12 @@ namespace Project_Rioman
                         bullet[num].BulletSpawn(location.X + 20, location.Center.Y - 8, SpriteEffects.None);
                 }
             }
+        }
+
+        public void Hit(int damage)
+        {
+            //TODO
+            Hit();
         }
 
         public void Hit()

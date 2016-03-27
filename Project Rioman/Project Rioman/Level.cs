@@ -627,12 +627,9 @@ namespace Project_Rioman
 
                 if (tle != null)
                 {
-                    if (tle.type == 1 || tle.type == 3 && tle.isTop)
-                    {
-                        for (int e = 0; e <= aenemy.Length - 1; e++)
-                            if (aenemy[e].GetCollisionRect().Intersects(tle.Floor))
-                                aenemy[e].GroundCollision(tle.location.Y);
-                    }
+
+                    for (int e = 0; e <= aenemy.Length - 1; e++)
+                        aenemy[e].DetectTileCollision(tle);
                 }
 
             }
@@ -774,17 +771,17 @@ namespace Project_Rioman
             return riolocation;
         }
 
-        public void UpdateEnemies(Rioman rioman, double deltaTime, Viewport viewportrect)
+        public void UpdateEnemies(Rioman rioman, Bullet[] bullets, double deltaTime, Viewport viewport)
         {
 
             for (int i = 0; i < numberOfEnemies; i++)
             {
-                enemies[i].UpdateEnemy(rioman, viewportrect, deltaTime);
+                enemies[i].UpdateEnemy(rioman, viewport, deltaTime);
             }
 
             for (int i = 0; i < aenemy.Length; i++)
             {
-                aenemy[i].Update(deltaTime);
+                aenemy[i].Update(rioman, bullets, deltaTime, viewport);
             }
 
             foreach (Pickup pickup in pickups)

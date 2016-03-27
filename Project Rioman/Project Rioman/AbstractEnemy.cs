@@ -16,6 +16,8 @@ namespace Project_Rioman
 
         protected SpriteEffects direction;
         protected Texture2D sprite;
+        protected Texture2D debugSquare;
+
         protected Rectangle drawRect;
 
         protected bool isAlive;
@@ -28,6 +30,8 @@ namespace Project_Rioman
 
         public AbstractEnemy(int type, int r, int c)
         {
+            debugSquare = EnemyAttributes.GetSprites(-1)[0];
+
             this.type = type;
 
             int y = (r+1) * Constant.TILE_SIZE;
@@ -57,16 +61,13 @@ namespace Project_Rioman
             //TODO;
         }
 
-        public void Move(int x, int y)
-        {
-            location.X += x;
-            location.Y += y;
-        }
+        public abstract void Move(int x, int y);
 
-        public abstract void Update(double deltaTime);
+        public abstract void Update(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport);
         public abstract void Draw(SpriteBatch spriteBatch);
         public abstract Rectangle GetCollisionRect();
-        public abstract void GroundCollision(int groundTop);
+
+        public abstract void DetectTileCollision(Tile tile);
 
 
         public bool FacingLeft()

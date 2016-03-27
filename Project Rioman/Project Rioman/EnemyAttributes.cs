@@ -68,6 +68,11 @@ namespace Project_Rioman
                 {"P1-H8R", "P1-H8Rbullets"}));
             sprites.Add(Constant.MACKS, LoadSprites(c, new string[]
                 { "Macks", "mkbullets"}));
+
+            //debug sprite
+            sprites.Add(-1, new Texture2D[] { c.Load<Texture2D>("Video\\debug\\debug1"),
+            c.Load<Texture2D>("Video\\debug\\debug2"),
+            c.Load<Texture2D>("Video\\debug\\debug3")});
         }
 
         private static Texture2D[] LoadSprites(ContentManager content, string[] location)
