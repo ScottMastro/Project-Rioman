@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Project_Rioman
 {
@@ -39,6 +40,11 @@ namespace Project_Rioman
         private int frame;
         private double frameTime;
         private const double FRAME_TIME = 0.15;
+
+        private double hitEffectTime;
+        private int blinkFrames;
+        private const int BLINK_DURATION = 4;
+
 
         public RiomanAnimation(ContentManager content, RiomanState s)
         {
@@ -83,26 +89,45 @@ namespace Project_Rioman
             climbShootTime = 0;
             frame = 0;
             warpFrame = 0;
+            blinkFrames = 0;
+            hitEffectTime = 0;
             sprite = stand;
         }
 
         public void Draw(SpriteBatch spriteBatch, Rectangle location, Rioman r)
         {
-            Rectangle locationRect = new Rectangle(location.X, location.Y, sprite.Width, sprite.Height);
-            Rectangle drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
 
-            if(state.IsClimbing() && !state.IsShooting())
-                spriteBatch.Draw(sprite, locationRect, drawRect, Color.White, 0f, new Vector2(sprite.Width / 2, 0f), SpriteEffects.None, 0f);
+            if (state.IsInvincible() && blinkFrames > 0) { }
             else
-               spriteBatch.Draw(sprite, locationRect, drawRect, Color.White, 0f, new Vector2(sprite.Width / 2, 0f), direction, 0f);
+            {
+                Rectangle locationRect = new Rectangle(location.X, location.Y, sprite.Width, sprite.Height);
+                Rectangle drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
 
+                if (state.IsClimbing() && !state.IsShooting())
+                    spriteBatch.Draw(sprite, locationRect, drawRect, Color.White, 0f, new Vector2(sprite.Width / 2, 0f), SpriteEffects.None, 0f);
+                else
+                    spriteBatch.Draw(sprite, locationRect, drawRect, Color.White, 0f, new Vector2(sprite.Width / 2, 0f), direction, 0f);
+
+            }
+
+            if (state.IsHit())
+            {
+                int frame = (int) Math.Floor(hitEffectTime / 0.05);
+                Rectangle effectDrawRect = new Rectangle(frame * hit.Width / 3, 0, hit.Width / 3, hit.Height);
+                Rectangle effectLocation = new Rectangle(location.X  - effectDrawRect.Width/2,
+                    location.Y + sprite.Height/2 - effectDrawRect.Height/2, effectDrawRect.Width, effectDrawRect.Height);
+
+                spriteBatch.Draw(hit, effectLocation, effectDrawRect, Color.White);
+            }
 
             /* debugging boxes
-            spriteBatch.Draw(debug[0], r.Hitbox, Color.White);
-            spriteBatch.Draw(debug[0], r.Head, Color.White);
-            spriteBatch.Draw(debug[1], r.Feet, Color.White);
+
             spriteBatch.Draw(debug[2], r.Left, Color.White);
             spriteBatch.Draw(debug[3], r.Right, Color.White);
+            spriteBatch.Draw(debug[1], r.Feet, Color.White);
+            spriteBatch.Draw(debug[0], r.Hitbox, Color.White);
+            spriteBatch.Draw(debug[0], r.Head, Color.White);
+
             */
 
 
@@ -130,7 +155,7 @@ namespace Project_Rioman
                     sprite = run[frame];
                 }
             }
-            else if (state.IsJumping() || state.IsFalling())
+            else if (state.Airborne())
             {
                 if (state.IsShooting())
                     sprite = jumpShoot;
@@ -144,6 +169,25 @@ namespace Project_Rioman
 
             GetDirection();
             AnimateWarping(deltaTime);
+
+            if (state.IsHit())
+            {
+                hitEffectTime += deltaTime;
+
+                if (state.Airborne())
+                    sprite = airHit;
+                else if (state.Grounded())
+                    sprite = groundHit;
+            }
+            else
+                hitEffectTime = 0;
+
+            if (state.IsInvincible())
+            {
+                blinkFrames--;
+                if (blinkFrames <= -BLINK_DURATION * 2)
+                    blinkFrames = BLINK_DURATION;
+            }
         }
 
         private void GetDirection()

@@ -20,6 +20,8 @@ namespace Project_Rioman
         private double fallTime;
         private double shootTime;
 
+        private int blinkFrames = 0;
+
         private bool stopLeftMovement;
         private bool stopRightMovement;
 
@@ -75,10 +77,6 @@ namespace Project_Rioman
         public override void Update(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
         {
 
-            isAlive = true;
-            //TODO: CHANGE THIS
-
-
             if (isAlive)
             {
                 if (IsStanding())
@@ -89,8 +87,6 @@ namespace Project_Rioman
                 
                 if(IsFalling())
                     UpdateFall(deltaTime);
-
-                UpdateBullets(viewport);
 
                 if (shooting)
                     UpdateShooting(deltaTime);
@@ -103,6 +99,20 @@ namespace Project_Rioman
                     isAlive = false;
 
             }
+            else if (readyToSpawn)
+            {
+
+                if(location.X > -10 && location.X < viewport.Width + 10 &&
+                    location.Y > -10 && location.Y < viewport.Height + 10)
+                {
+                    isAlive = true;
+                    readyToSpawn = false;
+
+                }
+            }
+
+            UpdateBullets(viewport);
+
         }
 
 
@@ -185,21 +195,18 @@ namespace Project_Rioman
                 player.Hit(touchDamage);
 
             for (int i = 0; i <= bullets.Length - 1; i++)
-            {
                 if (bullets[i].isAlive && player.Hitbox.Intersects(new Rectangle(bullets[i].X, bullets[i].Y, bullet.Width, bullet.Height))){
                     player.Hit(BULLET_DAMAGE);
                     bullets[i].isAlive = false;
                 }
 
-            }
+            for (int i = 0; i <= rioBullets.Length - 1; i++)
+                if (rioBullets[i].isAlive && rioBullets[i].location.Intersects(GetCollisionRect()))
+                {
+                    TakeDamage(rioBullets[i].TakeDamage());
+                    blinkFrames = 2;
 
-
-                for (int i = 0; i<= rioBullets.Length -1; i++)
-            {
-                if (rioBullets[i].alive && rioBullets[i].location.Intersects(GetCollisionRect()))
-                    health -= rioBullets[i].TakeDamage();
-            }
-                
+                }
         }
 
        
@@ -271,9 +278,11 @@ namespace Project_Rioman
 
             }
 
-            spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, drawRect.Width, drawRect.Height),
-                drawRect, Color.White, 0f, new Vector2(), direction, 0);
-
+            if (isAlive && blinkFrames <= 0)
+                spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, drawRect.Width, drawRect.Height),
+                    drawRect, Color.White, 0f, new Vector2(), direction, 0);
+            else
+                blinkFrames--;
         }
 
         private bool IsJumping() { return state == State.jumping; }

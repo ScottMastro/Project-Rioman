@@ -11,7 +11,6 @@ namespace Project_Rioman
     {
 
         private Rioman player;
-        Bullet[] bullets = new Bullet[3];
         Weapons weapons;
 
         private Level currentLevel;
@@ -25,9 +24,6 @@ namespace Project_Rioman
         {
             player = new Rioman(content);
             Health.LoadHealth(content);
-
-            for (int i = 0; i <= 2; i++)
-                bullets[i] = new Bullet(content.Load<Texture2D>("Video\\bullet"));
 
             weapons = new Weapons(content);
 
@@ -55,28 +51,19 @@ namespace Project_Rioman
                 if(!player.IsWarping())
                     currentLevel.Update(player, gameTime, viewportRect);
 
-                currentLevel.EnemyCollision(bullets, player);
+                currentLevel.EnemyCollision(player.GetBullets(), player);
 
-                player.BackwardScroll(currentLevel, viewportRect);
+               BackwardScroll();
 
-                player.Update(gameTime.ElapsedGameTime.TotalSeconds, currentLevel);
+                player.Update(gameTime.ElapsedGameTime.TotalSeconds, currentLevel, viewportRect);
 
-                currentLevel.UpdateEnemies(player, bullets, gameTime.ElapsedGameTime.TotalSeconds, viewportRect);
+                currentLevel.UpdateEnemies(player, player.GetBullets(), gameTime.ElapsedGameTime.TotalSeconds, viewportRect);
                 bool selectionscreen = currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportRect, player);
 
                 if (selectionscreen)
                 {
                     currentLevel.go = false;
                     GameState.SetState(Constant.SELECTION_SCREEN);
-                }
-
-                if (keyboardState.IsKeyDown(Constant.SHOOT) && !prevKeyboardState.IsKeyDown(Constant.SHOOT))
-                    player.Shooting(bullets);
-
-                if (!player.ispaused)
-                {
-                    foreach (Bullet blt in bullets)
-                        blt.BulletUpdate(viewportRect.Width);
                 }
 
                 currentLevel.CheckDeath(viewportRect, player);
@@ -103,8 +90,7 @@ namespace Project_Rioman
 
             if (currentLevel.killbullets)
             {
-                for (int i = 0; i <= 2; i++)
-                    bullets[i].alive = false;
+                player.KillBullets();
 
                 currentLevel.killbullets = false;
             }
@@ -136,12 +122,6 @@ namespace Project_Rioman
                     currentLevel.bosses[currentLevel.activelevel].Draw(spriteBatch);
                     currentLevel.DrawEnemies(spriteBatch);
 
-                    foreach (Bullet blt in bullets)
-                    {
-                        if (blt.alive)
-                            spriteBatch.Draw(blt.sprite, blt.location, Color.White);
-                    }
-
                     player.Draw(spriteBatch);
 
 
@@ -157,6 +137,21 @@ namespace Project_Rioman
             
     }
 
+        private void BackwardScroll()
+        {
+            if (currentLevel.stoprightscreenmovement)
+            {
+                if (player.Location.X < viewportRect.Width / 2)
+                    currentLevel.stoprightscreenmovement = false;
+            }
+
+            if (currentLevel.stopleftscreenmovement)
+            {
+                if (player.Location.X > viewportRect.Width / 2)
+                     currentLevel.stopleftscreenmovement = false;
+            }
+        }
+
         private void ChangeLevel()
         {
             currentLevel = levels[GameState.GetLevel() - 1];
@@ -165,8 +160,7 @@ namespace Project_Rioman
             currentLevel.TileFader();
             currentLevel.LadderForm();
 
-            foreach (Bullet blt in bullets)
-                blt.alive = false;
+            player.Reset();
 
             Health.SetHealth(27);
             Health.SetDrawBossHealth(false);

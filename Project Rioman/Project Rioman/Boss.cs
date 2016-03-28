@@ -236,7 +236,7 @@ namespace Project_Rioman
         {
             if (isalive)
             {
-                if (!rioman.isinvincible && rioman.Location.Intersects(collisionrect))
+                if (!rioman.IsInvincible() && rioman.Location.Intersects(collisionrect))
                 {
                     Health.AdjustHealth(-coldamage);
                     rioman.Hit();
@@ -249,7 +249,7 @@ namespace Project_Rioman
 
                 for (int i = 0; i <= 19; i++)
                 {
-                    if (bulletalive[i] && !rioman.isinvincible && rioman.Location.Intersects(bulletloc[i]))
+                    if (bulletalive[i] && !rioman.IsInvincible() && rioman.Location.Intersects(bulletloc[i]))
                     {
                         bulletalive[i] = false;
 
@@ -274,26 +274,26 @@ namespace Project_Rioman
                 {
                     if (boss == 5)
                     {
-                        if (blt.alive && blt.location.Intersects(collisionrect))
+                        if (blt.isAlive && blt.location.Intersects(collisionrect))
                         {
                             if (!canthurt)
                             {
                                 hit = true;
                                 Health.AdjustBossHealth(-1);
                             }
-                            blt.alive = false;
+                            blt.isAlive = false;
                         }
                     }
                     else
                     {
-                        if (blt.alive && blt.location.Intersects(location))
+                        if (blt.isAlive && blt.location.Intersects(location))
                         {
                             if (!canthurt)
                             {
                                 hit = true;
                                 Health.AdjustBossHealth(-1);
                             }
-                            blt.alive = false;
+                            blt.isAlive = false;
                         }
                     }
                 }

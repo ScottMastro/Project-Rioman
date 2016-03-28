@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Project_Rioman
@@ -7,7 +8,7 @@ namespace Project_Rioman
     {
 
         public Texture2D sprite;
-        public bool alive;
+        public bool isAlive;
         public Rectangle location;
         int direction;
         private int damage = 1;
@@ -15,7 +16,7 @@ namespace Project_Rioman
         public Bullet(Texture2D bullet)
         {
             sprite = bullet;
-            alive = false;
+            isAlive = false;
             location = new Rectangle(0, 0, bullet.Width, bullet.Height);
         }
 
@@ -29,15 +30,15 @@ namespace Project_Rioman
             else
                 direction = -1;
 
-            alive = true;
+            isAlive = true;
         }
 
         public void BulletUpdate(int viewport)
         {
             if (location.X > viewport || location.X < 0 - sprite.Width)
-                alive = false;
+                isAlive = false;
 
-            if (alive)
+            if (isAlive)
                 location.X += 9 * direction;
         }
 
@@ -49,8 +50,15 @@ namespace Project_Rioman
 
         public int TakeDamage()
         {
-            alive = false;
+            isAlive = false;
             return damage;
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (isAlive)
+                spriteBatch.Draw(sprite, location, Color.White);
+
         }
     }
 }

@@ -125,5 +125,10 @@ namespace Project_Rioman
         {
             Audio.jump2.Play(Constant.VOLUME, -1f, 0f);
         }
+
+        public static void PlayShoot()
+        {
+            Audio.shoot1.Play(Constant.VOLUME, 0f, 0f);
+        }
     }
 }

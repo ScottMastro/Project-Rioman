@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Input;
-using System;
 
 namespace Project_Rioman
 {
@@ -11,6 +10,7 @@ namespace Project_Rioman
 
         private bool animateWarp;
 
+
         private bool shooting;
         private double shootTime;
 
@@ -18,6 +18,12 @@ namespace Project_Rioman
         private double fallTime;
 
         private bool hit;
+        private double hitTime;
+
+
+        private bool invincible;
+        private double invincibleTime;
+        private const double MAX_INVINCIBLE_TIME = 2.5;
 
         private bool climbTop;
 
@@ -35,6 +41,7 @@ namespace Project_Rioman
         public void Reset()
         {
             hit = false;
+            invincible = false;
             shooting = false;
             climbTop = false;
             shootTime = 0;
@@ -80,6 +87,11 @@ namespace Project_Rioman
                 shootTime = 0;
             }
 
+            if (hit)
+                UpdateHit(deltaTime);
+            if (invincible)
+                UpdateInvincible(deltaTime);
+
             prevKeyboardState = k;
 
         }
@@ -96,7 +108,29 @@ namespace Project_Rioman
         private void UpdateFall( double deltaTime)
         {
             fallTime += deltaTime;
+        }
 
+        private void UpdateHit(double deltaTime)
+        {
+            if(Grounded())
+                hitTime += deltaTime;
+
+            if (hitTime > 0.3)
+            {
+                hitTime = 0;
+                hit = false;
+            }
+        }
+
+        private void UpdateInvincible(double deltaTime)
+        {
+            invincibleTime += deltaTime;
+
+            if (invincibleTime > MAX_INVINCIBLE_TIME)
+            {
+                invincibleTime = 0;
+                invincible = false;
+            }
         }
 
 
@@ -127,11 +161,14 @@ namespace Project_Rioman
         public bool IsFalling() { return state == State.falling; }
         public bool IsClimbing() { return state == State.climbing; }
         public bool IsShooting() { return shooting; }
+        public bool CanShoot() { return !IsWarping() && !IsHit() && !IsClimbTop(); }
+
 
         public void Warp()
         {
             state = State.warping;
             hit = false;
+            invincible = false;
         }
         public void StopWarping() { state = State.standing; }
         public void Run() { state = State.running; }
@@ -163,7 +200,7 @@ namespace Project_Rioman
         public void Fall() { state = State.falling; }
         public void Climb()
         {
-            if (!IsWarping())
+            if (!IsWarping() && !IsHit())
             {
                 state = State.climbing;
             }
@@ -171,14 +208,29 @@ namespace Project_Rioman
         public void StopShooting() { shooting = false; }
         public void Shoot()
         {
-            shooting = true;
-            shootTime = 0;
+            if (CanShoot())
+            {
+                shooting = true;
+                shootTime = 0;
+            }
         }
 
-        public void Hit()
+        public bool Hit()
         {
-            if (!IsWarping())
+            bool hitBefore = IsHit();
+
+            if (!IsHit() && !IsInvincible() && !IsWarping())
+            {
+                invincibleTime = 0;
+                hitTime = 0;
                 hit = true;
+                invincible = true;
+                Fall();
+            }
+
+            bool hitAfter = IsHit();
+
+            return !hitBefore && hitAfter;
         }
 
 
@@ -192,7 +244,7 @@ namespace Project_Rioman
 
             if (lives <= 0)
             {
-                GameState.SetState(2);
+                GameState.SetState(Constant.SELECTION_SCREEN);
                 Reset();
             }
         }
@@ -204,6 +256,10 @@ namespace Project_Rioman
         public void SetClimbTopState(bool x) { climbTop = x; }
         public void SetAnimateWarp(bool x) { animateWarp = x; }
         public bool IsAnimateWarp() { return animateWarp == true; }
+        public bool IsHit() { return hit; }
+        public bool IsInvincible() { return invincible; }
+        public bool Airborne() { return IsFalling() || IsJumping(); }
+        public bool Grounded() { return IsStanding() || IsRunning(); }
 
     }
 }

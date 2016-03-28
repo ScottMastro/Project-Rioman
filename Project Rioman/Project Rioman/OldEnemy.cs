@@ -48,7 +48,7 @@ namespace Project_Rioman
 
         public void TotemCollision(int number, Rioman rioman)
         {
-            if (!rioman.isinvincible && totems[number].collisionrect.Intersects(rioman.Location) && totems[number].isalive)
+            if (!rioman.IsInvincible() && totems[number].collisionrect.Intersects(rioman.Location) && totems[number].isalive)
             {
                 Health.AdjustHealth(-damage);
                 rioman.Hit();
@@ -70,13 +70,13 @@ namespace Project_Rioman
 
             for (int i = 2; i >= 0; i--)
             {
-                if (bullet.alive && bullet.location.Intersects(totems[i].location) && totems[i].isalive)
+                if (bullet.isAlive && bullet.location.Intersects(totems[i].location) && totems[i].isalive)
                 {
                     totems[i].hit = true;
                     totems[i].health--;
                     if (totems[i].health <= 0)
                         totems[i].isalive = false;
-                    bullet.alive = false;
+                    bullet.isAlive = false;
                 }
             }
 
@@ -88,7 +88,7 @@ namespace Project_Rioman
 
         public void TotemCollision(int number, Rioman rioman, bool bulletcollision)
         {
-            if (!rioman.isinvincible && totems[number].bulletcollision.Intersects(rioman.Location) && totems[number].bulletalive)
+            if (!rioman.IsInvincible() && totems[number].bulletcollision.Intersects(rioman.Location) && totems[number].bulletalive)
             {
                 Health.AdjustHealth(-totems[number].damage);
                 rioman.Hit();
@@ -102,7 +102,7 @@ namespace Project_Rioman
 
         public void CartCollision(int number, Rioman rioman)
         {
-            if (!rioman.isinvincible && carts[number].collisionrect.Intersects(rioman.Location) && carts[number].isalive)
+            if (!rioman.IsInvincible() && carts[number].collisionrect.Intersects(rioman.Location) && carts[number].isalive)
             {
                 Health.AdjustHealth(-damage);
                 rioman.Hit();
@@ -117,11 +117,11 @@ namespace Project_Rioman
         public void CartCollision(Bullet bullet)
         {
             for (int i = 0; i <= 3; i++)
-                if (bullet.alive && bullet.location.Intersects(carts[i].location) && carts[i].isalive)
+                if (bullet.isAlive && bullet.location.Intersects(carts[i].location) && carts[i].isalive)
                 {
                     carts[i].hit = true;
                     health--;
-                    bullet.alive = false;
+                    bullet.isAlive = false;
                 }
         }
 
@@ -539,8 +539,8 @@ namespace Project_Rioman
                         }
                         else if (totems[i].type == 4 && totems[i].isalive)
                         {
-                            if (!rioman.ispaused && !rioman.isinvincible && r.Next(0, 300) == 10)
-                                rioman.ispaused = true;
+                        //    if (!rioman.ispaused && !rioman.IsInvincible() && r.Next(0, 300) == 10)
+                          //      rioman.ispaused = true;
                         }
 
                         if (i < 2 && !totems[i + 1].isalive && totems[i].location.Y < totems[i + 1].location.Y)
@@ -623,7 +623,7 @@ namespace Project_Rioman
                     if (bool1)
                         location.Y -= 5;
 
-                    if (!rioman.ispaused && !bool1)
+                    if (!bool1)
                     {
                         if (rioman.Location.Center.X < location.Center.X)
                             location.X -= 1;

@@ -21,6 +21,8 @@ namespace Project_Rioman
         protected Rectangle drawRect;
 
         protected bool isAlive;
+        protected bool readyToSpawn;
+
         protected int health;
         protected int maxHealth;
         protected int touchDamage;
@@ -41,9 +43,11 @@ namespace Project_Rioman
             originalLocation = location;
 
             isAlive = false;
+            readyToSpawn = true;
             direction = SpriteEffects.None;
 
-            health = EnemyAttributes.GetMaxHealthAttribute(type);
+            maxHealth = EnemyAttributes.GetMaxHealthAttribute(type);
+            health = maxHealth;
             touchDamage = EnemyAttributes.GetDamageAttribute(type);
 
             this.r = new Random();
@@ -58,7 +62,7 @@ namespace Project_Rioman
 
         public void Die()
         {
-            //TODO;
+            isAlive = false;
         }
 
         public abstract void Move(int x, int y);

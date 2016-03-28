@@ -116,8 +116,8 @@ namespace Project_Rioman
             {
                 for (int c = 0; c <= width; c++)
                 {
-                    if(tiles[r,c] != null)
-                    tiles[r, c].Reset();
+                    if (tiles[r, c] != null)
+                        tiles[r, c].Reset();
                 }
             }
 
@@ -135,7 +135,7 @@ namespace Project_Rioman
             }
 
         }
-        
+
 
         public void CenterRioman(Viewport viewportrect, Rioman rioman)
         {
@@ -181,7 +181,7 @@ namespace Project_Rioman
                     //kill player
                     else if (tle.type == 2)
                     {
-                        if (rioman.Hitbox.Intersects(tle.location) && !rioman.isinvincible)
+                        if (rioman.Hitbox.Intersects(tle.location) && !rioman.IsInvincible())
                         {
                             lifechange = -1;
                             rioman.Die();
@@ -207,7 +207,7 @@ namespace Project_Rioman
                         if (!rioman.IsJumping() && rioman.Feet.Intersects(tle.Floor) && !rioman.Feet.Intersects(tle.IgnoreFloor))
                         {
                             onGround = true;
-                            rioman.MoveToY(tle.Y - rioman.Height + 8);
+                            rioman.MoveToY(tle.Y - rioman.GetSprite().Height + 8);
 
                             if (rioman.IsFalling() || rioman.IsClimbing())
                             {
@@ -422,12 +422,12 @@ namespace Project_Rioman
             {
                 if (row < height && tiles[row, column] != null && tiles[row, column].type == 4)
                 {
-                    if(tiles[row, column].Y > doorStopY)
+                    if (tiles[row, column].Y > doorStopY)
                     {
                         stillOpening = true;
                         tiles[row, column].Move(0, -DOOR_SPEED);
                     }
-                    
+
                     row++;
                 }
                 else
@@ -460,7 +460,7 @@ namespace Project_Rioman
                     {
                         stillClosing = true;
                         tiles[row, column].Move(0, DOOR_SPEED);
-                    }                        
+                    }
 
                     row++;
                 }
@@ -561,7 +561,7 @@ namespace Project_Rioman
                     {
                         if (enemies[i].type == 302)
                         {
-                            if (enemies[i].isalive && !rioman.isinvincible && rioman.Hitbox.Intersects(enemies[i].collisionrect)
+                            if (enemies[i].isalive && !rioman.IsInvincible() && rioman.Hitbox.Intersects(enemies[i].collisionrect)
                                 && Math.Abs(rioman.Location.Bottom - enemies[i].collisionrect.Y) < 10)
                             {
                                 rioman.MoveToY(enemies[i].collisionrect.Y - rioman.Location.Height + 2);
@@ -638,7 +638,7 @@ namespace Project_Rioman
             for (int i = 0; i < numberOfEnemies; i++)
                 enemies[i].isfalling = !enemycollision[i];
 
-            
+
 
             foreach (Pickup pickup in pickups)
                 pickup.PickupUpdate(rioman, viewportRect);
@@ -702,8 +702,8 @@ namespace Project_Rioman
             scrollingRect.Y += y;
         }
 
-        
-        
+
+
 
         public void LadderForm()
         {
@@ -809,46 +809,45 @@ namespace Project_Rioman
             {
                 if (enemies[i].isalive)
                 {
-                    if (!rioman.ispaused)
+                    foreach (Bullet bullet in bullets)
                     {
-                        foreach (Bullet bullet in bullets)
+                        if (enemies[i].type == 297)
                         {
-                            if (enemies[i].type == 297)
+                            bool dead = enemies[i].TotemCollision(bullet);
+                            if (dead)
+                                pickups[GetPickupIndex()].NewPickup(enemies[i].location.Center.X, enemies[i].location.Center.Y);
+                        }
+                        else
+                        {
+                            if (bullet.isAlive && enemies[i].location.Intersects(bullet.location))
                             {
-                                bool dead = enemies[i].TotemCollision(bullet);
-                                if (dead)
-                                    pickups[GetPickupIndex()].NewPickup(enemies[i].location.Center.X, enemies[i].location.Center.Y);
-                            }
-                            else
-                            {
-                                if (bullet.alive && enemies[i].location.Intersects(bullet.location))
+                                if (!enemies[i].cannotkill)
                                 {
-                                    if (!enemies[i].cannotkill)
+                                    enemies[i].hit = true;
+                                    enemies[i].health--;
+                                    if (enemies[i].health <= 0)
                                     {
-                                        enemies[i].hit = true;
-                                        enemies[i].health--;
-                                        if (enemies[i].health <= 0)
-                                        {
-                                            pickups[GetPickupIndex()].NewPickup(enemies[i].location.Center.X, enemies[i].location.Center.Y);
-                                            enemies[i].Kill();
-                                        }
+                                        pickups[GetPickupIndex()].NewPickup(enemies[i].location.Center.X, enemies[i].location.Center.Y);
+                                        enemies[i].Kill();
                                     }
-                                    bullet.alive = false;
-
-                                    if (enemies[i].type == 308)
-                                        enemies[i].bool1 = true;
                                 }
-                                else if (enemies[i].type == 301)
-                                    enemies[i].CartCollision(bullet);
+                                bullet.isAlive = false;
+
+                                if (enemies[i].type == 308)
+                                    enemies[i].bool1 = true;
                             }
+                            else if (enemies[i].type == 301)
+                                enemies[i].CartCollision(bullet);
                         }
                     }
+
                 }
-                if (enemies[i].isalive && !rioman.isinvincible && rioman.Hitbox.Intersects(enemies[i].collisionrect))
+                if (enemies[i].isalive && !rioman.IsInvincible() && rioman.Hitbox.Intersects(enemies[i].collisionrect))
                 {
-                    if (enemies[i].type == 299)
-                        rioman.ispaused = true;
-                    else if (enemies[i].type != 302)
+                    //      if (enemies[i].type == 299)
+                    //        rioman.ispaused = true;
+                    // else
+                    if (enemies[i].type != 302)
                     {
                         Health.AdjustHealth(-enemies[i].damage);
                         rioman.Hit();
@@ -889,7 +888,7 @@ namespace Project_Rioman
 
                     if (enemies[i].bulletalive[j])
                     {
-                        if (!rioman.isinvincible && rioman.Hitbox.Intersects(enemies[i].bulletloc[j]))
+                        if (!rioman.IsInvincible() && rioman.Hitbox.Intersects(enemies[i].bulletloc[j]))
                         {
                             enemies[i].bulletalive[j] = false;
                             enemies[i].bullettime[j] = 0;
@@ -909,7 +908,7 @@ namespace Project_Rioman
                 {
                     for (int k = 0; k <= 7; k++)
                     {
-                        if (!rioman.isinvincible && rioman.Hitbox.Intersects(enemies[i].other[k]))
+                        if (!rioman.IsInvincible() && rioman.Hitbox.Intersects(enemies[i].other[k]))
                         {
                             if (k == 0 || k == 4 || k == 5)
                                 enemies[i].other[k].Y = -100;
