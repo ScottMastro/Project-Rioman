@@ -75,7 +75,15 @@ namespace Project_Rioman
             isAlive = false;
         }
 
-        public abstract void Move(int x, int y);
+        public void Move(int x, int y)
+        {
+            location.X += x;
+            location.Y += y;
+            SubMove(x, y);
+        }
+
+
+        protected abstract void SubMove(int x, int y);
 
         public void Update(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
         {
@@ -90,6 +98,7 @@ namespace Project_Rioman
 
             wasAlive = isAlive;
         }
+
 
         protected abstract void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport);
 

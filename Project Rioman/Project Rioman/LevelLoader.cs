@@ -122,10 +122,15 @@ namespace Project_Rioman
                 tiles[r, c] = new Tile(tileSprites[value], value, type, r, c, content);
 
             //tile is an enemy
-            if(value == 298)
+            if(value == Constant.NEOLUCKY)
             {
                 aenemy.Add(new Neolucky(value, r, c));
             }
+            else if(value == Constant.DOZERBOT)
+            {
+                aenemy.Add(new DozerBot(value, r, c));
+            }
+
             else if (value >= 297 && value <= 317)
             {
                 enemies.Add(new Enemy(value, r, c, content));

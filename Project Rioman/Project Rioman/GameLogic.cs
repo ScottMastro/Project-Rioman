@@ -48,19 +48,21 @@ namespace Project_Rioman
                    && !Health.HealthIncreasing() && currentLevel.bosses[currentLevel.activelevel].intro >= 3)
             {
 
-                if(!player.IsWarping())
+                if (!player.IsWarping())
+                {
                     currentLevel.Update(player, gameTime, viewportRect);
 
-                currentLevel.EnemyCollision(player.GetBullets(), player);
+                    currentLevel.EnemyCollision(player.GetBullets(), player);
 
-               BackwardScroll();
+                    currentLevel.UpdateEnemies(player, player.GetBullets(), gameTime.ElapsedGameTime.TotalSeconds, viewportRect);
+                }
+                    bool selectionscreen = currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportRect, player);
+                
+                    BackwardScroll();
 
-                player.Update(gameTime.ElapsedGameTime.TotalSeconds, currentLevel, viewportRect);
+                    player.Update(gameTime.ElapsedGameTime.TotalSeconds, currentLevel, viewportRect);
 
-                currentLevel.UpdateEnemies(player, player.GetBullets(), gameTime.ElapsedGameTime.TotalSeconds, viewportRect);
-                bool selectionscreen = currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportRect, player);
-
-                if (selectionscreen)
+                    if (selectionscreen)
                 {
                     currentLevel.go = false;
                     GameState.SetState(Constant.SELECTION_SCREEN);

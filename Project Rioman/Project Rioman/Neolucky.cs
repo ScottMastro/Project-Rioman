@@ -209,10 +209,8 @@ namespace Project_Rioman
         }
 
        
-        public override void Move (int x, int y)
+        protected override void SubMove (int x, int y)
         {
-            location.X += x;
-            location.Y += y;
 
             for (int i = 0; i <= bullets.Length - 1; i++)
             {
@@ -401,7 +399,7 @@ namespace Project_Rioman
         private Rectangle Left() { return new Rectangle(location.X + 10, location.Y, 10, drawRect.Height * 2/3); }
         private Rectangle Right() { return new Rectangle(location.X + drawRect.Width -20, location.Y, 10, drawRect.Height * 2/3); }
         private Rectangle Head() { return new Rectangle(location.X + 20, location.Y + 10, drawRect.Width -40, 10); }
-        private Rectangle Feet() { return new Rectangle(location.X + 10, location.Y + drawRect.Height - 10, drawRect.Width - 20, 10); }
+     //   private Rectangle Feet() { return new Rectangle(location.X + 10, location.Y + drawRect.Height - 10, drawRect.Width - 20, 10); }
 
         public override Rectangle GetCollisionRect()
         {

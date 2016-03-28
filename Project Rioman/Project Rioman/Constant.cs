@@ -25,6 +25,8 @@ namespace Project_Rioman
         public static float VOLUME = 0.4f;
 
         public static int TILE_SIZE = 32;
+        public static int MAX_HEALTH = 27;
+
 
         public static int TITLE_SCREEN = 0;
         public static int SELECTION_SCREEN = 1;
