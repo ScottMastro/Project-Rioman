@@ -19,6 +19,8 @@ namespace Project_Rioman
 
         protected Rectangle drawRect;
 
+        protected int blinkFrames;
+
         protected Texture2D killExplosion;
         protected double killTime;
 
@@ -47,6 +49,8 @@ namespace Project_Rioman
             maxHealth = EnemyAttributes.GetMaxHealthAttribute(type);
             touchDamage = EnemyAttributes.GetDamageAttribute(type);
             killExplosion = EnemyAttributes.GetKillSprite();
+
+            blinkFrames = 0;
 
             this.r = new Random();
 
@@ -83,11 +87,22 @@ namespace Project_Rioman
         }
 
 
-        protected abstract void SubMove(int x, int y);
-
         public void Update(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
         {
+            if (!isAlive && readyToSpawn)
+            {
+
+                if (location.X > -10 && location.X < viewport.Width + 10 &&
+                    location.Y > -10 && location.Y < viewport.Height + 10)
+                {
+                    isAlive = true;
+                    readyToSpawn = false;
+
+                }
+            }
+
             SubUpdate(player, rioBullets, deltaTime, viewport);
+            CheckHit(player, rioBullets);
 
             if (!isAlive && health <= 0)
             {
@@ -99,14 +114,33 @@ namespace Project_Rioman
             wasAlive = isAlive;
         }
 
+        protected void CheckHit(Rioman player, Bullet[] rioBullets)
+        {
+            if (GetCollisionRect().Intersects(player.Hitbox))
+                player.Hit(touchDamage);
 
-        protected abstract void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport);
+            for (int i = 0; i <= rioBullets.Length - 1; i++)
+                if (rioBullets[i].isAlive && rioBullets[i].location.Intersects(GetCollisionRect()))
+                {
+                    TakeDamage(rioBullets[i].TakeDamage());
+                    blinkFrames = 2;
+
+                }
+
+            SubCheckHit(player, rioBullets);
+        }
+
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            SubDraw(spriteBatch);
+            SubDrawOther(spriteBatch);
+            if (isAlive && blinkFrames <= 0)
+                SubDrawEnemy(spriteBatch);
+            else if(blinkFrames > 0)
+                blinkFrames--;
 
-            if(killTime <= 0.25 && !isAlive && health <= 0)
+
+            if (killTime <= 0.25 && !isAlive && health <= 0)
             {
                 int frame = (int) Math.Floor(killTime / 0.05);
                 Rectangle killDrawRect = new Rectangle(frame * killExplosion.Width / 5, 0, killExplosion.Width / 5, killExplosion.Height);
@@ -118,8 +152,12 @@ namespace Project_Rioman
             }
         }
 
+        protected abstract void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport);
+        protected abstract void SubCheckHit(Rioman player, Bullet[] rioBullets);
+        protected abstract void SubDrawEnemy(SpriteBatch spriteBatch);
+        protected abstract void SubDrawOther(SpriteBatch spriteBatch);
+        protected abstract void SubMove(int x, int y);
 
-        protected abstract void SubDraw(SpriteBatch spriteBatch);
         public abstract Rectangle GetCollisionRect();
 
         public abstract void DetectTileCollision(Tile tile);

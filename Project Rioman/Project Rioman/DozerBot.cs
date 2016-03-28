@@ -13,13 +13,16 @@ namespace Project_Rioman
 
         private int frame;
         private double frameTime;
-   
         private double fallTime;
 
         private bool isGroundBelow;
 
         private enum State { rolling, falling };
         private State state;
+        private bool shooting;
+        private double shootTime;
+        private double timeBetweenShooting;
+        private int bulletCounter;
 
         struct DozerBullet
         {
@@ -38,7 +41,9 @@ namespace Project_Rioman
 
         }
 
-        private DozerBullet[] bullets = new DozerBullet[4];
+        private DozerBullet[] bullets = new DozerBullet[3];
+        private const int BULLET_DAMAGE = 2;
+        private const int BULLET_SPEED = 12;
 
 
         public DozerBot(int type, int r, int c) : base(type, r, c)
@@ -52,6 +57,7 @@ namespace Project_Rioman
 
             location.Y -= sprite.Height;
 
+            shooting = false;
             frame = 0;
             frameTime = 0;
             Fall();
@@ -61,48 +67,141 @@ namespace Project_Rioman
 
         protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
         {
-
-            frameTime += deltaTime;
-            if (frameTime > 0.25)
+            if (isAlive)
             {
-                frameTime = 0;
-                frame++;
-                if (frame >= 2)
-                    frame = 0;
-            }
+                frameTime += deltaTime;
+                if (frameTime > 0.25)
+                {
+                    frameTime = 0;
+                    frame++;
+                    if (frame >= 2)
+                        frame = 0;
+                }
 
 
-            if (IsFalling()) {
-                fallTime += deltaTime;
+                if (IsFalling())
+                {
+                    fallTime += deltaTime;
 
-                if (fallTime * 30 > 10)
-                    location.Y += 10;
+                    if (fallTime * 30 > 10)
+                        location.Y += 10;
+                    else
+                        location.Y += Convert.ToInt32(fallTime * 10);
+                }
+
+                if (FacingLeft())
+                    location.X -= 3;
                 else
-                    location.Y += Convert.ToInt32(fallTime * 10);
+                    location.X += 3;
+
+
+                if (!isGroundBelow)
+                    Fall();
+
+                isGroundBelow = false;
+
+                if (player.Hitbox.Intersects(KillPoint()))
+                    player.Hit(Constant.MAX_HEALTH);
+
+                if(!shooting)
+                    CheckShoot(deltaTime);
+                else
+                    UpdateShoot(deltaTime);
             }
-
-            if (FacingLeft())
-                location.X -= 3;
-            else 
-                location.X += 3;
-
-
-            if (!isGroundBelow)
-                Fall();
-
-            isGroundBelow = false;
-
-            if (player.Hitbox.Intersects(KillPoint()))
-                player.Hit(Constant.MAX_HEALTH);
+          
+            UpdateBullets(deltaTime, viewport);
 
         }
 
-
-
-
-        protected override void SubDraw(SpriteBatch spriteBatch)
+        private void CheckShoot(double deltaTime)
         {
+            timeBetweenShooting += deltaTime;
 
+            if (timeBetweenShooting > 1)
+            {
+                bool flag = true;
+
+                for (int i = 0; i <= bullets.Length - 1; i++)
+                    if (bullets[i].isAlive)
+                        flag = false;
+
+                shooting = flag;
+                shootTime = 0;
+                bulletCounter = 0;
+            }
+        }
+
+        private void UpdateBullets(double deltaTime, Viewport viewport)
+        {
+            for (int i = 0; i <= bullets.Length - 1; i++)
+            {
+                if (bullets[i].isAlive)
+                {
+                    bullets[i].X += BULLET_SPEED * bullets[i].direction;
+
+                    if (bullets[i].X > viewport.Width + 20 || bullets[i].X < -20)
+                        bullets[i].isAlive = false;
+                }
+            }
+        }
+
+        private void UpdateShoot(double deltaTime)
+        {
+            timeBetweenShooting = 0;
+            shootTime += deltaTime;
+
+            if (shootTime > 0.1)
+            {
+                shootTime = 0;
+
+                if (bulletCounter < bullets.Length)
+                {
+                    //Audio.PlayEnemyShoot1();
+
+                    bullets[bulletCounter].isAlive = true;
+
+                    if (FacingLeft())
+                    {
+                        bullets[bulletCounter].direction = -1;
+                        bullets[bulletCounter].X = Left().Left;
+                    }
+                    else {
+                        bullets[bulletCounter].direction = 1;
+                        bullets[bulletCounter].X = Right().Left;
+                    }
+
+                    bullets[bulletCounter].Y = location.Y + drawRect.Height * 2 / 5;
+
+                    bulletCounter++;
+                }
+                else
+                    shooting = false;
+            }
+        }
+
+        protected override void SubCheckHit(Rioman player, Bullet[] rioBullets)
+        {
+            for (int i = 0; i <= bullets.Length - 1; i++)
+                if (bullets[i].isAlive && player.Hitbox.Intersects(new Rectangle(bullets[i].X, bullets[i].Y, bullet.Width, bullet.Height)))
+                {
+                    player.Hit(BULLET_DAMAGE);
+                    bullets[i].isAlive = false;
+                }
+        }
+
+        protected override void SubDrawOther(SpriteBatch spriteBatch)
+        {
+            for (int i = 0; i <= bullets.Length - 1; i++)
+            {
+                if (bullets[i].isAlive)
+                    spriteBatch.Draw(bullet, new Rectangle(bullets[i].X, bullets[i].Y, bullet.Width, bullet.Height), Color.White);
+
+            }
+
+        }
+
+        protected override void SubDrawEnemy(SpriteBatch spriteBatch)
+        {
             drawRect = new Rectangle(frame * sprite.Width / 2, 0, sprite.Width / 2, sprite.Height);
             Rectangle locRect = new Rectangle(location.X, location.Y, drawRect.Width, drawRect.Height);
 
@@ -145,11 +244,13 @@ namespace Project_Rioman
         private void LeftCollision()
         {
             direction = SpriteEffects.None;
+            shooting = false;
         }
 
         private void RightCollision()
         {
             direction = SpriteEffects.FlipHorizontally;
+            shooting = false;
         }
 
 
@@ -197,6 +298,5 @@ namespace Project_Rioman
                 fallTime = 0;
             }
         }
-
     }
 }

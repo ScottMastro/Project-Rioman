@@ -20,8 +20,6 @@ namespace Project_Rioman
         private double fallTime;
         private double shootTime;
 
-        private int blinkFrames = 0;
-
         private bool stopLeftMovement;
         private bool stopRightMovement;
 
@@ -98,17 +96,7 @@ namespace Project_Rioman
                     isAlive = false;
 
             }
-            else if (readyToSpawn)
-            {
 
-                if(location.X > -10 && location.X < viewport.Width + 10 &&
-                    location.Y > -10 && location.Y < viewport.Height + 10)
-                {
-                    isAlive = true;
-                    readyToSpawn = false;
-
-                }
-            }
 
             UpdateBullets(viewport);
 
@@ -188,23 +176,13 @@ namespace Project_Rioman
             }
         }
 
-        private void CheckHit(Rioman player, Bullet[] rioBullets)
+        protected override void SubCheckHit(Rioman player, Bullet[] rioBullets)
         {
-            if (GetCollisionRect().Intersects(player.Hitbox))
-                player.Hit(touchDamage);
 
             for (int i = 0; i <= bullets.Length - 1; i++)
                 if (bullets[i].isAlive && player.Hitbox.Intersects(new Rectangle(bullets[i].X, bullets[i].Y, bullet.Width, bullet.Height))){
                     player.Hit(BULLET_DAMAGE);
                     bullets[i].isAlive = false;
-                }
-
-            for (int i = 0; i <= rioBullets.Length - 1; i++)
-                if (rioBullets[i].isAlive && rioBullets[i].location.Intersects(GetCollisionRect()))
-                {
-                    TakeDamage(rioBullets[i].TakeDamage());
-                    blinkFrames = 2;
-
                 }
         }
 
@@ -265,7 +243,14 @@ namespace Project_Rioman
         }
 
 
-        protected override void SubDraw(SpriteBatch spriteBatch)
+        protected override void SubDrawEnemy(SpriteBatch spriteBatch)
+        {
+                spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, drawRect.Width, drawRect.Height),
+                    drawRect, Color.White, 0f, new Vector2(), direction, 0);
+
+        }
+
+        protected override void SubDrawOther(SpriteBatch spriteBatch)
         {
 
             for (int i = 0; i <= bullets.Length - 1; i++)
@@ -275,11 +260,6 @@ namespace Project_Rioman
 
             }
 
-            if (isAlive && blinkFrames <= 0)
-                spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, drawRect.Width, drawRect.Height),
-                    drawRect, Color.White, 0f, new Vector2(), direction, 0);
-            else
-                blinkFrames--;
         }
 
         private bool IsJumping() { return state == State.jumping; }
