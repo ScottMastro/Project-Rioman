@@ -74,8 +74,7 @@ namespace Project_Rioman
             stopRightMovement = false;
         }
 
-        public override void Update(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
-        {
+        protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport) {
 
             if (isAlive)
             {
@@ -268,7 +267,7 @@ namespace Project_Rioman
         }
 
 
-        public override void Draw(SpriteBatch spriteBatch)
+        protected override void SubDraw(SpriteBatch spriteBatch)
         {
 
             for (int i = 0; i <= bullets.Length - 1; i++)

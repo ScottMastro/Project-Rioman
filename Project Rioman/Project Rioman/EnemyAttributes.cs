@@ -11,6 +11,7 @@ namespace Project_Rioman
         private static Dictionary<int, int> maxHealth;
         private static Dictionary<int, int> damage;
         private static Dictionary<int, Texture2D[]> sprites;
+        private static Texture2D killExplosion;
 
 
      
@@ -24,6 +25,8 @@ namespace Project_Rioman
 
         private static void SpritesInit(ContentManager c)
         {
+            killExplosion = c.Load<Texture2D>("Video\\enemies\\explodingenemy");
+
             sprites = new Dictionary<int, Texture2D[]>();
 
             sprites.Add(Constant.TOTEM, LoadSprites(c, new string[]
@@ -160,6 +163,11 @@ namespace Project_Rioman
             sprites.TryGetValue(type, out s);
 
             return s;
+        }
+
+        public static Texture2D GetKillSprite()
+        {
+            return killExplosion;
         }
     }
 }
