@@ -588,7 +588,6 @@ Content\Audio\titlescreen.xnb
 Content\Audio\toxman.xnb
 Content\Audio\soundeffects\shoot.xnb
 Content\Audio\soundeffects\shoot2.xnb
-Content\Audio\soundeffects\shoot3.xnb
 Content\Audio\soundeffects\selection.xnb
 Content\Audio\soundeffects\jump.xnb
 Content\Audio\soundeffects\jump2.xnb
@@ -611,3 +610,6 @@ Content\Video\debug\debug1.xnb
 Content\Video\debug\debug2.xnb
 Content\Video\debug\debug3.xnb
 Content\Video\debug\debug4.xnb
+Content\Audio\soundeffects\killenemy.xnb
+Content\Audio\soundeffects\killenemy2.xnb
+Content\Audio\soundeffects\shoot3.xnb

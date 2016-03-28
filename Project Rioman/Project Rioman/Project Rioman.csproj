@@ -106,9 +106,12 @@
     <Compile Include="Boss.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Constant.cs" />
+    <Compile Include="DeuxKama.cs" />
+    <Compile Include="DozerBot.cs" />
     <Compile Include="EnemyAttributes.cs" />
     <Compile Include="GameLogic.cs" />
     <Compile Include="GameState.cs" />
+    <Compile Include="Macks.cs" />
     <Compile Include="Neolucky.cs" />
     <Compile Include="OldEnemy.cs" />
     <Compile Include="Health.cs" />

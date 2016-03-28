@@ -5312,15 +5312,6 @@
       <Time>2010-02-08T20:48:34-05:00</Time>
     </Item>
     <Item>
-      <Source>Audio\soundeffects\shoot3.wav</Source>
-      <Name>Audio\soundeffects\shoot3</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\shoot3.xnb</Output>
-      <Time>2010-02-08T20:48:34-05:00</Time>
-    </Item>
-    <Item>
       <Source>Audio\soundeffects\selection.wav</Source>
       <Name>Audio\soundeffects\selection</Name>
       <Importer>WavImporter</Importer>
@@ -5517,6 +5508,33 @@
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug4.xnb</Output>
       <Time>2016-03-21T21:52:43.6083417-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\soundeffects\killenemy.wav</Source>
+      <Name>Audio\soundeffects\killenemy</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\killenemy.xnb</Output>
+      <Time>2010-02-08T20:48:34-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\soundeffects\killenemy2.wav</Source>
+      <Name>Audio\soundeffects\killenemy2</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\killenemy2.xnb</Output>
+      <Time>2016-03-27T23:51:25.6991641-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\soundeffects\shoot3.wav</Source>
+      <Name>Audio\soundeffects\shoot3</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\shoot3.xnb</Output>
+      <Time>2016-03-27T23:52:44.0078753-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

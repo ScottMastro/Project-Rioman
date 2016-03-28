@@ -1804,7 +1804,6 @@ C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Pro
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\toxman.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\shoot.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\shoot2.xnb
-C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\shoot3.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\selection.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\jump.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\jump2.xnb
@@ -1833,3 +1832,6 @@ C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Pro
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug2.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug3.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug4.xnb
+C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\killenemy.xnb
+C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\killenemy2.xnb
+C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\shoot3.xnb

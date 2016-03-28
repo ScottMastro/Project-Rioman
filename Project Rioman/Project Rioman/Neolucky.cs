@@ -317,7 +317,7 @@ namespace Project_Rioman
 
             if (b > -1)
             {
-
+                Audio.PlayEnemyShoot1();
                 shooting = true;
                 shootTime = 0;
                 if (IsStanding())

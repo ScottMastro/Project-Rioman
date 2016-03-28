@@ -23,6 +23,7 @@ namespace Project_Rioman
         protected double killTime;
 
         protected bool isAlive;
+        protected bool wasAlive;
         protected bool readyToSpawn;
 
         protected int health;
@@ -46,7 +47,6 @@ namespace Project_Rioman
             maxHealth = EnemyAttributes.GetMaxHealthAttribute(type);
             touchDamage = EnemyAttributes.GetDamageAttribute(type);
             killExplosion = EnemyAttributes.GetKillSprite();
-
 
             this.r = new Random();
 
@@ -82,8 +82,13 @@ namespace Project_Rioman
             SubUpdate(player, rioBullets, deltaTime, viewport);
 
             if (!isAlive && health <= 0)
+            {
                 killTime += deltaTime;
-            
+                if (wasAlive)
+                    Audio.PlayKillEnemy();
+            }
+
+            wasAlive = isAlive;
         }
 
         protected abstract void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport);

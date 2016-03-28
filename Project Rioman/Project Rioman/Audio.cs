@@ -28,6 +28,8 @@ namespace Project_Rioman
         public static SoundEffect shoot1;
         public static SoundEffect shoot2;
         public static SoundEffect shoot3;
+        public static SoundEffect killEnemy;
+        public static SoundEffect killEnemy2;
         public static SoundEffect jump1;
         public static SoundEffect jump2;
         public static SoundEffect jump3;
@@ -59,6 +61,8 @@ namespace Project_Rioman
             shoot1 = content.Load<SoundEffect>("Audio\\soundeffects\\shoot");
             shoot2 = content.Load<SoundEffect>("Audio\\soundeffects\\shoot2");
             shoot3 = content.Load<SoundEffect>("Audio\\soundeffects\\shoot3");
+            killEnemy = content.Load<SoundEffect>("Audio\\soundeffects\\killenemy");
+            killEnemy2 = content.Load<SoundEffect>("Audio\\soundeffects\\killenemy2");
             jump1 = content.Load<SoundEffect>("Audio\\soundeffects\\jump");
             jump2 = content.Load<SoundEffect>("Audio\\soundeffects\\jump2");
             jump3 = content.Load<SoundEffect>("Audio\\soundeffects\\jump3");
@@ -108,27 +112,37 @@ namespace Project_Rioman
         public static void PlayWarp()
         {
 
-            if (Audio.activesoundeffect == null || Audio.activesoundeffect.State != SoundState.Playing)
+            if (activesoundeffect == null || activesoundeffect.State != SoundState.Playing)
             {
-                Audio.activesoundeffect = Audio.pickup.CreateInstance();
-                Audio.activesoundeffect.Volume = Constant.VOLUME;
-                Audio.activesoundeffect.Play();
+                activesoundeffect = pickup.CreateInstance();
+                activesoundeffect.Volume = Constant.VOLUME;
+                activesoundeffect.Play();
             }
         }
 
         public static void PlayLand()
         {
-            Audio.land.Play(Constant.VOLUME, 0f, 0f);
+            land.Play(Constant.VOLUME, 0f, 0f);
         }
 
         public static void PlayDoor()
         {
-            Audio.jump2.Play(Constant.VOLUME, -1f, 0f);
+            jump2.Play(Constant.VOLUME, -1f, 0f);
         }
 
         public static void PlayShoot()
         {
-            Audio.shoot1.Play(Constant.VOLUME, 0f, 0f);
+            shoot1.Play(Constant.VOLUME, 0f, 0f);
+        }
+
+        public static void PlayEnemyShoot1()
+        {
+            shoot3.Play(Constant.VOLUME, 0.5f, 0f);
+        }
+
+        public static void PlayKillEnemy()
+        {
+            killEnemy2.Play(Constant.VOLUME, 0f, 0f);
         }
     }
 }
