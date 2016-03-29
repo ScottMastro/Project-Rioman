@@ -123,7 +123,7 @@ namespace Project_Rioman
             damage.Add(Constant.KRONOS, 0);
             damage.Add(Constant.PURIN, 2);
             damage.Add(Constant.MOUSEHEAD, 5);
-            damage.Add(Constant.FLIPSIDE, 500);
+            damage.Add(Constant.FLIPSIDE, Constant.MAX_HEALTH);
             damage.Add(Constant.MACEBOT, 6);
             damage.Add(Constant.TR05D0R, 5);
             damage.Add(Constant.SPIKEBOMB, 3);
@@ -134,7 +134,7 @@ namespace Project_Rioman
             damage.Add(Constant.DEUXKAMA, 5);
             damage.Add(Constant.SERVERBOT, 4);
             damage.Add(Constant.MEGAHOPPER, 6);
-            damage.Add(Constant.DOZERBOT, 500);
+            damage.Add(Constant.DOZERBOT, Constant.MAX_HEALTH);
             damage.Add(Constant.BLACKY, 3);
             damage.Add(Constant.HELLICOPTOR, 4);
             damage.Add(Constant.P1H8R, 3);

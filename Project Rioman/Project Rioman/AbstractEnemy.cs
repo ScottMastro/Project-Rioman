@@ -12,7 +12,6 @@ namespace Project_Rioman
         protected Rectangle originalLocation;
         protected Rectangle hitbox;
 
-
         protected SpriteEffects direction;
         protected Texture2D sprite;
         protected Texture2D debugSquare;
@@ -27,6 +26,7 @@ namespace Project_Rioman
         protected bool isAlive;
         protected bool wasAlive;
         protected bool readyToSpawn;
+        protected bool isInvincible = false;
 
         protected int health;
         protected int maxHealth;
@@ -116,16 +116,22 @@ namespace Project_Rioman
 
         protected void CheckHit(Rioman player, Bullet[] rioBullets)
         {
-            if (GetCollisionRect().Intersects(player.Hitbox))
-                player.Hit(touchDamage);
+            if (isAlive)
+            {
+                if (GetCollisionRect().Intersects(player.Hitbox))
+                    player.Hit(touchDamage);
 
-            for (int i = 0; i <= rioBullets.Length - 1; i++)
-                if (rioBullets[i].isAlive && rioBullets[i].location.Intersects(GetCollisionRect()))
+                if (!isInvincible)
                 {
-                    TakeDamage(rioBullets[i].TakeDamage());
-                    blinkFrames = 2;
+                    for (int i = 0; i <= rioBullets.Length - 1; i++)
+                        if (rioBullets[i].isAlive && rioBullets[i].location.Intersects(GetCollisionRect()))
+                        {
+                            TakeDamage(rioBullets[i].TakeDamage());
+                            blinkFrames = 2;
 
+                        }
                 }
+            }
 
             SubCheckHit(player, rioBullets);
         }

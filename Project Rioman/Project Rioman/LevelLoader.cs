@@ -122,25 +122,29 @@ namespace Project_Rioman
                 tiles[r, c] = new Tile(tileSprites[value], value, type, r, c, content);
 
             //tile is an enemy
-            if(value == Constant.NEOLUCKY)
-            {
-                aenemy.Add(new Neolucky(value, r, c));
-            }
-            else if(value == Constant.DOZERBOT)
-            {
-                aenemy.Add(new DozerBot(value, r, c));
-            }
-
-            else if (value >= 297 && value <= 317)
-            {
-                enemies.Add(new Enemy(value, r, c, content));
-            }
+            if (value >= 297 && value <= 317)
+                CreateEnemy(value, r, c, content);
 
             //tile is a boss
             if (value == 289)
                 bosses[5].SetBoss(c * 32, r * 32);
             if (value == 285)
                 bosses[3].SetBoss(c * 32, r * 32);
+        }
+
+        private void CreateEnemy(int value, int r, int c, ContentManager content)
+        {
+            if (value == Constant.NEOLUCKY)
+                aenemy.Add(new Neolucky(value, r, c));
+            else if (value == Constant.DOZERBOT)
+                aenemy.Add(new DozerBot(value, r, c));
+            else if (value == Constant.DEUXKAMA)
+                aenemy.Add(new DeuxKama(value, r, c));
+            else if (value >= 297 && value <= 317)
+            {
+                enemies.Add(new Enemy(value, r, c, content));
+            }
+
         }
 
         private void SetLetters()
