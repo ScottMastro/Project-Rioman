@@ -22,7 +22,7 @@ namespace Project_Rioman
 
             rotation = 0f;
             direction = SpriteEffects.FlipHorizontally;
-            rotationOrigin = new Vector2((float)sprite.Width / 2f, (float)sprite.Height / 2f);
+            rotationOrigin = new Vector2((float)drawRect.Center.X, (float)drawRect.Center.Y);
 
             netVerticalMovement = 0;
             verticalDirection = 1;

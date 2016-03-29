@@ -140,6 +140,8 @@ namespace Project_Rioman
                 aenemy.Add(new DozerBot(value, r, c));
             else if (value == Constant.DEUXKAMA)
                 aenemy.Add(new DeuxKama(value, r, c));
+            else if (value == Constant.MACKS)
+                aenemy.Add(new Macks(value, r, c));
             else if (value >= 297 && value <= 317)
             {
                 enemies.Add(new Enemy(value, r, c, content));
