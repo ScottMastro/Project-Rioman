@@ -22,7 +22,7 @@ namespace Project_Rioman
         public static Keys UP { get { return Keys.Up; } }
         public static Keys DOWN { get { return Keys.Down; } }
 
-        public static float VOLUME = 0.4f;
+        public static float VOLUME = 0.1f;
 
         public static int TILE_SIZE = 32;
         public static int MAX_HEALTH = 27;

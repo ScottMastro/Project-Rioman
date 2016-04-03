@@ -16,12 +16,16 @@ namespace Project_Rioman
         private bool stopDownMovement;
         private bool collideWithTile;
 
+        private double shootTime;
+
         struct MackBullet
         {
             public bool isAlive;
             public int X;
             public int Y;
             public int direction;
+            public int frame;
+            public double frameTime;
 
             public void Reset()
             {
@@ -31,10 +35,31 @@ namespace Project_Rioman
                 direction = -1;
             }
 
+            public void Update(double deltaTime)
+            {
+                frameTime += deltaTime;
+
+                if (frameTime > 0.1)
+                {
+                    frameTime = 0;
+                    frame++;
+                    if (frame > 2)
+                        frame = 0;
+                }
+            }
+
+            public SpriteEffects SpriteDirection()
+            {
+                if (direction < 0)
+                    return SpriteEffects.None;
+                else
+                    return SpriteEffects.FlipHorizontally;
+            }
         }
 
         private MackBullet[] bullets = new MackBullet[3];
-
+        private const int BULLET_SPEED = 8;
+        private const int BULLET_DAMAGE = 5;
 
         public Macks(int type, int r, int c) : base(type, r, c)
         {
@@ -48,6 +73,8 @@ namespace Project_Rioman
             stopUpMovement = false;
             stopDownMovement = false;
             collideWithTile = false;
+
+            shootTime = 0;
         }
 
         protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
@@ -74,6 +101,10 @@ namespace Project_Rioman
 
                 }
 
+                shootTime += deltaTime;
+                distance = GetCollisionRect().Center.Y - player.Hitbox.Center.Y;
+                if (shootTime > 0.5 && distance < 10)
+                    Shoot();
 
                 if (!collideWithTile)
                 {
@@ -81,7 +112,58 @@ namespace Project_Rioman
                     stopDownMovement = false;
                 }
                 collideWithTile = false;
+
             }
+
+
+            for (int i = 0; i <= bullets.Length - 1; i++)
+            {
+                if (bullets[i].isAlive)
+                {
+                    bullets[i].Update(deltaTime);
+                    bullets[i].X += BULLET_SPEED * bullets[i].direction;
+
+                    if (bullets[i].X > viewport.Width + 20 || bullets[i].X < -20)
+                        bullets[i].isAlive = false;
+                }
+
+            }
+        }
+        
+        private void Shoot()
+        {
+            int index = -1;
+
+            for (int i = 0; i <= bullets.Length - 1; i++)
+                if (!bullets[i].isAlive)
+                    index = i;
+
+            if (index > -1)
+            {
+               // Audio.PlayEnemyShoot1();
+                shootTime = 0;
+
+                bullets[index].isAlive = true;
+
+                if (FacingLeft())
+                    bullets[index].direction = -1;
+                else 
+                    bullets[index].direction = 1;
+
+                bullets[index].X = GetCollisionRect().Center.X;
+                bullets[index].Y = GetCollisionRect().Center.Y - 3;
+            }
+
+        }
+
+        protected override void SubCheckHit(Rioman player, Bullet[] rioBullets)
+        {
+            for (int i = 0; i <= bullets.Length - 1; i++)
+                if (bullets[i].isAlive && player.Hitbox.Intersects(new Rectangle(bullets[i].X, bullets[i].Y, bullet.Width/3, bullet.Height)))
+                {
+                    player.Hit(BULLET_DAMAGE);
+                    bullets[i].isAlive = false;
+                }
         }
 
         protected override void SubDrawEnemy(SpriteBatch spriteBatch)
@@ -91,19 +173,25 @@ namespace Project_Rioman
 
         }
 
-        public override Rectangle GetCollisionRect()
-        {
-            return new Rectangle(location.X + 5, location.Y + 3, drawRect.Width - 10, drawRect.Height - 6);
-        }
-
         protected override void SubDrawOther(SpriteBatch spriteBatch)
         {
-            //do nothing
+            for (int i = 0; i <= bullets.Length - 1; i++)
+            {
+                if (bullets[i].isAlive)
+                    spriteBatch.Draw(bullet, new Rectangle(bullets[i].X, bullets[i].Y, bullet.Width/3, bullet.Height),
+                        new Rectangle(bullets[i].frame * bullet.Width /3, 0, bullet.Width/3, bullet.Height), Color.White, 0f, new Vector2(), 
+                        bullets[i].SpriteDirection(), 0f);
+
+            }
         }
 
         protected override void SubMove(int x, int y)
         {
-            //do nothing
+            for (int i = 0; i <= bullets.Length - 1; i++)
+            {
+                bullets[i].X += x;
+                bullets[i].Y += y;
+            }
         }
 
         public override void DetectTileCollision(Tile tile)
@@ -123,9 +211,9 @@ namespace Project_Rioman
             }
         }
 
-        protected override void SubCheckHit(Rioman player, Bullet[] rioBullets)
+        public override Rectangle GetCollisionRect()
         {
-            //do nothing
+            return new Rectangle(location.X + 5, location.Y + 3, drawRect.Width - 10, drawRect.Height - 6);
         }
     }
 }

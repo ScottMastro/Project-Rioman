@@ -187,7 +187,7 @@ namespace Project_Rioman
 
         public void Jump()
         {
-            if (!IsWarping() && !IsFalling())
+            if (!IsWarping() && !IsFalling() && !IsHit())
             {
                 jumpTime = 0;
                 if (state == State.climbing)

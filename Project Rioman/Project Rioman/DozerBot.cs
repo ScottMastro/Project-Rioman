@@ -167,7 +167,7 @@ namespace Project_Rioman
                         bullets[bulletCounter].X = Right().Left;
                     }
 
-                    bullets[bulletCounter].Y = location.Y + drawRect.Height * 2 / 5;
+                    bullets[bulletCounter].Y = location.Y + drawRect.Height * 3 / 5;
 
                     bulletCounter++;
                 }

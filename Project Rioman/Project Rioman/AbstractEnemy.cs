@@ -92,8 +92,8 @@ namespace Project_Rioman
             if (!isAlive && readyToSpawn)
             {
 
-                if (location.X > -10 && location.X < viewport.Width + 10 &&
-                    location.Y > -10 && location.Y < viewport.Height + 10)
+                if (location.X > -20 && location.X < viewport.Width + 20 &&
+                    location.Y > -20 && location.Y < viewport.Height + 20)
                 {
                     isAlive = true;
                     readyToSpawn = false;

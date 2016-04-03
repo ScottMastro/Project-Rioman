@@ -111,6 +111,7 @@
     <Compile Include="EnemyAttributes.cs" />
     <Compile Include="GameLogic.cs" />
     <Compile Include="GameState.cs" />
+    <Compile Include="Macebot.cs" />
     <Compile Include="Macks.cs" />
     <Compile Include="Neolucky.cs" />
     <Compile Include="OldEnemy.cs" />

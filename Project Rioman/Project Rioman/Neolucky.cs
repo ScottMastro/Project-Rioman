@@ -287,13 +287,13 @@ namespace Project_Rioman
 
         private void Shoot()
         {
-            int b = -1;
+            int index = -1;
 
             for (int i = 0; i <= bullets.Length - 1; i++)
                 if (!bullets[i].isAlive)
-                    b = i;
+                    index = i;
 
-            if (b > -1)
+            if (index > -1)
             {
                 Audio.PlayEnemyShoot1();
                 shooting = true;
@@ -304,7 +304,7 @@ namespace Project_Rioman
                     drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
                 }
 
-                CreateBullet(b);
+                CreateBullet(index);
             }
         }
 
