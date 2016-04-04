@@ -90,10 +90,6 @@ namespace Project_Rioman
                 else if( r.Next(1000) < SHOOT_PROB)
                     Shoot();
 
-                CheckHit(player, rioBullets);
-
-                if (health < 0)
-                    isAlive = false;
 
             }
 
@@ -338,7 +334,7 @@ namespace Project_Rioman
                     GroundCollision(tile.location.Y);
             }
 
-            if (tile.type == 1)
+            if (tile.type == 1 || tile.type == 4)
             {
                 if (Head().Intersects(tile.Bottom))
                     BottomCollision();

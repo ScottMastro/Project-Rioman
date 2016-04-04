@@ -144,6 +144,8 @@ namespace Project_Rioman
                 aenemy.Add(new Macks(value, r, c));
             else if (value == Constant.MACEBOT)
                 aenemy.Add(new Macebot(value, r, c));
+            else if (value == Constant.PURIN)
+                aenemy.Add(new Purin(value, r, c));
             else if (value >= 297 && value <= 317)
             {
                 enemies.Add(new Enemy(value, r, c, content));

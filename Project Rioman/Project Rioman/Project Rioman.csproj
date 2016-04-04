@@ -100,35 +100,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractEnemy.cs" />
+    <Compile Include="Enemies\AbstractEnemy.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="Audio.cs" />
     <Compile Include="Boss.cs" />
-    <Compile Include="Bullet.cs" />
+    <Compile Include="Rioman\Bullet.cs" />
     <Compile Include="Constant.cs" />
-    <Compile Include="DeuxKama.cs" />
-    <Compile Include="DozerBot.cs" />
-    <Compile Include="EnemyAttributes.cs" />
-    <Compile Include="GameLogic.cs" />
-    <Compile Include="GameState.cs" />
-    <Compile Include="Macebot.cs" />
-    <Compile Include="Macks.cs" />
-    <Compile Include="Neolucky.cs" />
-    <Compile Include="OldEnemy.cs" />
+    <Compile Include="Enemies\DeuxKama.cs" />
+    <Compile Include="Enemies\DozerBot.cs" />
+    <Compile Include="Enemies\EnemyAttributes.cs" />
+    <Compile Include="GameState\GameLogic.cs" />
+    <Compile Include="GameState\GameState.cs" />
+    <Compile Include="Enemies\Macebot.cs" />
+    <Compile Include="Enemies\Macks.cs" />
+    <Compile Include="Enemies\Neolucky.cs" />
+    <Compile Include="Enemies\OldEnemy.cs" />
     <Compile Include="Health.cs" />
-    <Compile Include="Level.cs" />
-    <Compile Include="LevelLoader.cs" />
+    <Compile Include="Levels\Level.cs" />
+    <Compile Include="Levels\LevelLoader.cs" />
     <Compile Include="Pickup.cs" />
-    <Compile Include="RiomanAnimation.cs" />
-    <Compile Include="RiomanState.cs" />
-    <Compile Include="Save.cs" />
-    <Compile Include="StageSelection.cs" />
-    <Compile Include="Opening.cs" />
+    <Compile Include="Enemies\Purin.cs" />
+    <Compile Include="Rioman\RiomanAnimation.cs" />
+    <Compile Include="Rioman\RiomanState.cs" />
+    <Compile Include="GameState\Save.cs" />
+    <Compile Include="GameState\StageSelection.cs" />
+    <Compile Include="GameState\Opening.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="Rioman.cs" />
-    <Compile Include="Tile.cs" />
+    <Compile Include="Rioman\Rioman.cs" />
+    <Compile Include="Levels\Tile.cs" />
     <Compile Include="Weapons.cs" />
   </ItemGroup>
   <ItemGroup>
