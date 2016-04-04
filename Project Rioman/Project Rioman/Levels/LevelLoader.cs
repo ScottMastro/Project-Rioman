@@ -150,6 +150,8 @@ namespace Project_Rioman
                 aenemy.Add(new Flipside(value, r, c));
             else if (value == Constant.SPIKEBOMB)
                 aenemy.Add(new SpikeBomb(value, r, c));
+            else if (value == Constant.CHANCEBOMB)
+                aenemy.Add(new ChanceBomb(value, r, c));
             else if (value >= 297 && value <= 317)
             {
                 enemies.Add(new Enemy(value, r, c, content));
