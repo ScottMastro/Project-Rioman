@@ -105,6 +105,7 @@
     <Compile Include="Audio.cs" />
     <Compile Include="Boss.cs" />
     <Compile Include="Enemies\Flipside.cs" />
+    <Compile Include="Enemies\SpikeBomb.cs" />
     <Compile Include="Rioman\Bullet.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Enemies\DeuxKama.cs" />
