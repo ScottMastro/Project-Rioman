@@ -10,6 +10,7 @@ namespace Project_Rioman
 
         private bool animateWarp;
 
+        private bool onEnemy;
 
         private bool shooting;
         private double shootTime;
@@ -53,6 +54,7 @@ namespace Project_Rioman
 
         public void Update(double deltaTime)
         {
+            onEnemy = false;
 
             KeyboardState k = Keyboard.GetState();
 
@@ -170,6 +172,10 @@ namespace Project_Rioman
             hit = false;
             invincible = false;
         }
+        public void SetOnEnemy() {
+            onEnemy = true;
+            Stand();
+        }
         public void StopWarping() { state = State.standing; }
         public void Run() { state = State.running; }
         public void Stand()
@@ -197,7 +203,10 @@ namespace Project_Rioman
             }
         }
 
-        public void Fall() { state = State.falling; }
+        public void Fall() {
+            if(!onEnemy)
+                state = State.falling;
+        }
         public void Climb()
         {
             if (!IsWarping() && !IsHit())
@@ -258,8 +267,9 @@ namespace Project_Rioman
         public bool IsAnimateWarp() { return animateWarp == true; }
         public bool IsHit() { return hit; }
         public bool IsInvincible() { return invincible; }
+        public bool IsOnEnemy() { return onEnemy; }
         public bool Airborne() { return IsFalling() || IsJumping(); }
-        public bool Grounded() { return IsStanding() || IsRunning(); }
+        public bool Grounded() { return IsStanding() || IsRunning() || IsOnEnemy(); }
 
     }
 }

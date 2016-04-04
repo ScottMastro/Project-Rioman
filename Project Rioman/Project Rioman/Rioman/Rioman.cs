@@ -27,7 +27,6 @@ namespace Project_Rioman
 
         private Bullet[] bullets = new Bullet[3];
 
-
         private KeyboardState prevKeyboardState;
 
         public Rioman(ContentManager content)
@@ -358,6 +357,11 @@ namespace Project_Rioman
             location.Y = y;
         }
 
+        public void SetOnEnemy(int posY) {
+            state.SetOnEnemy();
+            MoveToY(posY - GetSprite().Height + 8);
+        }
+
         public void StopRightMovement() { stopRightMovement = true; }
         public void StopLeftMovement() { stopLeftMovement = true; }
         public Texture2D GetSprite() { return anim.GetSprite(); }
@@ -374,6 +378,8 @@ namespace Project_Rioman
         public bool IsClimbing() { return state.IsClimbing(); }
         public bool IsJumping() { return state.IsJumping(); }
         public bool IsInvincible() { return state.IsInvincible(); }
+        public bool IsOnEnemy() { return state.IsOnEnemy(); }
+
         public bool FacingRight() { return anim.FacingRight(); }
 
         public Bullet[] GetBullets() { return bullets; }

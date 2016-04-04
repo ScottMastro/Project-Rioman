@@ -219,7 +219,7 @@ namespace Project_Rioman
                 }
             }
 
-            if (!onGround && !rioman.IsJumping() && !rioman.IsClimbing())
+            if (!onGround && !rioman.IsJumping() && !rioman.IsClimbing() && !rioman.IsOnEnemy())
                 rioman.state.Fall();
 
             if (climbTop)
