@@ -3959,7 +3959,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\enemies\ttbullets1.xnb</Output>
-      <Time>2010-02-12T23:03:14-05:00</Time>
+      <Time>2016-04-05T17:14:34.4433167-04:00</Time>
     </Item>
     <Item>
       <Source>Video\enemies\ttbullets2.png</Source>
@@ -3968,7 +3968,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\enemies\ttbullets2.xnb</Output>
-      <Time>2010-02-12T23:03:34-05:00</Time>
+      <Time>2016-04-05T17:18:12.0241615-04:00</Time>
     </Item>
     <Item>
       <Source>Video\enemies\ttbullets3.png</Source>
@@ -5535,6 +5535,15 @@
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\shoot3.xnb</Output>
       <Time>2016-03-27T23:52:44.0078753-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\enemies\ttbullets4.png</Source>
+      <Name>Video\enemies\ttbullets4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\enemies\ttbullets4.xnb</Output>
+      <Time>2016-04-05T13:00:59.4868939-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

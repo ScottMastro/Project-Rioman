@@ -30,7 +30,7 @@ namespace Project_Rioman
             sprites = new Dictionary<int, Texture2D[]>();
 
             sprites.Add(Constant.TOTEM, LoadSprites(c, new string[]
-                {"troubling-totem", "ttbullets0", "ttbullets1", "ttbullets2", "ttbullets3"}));
+                {"troubling-totem", "ttbullets0", "ttbullets1", "ttbullets2", "ttbullets3", "ttbullets4"}));
             sprites.Add(Constant.NEOLUCKY, LoadSprites(c, new string[]
                 {"neo-luckystand", "neo-luckybullet", "neo-luckyattack", "neo-luckyjump"}));
             sprites.Add(Constant.KRONOS, LoadSprites(c, new string[]

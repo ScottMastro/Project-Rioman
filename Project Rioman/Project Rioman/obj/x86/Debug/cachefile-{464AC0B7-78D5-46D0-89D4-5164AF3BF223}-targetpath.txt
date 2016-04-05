@@ -613,3 +613,4 @@ Content\Video\debug\debug4.xnb
 Content\Audio\soundeffects\killenemy.xnb
 Content\Audio\soundeffects\killenemy2.xnb
 Content\Audio\soundeffects\shoot3.xnb
+Content\Video\enemies\ttbullets4.xnb

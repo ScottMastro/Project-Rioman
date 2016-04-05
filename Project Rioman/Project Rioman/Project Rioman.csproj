@@ -109,6 +109,7 @@
     <Compile Include="Enemies\MegaHopper.cs" />
     <Compile Include="Enemies\Serverbot.cs" />
     <Compile Include="Enemies\SpikeBomb.cs" />
+    <Compile Include="Enemies\Totem.cs" />
     <Compile Include="Rioman\Bullet.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Enemies\DeuxKama.cs" />
