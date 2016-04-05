@@ -154,6 +154,8 @@ namespace Project_Rioman
                 aenemy.Add(new ChanceBomb(value, r, c));
             else if (value == Constant.MEGAHOPPER)
                 aenemy.Add(new MegaHopper(value, r, c));
+            else if (value == Constant.SERVERBOT)
+                aenemy.Add(new Serverbot(value, r, c));
             else if (value >= 297 && value <= 317)
             {
                 enemies.Add(new Enemy(value, r, c, content));
