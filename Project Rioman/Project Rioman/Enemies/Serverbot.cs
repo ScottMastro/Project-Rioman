@@ -17,6 +17,8 @@ namespace Project_Rioman
         private bool stopLeft;
         private bool stopRight;
 
+        private const int MOVE_SPEED = 16;
+
 
         public Serverbot(int type, int r, int c) : base(type, r, c)
         {
@@ -27,6 +29,9 @@ namespace Project_Rioman
             drawRect = new Rectangle(sprite.Width / 4, 0, sprite.Width / 4, sprite.Height);
 
             groundBelow = false;
+            stopLeft = false;
+            stopRight = false;
+
         }
 
         protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
@@ -34,9 +39,19 @@ namespace Project_Rioman
 
             if (isAlive)
             {
+                if (!falling)
+                {
+                    if (Math.Abs(player.Hitbox.Center.X - GetCollisionRect().Center.X) < MOVE_SPEED + 4)
+                        Stand();
+                    else if (player.Hitbox.Center.X > GetCollisionRect().Center.X)
+                        direction = SpriteEffects.FlipHorizontally;
+                    else if (player.Hitbox.Center.X < GetCollisionRect().Center.X)
+                        direction = SpriteEffects.None;
+                }
+
                 frameTime += deltaTime;
 
-                if (frameTime > 0.15)
+                if (frameTime > 0.15 && !falling)
                 {
                     frameTime = 0;
                     frame++;
@@ -44,31 +59,29 @@ namespace Project_Rioman
                         frame = 1;
 
                     if (FacingLeft() && !stopLeft)
-                        Move(-16, 0);
+                        Move(-MOVE_SPEED, 0);
                     else if (!FacingLeft() && !stopRight)
-                        Move(16, 0);
+                        Move(MOVE_SPEED, 0);
                     else
                         Stand();
                 }
-
-
-                if (player.Hitbox.Center.X > GetCollisionRect().Center.X)
-                    direction = SpriteEffects.FlipHorizontally;
-                else if (player.Hitbox.Center.Y < GetCollisionRect().Center.Y)
-                    direction = SpriteEffects.None;
-
 
 
                 if (falling)
                 {
 
                     fallTime += deltaTime;
-                    Move(0, Convert.ToInt32(8 - fallTime * 10));
+                    if (fallTime * 30 > 10)
+                        Move(0, 10);
+                    else
+                        Move(0, Math.Max(Convert.ToInt32(fallTime * 30), 2));
                 }
 
                 if (!groundBelow)
                     falling = true;
                 groundBelow = false;
+                stopLeft = false;
+                stopRight = false;
             }
         }
 
@@ -99,9 +112,9 @@ namespace Project_Rioman
             if (tile.type == 1 || tile.type == 4)
             {
                 if (Right().Intersects(tile.Left))
-                    LeftCollision();
+                    LeftCollision(tile.location.Left);
                 if (Left().Intersects(tile.Right))
-                    RightCollision();
+                    RightCollision(tile.location.Right);
             }
         }
 
@@ -112,18 +125,22 @@ namespace Project_Rioman
             {
                 fallTime = 0;
                 location.Y = groundTop - drawRect.Height;
+                falling = false;
             }
         }
 
 
-        private void LeftCollision()
+        private void LeftCollision(int leftX)
         {
             stopRight = true;
+            location.X = leftX - drawRect.Width + 5;
         }
 
-        private void RightCollision()
+        private void RightCollision(int rightX)
         {
             stopLeft = true;
+            location.X = rightX - 6;
+
         }
 
         public override Rectangle GetCollisionRect()
@@ -131,7 +148,7 @@ namespace Project_Rioman
             return new Rectangle(location.X + 6, location.Y + 12, drawRect.Width - 12, drawRect.Height - 12);
         }
 
-        private Rectangle Left() { return new Rectangle(location.X, location.Y + 8, 10, drawRect.Height * 2 / 3); }
+        private Rectangle Left() { return new Rectangle(location.X- 4, location.Y + 8, 10, drawRect.Height * 2 / 3); }
         private Rectangle Right() { return new Rectangle(location.X + drawRect.Width - 14, location.Y + 8, 10, drawRect.Height * 2 / 3); }
         private Rectangle Feet() { return new Rectangle(location.X + 12, location.Y + drawRect.Height - 10, drawRect.Width - 24, 10); }
 

@@ -141,7 +141,7 @@ namespace Project_Rioman
         private Rectangle Left() { return new Rectangle(location.X, location.Y + 20, 12, drawRect.Height * 2 / 3); }
         private Rectangle Right() { return new Rectangle(location.X + drawRect.Width - 14, location.Y + 20, 12, drawRect.Height * 2 / 3); }
         private Rectangle Head() { return new Rectangle(location.X + 6, location.Y, drawRect.Width - 12, 12); }
-        private Rectangle Feet() { return new Rectangle(location.X + 6, location.Y + drawRect.Height - 12, drawRect.Width - 12, 12); }
+        private Rectangle Feet() { return new Rectangle(location.X + 12, location.Y + drawRect.Height - 12, drawRect.Width - 24, 12); }
 
         protected override void SubDrawOther(SpriteBatch spriteBatch)
         {
