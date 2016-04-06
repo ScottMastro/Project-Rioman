@@ -35,6 +35,7 @@ namespace Project_Rioman
         public static SoundEffect jump3;
         public static SoundEffect land;
         public static SoundEffect selection;
+        public static SoundEffect shieldHit;
         public static SoundEffect die;
         private static SoundEffect warp;
         public static SoundEffect pickup;
@@ -68,6 +69,7 @@ namespace Project_Rioman
             jump3 = content.Load<SoundEffect>("Audio\\soundeffects\\jump3");
             land = content.Load<SoundEffect>("Audio\\soundeffects\\land2");
             selection = content.Load<SoundEffect>("Audio\\soundeffects\\selection");
+            shieldHit = content.Load<SoundEffect>("Audio\\soundeffects\\shieldhit");
             die = content.Load<SoundEffect>("Audio\\soundeffects\\die");
             warp = content.Load<SoundEffect>("Audio\\soundeffects\\warp");
             pickup = content.Load<SoundEffect>("Audio\\soundeffects\\powerup");
@@ -137,12 +139,17 @@ namespace Project_Rioman
 
         public static void PlayEnemyShoot1()
         {
-            shoot3.Play(Constant.VOLUME, 0.5f, 0f);
+            shoot3.Play(Constant.VOLUME, -0.5f, 0f);
         }
 
         public static void PlayKillEnemy()
         {
             killEnemy2.Play(Constant.VOLUME, 0f, 0f);
+        }
+
+        public static void PlayShieldHit()
+        {
+            shieldHit.Play(Constant.VOLUME, 0.5f, 0f);
         }
     }
 }

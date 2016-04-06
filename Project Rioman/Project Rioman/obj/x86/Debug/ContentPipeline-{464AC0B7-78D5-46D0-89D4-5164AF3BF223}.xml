@@ -5545,6 +5545,15 @@
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\enemies\ttbullets4.xnb</Output>
       <Time>2016-04-05T13:00:59.4868939-04:00</Time>
     </Item>
+    <Item>
+      <Source>Audio\soundeffects\shieldhit.wav</Source>
+      <Name>Audio\soundeffects\shieldhit</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\shieldhit.xnb</Output>
+      <Time>2016-04-05T23:36:58.1077619-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{464AC0B7-78D5-46D0-89D4-5164AF3BF223}</ContentProjectGUID>
