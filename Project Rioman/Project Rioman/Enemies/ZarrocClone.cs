@@ -103,13 +103,16 @@ namespace Project_Rioman
 
         protected override void SubCheckHit(Rioman player, Bullet[] rioBullets)
         {
-            for (int i = 0; i<= rioBullets.Length -1; i++)
-                if (rioBullets[i].isAlive && rioBullets[i].location.Intersects(GetShieldRect()))
-                {
-                    rioBullets[i].isAlive = false;
-                    Audio.PlayShieldHit();
+            if (isAlive)
+            {
+                for (int i = 0; i <= rioBullets.Length - 1; i++)
+                    if (rioBullets[i].isAlive && rioBullets[i].location.Intersects(GetShieldRect()))
+                    {
+                        rioBullets[i].isAlive = false;
+                        Audio.PlayShieldHit();
 
-                }
+                    }
+            }
 
             for (int i = 0; i <= bullets.Length - 1; i++)
                 if (bullets[i].isAlive && player.Hitbox.Intersects(new Rectangle(bullets[i].X, bullets[i].Y, bullet.Width, bullet.Height)))

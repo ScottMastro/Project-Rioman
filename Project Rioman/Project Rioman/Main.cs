@@ -108,10 +108,6 @@ namespace Project_Rioman
             else if (GameState.GetState() >= 10 && GameState.GetState() < 100)
                 gameLogic.Update(gameTime);
 
-
-            // if (previousgamestatus != gamestatus)
-            //    Audio.ChangeActiveSong(gamestatus);
-
             previousKeyboardState = keyboardstate;
 
             base.Update(gameTime);
@@ -138,7 +134,7 @@ namespace Project_Rioman
             else if (GameState.GetState() > 100)
                 StageSelection.DrawDance(spriteBatch, viewportRect);
             else if (GameState.GetState() >= 10 && GameState.GetState() < 100)
-                gameLogic.Draw(spriteBatch, viewportRect);
+                gameLogic.Draw(GraphicsDevice, spriteBatch, viewportRect);
 
             spriteBatch.End();
 

@@ -117,8 +117,10 @@ namespace Project_Rioman
 
         }
 
-        public void Draw(SpriteBatch spriteBatch, Viewport viewportRect)
+        public void Draw(GraphicsDevice graphics, SpriteBatch spriteBatch, Viewport viewportRect)
         {
+            graphics.Clear(currentLevel.backgroundcolour);
+
 
             if (currentLevel != null)
             {

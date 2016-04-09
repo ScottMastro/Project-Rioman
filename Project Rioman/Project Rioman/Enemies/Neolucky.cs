@@ -43,14 +43,6 @@ namespace Project_Rioman
             public int Y;
             public int direction;
 
-            public void Reset()
-            {
-                isAlive = false;
-                X = 0;
-                Y = 0;
-                direction = -1;
-            }
-
         }
 
         private NeoBullet[] bullets = new NeoBullet[3];
@@ -330,7 +322,7 @@ namespace Project_Rioman
 
             if (tile.type == 1 || tile.type == 3 && tile.isTop)
             {
-                if (GetCollisionRect().Intersects(tile.Floor))
+                if (Feet().Intersects(tile.Floor))
                     GroundCollision(tile.location.Y);
             }
 
@@ -375,7 +367,7 @@ namespace Project_Rioman
         private Rectangle Left() { return new Rectangle(location.X + 10, location.Y, 10, drawRect.Height * 2/3); }
         private Rectangle Right() { return new Rectangle(location.X + drawRect.Width -20, location.Y, 10, drawRect.Height * 2/3); }
         private Rectangle Head() { return new Rectangle(location.X + 20, location.Y + 10, drawRect.Width -40, 10); }
-     //   private Rectangle Feet() { return new Rectangle(location.X + 10, location.Y + drawRect.Height - 10, drawRect.Width - 20, 10); }
+        private Rectangle Feet() { return new Rectangle(location.X + 10, location.Y + drawRect.Height - 10, drawRect.Width - 20, 10); }
 
         public override Rectangle GetCollisionRect()
         {

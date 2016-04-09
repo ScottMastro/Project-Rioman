@@ -38,7 +38,10 @@ namespace Project_Rioman
         public static int GetLevel() { return state - 9; }
         public static void SetState(int value) {
             prevState = state;
-            state = value; }
+            state = value;
+
+          //  Audio.ChangeActiveSong(state);
+        }
         public static int GetPrevState() { return prevState; }
         public static bool IsPaused() { return pause; }
         public static void Pause() { pause = true; }
