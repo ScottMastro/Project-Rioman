@@ -108,6 +108,7 @@
     <Compile Include="Enemies\Flipside.cs" />
     <Compile Include="Enemies\MegaHopper.cs" />
     <Compile Include="Enemies\MushMech.cs" />
+    <Compile Include="Enemies\P1H8R.cs" />
     <Compile Include="Enemies\Serverbot.cs" />
     <Compile Include="Enemies\SpikeBomb.cs" />
     <Compile Include="Enemies\Totem.cs" />
