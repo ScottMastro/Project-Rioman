@@ -4,41 +4,29 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Project_Rioman
 {
-    class P1H8R : AbstractEnemy
+    class Hellicoptor : AbstractEnemy
     {
-        private Texture2D bullet;
-        private const int BULLET_DAMAGE = 4;
-        private const int BULLET_SPEED = 9;
 
-        private double shootTime;
+        private double frameTime;
+        private int frame;
         private bool chasing;
+
+        private const int SPEED = 2;
 
         private bool stopDownMovement;
         private bool stopUpMovement;
         private bool stopLeftMovement;
         private bool stopRightMovement;
 
-        struct H8Bullet
-        {
-            public bool isAlive;
-            public int X;
-            public int Y;
-
-        }
-        private H8Bullet[] bullets = new H8Bullet[3];
-
-
-        public P1H8R(int type, int r, int c) : base(type, r, c)
+        public Hellicoptor(int type, int r, int c) : base(type, r, c)
 
         {
-            Texture2D[] sprites = EnemyAttributes.GetSprites(type);
+            sprite = EnemyAttributes.GetSprites(type)[0];
 
-            sprite = sprites[0];
-            bullet = sprites[1];
+            drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
 
-            drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
-
-            shootTime = 0;
+            frameTime = 0;
+            frame = 0;
             chasing = false;
 
             stopDownMovement = false;
@@ -58,7 +46,7 @@ namespace Project_Rioman
                 int thisX = GetCollisionRect().Center.X;
                 int thisY = GetCollisionRect().Center.Y;
 
-                    if (!chasing)
+                if (!chasing)
                 {
                     if (Math.Abs(thisX - playerX) < 200 &&
                         (Math.Abs(thisY - playerY) < 200))
@@ -70,39 +58,32 @@ namespace Project_Rioman
                         (Math.Abs(thisY - playerY) > 250))
                         chasing = false;
 
-                    if (playerY < thisY + 76 && !stopUpMovement)
-                        location.Y--;
-                    else if (playerY > thisY + 76 && !stopDownMovement)
-                        location.Y++;
+                    if (playerY < thisY && !stopUpMovement)
+                        location.Y -= SPEED;
+                    else if (playerY > thisY && !stopDownMovement)
+                        location.Y += SPEED;
 
                     if (thisX - playerX > 4 && !stopLeftMovement)
                     {
-                        location.X--;
+                        location.X -= SPEED;
                         direction = SpriteEffects.None;
                     }
                     else if (playerX - thisX > 4 && !stopRightMovement)
                     {
-                        location.X++;
+                        location.X += SPEED;
                         direction = SpriteEffects.FlipHorizontally;
                     }
                 }
 
-                shootTime += deltaTime;
-                if (shootTime > 1.5)
+                frameTime += deltaTime;
+                if (frameTime > 0.2)
                 {
-                    shootTime = 0;
-                    int index = -1;
+                    frameTime = 0;
 
-                    for (int i = 0; i <= bullets.Length - 1; i++)
-                        if (!bullets[i].isAlive)
-                            index = i;
-
-                    if (index > -1)
-                    {
-                        bullets[index].isAlive = true;
-                        bullets[index].Y = thisY;
-                        bullets[index].X = thisX;
-                    }
+                    if (frame == 0)
+                        frame = 1;
+                    else
+                        frame = 0;
                 }
 
                 stopDownMovement = false;
@@ -110,50 +91,15 @@ namespace Project_Rioman
                 stopLeftMovement = false;
                 stopRightMovement = false;
             }
-
-            for (int i = 0; i <= bullets.Length - 1; i++)
-                if (bullets[i].isAlive)
-                {
-                    bullets[i].Y += BULLET_SPEED;
-
-                    if (bullets[i].Y < -20 || bullets[i].Y > viewport.Height + 20)
-                        bullets[i].isAlive = false;
-                }
-        }
-
-        protected override void SubCheckHit(Rioman player, Bullet[] rioBullets)
-        {
-            for (int i = 0; i <= bullets.Length - 1; i++)
-                if (bullets[i].isAlive && player.Hitbox.Intersects(new Rectangle(bullets[i].X, bullets[i].Y, bullet.Width, bullet.Height)))
-                {
-                    player.Hit(BULLET_DAMAGE);
-                    bullets[i].isAlive = false;
-                }
         }
 
         protected override void SubDrawEnemy(SpriteBatch spriteBatch)
         {
+            drawRect = new Rectangle(frame * sprite.Width / 2, 0, sprite.Width/2, sprite.Height);
+
             spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, drawRect.Width, drawRect.Height),
                 drawRect, Color.White, 0f, new Vector2(), direction, 0);
 
-        }
-
-        protected override void SubDrawOther(SpriteBatch spriteBatch)
-        {
-            for (int i = 0; i <= bullets.Length - 1; i++)
-            {
-                if (bullets[i].isAlive)
-                    spriteBatch.Draw(bullet, new Rectangle(bullets[i].X, bullets[i].Y, bullet.Width, bullet.Height), Color.White);
-            }
-        }
-
-        protected override void SubMove(int x, int y)
-        {
-            for (int i = 0; i <= bullets.Length - 1; i++)
-            {
-                bullets[i].X += x;
-                bullets[i].Y += y;
-            }
         }
 
         public override Rectangle GetCollisionRect()
@@ -172,7 +118,7 @@ namespace Project_Rioman
             if (tile.type == 1 || tile.type == 3 && tile.isTop || tile.type == 4)
             {
                 if (Bottom().Intersects(tile.Floor))
-                    stopDownMovement = true; 
+                    stopDownMovement = true;
                 if (Top().Intersects(tile.Bottom))
                     stopUpMovement = true;
                 if (Right().Intersects(tile.Left))
@@ -180,6 +126,21 @@ namespace Project_Rioman
                 if (Left().Intersects(tile.Right))
                     stopLeftMovement = true;
             }
+        }
+
+        protected override void SubCheckHit(Rioman player, Bullet[] rioBullets)
+        {
+            //do nothing
+        }
+
+        protected override void SubDrawOther(SpriteBatch spriteBatch)
+        {
+            //do nothing
+        }
+
+        protected override void SubMove(int x, int y)
+        {
+            //do nothing
         }
     }
 }

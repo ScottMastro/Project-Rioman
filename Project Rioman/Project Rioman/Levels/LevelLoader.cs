@@ -166,6 +166,8 @@ namespace Project_Rioman
                 aenemy.Add(new MushMech(value, r, c));
             else if (value == Constant.P1H8R)
                 aenemy.Add(new P1H8R(value, r, c));
+            else if (value == Constant.HELLICOPTOR)
+                aenemy.Add(new Hellicoptor(value, r, c));
             else if (value >= 297 && value <= 317)
             {
                 enemies.Add(new Enemy(value, r, c, content));
