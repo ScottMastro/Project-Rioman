@@ -118,7 +118,7 @@ namespace Project_Rioman
         {
             if (isAlive)
             {
-                if (GetCollisionRect().Intersects(player.Hitbox))
+                if (GetCollisionRect().Intersects(player.Hitbox) && touchDamage > 0)
                     player.Hit(touchDamage);
 
                 if (!isInvincible)

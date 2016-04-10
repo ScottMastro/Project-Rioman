@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using System;
+using Microsoft.Xna.Framework.Input;
 
 namespace Project_Rioman
 {
@@ -21,6 +22,7 @@ namespace Project_Rioman
         private bool hit;
         private double hitTime;
 
+        private double freezeTime;
 
         private bool invincible;
         private double invincibleTime;
@@ -50,6 +52,7 @@ namespace Project_Rioman
             lives = 3;
             jumpTime = 0;
             fallTime = 0;
+            freezeTime = 0;
         }
 
         public void Update(double deltaTime)
@@ -230,6 +233,7 @@ namespace Project_Rioman
 
             if (!IsHit() && !IsInvincible() && !IsWarping())
             {
+                freezeTime = 0;
                 invincibleTime = 0;
                 hitTime = 0;
                 hit = true;
@@ -270,6 +274,13 @@ namespace Project_Rioman
         public bool IsOnEnemy() { return onEnemy; }
         public bool Airborne() { return IsFalling() || IsJumping(); }
         public bool Grounded() { return IsStanding() || IsRunning() || IsOnEnemy(); }
+
+        public void Freeze(double x) {
+            if (!IsWarping())
+                freezeTime += x; }
+        public double GetFreezeTime() { return freezeTime; }
+        public void UpdateFreezeTime(double deltaTime) { freezeTime -= deltaTime; }
+        public bool IsFrozen() { return freezeTime > 0; }
 
     }
 }

@@ -107,6 +107,7 @@
     <Compile Include="Enemies\ChanceBomb.cs" />
     <Compile Include="Enemies\Flipside.cs" />
     <Compile Include="Enemies\Hellicoptor.cs" />
+    <Compile Include="Enemies\Kronos.cs" />
     <Compile Include="Enemies\MegaHopper.cs" />
     <Compile Include="Enemies\MushMech.cs" />
     <Compile Include="Enemies\P1H8R.cs" />

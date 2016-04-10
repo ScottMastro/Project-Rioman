@@ -168,6 +168,8 @@ namespace Project_Rioman
                 aenemy.Add(new P1H8R(value, r, c));
             else if (value == Constant.HELLICOPTOR)
                 aenemy.Add(new Hellicoptor(value, r, c));
+            else if (value == Constant.KRONOS)
+                aenemy.Add(new Kronos(value, r, c));
             else if (value >= 297 && value <= 317)
             {
                 enemies.Add(new Enemy(value, r, c, content));

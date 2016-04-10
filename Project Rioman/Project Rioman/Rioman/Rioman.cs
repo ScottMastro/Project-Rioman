@@ -61,36 +61,42 @@ namespace Project_Rioman
 
         public void Update(double deltaTime, Level level, Viewport viewport)
         {
-            KeyboardState keyboardState = Keyboard.GetState();
+            if (!state.IsFrozen())
+            {
 
-            state.Update(deltaTime);
+                KeyboardState keyboardState = Keyboard.GetState();
 
-            if (IsClimbing())
-                UpdateClimb(deltaTime, keyboardState, level);
-            else if (IsJumping())
-                UpdateJump(keyboardState, level);
-            else if (IsFalling())
-                UpdateFall(deltaTime, keyboardState, level);
-            else if (IsRunning() || state.IsStanding())
-                UpdateStand(keyboardState, level);
-            else if (IsWarping())
-                UpdateWarp();
+                state.Update(deltaTime);
 
-            if (state.IsHit())
-                UpdateHit();
+                if (IsClimbing())
+                    UpdateClimb(deltaTime, keyboardState, level);
+                else if (IsJumping())
+                    UpdateJump(keyboardState, level);
+                else if (IsFalling())
+                    UpdateFall(deltaTime, keyboardState, level);
+                else if (IsRunning() || state.IsStanding())
+                    UpdateStand(keyboardState, level);
+                else if (IsWarping())
+                    UpdateWarp();
 
-            CheckShoot(keyboardState);
+                if (state.IsHit())
+                    UpdateHit();
 
-            foreach (Bullet blt in bullets)
-                blt.BulletUpdate(viewport.Width);
-            
+                CheckShoot(keyboardState);
 
-            stopLeftMovement = false;
-            stopRightMovement = false;
+                foreach (Bullet blt in bullets)
+                    blt.BulletUpdate(viewport.Width);
 
-            anim.Update(deltaTime);
 
-            prevKeyboardState = keyboardState;
+                stopLeftMovement = false;
+                stopRightMovement = false;
+
+                anim.Update(deltaTime);
+
+                prevKeyboardState = keyboardState;
+            }
+            else
+                state.UpdateFreezeTime(deltaTime);
         }
 
         private void CheckShoot(KeyboardState keyboardState)
@@ -264,7 +270,6 @@ namespace Project_Rioman
 
         }
 
-
         public Rectangle Hitbox
         {
             get
@@ -381,6 +386,9 @@ namespace Project_Rioman
         public bool IsOnEnemy() { return state.IsOnEnemy(); }
 
         public bool FacingRight() { return anim.FacingRight(); }
+
+        public void FreezeFor(double x) { state.Freeze(x); anim.SetFreezeTime(x); }
+        public bool IsFrozen() { return state.IsFrozen(); }
 
         public Bullet[] GetBullets() { return bullets; }
         public void KillBullets()

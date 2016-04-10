@@ -5554,6 +5554,15 @@
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\shieldhit.xnb</Output>
       <Time>2016-04-05T23:36:58.1077619-04:00</Time>
     </Item>
+    <Item>
+      <Source>Video\rioman\clockandhand.png</Source>
+      <Name>Video\rioman\clockandhand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clockandhand.xnb</Output>
+      <Time>2016-04-10T15:34:05.6124778-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{464AC0B7-78D5-46D0-89D4-5164AF3BF223}</ContentProjectGUID>

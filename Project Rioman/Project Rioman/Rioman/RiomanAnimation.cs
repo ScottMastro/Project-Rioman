@@ -28,6 +28,8 @@ namespace Project_Rioman
         private Texture2D[] runShoot = new Texture2D[4];
         private Texture2D climbTop;
 
+        private Texture2D clock;
+
         public SpriteEffects direction;
 
         private int warpFrame;
@@ -45,6 +47,7 @@ namespace Project_Rioman
         private int blinkFrames;
         private const int BLINK_DURATION = 4;
 
+        private double totalFreezeTime;
 
         public RiomanAnimation(ContentManager content, RiomanState s)
         {
@@ -69,6 +72,8 @@ namespace Project_Rioman
             climbTop = content.Load<Texture2D>("Video\\rioman\\riomanclimbtop");
             climbFlip = content.Load<Texture2D>("Video\\rioman\\riomanclimbflop");
 
+            clock = content.Load<Texture2D>("Video\\rioman\\clockandhand");
+
             for (int i = 1; i <= 4; i++)
                 warp[i - 1] = content.Load<Texture2D>("Video\\rioman\\warp" + i.ToString());
             for (int i = 1; i <= 3; i++)
@@ -92,6 +97,8 @@ namespace Project_Rioman
             blinkFrames = 0;
             hitEffectTime = 0;
             sprite = stand;
+
+            totalFreezeTime = 0;
         }
 
         public void Draw(SpriteBatch spriteBatch, Rectangle location, Rioman r)
@@ -120,6 +127,15 @@ namespace Project_Rioman
                 spriteBatch.Draw(hit, effectLocation, effectDrawRect, Color.White);
             }
 
+            if (state.IsFrozen())
+            {
+                spriteBatch.Draw(clock, new Rectangle(r.Hitbox.Center.X, r.Hitbox.Center.Y, clock.Width / 2, clock.Height),
+                    new Rectangle(0, 0, clock.Width / 2, clock.Height), Color.White * 0.6f, 0f, new Vector2(clock.Width / 4, clock.Height / 2), SpriteEffects.None, 0);
+                spriteBatch.Draw(clock, new Rectangle(r.Hitbox.Center.X, r.Hitbox.Center.Y, clock.Width / 2, clock.Height),
+                    new Rectangle(clock.Width / 2, 0, clock.Width / 2, clock.Height), Color.White ,
+                    (float)(state.GetFreezeTime()/totalFreezeTime) * -MathHelper.TwoPi, new Vector2(clock.Width / 4, clock.Height / 2), SpriteEffects.None, 0);
+
+            }
             /* debugging boxes
 
             spriteBatch.Draw(debug[2], r.Left, Color.White);
@@ -289,5 +305,7 @@ namespace Project_Rioman
 
         public Texture2D GetSprite() { return sprite; }
         public bool FacingRight() { return direction == SpriteEffects.None; }
+        public void SetFreezeTime(double x) { totalFreezeTime = x; }
+
     }
 }
