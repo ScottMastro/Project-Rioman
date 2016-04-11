@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Collections.Generic;
 
 namespace WindowsFormsApplication1
 {
@@ -15,19 +12,31 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
-            this.MouseWheel += new MouseEventHandler(Form1_MouseWheel);
         }
 
         Color bgcolour = Color.White;
 
-        bool newlevel = false;
+        List<int[,]> undoTilesets = new List<int[,]>();
+        List<int[,]> redoTilesets = new List<int[,]>();
+
+        bool hasLevel = false;
         Point[,] point;
-        int tilewidth;
-        int tileheight;
+        int width;
+        int height;
         int[,] tile;
+
+        int[,] previousTiles;
+        int[,] previousMouse;
+
         Image[] tiles;
         int activetile;
         Graphics g;
+
+        const int WIDTH = 16;
+        const int HEIGHT = 16;
+
+        bool mouseDown;
+        Point mouseDownPos;
 
         Image[] BunnyMan;
         Image[] AuroraMan;
@@ -55,7 +64,7 @@ namespace WindowsFormsApplication1
         private void Form1_Load(object sender, EventArgs e)
         {
             LoadAllImages(500);
-            UpdateTileset("BM");
+            UpdateTileset("ENM");
         }
 
         private void newLevelToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,399 +74,347 @@ namespace WindowsFormsApplication1
 
             if (dialog.DialogResult == DialogResult.OK)
             {
-                tileheight = dialog.GetHeight;
-                tilewidth = dialog.GetWidth;
+                height = dialog.GetHeight;
+                width = dialog.GetWidth;
 
-                tile = new int[tileheight + 1, tilewidth + 1];
+                tile = new int[width + 1, height + 1];
 
                 Start();
             }
         }
 
+        private int[,] CopyArray(int[,] array, int w, int h)
+        {
+            int[,] newArray = new int[w, h];
+
+            for (int x = 0; x <= w - 1; x++)
+                for (int y = 0; y <= h - 1; y++)
+                    newArray[x, y] = array[x, y];
+
+            return newArray;
+        }
+
         private void Start()
         {
-            PnlLevel.Width = tilewidth * 16;
-            PnlLevel.Height = tileheight * 16;
-            PnlLevel.BorderStyle = BorderStyle.FixedSingle;
-            PnlLevel.BackColor = bgcolour;
 
-            g = PnlLevel.CreateGraphics();
+            panel.Width = width * 16;
+            panel.Height = height * 16;
+            panel.BorderStyle = BorderStyle.FixedSingle;
+            panel.BackColor = bgcolour;
 
-            point = new Point[tileheight + 1, tilewidth + 1];
 
-            newlevel = true;
+            g = panel.CreateGraphics();
 
-            for (int r = 0; r <= tileheight - 1; r++)
+            point = new Point[width + 1, height + 1];
+
+            previousTiles = new int[width + 1, height + 1];
+            previousMouse = new int[width + 1, height + 1];
+
+            hasLevel = true;
+
+            panel.BackColor = bgcolour;
+
+
+            for (int x = 0; x <= width - 1; x++)
             {
-                for (int c = 0; c <= tilewidth - 1; c++)
+                for (int y = 0; y <= height - 1; y++)
                 {
-                    point[r, c] = new Point(c * 16, r * 16);
+                    point[x, y] = new Point(x * WIDTH, y * HEIGHT);
                 }
             }
         }
 
-        private void UncheckAll()
-        {
-            bunnyManToolStripMenuItem.Checked = false;
-            posterManToolStripMenuItem.Checked = false;
-            auroraManToolStripMenuItem.Checked = false;
-            toxicManToolStripMenuItem.Checked = false;
-            cloverManToolStripMenuItem.Checked = false;
-            infernoManToolStripMenuItem.Checked = false;
-            geoGirlToolStripMenuItem.Checked = false;
-            lurkerManToolStripMenuItem.Checked = false;
-            cCMToolStripMenuItem.Checked = false;
-            oliToolStripMenuItem.Checked = false;
-            DEEZToolStripMenuItem.Checked = false;
-            mushToolStripMenuItem1.Checked = false;
-            rioManAndRobotMastersToolStripMenuItem.Checked = false;
-            enemiesToolStripMenuItem.Checked = false;
-            scrollToolStripMenuItem.Checked = false;
-        }
 
-        private void bunnyManToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FullRefreshLevel()
         {
-            UncheckAll();
-            bunnyManToolStripMenuItem.Checked = true;
-            UpdateTileset("BM");
-        }
-
-        private void posterManToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UncheckAll();
-            posterManToolStripMenuItem.Checked = true;
-            UpdateTileset("PM");
-        }
-
-        private void auroraManToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UncheckAll();
-            auroraManToolStripMenuItem.Checked = true;
-            UpdateTileset("AM");
-        }
-
-        private void toxicManToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UncheckAll();
-            toxicManToolStripMenuItem.Checked = true;
-            UpdateTileset("TM");
-        }
-
-        private void cloverManToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UncheckAll();
-            cloverManToolStripMenuItem.Checked = true;
-            UpdateTileset("CM");
-        }
-
-        private void infernoManToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UncheckAll();
-            infernoManToolStripMenuItem.Checked = true;
-            UpdateTileset("IM");
-        }
-
-        private void geoGirlToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UncheckAll();
-            geoGirlToolStripMenuItem.Checked = true;
-            UpdateTileset("GG");
-        }
-
-        private void lurkerManToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UncheckAll();
-            lurkerManToolStripMenuItem.Checked = true;
-            UpdateTileset("LM");
-        }
-
-        private void cCMToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UncheckAll();
-            cCMToolStripMenuItem.Checked = true;
-            UpdateTileset("CCM");
-        }
-
-        private void oliToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UncheckAll();
-            oliToolStripMenuItem.Checked = true;
-            UpdateTileset("OLI");
-        }
-
-        private void DEEZToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UncheckAll();
-            DEEZToolStripMenuItem.Checked = true;
-            UpdateTileset("DK");
-        }
-
-        private void mushToolStripMenuItem1_Click_1(object sender, EventArgs e)
-        {
-            UncheckAll();
-            mushToolStripMenuItem1.Checked = true;
-            UpdateTileset("MUSH");
-        }
-
-        private void rioManAndRobotMastersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UncheckAll();
-            rioManAndRobotMastersToolStripMenuItem.Checked = true;
-            UpdateTileset("CHARA");
-        }
-
-        private void enemiesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UncheckAll();
-            enemiesToolStripMenuItem.Checked = true;
-            UpdateTileset("ENM");
-        }
-
-        private void scrollToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UncheckAll();
-            scrollToolStripMenuItem.Checked = true;
-            UpdateTileset("SCROL");
-        }
-
-        private void PnlLevel_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (newlevel)
+            if (hasLevel)
             {
-                int x = e.X / 16;
-                int y = e.Y / 16;
 
-                if (e.Button == MouseButtons.Left)
-                {
-                    g.DrawImage(tiles[activetile], point[y, x]);
-                    tile[y, x] = activetile;
-                }
-                else if (e.Button == MouseButtons.Right)
-                {
-                    tile[y, x] = 0;
-                    RefreshLevel();
-                }
+                for (int x = 0; x <= width - 1; x++)
+                    for (int y = 0; y <= height - 1; y++)
+                        DrawSquare(x, y);
+                
+
+                DrawMouseLocation();
+
             }
         }
 
-        private void Form1_MouseWheel(object sender, EventArgs e)
+        private void PartialRefreshLevel()
         {
-            RefreshLevel();
-        }
-
-        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (newlevel)
+            if (hasLevel)
             {
-                RefreshLevel();
-            }
-        }
 
-        private void Form1_Scroll(object sender, ScrollEventArgs e)
-        {
-            if (newlevel)
-            {
-                RefreshLevel();
-            }
-        }
+                int[,] mouse = GetMouseTiles();
 
-        private void RefreshLevel()
-        {
-            if (newlevel)
-            {
-                g.Clear(bgcolour);
-
-                for (int r = 0; r <= tileheight - 1; r++)
-                {
-                    for (int c = 0; c <= tilewidth - 1; c++)
+                
+                for (int x = 0; x <= width - 1; x++)
+                    for (int y = 0; y <= height - 1; y++)
                     {
-                        if (tile[r, c] > 0)
+                        try
                         {
-                            g.DrawImage(tiles[tile[r, c]], point[r, c]);
+                            if (previousTiles[x, y] != tile[x, y] || previousMouse[x, y] == 1 && mouse[x, y] == 0)
+                                DrawSquare(x, y);
+
+                            if (previousMouse[x, y] == 0 && mouse[x, y] == 1)
+                                g.FillRectangle(new SolidBrush(Color.FromArgb(128, 255, 0, 0)), new Rectangle(x * WIDTH, y * HEIGHT, WIDTH, HEIGHT));
+
                         }
+                        catch (IndexOutOfRangeException e)
+                        {
+                            previousMouse = mouse;
+                            previousTiles = tile;
+                            return;
+                        }
+
+
+                    }
+
+                previousMouse = mouse;
+                previousTiles = tile;
+            }
+        }
+
+        private void DrawSquare(int x, int y)
+        {
+            if (tile[x, y] > 0)
+                g.DrawImage(tiles[tile[x, y]], new Point(point[x, y].X, point[x, y].Y));
+            else
+                g.FillRectangle(new SolidBrush(bgcolour), new Rectangle(point[x, y].X, point[x, y].Y, WIDTH, HEIGHT));
+
+        }
+
+        private void panel_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (hasLevel)
+            {
+                mouseDownPos = TopLeftPoint(new Point(e.X, e.Y));
+                mouseDown = true;
+            }
+
+        }
+
+        private void panel_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (hasLevel)
+            {
+                mouseDown = false;
+
+                int[,] oldTiles = CopyArray(tile, width, height);
+
+                Point pos = GetMouseLocation();
+
+                int x1 = pos.X / WIDTH;
+                int x2 = mouseDownPos.X / WIDTH;
+                int y1 = pos.Y / HEIGHT;
+                int y2 = mouseDownPos.Y / HEIGHT;
+
+                for (int i = Math.Min(x1, x2); i <= Math.Max(x1, x2); i++)
+                    for (int j = Math.Min(y1, y2); j <= Math.Max(y1, y2); j++)
+                        tile[i, j] = activetile;
+
+
+                if (!oldTiles.Equals(tile)) {
+                    undoTilesets.Add(oldTiles);
+                    redoTilesets = new List<int[,]>();
+                }
+
+
+                PartialRefreshLevel();
+            }
+        }
+
+        private Point GetMouseLocation()
+        {
+            Point pos = panel.PointToClient(Cursor.Position);
+            pos = TopLeftPoint(pos);
+
+            if (pos.X < 0 || pos.X > width * WIDTH ||
+                pos.Y < 0 || pos.Y > height * HEIGHT)
+                return new Point(0,0);
+
+            return pos;
+        }
+
+
+        private void DrawMouseLocation()
+        {
+            if (hasLevel)
+            {
+                Point pos;
+                if (!mouseDown)
+                {
+                    pos = GetMouseLocation();
+
+                    g.FillRectangle(new SolidBrush(Color.FromArgb(128, 255, 0, 0)), new Rectangle(pos.X, pos.Y, WIDTH, HEIGHT));
+                }
+                else
+                {
+                    pos = GetMouseLocation();
+
+
+                    g.FillRectangle(new SolidBrush(Color.FromArgb(128, 0, 255, 0)),
+                        new Rectangle(Math.Min(mouseDownPos.X, pos.X),
+                        Math.Min(mouseDownPos.Y, pos.Y),
+                        Math.Abs(pos.X - mouseDownPos.X),
+                        Math.Abs(pos.Y - mouseDownPos.Y)));
+
+
+                }
+            }
+        }
+
+        private int[,] GetMouseTiles()
+        {
+            int[,] mouse = new int[width + 1, height + 1];
+            if (!mouseDown)
+            {
+                Point pos = GetMouseLocation();
+                mouse[pos.X / WIDTH, pos.Y / HEIGHT] = 1;
+            }
+            else
+            {
+                Point pos = GetMouseLocation();
+
+
+                int x1 = pos.X / WIDTH;
+                int x2 = mouseDownPos.X / WIDTH;
+                int y1 = pos.Y / HEIGHT;
+                int y2 = mouseDownPos.Y / HEIGHT;
+
+                for (int i = Math.Min(x1, x2); i <= Math.Max(x1, x2); i++)
+                    for (int j = Math.Min(y1, y2); j <= Math.Max(y1, y2); j++)
+                        mouse[i, j] = 1;
+
+            }
+            return mouse;
+        }
+
+        private Point TopLeftPoint(Point p)
+        {
+            return new Point((int)(p.X / WIDTH) * WIDTH, (int)(p.Y / HEIGHT) * HEIGHT);
+
+        }
+
+        private void refresher_Tick(object sender, EventArgs e)
+        {
+            PartialRefreshLevel();
+
+            if (undoTilesets.Count > 10)
+                undoTilesets.RemoveAt(0);
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            FullRefreshLevel();
+        }
+
+        private void Form1_ResizeEnd(object sender, EventArgs e)
+        {
+            FullRefreshLevel();
+        }
+
+        private void panelpanel_Scroll(object sender, ScrollEventArgs e)
+        {
+            FullRefreshLevel();
+        }
+
+        private void Form1_SizeChanged(object sender, EventArgs e)
+        {
+            FullRefreshLevel();
+        }
+
+        private void ChangeActiveTile(Image tle)
+        {
+            if (tle != null)
+            {
+                for (int i = 1; i <= 500; i++)
+                {
+                    if (tle == tiles[i])
+                    {
+                        activetile = i;
                     }
                 }
             }
-            groupBox1.Location = new Point(0, this.Height - 120);
+            picactivetile.Image = tle;
         }
 
-        private void LoadAllImages(int numberofimages)
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            int counter = 0;
-            tiles = new Image[numberofimages + 1];
-
-            BunnyMan = new Image[39];
-            AuroraMan = new Image[21];
-            CloverMan = new Image[34];
-            GeoGirl = new Image[11];
-            InfernoMan = new Image[13];
-            LurkerMan = new Image[25];
-            PosterMan = new Image[17];
-            ToxicMan = new Image[12];
-            CCM = new Image[20];
-            Oli = new Image[26];
-            DeezKirb = new Image[33];
-            Mushie = new Image[44];
-            Characters = new Image[14];
-            Enemies = new Image[22];
-            Scroller = new Image[5];
-            Other = new Image[30];
-
-            for (int i = 1; i <= 38; i++)
+            if (hasLevel)
             {
-                counter++;
-
-                BunnyMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Bunny Man/BM" + i.ToString() + ".bmp");
-                tiles[counter] = BunnyMan[i];
-
-
-            }
-
-            for (int i = 1; i <= 20; i++)
-            {
-                counter++;
-
-                AuroraMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Aurora Man/AM" + i.ToString() + ".bmp");
-                tiles[counter] = AuroraMan[i];
-
-
-            }
-
-            for (int i = 1; i <= 33; i++)
-            {
-                counter++;
-
-                CloverMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Clover Man/CM" + i.ToString() + ".bmp");
-                tiles[counter] = CloverMan[i];
-
-
-            }
-
-            for (int i = 1; i <= 10; i++)
-            {
-                counter++;
-
-                GeoGirl[i] = Image.FromFile(Application.StartupPath + @"/tiles/Geo Girl/GG" + i.ToString() + ".bmp");
-                tiles[counter] = GeoGirl[i];
-
-
-            }
-
-            for (int i = 1; i <= 12; i++)
-            {
-                counter++;
-
-                InfernoMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Inferno Man/IM" + i.ToString() + ".bmp");
-                tiles[counter] = InfernoMan[i];
-
-
-            }
-
-            for (int i = 1; i <= 24; i++)
-            {
-                counter++;
-
-                LurkerMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Lurker Man/LM" + i.ToString() + ".bmp");
-                tiles[counter] = LurkerMan[i];
-
-
-            }
-
-            for (int i = 1; i <= 16; i++)
-            {
-                counter++;
-
-                PosterMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Poster Man/PM" + i.ToString() + ".bmp");
-                tiles[counter] = PosterMan[i];
-
-            }
-
-            for (int i = 1; i <= 11; i++)
-            {
-                counter++;
-
-                ToxicMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Toxic Man/TM" + i.ToString() + ".bmp");
-                tiles[counter] = ToxicMan[i];
-
-
-            }
-
-            for (int i = 1; i <= 19; i++)
-            {
-                counter++;
-
-                CCM[i] = Image.FromFile(Application.StartupPath + @"/tiles/CCM/C" + i.ToString() + ".bmp");
-                tiles[counter] = CCM[i];
-
-
-            }
-
-            for (int i = 1; i <= 25; i++)
-            {
-                counter++;
-
-                Oli[i] = Image.FromFile(Application.StartupPath + @"/tiles/Oli/o" + i.ToString() + ".bmp");
-                tiles[counter] = Oli[i];
-
-
-            }
-
-            for (int i = 1; i <= 32; i++)
-            {
-                counter++;
-
-                DeezKirb[i] = Image.FromFile(Application.StartupPath + @"/tiles/DeezKirb/DK" + i.ToString() + ".bmp");
-                tiles[counter] = DeezKirb[i];
-
-            }
-
-            for (int i = 1; i <= 43; i++)
-            {
-                counter++;
-
-                Mushie[i] = Image.FromFile(Application.StartupPath + @"/tiles/Mushie/M" + i.ToString() + ".bmp");
-                tiles[counter] = Mushie[i];
-
-            }
-
-            for (int i = 1; i <= 13; i++)
-            {
-                counter++;
-
-                Characters[i] = Image.FromFile(Application.StartupPath + @"/tiles/Things/" + i.ToString() + ".bmp");
-                tiles[counter] = Characters[i];
-
-            }
-
-            for (int i = 1; i <= 21; i++)
-            {
-                counter++;
-
-                Enemies[i] = Image.FromFile(Application.StartupPath + @"/tiles/Enemies/E" + i.ToString() + ".png");
-                tiles[counter] = Enemies[i];
-
-            }
-
-            for (int i = 1; i <= 4; i++)
-            {
-                counter++;
-
-                Scroller[i] = Image.FromFile(Application.StartupPath + @"/tiles/Scroller/" + i.ToString() + ".bmp");
-                tiles[counter] = Scroller[i];
-
-            }
-
-            for (int i = 1; i <= 29; i++)
-            {
-                if (File.Exists(Application.StartupPath + @"/tiles/other/other" + i.ToString() + ".png"))
+                if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Z && undoTilesets.Count > 0)
                 {
-                    counter++;
+                    redoTilesets.Add(tile);
+                    tile = undoTilesets[undoTilesets.Count - 1];
+                    undoTilesets.RemoveAt(undoTilesets.Count - 1);
 
-                    Other[i] = Image.FromFile(Application.StartupPath + @"/tiles/other/other" + i.ToString() + ".png");
-                    tiles[counter] = Other[i];
+                    PartialRefreshLevel();
+                }
+
+                if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Y && redoTilesets.Count > 0)
+                {
+                    undoTilesets.Add(tile);
+                    tile = redoTilesets[redoTilesets.Count - 1];
+                    redoTilesets.RemoveAt(redoTilesets.Count - 1);
+
+                    PartialRefreshLevel();
+                }
+
+                if (e.KeyCode == Keys.S)
+                {
+                    MessageBox.Show(undoTilesets.Count.ToString() + " " + redoTilesets.Count.ToString());
                 }
 
             }
+        }
+
+        private void changeColourToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+            bgcolour = colorDialog1.Color;
+
+            panel.BackColor = bgcolour;
+            FullRefreshLevel();
+        }
+
+
+        private void exportToTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.Title = "Save Level";
+            saveFileDialog1.FileName = "level";
+            saveFileDialog1.Filter = "Text files (*.txt)|*.txt";
+
+            saveFileDialog1.ShowDialog();
+        }
+
+        private void importFromTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Title = "Open Level";
+            openFileDialog1.FileName = "";
+            openFileDialog1.Filter = "Text files (*.txt)|*.txt";
+            openFileDialog1.ShowDialog();
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            Encrypter.Encrypt(tile, width, height, saveFileDialog1.FileName, bgcolour);
+
+            MessageBox.Show("Saved to " + saveFileDialog1.FileName);
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            tile = Encrypter.Decrypt(tile, ref width, ref height, openFileDialog1.FileName, ref bgcolour);
+            MessageBox.Show("Loaded from " + openFileDialog1.FileName);
+            Start();
+        }
+
+        private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            help help = new help();
+
+            help.ShowDialog();
         }
 
         private void UpdateTileset(string type)
@@ -510,8 +467,7 @@ namespace WindowsFormsApplication1
             pictureBox46.Image = null;
             pictureBox47.Image = null;
             pictureBox48.Image = null;
-            pictureBox49.Image = null;
-            pictureBox50.Image = null;
+
 
 
             if (type == "BM")
@@ -972,20 +928,186 @@ namespace WindowsFormsApplication1
 
         }
 
-        private void ChangeActiveTile(Image tle)
+
+        private void LoadAllImages(int numberofimages)
         {
-            if (tle != null)
+            int counter = 0;
+            tiles = new Image[numberofimages + 1];
+
+            BunnyMan = new Image[39];
+            AuroraMan = new Image[21];
+            CloverMan = new Image[34];
+            GeoGirl = new Image[11];
+            InfernoMan = new Image[13];
+            LurkerMan = new Image[25];
+            PosterMan = new Image[17];
+            ToxicMan = new Image[12];
+            CCM = new Image[20];
+            Oli = new Image[26];
+            DeezKirb = new Image[33];
+            Mushie = new Image[44];
+            Characters = new Image[14];
+            Enemies = new Image[22];
+            Scroller = new Image[5];
+            Other = new Image[30];
+
+            for (int i = 1; i <= 38; i++)
             {
-                for (int i = 1; i <= 500; i++)
-                {
-                    if (tle == tiles[i])
-                    {
-                        activetile = i;
-                    }
-                }
+                counter++;
+
+                BunnyMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Bunny Man/BM" + i.ToString() + ".bmp");
+                tiles[counter] = BunnyMan[i];
+
+
             }
-            picactivetile.Image = tle;
+
+            for (int i = 1; i <= 20; i++)
+            {
+                counter++;
+
+                AuroraMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Aurora Man/AM" + i.ToString() + ".bmp");
+                tiles[counter] = AuroraMan[i];
+
+
+            }
+
+            for (int i = 1; i <= 33; i++)
+            {
+                counter++;
+
+                CloverMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Clover Man/CM" + i.ToString() + ".bmp");
+                tiles[counter] = CloverMan[i];
+
+
+            }
+
+            for (int i = 1; i <= 10; i++)
+            {
+                counter++;
+
+                GeoGirl[i] = Image.FromFile(Application.StartupPath + @"/tiles/Geo Girl/GG" + i.ToString() + ".bmp");
+                tiles[counter] = GeoGirl[i];
+
+
+            }
+
+            for (int i = 1; i <= 12; i++)
+            {
+                counter++;
+
+                InfernoMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Inferno Man/IM" + i.ToString() + ".bmp");
+                tiles[counter] = InfernoMan[i];
+
+
+            }
+
+            for (int i = 1; i <= 24; i++)
+            {
+                counter++;
+
+                LurkerMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Lurker Man/LM" + i.ToString() + ".bmp");
+                tiles[counter] = LurkerMan[i];
+
+
+            }
+
+            for (int i = 1; i <= 16; i++)
+            {
+                counter++;
+
+                PosterMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Poster Man/PM" + i.ToString() + ".bmp");
+                tiles[counter] = PosterMan[i];
+
+            }
+
+            for (int i = 1; i <= 11; i++)
+            {
+                counter++;
+
+                ToxicMan[i] = Image.FromFile(Application.StartupPath + @"/tiles/Toxic Man/TM" + i.ToString() + ".bmp");
+                tiles[counter] = ToxicMan[i];
+
+
+            }
+
+            for (int i = 1; i <= 19; i++)
+            {
+                counter++;
+
+                CCM[i] = Image.FromFile(Application.StartupPath + @"/tiles/CCM/C" + i.ToString() + ".bmp");
+                tiles[counter] = CCM[i];
+
+
+            }
+
+            for (int i = 1; i <= 25; i++)
+            {
+                counter++;
+
+                Oli[i] = Image.FromFile(Application.StartupPath + @"/tiles/Oli/o" + i.ToString() + ".bmp");
+                tiles[counter] = Oli[i];
+
+
+            }
+
+            for (int i = 1; i <= 32; i++)
+            {
+                counter++;
+
+                DeezKirb[i] = Image.FromFile(Application.StartupPath + @"/tiles/DeezKirb/DK" + i.ToString() + ".bmp");
+                tiles[counter] = DeezKirb[i];
+
+            }
+
+            for (int i = 1; i <= 43; i++)
+            {
+                counter++;
+
+                Mushie[i] = Image.FromFile(Application.StartupPath + @"/tiles/Mushie/M" + i.ToString() + ".bmp");
+                tiles[counter] = Mushie[i];
+
+            }
+
+            for (int i = 1; i <= 13; i++)
+            {
+                counter++;
+
+                Characters[i] = Image.FromFile(Application.StartupPath + @"/tiles/Things/" + i.ToString() + ".bmp");
+                tiles[counter] = Characters[i];
+
+            }
+
+            for (int i = 1; i <= 21; i++)
+            {
+                counter++;
+
+                Enemies[i] = Image.FromFile(Application.StartupPath + @"/tiles/Enemies/E" + i.ToString() + ".png");
+                tiles[counter] = Enemies[i];
+
+            }
+
+            for (int i = 1; i <= 4; i++)
+            {
+                counter++;
+
+                Scroller[i] = Image.FromFile(Application.StartupPath + @"/tiles/Scroller/" + i.ToString() + ".bmp");
+                tiles[counter] = Scroller[i];
+
+            }
+
+            for (int i = 1; i <= 29; i++)
+            {
+                if (File.Exists(Application.StartupPath + @"/tiles/other/other" + i.ToString() + ".png"))
+                {
+                    counter++;
+
+                    Other[i] = Image.FromFile(Application.StartupPath + @"/tiles/other/other" + i.ToString() + ".png");
+                    tiles[counter] = Other[i];
+                }
+
+            }
         }
+
 
         private void pictureBox8_Click(object sender, EventArgs e)
         {
@@ -1050,16 +1172,6 @@ namespace WindowsFormsApplication1
         private void pictureBox48_Click(object sender, EventArgs e)
         {
             ChangeActiveTile(pictureBox48.Image);
-        }
-
-        private void pictureBox49_Click(object sender, EventArgs e)
-        {
-            ChangeActiveTile(pictureBox49.Image);
-        }
-
-        private void pictureBox50_Click(object sender, EventArgs e)
-        {
-            ChangeActiveTile(pictureBox50.Image);
         }
 
         private void pictureBox29_Click(object sender, EventArgs e)
@@ -1237,57 +1349,138 @@ namespace WindowsFormsApplication1
             ChangeActiveTile(pictureBox1.Image);
         }
 
-        private void changeColourToolStripMenuItem_Click(object sender, EventArgs e)
+        private void UncheckAll()
         {
-            colorDialog1.ShowDialog();
-            bgcolour = colorDialog1.Color;
-
-            PnlLevel.BackColor = bgcolour;
-            RefreshLevel();
+            bunnyManToolStripMenuItem.Checked = false;
+            posterManToolStripMenuItem.Checked = false;
+            auroraManToolStripMenuItem.Checked = false;
+            toxicManToolStripMenuItem.Checked = false;
+            cloverManToolStripMenuItem.Checked = false;
+            infernoManToolStripMenuItem.Checked = false;
+            geoGirlToolStripMenuItem.Checked = false;
+            lurkerManToolStripMenuItem.Checked = false;
+            cCMToolStripMenuItem.Checked = false;
+            oliToolStripMenuItem.Checked = false;
+            DEEZToolStripMenuItem.Checked = false;
+            mushToolStripMenuItem1.Checked = false;
+            rioManAndRobotMastersToolStripMenuItem.Checked = false;
+            enemiesToolStripMenuItem.Checked = false;
+            scrollToolStripMenuItem.Checked = false;
         }
 
-        private void Form1_Resize(object sender, EventArgs e)
+        private void bunnyManToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            groupBox1.Location = new Point(0, this.Height - 120);
+            UncheckAll();
+            bunnyManToolStripMenuItem.Checked = true;
+            UpdateTileset("BM");
         }
 
-        private void exportToTextToolStripMenuItem_Click(object sender, EventArgs e)
+        private void posterManToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.Title = "Save Level";
-            saveFileDialog1.FileName = "level";
-            saveFileDialog1.Filter = "Text files (*.txt)|*.txt";
-
-            saveFileDialog1.ShowDialog();
+            UncheckAll();
+            posterManToolStripMenuItem.Checked = true;
+            UpdateTileset("PM");
         }
 
-        private void importFromTextToolStripMenuItem_Click(object sender, EventArgs e)
+        private void auroraManToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Title = "Open Level";
-            openFileDialog1.FileName = "";
-            openFileDialog1.Filter = "Text files (*.txt)|*.txt";
-            openFileDialog1.ShowDialog();
+            UncheckAll();
+            auroraManToolStripMenuItem.Checked = true;
+            UpdateTileset("AM");
         }
 
-        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void toxicManToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Encrypter.Encrypt(tile, tileheight, tilewidth, saveFileDialog1.FileName, bgcolour);
-
-            MessageBox.Show("Saved to " + saveFileDialog1.FileName);
+            UncheckAll();
+            toxicManToolStripMenuItem.Checked = true;
+            UpdateTileset("TM");
         }
 
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void cloverManToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tile = Encrypter.Decrypt(tile, ref tileheight, ref tilewidth, openFileDialog1.FileName, ref bgcolour);
-            MessageBox.Show("Loaded from " + openFileDialog1.FileName);
-            Start();
-            RefreshLevel();
+            UncheckAll();
+            cloverManToolStripMenuItem.Checked = true;
+            UpdateTileset("CM");
         }
 
-        private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void infernoManToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            help help = new help();
+            UncheckAll();
+            infernoManToolStripMenuItem.Checked = true;
+            UpdateTileset("IM");
+        }
 
-            help.ShowDialog();
+        private void geoGirlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckAll();
+            geoGirlToolStripMenuItem.Checked = true;
+            UpdateTileset("GG");
+        }
+
+        private void lurkerManToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckAll();
+            lurkerManToolStripMenuItem.Checked = true;
+            UpdateTileset("LM");
+        }
+
+        private void cCMToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckAll();
+            cCMToolStripMenuItem.Checked = true;
+            UpdateTileset("CCM");
+        }
+
+        private void oliToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckAll();
+            oliToolStripMenuItem.Checked = true;
+            UpdateTileset("OLI");
+        }
+
+        private void DEEZToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckAll();
+            DEEZToolStripMenuItem.Checked = true;
+            UpdateTileset("DK");
+        }
+
+        private void mushToolStripMenuItem1_Click_1(object sender, EventArgs e)
+        {
+            UncheckAll();
+            mushToolStripMenuItem1.Checked = true;
+            UpdateTileset("MUSH");
+        }
+
+        private void rioManAndRobotMastersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckAll();
+            rioManAndRobotMastersToolStripMenuItem.Checked = true;
+            UpdateTileset("CHARA");
+        }
+
+        private void enemiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckAll();
+            enemiesToolStripMenuItem.Checked = true;
+            UpdateTileset("ENM");
+        }
+
+        private void scrollToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UncheckAll();
+            scrollToolStripMenuItem.Checked = true;
+            UpdateTileset("SCROL");
+        }
+
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FullRefreshLevel();
+        }
+
+        private void panel_MouseEnter(object sender, EventArgs e)
+        {
+            FullRefreshLevel();
         }
     }
 }

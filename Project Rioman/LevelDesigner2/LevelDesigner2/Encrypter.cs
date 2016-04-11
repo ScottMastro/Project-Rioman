@@ -12,24 +12,24 @@ namespace WindowsFormsApplication1
 {
     static class Encrypter
     {
-        public static void Encrypt(int[,] level, int row, int column, string location, Color bgcolour)
+        public static void Encrypt(int[,] level, int width, int height, string location, Color bgcolour)
         {
             string[] letters = new string[501];
             SetLetters(letters);
 
             StreamWriter write = new StreamWriter(location);
-            write.WriteLine(row.ToString() + "&" + column.ToString() + "&" + bgcolour.R.ToString() + "&" + bgcolour.G.ToString() + "&" + bgcolour.B.ToString());
+            write.WriteLine(width.ToString() + "&" + height.ToString() + "&" + bgcolour.R.ToString() + "&" + bgcolour.G.ToString() + "&" + bgcolour.B.ToString());
 
             string line = "";
 
-            for (int r = 0; r <= row - 1; r++)
+            for (int y = 0; y <= height - 1; y++)
             {
-                for (int c = 0; c <= column - 1; c++)
+                for (int x = 0; x <= width - 1; x++)
                 {
-                    if (level[r, c] == 0)
+                    if (level[x, y] == 0)
                         line += "%%";
                     else
-                        line += letters[level[r, c]];
+                        line += letters[level[x, y]];
                 }
 
                 write.WriteLine(line);
@@ -39,7 +39,7 @@ namespace WindowsFormsApplication1
             write.Close();
         }
 
-        public static int[,] Decrypt(int[,] level, ref int row, ref int column, string location, ref Color bgcolour)
+        public static int[,] Decrypt(int[,] level, ref int width, ref int height, string location, ref Color bgcolour)
         {
             string[] letters = new string[501];
             SetLetters(letters);
@@ -47,29 +47,29 @@ namespace WindowsFormsApplication1
             StreamReader read = new StreamReader(location);
             string rc = read.ReadLine();
             string[] parts = rc.Split('&');
-            row = Convert.ToInt32(parts[0]);
-            column = Convert.ToInt32(parts[1]);
+            width = Convert.ToInt32(parts[0]);
+            height = Convert.ToInt32(parts[1]);
             bgcolour = Color.FromArgb(Convert.ToInt32(parts[2]), Convert.ToInt32(parts[3]), Convert.ToInt32(parts[4]));
 
 
-            level = new int[row + 1, column + 1];
+            level = new int[width + 1, height + 1];
 
             string line = "";
 
-            for (int r = 0; r <= row - 1; r++)
+            for (int y = 0; y <= height - 1; y++)
             {
                 line = read.ReadLine();
 
-                for (int c = 0; c <= column * 2 - 2; c += 2)
+                for (int x = 0; x <= width * 2 - 2; x += 2)
                 {
-                    if (line.Substring(c, 2) == "%%")
-                        level[r, c / 2] = 0;
+                    if (line.Substring(x, 2) == "%%")
+                        level[x/2, y] = 0;
                     else
                     {
                         for (int i = 1; i <= 500; i++)
                         {
-                            if (letters[i] == line.Substring(c, 2))
-                                level[r, c / 2] = i;
+                            if (letters[i] == line.Substring(x, 2))
+                                level[x/2, y] = i;
                         }
                     }
                 }
