@@ -18,6 +18,12 @@ namespace Project_Rioman
         {
             isInvincible = true;
             sprite = EnemyAttributes.GetSprites(type)[0];
+
+            SubReset();
+        }
+
+        protected override void SubReset()
+        {
             drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
 
             rotation = 0f;
@@ -26,8 +32,8 @@ namespace Project_Rioman
 
             netVerticalMovement = 0;
             verticalDirection = 1;
-
         }
+
 
         protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
         {

@@ -19,14 +19,19 @@ namespace Project_Rioman
         {
             sprite = EnemyAttributes.GetSprites(type)[0];
 
+            SubReset();
+        }
+
+        protected override void SubReset()
+        {
             drawRect = new Rectangle(0, 0, sprite.Width / 10, sprite.Height);
 
             frameTime = 0;
             frame = 0;
             animateDirection = 1;
             chasing = false;
-
         }
+
 
         protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
         {

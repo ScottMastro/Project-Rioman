@@ -46,10 +46,14 @@ namespace Project_Rioman
         public DozerBot(int type, int r, int c) : base(type, r, c)
         {
             Texture2D[] sprites = EnemyAttributes.GetSprites(type);
-
             sprite = sprites[0];
             bullet = sprites[1];
 
+            SubReset();
+        }
+
+        protected override void SubReset()
+        {
             drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
 
             location.Y -= sprite.Height;
@@ -59,8 +63,8 @@ namespace Project_Rioman
             frameTime = 0;
             Fall();
             isGroundBelow = false;
-
         }
+
 
         protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
         {

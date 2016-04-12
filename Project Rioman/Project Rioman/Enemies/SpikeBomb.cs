@@ -55,6 +55,11 @@ namespace Project_Rioman
             bullet = sprites[1];
             angledBullet = sprites[2];
 
+            SubReset();
+        }
+
+        protected override void SubReset()
+        {
             drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
             location.X -= drawRect.Width / 2;
             location.Y -= drawRect.Height / 2;

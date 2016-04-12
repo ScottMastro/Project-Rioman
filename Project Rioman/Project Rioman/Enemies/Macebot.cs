@@ -35,6 +35,11 @@ namespace Project_Rioman
             ballString = sprites[1];
             macebot = sprites[2];
 
+            SubReset();
+        }
+
+        protected override void SubReset()
+        {
             sprite = macebot;
             location.Y -= sprite.Height;
             drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
@@ -49,7 +54,9 @@ namespace Project_Rioman
             ballSpeedSkipFrame = true;
 
             attacking = false;
+
         }
+
 
         protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
         {

@@ -39,6 +39,15 @@ namespace Project_Rioman
             sprite = sprites[0];
             bullet = sprites[1];
 
+            bulletDamage = 4;
+            if (type == Constant.TMUSHMECH)
+                bulletDamage = 7;
+
+            SubReset();
+        }
+
+        protected override void SubReset()
+        {
             drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
             location.Y -= sprite.Height;
 
@@ -50,10 +59,6 @@ namespace Project_Rioman
 
             leftColliderIntersect = false;
             rightColliderIntersect = false;
-
-            bulletDamage = 4;
-            if (type == Constant.TMUSHMECH)
-                bulletDamage = 7;
 
             leftBullet.isAlive = true;
             rightBullet.isAlive = true;
@@ -124,13 +129,16 @@ namespace Project_Rioman
 
         protected override void SubCheckHit(Rioman player, Bullet[] rioBullets)
         {
-            if (leftBullet.isAlive && player.Hitbox.Intersects(new Rectangle(leftBullet.X, leftBullet.Y, bullet.Width, bullet.Height)))
+            
+            if (leftBullet.isAlive && !leftBullet.isAttached &&
+                player.Hitbox.Intersects(new Rectangle(leftBullet.X, leftBullet.Y, bullet.Width, bullet.Height)))
             {
                 leftBullet.isAlive = false;
                 player.Hit(bulletDamage);
             }
 
-            if(rightBullet.isAlive && player.Hitbox.Intersects(new Rectangle(rightBullet.X, rightBullet.Y, bullet.Width, bullet.Height)))
+            if(rightBullet.isAlive && !leftBullet.isAttached &&
+                player.Hitbox.Intersects(new Rectangle(rightBullet.X, rightBullet.Y, bullet.Width, bullet.Height)))
             {
                 rightBullet.isAlive = false;
                 player.Hit(bulletDamage);

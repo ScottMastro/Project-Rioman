@@ -37,13 +37,16 @@ namespace Project_Rioman
             bullet = sprites[1];
             attack = sprites[2];
 
+            SubReset();
+        }
+
+        protected override void SubReset()
+        {
             sprite = stand;
             drawRect = new Rectangle(0, 0, stand.Width, stand.Height);
 
             attacking = false;
             location.Y -= stand.Height;
-
-
         }
 
         protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)

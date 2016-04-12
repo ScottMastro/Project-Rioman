@@ -57,8 +57,8 @@ namespace Project_Rioman
 
                 string rc = read.ReadLine();
                 string[] parts = rc.Split('&');
-                height = Convert.ToInt32(parts[0]);
-                width = Convert.ToInt32(parts[1]);
+                width = Convert.ToInt32(parts[0]);
+                height = Convert.ToInt32(parts[1]);
 
                 backgroundColour = new Color(Convert.ToByte(parts[2]), Convert.ToByte(parts[3]), Convert.ToByte(parts[4]));
 
@@ -66,19 +66,19 @@ namespace Project_Rioman
 
                 string line = "";
 
-                for (int r = 0; r <= height - 1; r++)
+                for (int y = 0; y <= height - 1; y++)
                 {
                     line = read.ReadLine();
 
-                    for (int c = 0; c <= width * 2 - 2; c += 2)
+                    for (int x = 0; x <= width * 2 - 2; x += 2)
                     {
-                        if (line.Substring(c, 2) == "%%")
-                            tilePos[r, c / 2] = 0;
+                        if (line.Substring(x, 2) == "%%")
+                            tilePos[y, x / 2] = 0;
                         else
                         {
                             int val = 0;
-                            letters.TryGetValue(line.Substring(c, 2), out val);
-                            tilePos[r, c / 2] = val;
+                            letters.TryGetValue(line.Substring(x, 2), out val);
+                            tilePos[y, x / 2] = val;
                         }
                     }
 

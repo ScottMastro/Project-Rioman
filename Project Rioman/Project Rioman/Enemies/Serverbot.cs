@@ -23,6 +23,13 @@ namespace Project_Rioman
         public Serverbot(int type, int r, int c) : base(type, r, c)
         {
             sprite = EnemyAttributes.GetSprites(type)[0];
+
+            SubReset();
+
+        }
+
+        protected override void SubReset()
+        {
             frame = 1;
 
             location.Y -= sprite.Height;
@@ -31,7 +38,6 @@ namespace Project_Rioman
             groundBelow = false;
             stopLeft = false;
             stopRight = false;
-
         }
 
         protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)

@@ -19,10 +19,14 @@ namespace Project_Rioman
         private bool stopRightMovement;
 
         public Hellicoptor(int type, int r, int c) : base(type, r, c)
-
         {
             sprite = EnemyAttributes.GetSprites(type)[0];
 
+            SubReset();
+        }
+
+        protected override void SubReset()
+        {
             drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
 
             frameTime = 0;
@@ -33,8 +37,8 @@ namespace Project_Rioman
             stopUpMovement = false;
             stopLeftMovement = false;
             stopRightMovement = false;
-
         }
+
 
         protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
         {

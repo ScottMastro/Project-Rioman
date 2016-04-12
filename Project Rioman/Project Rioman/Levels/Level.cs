@@ -102,11 +102,21 @@ namespace Project_Rioman
         public void Reset()
         {
             ResetTiles();
+            ResetEnemies();
 
             scrollingRect = new Rectangle();
             scrollers = MakeScroller();
 
             doorOpening = false;
+
+        }
+
+
+        public void ResetEnemies()
+        {
+            for (int i = 0; i <= aenemy.Length - 1; i++)
+                aenemy[i].Reset();
+            
 
         }
 

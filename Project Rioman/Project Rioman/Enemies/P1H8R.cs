@@ -36,6 +36,11 @@ namespace Project_Rioman
             sprite = sprites[0];
             bullet = sprites[1];
 
+            SubReset();
+        }
+
+        protected override void SubReset()
+        {
             drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
 
             shootTime = 0;
@@ -45,8 +50,8 @@ namespace Project_Rioman
             stopUpMovement = false;
             stopLeftMovement = false;
             stopRightMovement = false;
-
         }
+
 
         protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
         {

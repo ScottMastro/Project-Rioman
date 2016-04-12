@@ -19,11 +19,18 @@ namespace Project_Rioman
         public MegaHopper(int type, int r, int c) : base(type, r, c)
         {
             sprite = EnemyAttributes.GetSprites(type)[0];
+
+            SubReset();
+        }
+
+        protected override void SubReset()
+        {
             frame = 0;
 
             location.Y -= sprite.Height;
             drawRect = new Rectangle(0, 0, sprite.Width / 6, sprite.Height);
         }
+
 
         protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
         {

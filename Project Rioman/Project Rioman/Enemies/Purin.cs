@@ -79,6 +79,11 @@ namespace Project_Rioman
             bullet = sprites[1];
             purinJump = sprites[2];
 
+            SubReset();
+        }
+
+        protected override void SubReset()
+        {
             sprite = purinMove;
             drawRect = new Rectangle(0, 0, sprite.Width / 3, sprite.Height);
             frame = 0;
@@ -90,8 +95,8 @@ namespace Project_Rioman
 
             stopLeftMovement = false;
             stopRightMovement = false;
-
         }
+
 
         protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
         {

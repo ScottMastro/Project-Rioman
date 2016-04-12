@@ -221,24 +221,30 @@ namespace Project_Rioman
 
         public Totem(int type, int r, int c) : base(type, r, c)
         {
-            isInvincible = true;
 
             Texture2D[] sprites = EnemyAttributes.GetSprites(type);
             sprite = sprites[0];
+            SetupTotems(sprites);
+
+            SubReset();
+        }
+
+        protected override void SubReset() {
+            isInvincible = true;
+
             drawRect = new Rectangle(0, 0, sprite.Width / 5, sprite.Height);
 
             location.Y -= sprite.Height * numberOfTotems;
 
-            SetupTotems(sprites);
             totems = new TotemPart[numberOfTotems];
             bullets = new TotemBullet[numberOfTotems * 2];
 
             for (int i = 0; i <= numberOfTotems - 1; i++)
-                totems[i].Init(this.r.Next(0, 5), 
-                    location.X, location.Y + (numberOfTotems - i - 1) * drawRect.Height, 
-                    sprite,  this.r.Next(0, 100)/10.0);
-
+                totems[i].Init(this.r.Next(0, 5),
+                    location.X, location.Y + (numberOfTotems - i - 1) * drawRect.Height,
+                    sprite, this.r.Next(0, 100) / 10.0);
         }
+
 
         private void SetupTotems(Texture2D[] sprites)
         {

@@ -29,6 +29,12 @@ namespace Project_Rioman
             sprite = sprites[0];
             explosion = sprites[1];
 
+            SubReset();
+        }
+
+
+        protected override void SubReset()
+        {
             counter = 0;
             drawRect = new Rectangle(0, 0, sprite.Width / 6, sprite.Height);
             exploding = false;

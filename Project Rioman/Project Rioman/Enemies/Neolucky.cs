@@ -56,6 +56,11 @@ namespace Project_Rioman
             attack = sprites[2];
             jump = sprites[3];
 
+            SubReset();
+        }
+
+        protected override void SubReset()
+        {
             shooting = false;
             location.Y -= stand.Height;
             Stand();

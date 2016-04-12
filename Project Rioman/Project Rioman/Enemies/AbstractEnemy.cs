@@ -54,10 +54,10 @@ namespace Project_Rioman
 
             this.r = new Random();
 
-            Reset();
+            AbstractReset();
         }
 
-        public void Reset()
+        private void AbstractReset()
         {
             location = originalLocation;
             isAlive = false;
@@ -65,6 +65,12 @@ namespace Project_Rioman
             direction = SpriteEffects.None;
             health = maxHealth;
             killTime = 0;
+        }
+
+        public void Reset()
+        {
+            AbstractReset();
+            SubReset();
         }
 
         public void TakeDamage(int amount)
@@ -158,6 +164,7 @@ namespace Project_Rioman
             }
         }
 
+        protected abstract void SubReset();
         protected abstract void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport);
         protected abstract void SubCheckHit(Rioman player, Bullet[] rioBullets);
         protected abstract void SubDrawEnemy(SpriteBatch spriteBatch);
