@@ -198,6 +198,7 @@ namespace WindowsFormsApplication1
         {
             if (hasLevel)
             {
+
                 mouseDown = false;
 
                 int[,] oldTiles = CopyArray(tile, width, height);
@@ -211,7 +212,12 @@ namespace WindowsFormsApplication1
 
                 for (int i = Math.Min(x1, x2); i <= Math.Max(x1, x2); i++)
                     for (int j = Math.Min(y1, y2); j <= Math.Max(y1, y2); j++)
-                        tile[i, j] = activetile;
+                    {
+                        if(e.Button == MouseButtons.Left)
+                            tile[i, j] = activetile;
+                        else if (e.Button == MouseButtons.Right)
+                            tile[i, j] = 0;
+                    }
 
 
                 if (!oldTiles.Equals(tile)) {
