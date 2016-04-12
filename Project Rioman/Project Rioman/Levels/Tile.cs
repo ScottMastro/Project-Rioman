@@ -150,7 +150,7 @@ namespace Project_Rioman
         public void Draw(SpriteBatch spriteBatch)
         {
             if (type != 6 && type >= 0)
-                spriteBatch.Draw(sprite, location, Color.White);
+                spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, sprite.Width, sprite.Height), Color.White);
 
         }
 

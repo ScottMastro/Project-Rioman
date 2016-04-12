@@ -69,7 +69,7 @@ namespace Project_Rioman
         {
             int type = -1;
 
-            if (tileNumber >= 110 && tileNumber <= 113)
+            if (tileNumber >= 110 && tileNumber <= 113 || tileNumber == 17)
                 type = 0;
             if (tileNumber >= 1 && tileNumber <= 6 || tileNumber == 15 || tileNumber == 16)
                 type = 1;
