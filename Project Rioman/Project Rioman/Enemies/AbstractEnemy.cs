@@ -10,6 +10,7 @@ namespace Project_Rioman
         protected int type;
         protected Rectangle location;
         protected Rectangle originalLocation;
+        protected Rectangle netMovement;
         protected Rectangle hitbox;
 
         protected SpriteEffects direction;
@@ -61,15 +62,27 @@ namespace Project_Rioman
         {
             location = originalLocation;
             isAlive = false;
-            readyToSpawn = true;
+            readyToSpawn = false;
             direction = SpriteEffects.None;
             health = maxHealth;
             killTime = 0;
         }
 
-        public void Reset()
+        public void Reset(bool fullReset)
         {
             AbstractReset();
+
+            if (fullReset)
+            {
+                netMovement = new Rectangle(0, 0, 0, 0);
+                readyToSpawn = true;
+            }
+            else
+            {
+                location.X = originalLocation.X + netMovement.X;
+                location.Y = originalLocation.Y + netMovement.Y;
+            }
+
             SubReset();
         }
 
@@ -89,23 +102,30 @@ namespace Project_Rioman
         {
             location.X += x;
             location.Y += y;
+
+            netMovement.X += x;
+            netMovement.Y += y;
+
             SubMove(x, y);
         }
 
 
         public void Update(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
         {
-            if (!isAlive && readyToSpawn)
+            if (!isAlive && readyToSpawn && !Offscreen(viewport))
             {
+                Reset(false);
+                isAlive = true;
 
-                if (location.X > -20 && location.X < viewport.Width + 20 &&
-                    location.Y > -20 && location.Y < viewport.Height + 20)
-                {
-                    isAlive = true;
-                    readyToSpawn = false;
-
-                }
+                if (player.Hitbox.Center.X < location.X)
+                    direction = SpriteEffects.None;
+                else
+                    direction = SpriteEffects.FlipHorizontally;
             }
+            else if (isAlive && Offscreen(viewport) && !isInvincible)
+                Reset(false);
+            else if (!readyToSpawn)
+                readyToSpawn = SpawnPointOffscreen(viewport);
 
             SubUpdate(player, rioBullets, deltaTime, viewport);
             CheckHit(player, rioBullets);
@@ -174,6 +194,22 @@ namespace Project_Rioman
         public abstract Rectangle GetCollisionRect();
 
         public abstract void DetectTileCollision(Tile tile);
+
+        public bool Offscreen(Viewport viewport)
+        {
+            int buffer = 50;
+
+            return (location.Right < -buffer || location.Left > viewport.Width + buffer ||
+                    location.Bottom < -buffer || location.Top > viewport.Height + buffer);
+        }
+
+        private bool SpawnPointOffscreen(Viewport viewport)
+        {
+            int buffer = 50;
+
+            return (originalLocation.X + netMovement.X < -buffer || originalLocation.X + netMovement.X > viewport.Width + buffer ||
+                    originalLocation.Y + netMovement.Y < -buffer || originalLocation.Y + netMovement.Y > viewport.Height + buffer);
+        }
 
 
         public bool FacingLeft()

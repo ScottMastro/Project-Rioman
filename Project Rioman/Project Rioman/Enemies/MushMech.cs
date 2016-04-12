@@ -76,7 +76,6 @@ namespace Project_Rioman
 
             if (isAlive)
             {
-                Console.WriteLine(stopLeftMovement);
 
                 if (!leftColliderIntersect)
                     stopLeftMovement = false;

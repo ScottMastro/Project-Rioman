@@ -115,7 +115,7 @@ namespace Project_Rioman
         public void ResetEnemies()
         {
             for (int i = 0; i <= aenemy.Length - 1; i++)
-                aenemy[i].Reset();
+                aenemy[i].Reset(true);
             
 
         }
@@ -211,7 +211,7 @@ namespace Project_Rioman
                         climbTop = true;
                     }
 
-                    if (tle.type == 1 || tle.type == 4 || tle.type == 5 || tle.type == 3 && tle.isTop)
+                    if (tle.type == 1 || tle.type == 2 || tle.type == 4 || tle.type == 5 || tle.type == 3 && tle.isTop)
                     {
 
                         if (!rioman.IsJumping() && rioman.Feet.Intersects(tle.Floor) && !rioman.Feet.Intersects(tle.IgnoreFloor))
