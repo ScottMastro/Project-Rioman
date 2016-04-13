@@ -20,7 +20,7 @@ namespace Project_Rioman
 
         public Enemy[] enemies;
         private AbstractEnemy[] aenemy;
-        public Pickup[] pickups = new Pickup[10];
+        public OldPickup[] pickups = new OldPickup[10];
         public Boss[] bosses = new Boss[17];
         int numberOfEnemies;
 
@@ -81,7 +81,7 @@ namespace Project_Rioman
 
 
         public Level(Color bg, int width, int height, Vector2 startpos, Tile[,] tiles,
-            Enemy[] enemies, AbstractEnemy[] ae, Pickup[] pickups, Boss[] bosses)
+            Enemy[] enemies, AbstractEnemy[] ae, OldPickup[] pickups, Boss[] bosses)
         {
             backgroundcolour = bg;
             this.width = width;
@@ -550,7 +550,7 @@ namespace Project_Rioman
 
                     if (tle.type == 1 || tle.type == 4 || tle.type == 5)
                     {
-                        foreach (Pickup pickup in pickups)
+                        foreach (OldPickup pickup in pickups)
                             pickup.PickupUpdate(tle);
 
                         if (bosses[activelevel].pickup)
@@ -650,7 +650,7 @@ namespace Project_Rioman
 
 
 
-            foreach (Pickup pickup in pickups)
+            foreach (OldPickup pickup in pickups)
                 pickup.PickupUpdate(rioman, viewportRect);
 
 
@@ -694,7 +694,7 @@ namespace Project_Rioman
                 scrollers[i].Move(x, y);
 
 
-            foreach (Pickup pickup in pickups)
+            foreach (OldPickup pickup in pickups)
             {
                 if (pickup.isalive)
                     pickup.MovePickup(x, y);
@@ -794,7 +794,7 @@ namespace Project_Rioman
                 aenemy[i].Update(rioman, bullets, deltaTime, viewport);
             }
 
-            foreach (Pickup pickup in pickups)
+            foreach (OldPickup pickup in pickups)
             {
                 if (pickup.isalive)
                     pickup.Animate(deltaTime);
@@ -860,7 +860,7 @@ namespace Project_Rioman
                     if (enemies[i].type != 302)
                     {
                         Health.AdjustHealth(-enemies[i].damage);
-                        rioman.Hit();
+                       // rioman.Hit();
 
                         if (rioman.Location.Left < enemies[i].location.Left)
                             rioman.invincibledirection = -3;
@@ -875,7 +875,7 @@ namespace Project_Rioman
                         if (enemies[i].othertime <= 2 && enemies[i].othertime <= 2 && enemies[i].bool1)
                         {
                             Health.AdjustHealth(-enemies[i].damage);
-                            rioman.Hit();
+                         //   rioman.Hit();
                         }
                     }
                 }
@@ -904,7 +904,7 @@ namespace Project_Rioman
                             enemies[i].bullettime[j] = 0;
                             Health.AdjustHealth(-3);
 
-                            rioman.Hit();
+//                            rioman.Hit();
 
                             if (rioman.Location.Left < enemies[i].bulletloc[j].Left)
                                 rioman.invincibledirection = -3;
@@ -932,7 +932,7 @@ namespace Project_Rioman
                             Health.AdjustHealth(-enemies[i].damage);
 
 
-                            rioman.Hit();
+                         //   rioman.Hit();
 
                             if (rioman.Location.Left < enemies[i].other[k].Left)
                                 rioman.invincibledirection = -3;

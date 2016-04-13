@@ -250,18 +250,18 @@ namespace Project_Rioman
 
         }
 
-        public void Hit()
-        {
-            if (state.Hit())
-                Move(0, -10);
-        }
 
         public void Hit(int damage)
         {
-            //TODO
-            Hit();
-        }
+            if (!IsInvincible())
+            {
+                Health.AdjustHealth(-damage);
+                state.Hit();
 
+                if (state.Hit())
+                    Move(0, -10);
+            }
+        }
         public void Die()
         {
             Reset();

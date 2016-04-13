@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Project_Rioman
 {
-    class Pickup
+    class OldPickup
     {
         public int type;
         public bool isalive;
@@ -19,7 +19,7 @@ namespace Project_Rioman
         public double nextlevel;
 
 
-        public Pickup()
+        public OldPickup()
         {
         }
 

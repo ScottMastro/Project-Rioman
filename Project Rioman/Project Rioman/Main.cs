@@ -53,6 +53,8 @@ namespace Project_Rioman
             backgroundcolor = Color.Black;
 
             EnemyAttributes.LoadContent(Content);
+            PickupAttributes.LoadContent(Content);
+
             Audio.LoadAudio(Content);
             Save.LoadContent(Content);
             Opening.LoadContent(Content);

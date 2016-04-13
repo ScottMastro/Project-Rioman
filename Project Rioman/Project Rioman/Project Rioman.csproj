@@ -100,6 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractPickup.cs" />
     <Compile Include="Enemies\AbstractEnemy.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="Audio.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Enemies\SpikeBomb.cs" />
     <Compile Include="Enemies\Totem.cs" />
     <Compile Include="Enemies\ZarrocClone.cs" />
+    <Compile Include="PickupAttributes.cs" />
     <Compile Include="Rioman\Bullet.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Enemies\DeuxKama.cs" />

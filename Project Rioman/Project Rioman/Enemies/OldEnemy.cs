@@ -51,7 +51,7 @@ namespace Project_Rioman
             if (!rioman.IsInvincible() && totems[number].collisionrect.Intersects(rioman.Location) && totems[number].isalive)
             {
                 Health.AdjustHealth(-damage);
-                rioman.Hit();
+                //rioman.Hit();
 
                 if (rioman.Location.Left < totems[number].location.Left)
                     rioman.invincibledirection = -3;
@@ -91,7 +91,7 @@ namespace Project_Rioman
             if (!rioman.IsInvincible() && totems[number].bulletcollision.Intersects(rioman.Location) && totems[number].bulletalive)
             {
                 Health.AdjustHealth(-totems[number].damage);
-                rioman.Hit();
+                //rioman.Hit();
 
                 if (rioman.Location.Left < totems[number].location.Left)
                     rioman.invincibledirection = -3;
@@ -105,7 +105,7 @@ namespace Project_Rioman
             if (!rioman.IsInvincible() && carts[number].collisionrect.Intersects(rioman.Location) && carts[number].isalive)
             {
                 Health.AdjustHealth(-damage);
-                rioman.Hit();
+              //  rioman.Hit();
 
                 if (rioman.Location.Left < carts[number].location.Left)
                     rioman.invincibledirection = -3;

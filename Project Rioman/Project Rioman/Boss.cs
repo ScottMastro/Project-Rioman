@@ -69,7 +69,7 @@ namespace Project_Rioman
         public double explodetime;
 
         public bool pickup;
-        public Pickup weapon;
+        public OldPickup weapon;
         Color healthcolour;
 
         Random r = new Random();
@@ -136,7 +136,7 @@ namespace Project_Rioman
                 spritesheet[i] = content.Load<Texture2D>("Video\\bosses\\" + name + "\\" + name + i.ToString());
 
             explode = content.Load<Texture2D>("Video\\bosses\\explode");
-            weapon = new Pickup();
+            weapon = new OldPickup();
             weapon.LoadPickupSprites(content);
 
             activeframe = new int[spritesheets + 1];
@@ -239,7 +239,7 @@ namespace Project_Rioman
                 if (!rioman.IsInvincible() && rioman.Location.Intersects(collisionrect))
                 {
                     Health.AdjustHealth(-coldamage);
-                    rioman.Hit();
+                    //rioman.Hit();
 
                     if (rioman.Location.Left < collisionrect.Left)
                         rioman.invincibledirection = -3;
@@ -258,7 +258,7 @@ namespace Project_Rioman
                         else if (attacktype[i] == 2)
                             Health.AdjustHealth(-atk2damage);
 
-                        rioman.Hit();
+                        //rioman.Hit();
 
                         if (rioman.Location.Left < bulletloc[i].Left)
                             rioman.invincibledirection = -3;

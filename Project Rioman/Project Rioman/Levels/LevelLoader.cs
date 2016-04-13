@@ -22,7 +22,7 @@ namespace Project_Rioman
         private Tile[,] tiles;
         private List<Enemy> enemies;
         private List<AbstractEnemy> aenemy;
-        private Pickup[] pickups = new Pickup[10];
+        private OldPickup[] pickups = new OldPickup[10];
         private Boss[] bosses = new Boss[17];
 
         public LevelLoader() { }
@@ -37,7 +37,7 @@ namespace Project_Rioman
 
             for (int j = 0; j <= 9; j++)
             {
-                pickups[j] = new Pickup();
+                pickups[j] = new OldPickup();
                 pickups[j].LoadPickupSprites(content);
 
                 bosses[j] = new Boss();
