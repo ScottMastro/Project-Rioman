@@ -5563,6 +5563,15 @@
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clockandhand.xnb</Output>
       <Time>2016-04-10T15:34:05.6124778-04:00</Time>
     </Item>
+    <Item>
+      <Source>Audio\soundeffects\heal.wav</Source>
+      <Name>Audio\soundeffects\heal</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\heal.xnb</Output>
+      <Time>2016-04-13T23:00:33.4832698-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{464AC0B7-78D5-46D0-89D4-5164AF3BF223}</ContentProjectGUID>

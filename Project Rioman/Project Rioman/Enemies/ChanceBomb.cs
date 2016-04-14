@@ -71,7 +71,7 @@ namespace Project_Rioman
                                 counter++;
                             else if (counter == 3)
                             {
-                                if (r.Next(0, 2) == 0)
+                                if (new Random().Next(0, 2) == 0)
                                     counter = 4;
                                 else
                                     counter = 5;

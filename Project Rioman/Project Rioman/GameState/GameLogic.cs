@@ -129,6 +129,7 @@ namespace Project_Rioman
                     currentLevel.DrawTiles(spriteBatch);
                     currentLevel.bosses[currentLevel.activelevel].Draw(spriteBatch);
                     currentLevel.DrawEnemies(spriteBatch);
+                    currentLevel.DrawItems(spriteBatch);
 
                     player.Draw(spriteBatch);
 

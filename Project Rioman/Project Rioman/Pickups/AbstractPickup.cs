@@ -6,50 +6,87 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Project_Rioman
 {
-    class AbstractPickup
+    abstract class AbstractPickup
     {
-        private int type;
-        private bool isAlive;
-        private bool onGround;
-        private Texture2D sprite;
-        private Rectangle drawRect;
-        private Rectangle location;
-        private Rectangle originalLocation;
+        protected int type;
+        protected bool isAlive;
+        protected bool onGround;
+        protected Texture2D sprite;
+        protected Texture2D debugSquare;
 
-        private bool canDie;
+        protected Rectangle drawRect;
+        protected Rectangle location;
+        protected Rectangle originalLocation;
 
-        public AbstractPickup(int type)
+        protected bool canDie;
+
+        public AbstractPickup(int type, int x, int y)
         {
-            sprite = PickupAttributes.GetSprite(type);
+            this.type = type;
+            debugSquare = PickupAttributes.GetSprite(-1);
             isAlive = true;
             onGround = false;
+            location.X = x;
+            location.Y = y - 10;
         }
 
-        public void Update(double deltaTime)
+        public void Update(Rioman player, double deltaTime, Viewport viewport)
         {
+            if (isAlive)
+            {
+                if (player.Hitbox.Intersects(GetCollisionRect()))
+                    PickedUp();
 
+                if (!onGround)
+                    location.Y += 2;
+            }
+
+            SubUpdate(deltaTime);
         }
 
-        public void MovePickup(int x, int y)
-        {
-            location.X += x;
-            location.Y += y;
-        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             if (isAlive)
                 spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, drawRect.Width, drawRect.Height),
-                    drawRect, Color.White, 0f, new Vector2(), SpriteEffects.None, 0);
+                    drawRect, Color.White, 0f, new Vector2(drawRect.Width / 2, drawRect.Height / 2), SpriteEffects.None, 0);
         }
 
-        public void Kill(bool check, Viewport viewportrect)
+        public void Move(int x, int y)
         {
-            if (canDie) { 
-                if (location.Right < 50 || location.X > viewportrect.Width ||
-                    location.Bottom < 50 || location.Y > viewportrect.Height)
-                        isAlive = false;
+            location.X += x;
+            location.Y += y;
         }
+
+        public void DetectTileCollision(Tile tile)
+        {
+            if (!onGround)
+            {
+                if (tile.type == 1 || tile.type == 3 && tile.isTop)
+                    if (tile.Top.Intersects(GetCollisionRect()))
+                        onGround = true;
+                    
+            }
+
+        }
+
+        private void Kill(bool check, Viewport viewportrect)
+        {
+            if (canDie)
+                if (location.X < -50 || location.X > viewportrect.Width + 50 ||
+                    location.Y < -50 || location.Y > viewportrect.Height + 50)
+                    isAlive = false;
+        }
+
+        public Rectangle GetCollisionRect()
+        {
+            return new Rectangle(location.X - drawRect.Width / 2, location.Y - drawRect.Height / 2, drawRect.Width, drawRect.Height);
+        }
+
+
+        protected abstract void SubUpdate(double deltaTime);
+        protected abstract void PickedUp();
+
     }
 }
  

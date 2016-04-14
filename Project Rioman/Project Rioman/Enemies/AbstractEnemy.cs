@@ -7,11 +7,15 @@ namespace Project_Rioman
 {
     abstract class AbstractEnemy
     {
+        private Level level;
+        
         protected int type;
         protected Rectangle location;
         protected Rectangle originalLocation;
         protected Rectangle netMovement;
         protected Rectangle hitbox;
+
+        protected AbstractPickup droppedItem;
 
         protected SpriteEffects direction;
         protected Texture2D sprite;
@@ -33,8 +37,6 @@ namespace Project_Rioman
         protected int maxHealth;
         protected int touchDamage;
 
-        protected Random r;
-
 
         public AbstractEnemy(int type, int r, int c)
         {
@@ -53,8 +55,6 @@ namespace Project_Rioman
 
             blinkFrames = 0;
 
-            this.r = new Random();
-
             AbstractReset();
         }
 
@@ -66,6 +66,7 @@ namespace Project_Rioman
             direction = SpriteEffects.None;
             health = maxHealth;
             killTime = 0;
+            droppedItem = null;
         }
 
         public void Reset(bool fullReset)
@@ -96,6 +97,41 @@ namespace Project_Rioman
         public void Die()
         {
             isAlive = false;
+
+            int n = new Random().Next(0, 100) + 1;
+            int x = GetCollisionRect().Center.X;
+            int y = GetCollisionRect().Center.Y;
+
+
+            //drop small health
+            int dropProb = Constant.HEALTH_DROP_PERCENT_SMALL;
+            if (n < dropProb) {
+                droppedItem = new EnemyPickup(Constant.SMALL_HEALTH, x, y);
+                return;
+            }
+            
+            //drop big health
+            dropProb += Constant.HEALTH_DROP_PERCENT_BIG;
+            if (n < dropProb) {
+                droppedItem = new EnemyPickup(Constant.BIG_HEALTH, x, y);
+                return;
+            }
+
+            //drop small ammo
+            dropProb += Constant.AMMO_DROP_PERCENT_SMALL;
+            if (n < dropProb) {
+                droppedItem = new EnemyPickup(Constant.SMALL_AMM0, x, y);
+                return;
+            }
+
+            //drop big ammo
+            dropProb += Constant.AMMO_DROP_PERCENT_BIG;
+            if (n < dropProb) {
+                droppedItem = new EnemyPickup(Constant.BIG_AMMO, x, y);
+                return;
+            }
+
+
         }
 
         public void Move(int x, int y)
@@ -215,6 +251,14 @@ namespace Project_Rioman
         public bool FacingLeft()
         {
             return direction == SpriteEffects.None;
+        }
+
+        public AbstractPickup GetDroppedPickup()
+        {
+            AbstractPickup temp = droppedItem;
+            droppedItem = null;
+
+            return temp;
         }
     }
 }

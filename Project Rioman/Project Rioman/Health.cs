@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-
+using System;
 namespace Project_Rioman
 {
     static class Health
@@ -9,7 +9,6 @@ namespace Project_Rioman
         private static Texture2D healthbar;
         private static Texture2D healthpoint;
         private static int health;
-        private static bool healthIncrease;
         private static double increasetime;
         private static int increaseAmount;
 
@@ -21,7 +20,7 @@ namespace Project_Rioman
         {
             healthbar = content.Load<Texture2D>("Video\\pause\\bar");
             healthpoint = content.Load<Texture2D>("Video\\pause\\health");
-            health = 27;
+            health = Constant.MAX_HEALTH;
         }
 
         public static void DrawHealth(SpriteBatch spriteBatch)
@@ -42,30 +41,23 @@ namespace Project_Rioman
             }
         }
 
-        public static void StartIncreaseHealth(int amount)
+        public static void UpdateHealth(double deltaTime)
         {
-            increaseAmount = amount;
-            healthIncrease = true;
-            increasetime = 0;
-        }
-
-        public static void UpdateHealth(double elapsedtime)
-        {
-            increasetime += elapsedtime;
+            increasetime += deltaTime;
 
             if (increasetime > 0.05)
             {
                 increasetime = 0;
                 increaseAmount--;
 
-                if (health < 27)
-                    health++;
-
-                if (health >= 27 || increaseAmount <= 0)
+                if (health < Constant.MAX_HEALTH)
                 {
-                    healthIncrease = false;
-                    increaseAmount = 0;
+                    health++;
+                    Audio.heal.Play();
                 }
+                else
+                    increaseAmount = 0;
+                
             }
         }
 
@@ -80,7 +72,7 @@ namespace Project_Rioman
             int done = 2;
             bossHealth++;
 
-            if (bossHealth >= 27)
+            if (bossHealth >= Constant.MAX_HEALTH)
                 done = 3;
 
             return done;
@@ -93,10 +85,16 @@ namespace Project_Rioman
         public static int GetBossHealth() { return bossHealth; }
 
 
-        public static void IncreaseHealth(int amount) { increaseAmount = amount; }
+        public static void IncreaseHealth(int amount) {
+            if (health < Constant.MAX_HEALTH)
+            {
+                increaseAmount = amount;
+                increasetime = 0;
+            }
+        }
         public static void AdjustHealth(int amount) { health += amount; }
         public static int GetHealth() { return health; }
         public static void SetHealth(int x) { health = x; }
-        public static bool HealthIncreasing() { return healthIncrease; }
+        public static bool HealthIncreasing() { return increaseAmount > 0; }
     }
 }

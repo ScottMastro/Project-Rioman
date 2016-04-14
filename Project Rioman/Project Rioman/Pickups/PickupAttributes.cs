@@ -19,8 +19,11 @@ namespace Project_Rioman
         {
             sprites = new Dictionary<int, Texture2D>();
 
+            sprites.Add(-1, content.Load<Texture2D>("Video\\debug\\debug2"));
+
+
             for (int i = 1; i <= 9; i++)
-                sprites.Add(i, content.Load<Texture2D>("Video\\pickups\\wpickup" + i.ToString());
+                sprites.Add(i, content.Load<Texture2D>("Video\\pickups\\wpickup" + i.ToString()));
 
             sprites.Add(10, content.Load<Texture2D>("Video\\pickups\\etank"));
             sprites.Add(11, content.Load<Texture2D>("Video\\pickups\\mtank"));
@@ -42,3 +45,4 @@ namespace Project_Rioman
         }
 
     }
+}

@@ -27,6 +27,19 @@ namespace Project_Rioman
         public static int TILE_SIZE = 32;
         public static int MAX_HEALTH = 27;
 
+        public static int HEALTH_DROP_PERCENT_SMALL = 25;
+        public static int HEALTH_DROP_PERCENT_BIG = 25;
+        public static int AMMO_DROP_PERCENT_SMALL = 25;
+        public static int AMMO_DROP_PERCENT_BIG = 25;
+
+        public static int ETANK = 10;
+        public static int MTANK = 11;
+        public static int WTANK = 12;
+        public static int LIFE = 13;
+        public static int BIG_HEALTH = 14;
+        public static int SMALL_HEALTH = 15;
+        public static int BIG_AMMO = 16;
+        public static int SMALL_AMM0 = 17;
 
         public static int TITLE_SCREEN = 0;
         public static int SELECTION_SCREEN = 1;

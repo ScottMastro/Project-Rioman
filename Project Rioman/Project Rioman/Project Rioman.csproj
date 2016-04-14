@@ -100,7 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractPickup.cs" />
+    <Compile Include="Pickups\AbstractPickup.cs" />
     <Compile Include="Enemies\AbstractEnemy.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="Audio.cs" />
@@ -116,7 +116,8 @@
     <Compile Include="Enemies\SpikeBomb.cs" />
     <Compile Include="Enemies\Totem.cs" />
     <Compile Include="Enemies\ZarrocClone.cs" />
-    <Compile Include="PickupAttributes.cs" />
+    <Compile Include="Pickups\EnemyPickup.cs" />
+    <Compile Include="Pickups\PickupAttributes.cs" />
     <Compile Include="Rioman\Bullet.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Enemies\DeuxKama.cs" />
@@ -131,7 +132,7 @@
     <Compile Include="Health.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\LevelLoader.cs" />
-    <Compile Include="Pickup.cs" />
+    <Compile Include="Pickups\OldPickup.cs" />
     <Compile Include="Enemies\Purin.cs" />
     <Compile Include="Rioman\RiomanAnimation.cs" />
     <Compile Include="Rioman\RiomanState.cs" />

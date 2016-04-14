@@ -21,6 +21,8 @@ namespace Project_Rioman
         public Enemy[] enemies;
         private AbstractEnemy[] aenemy;
         public OldPickup[] pickups = new OldPickup[10];
+        private List<AbstractPickup> items; 
+
         public Boss[] bosses = new Boss[17];
         int numberOfEnemies;
 
@@ -92,9 +94,9 @@ namespace Project_Rioman
             aenemy = ae;
             numberOfEnemies = enemies.Length;
             this.pickups = pickups;
+            items = new List<AbstractPickup>();
             this.bosses = bosses;
             go = false;
-
 
 
         }
@@ -103,6 +105,8 @@ namespace Project_Rioman
         {
             ResetTiles();
             ResetEnemies();
+
+            items = new List<AbstractPickup>();
 
             scrollingRect = new Rectangle();
             scrollers = MakeScroller();
@@ -131,6 +135,15 @@ namespace Project_Rioman
                 }
             }
 
+        }
+
+        public void DrawItems(SpriteBatch spriteBatch)
+        {
+
+            foreach (AbstractPickup item in items)
+            {
+                item.Draw(spriteBatch);
+            }
         }
 
         public void DrawTiles(SpriteBatch spriteBatch)
@@ -531,16 +544,16 @@ namespace Project_Rioman
 
 
 
-        public void Update(Rioman rioman, GameTime gameTime, Viewport viewportRect)
+        public void Update(Rioman rioman, GameTime gameTime, Viewport viewport)
         {
-
+            double deltaTime = gameTime.ElapsedGameTime.TotalSeconds;
             stopleftscreenmovement = false;
             stoprightscreenmovement = false;
             bool[] enemycollision = new bool[numberOfEnemies + 1];
             bool bossfalling = true;
 
 
-            UpdateScrollers(rioman, viewportRect);
+            UpdateScrollers(rioman, viewport);
             InteractWithLevel(rioman);
             foreach (Tile tle in tiles)
             {
@@ -640,6 +653,10 @@ namespace Project_Rioman
 
                     for (int e = 0; e <= aenemy.Length - 1; e++)
                         aenemy[e].DetectTileCollision(tle);
+
+
+                    for (int i = 0; i <= items.Count - 1; i++)
+                        items[i].DetectTileCollision(tle);
                 }
 
             }
@@ -651,8 +668,11 @@ namespace Project_Rioman
 
 
             foreach (OldPickup pickup in pickups)
-                pickup.PickupUpdate(rioman, viewportRect);
+                pickup.PickupUpdate(rioman, viewport);
 
+
+            for (int i = 0; i<= items.Count -1; i++) 
+                items[i].Update(rioman, deltaTime, viewport);
 
 
 
@@ -700,10 +720,13 @@ namespace Project_Rioman
                     pickup.MovePickup(x, y);
             }
 
+            for (int i = 0; i <= items.Count - 1; i++)
+                items[i].Move(x, y);
+
             for (int i = 0; i < numberOfEnemies; i++)
                 enemies[i].MoveEnemies(x, y);
 
-            for (int i = 0; i < aenemy.Length; i++)
+            for (int i = 0; i <= aenemy.Length - 1; i++)
                 aenemy[i].Move(x, y);
 
             bosses[activelevel].Move(x, y);
@@ -792,6 +815,9 @@ namespace Project_Rioman
             for (int i = 0; i < aenemy.Length; i++)
             {
                 aenemy[i].Update(rioman, bullets, deltaTime, viewport);
+                AbstractPickup p = aenemy[i].GetDroppedPickup();
+                if (p != null)
+                    items.Add(p);
             }
 
             foreach (OldPickup pickup in pickups)

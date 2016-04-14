@@ -84,7 +84,7 @@ namespace Project_Rioman
 
                 if (shooting)
                     UpdateShooting(deltaTime);
-                else if( r.Next(1000) < SHOOT_PROB)
+                else if( new  Random().Next(1000) < SHOOT_PROB)
                     Shoot();
 
 
@@ -122,7 +122,7 @@ namespace Project_Rioman
                 }
             }
 
-            if (r.Next(1000) < JUMP_PROB)
+            if (new Random().Next(1000) < JUMP_PROB)
                 Jump();
         }
 

@@ -128,7 +128,7 @@ namespace Project_Rioman
 
         private void UpdateWalk(double deltaTime)
         {
-            if (r.Next(1000) < JUMP_PROB)
+            if (new Random().Next(1000) < JUMP_PROB)
                 Jump();
 
             if (FacingLeft())

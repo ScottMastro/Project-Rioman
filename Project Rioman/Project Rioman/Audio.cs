@@ -30,6 +30,7 @@ namespace Project_Rioman
         public static SoundEffect shoot3;
         public static SoundEffect killEnemy;
         public static SoundEffect killEnemy2;
+        public static SoundEffect heal;
         public static SoundEffect jump1;
         public static SoundEffect jump2;
         public static SoundEffect jump3;
@@ -64,6 +65,7 @@ namespace Project_Rioman
             shoot3 = content.Load<SoundEffect>("Audio\\soundeffects\\shoot3");
             killEnemy = content.Load<SoundEffect>("Audio\\soundeffects\\killenemy");
             killEnemy2 = content.Load<SoundEffect>("Audio\\soundeffects\\killenemy2");
+            heal = content.Load<SoundEffect>("Audio\\soundeffects\\heal");
             jump1 = content.Load<SoundEffect>("Audio\\soundeffects\\jump");
             jump2 = content.Load<SoundEffect>("Audio\\soundeffects\\jump2");
             jump3 = content.Load<SoundEffect>("Audio\\soundeffects\\jump3");
@@ -150,6 +152,11 @@ namespace Project_Rioman
         public static void PlayShieldHit()
         {
             shieldHit.Play(Constant.VOLUME, 0.5f, 0f);
+        }
+
+        public static void PlayHeal()
+        {
+            heal.Play(Constant.VOLUME, 0.4f, 0f);
         }
     }
 }
