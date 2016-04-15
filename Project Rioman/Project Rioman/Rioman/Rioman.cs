@@ -156,9 +156,9 @@ namespace Project_Rioman
             CheckClimb(keyboardState, level);
 
             if (state.GetFallTime() * 30 > MAX_FALL_SPEED)
-                Move(0, MAX_FALL_SPEED);
+                MoveInWorld(0, MAX_FALL_SPEED, level);
             else
-                Move(0, Convert.ToInt32(state.GetFallTime() * 30));
+                MoveInWorld(0, Convert.ToInt32(state.GetFallTime() * 30), level);
 
         }
 
@@ -168,7 +168,7 @@ namespace Project_Rioman
             HorizontalMovement(keyboardState, level);
             CheckClimb(keyboardState, level);
 
-            Move(0, -Convert.ToInt32(10 - state.GetJumpTime() * 22));
+            MoveInWorld(0, -Convert.ToInt32(10 - state.GetJumpTime() * 22), level);
 
         }
 
@@ -178,21 +178,11 @@ namespace Project_Rioman
 
             if (!state.IsHit())
             {
-                if (keyboardState.IsKeyDown(Constant.RIGHT) && !stopRightMovement)
-                {
-                    if (!level.stopleftscreenmovement && !level.stoprightscreenmovement)
-                        level.MoveStuff(-3, 0);
-                    else if (level.stoprightscreenmovement || level.stopleftscreenmovement)
-                        Move(3, 0);
-                }
-                else if (keyboardState.IsKeyDown(Constant.LEFT) && !stopLeftMovement)
-                {
-                    if (!level.stopleftscreenmovement && !level.stoprightscreenmovement)
-                        level.MoveStuff(3, 0);
-                    else if (level.stopleftscreenmovement || level.stoprightscreenmovement)
-                        Move(-3, 0);
+                if (keyboardState.IsKeyDown(Constant.RIGHT))
+                    MoveInWorld(3, 0, level);
+                else if (keyboardState.IsKeyDown(Constant.LEFT))
+                    MoveInWorld(-3, 0, level);
 
-                }
             }
         }
 
@@ -350,6 +340,39 @@ namespace Project_Rioman
         {
             location.X += x;
             location.Y += y;
+        }
+
+        public void MoveInWorld(int x, int y, Level level)
+        {
+            if (x < 0 && !stopLeftMovement)
+            {
+                if (!level.stopRightScreenMovement)
+                    level.MoveStuff(-x, 0);
+                else
+                    Move(x, 0);
+            }
+            else if(x > 0 && !stopRightMovement)
+            {
+                if (!level.stopLeftScreenMovement)
+                    level.MoveStuff(-x, 0);
+                else
+                    Move(x, 0);
+            }
+
+            if (y < 0)
+            {
+                if (!level.stopUpScreenMovement)
+                    level.MoveStuff(0, -y);
+                else
+                    Move(0, y);
+            }
+            else
+            {
+                if (!level.stopDownScreenMovement)
+                    level.MoveStuff(0, -y);
+                else
+                    Move(0, y);
+            }
         }
 
         public void MoveToX(int x)

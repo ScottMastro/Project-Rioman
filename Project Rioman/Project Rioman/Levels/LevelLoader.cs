@@ -13,7 +13,7 @@ namespace Project_Rioman
         Dictionary<string, int> letters = new Dictionary<string, int>();
 
         private Color backgroundColour;
-        private Texture2D[] tileSprites = new Texture2D[322];
+        private Texture2D[] tileSprites = new Texture2D[332];
         private int width;
         private int height;
         private int[,] tilePos;

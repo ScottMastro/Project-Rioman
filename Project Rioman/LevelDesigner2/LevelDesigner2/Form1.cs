@@ -36,6 +36,8 @@ namespace WindowsFormsApplication1
         const int HEIGHT = 16;
 
         bool mouseDown;
+        bool shiftDown;
+
         Point mouseDownPos;
 
         Image[] BunnyMan;
@@ -137,6 +139,10 @@ namespace WindowsFormsApplication1
 
                 DrawMouseLocation();
 
+
+                if (shiftDown)
+                    DrawRectangles();
+
             }
         }
 
@@ -172,8 +178,70 @@ namespace WindowsFormsApplication1
 
                 previousMouse = mouse;
                 previousTiles = tile;
+
+                if (shiftDown)
+                    DrawRectangles();
             }
         }
+
+        private void DrawRectangles()
+        {
+            for (int x = 0; x <= width - 1; x++)
+                for (int y = 0; y <= height - 1; y++)
+                {
+                    if (tile[x, y] == 322)
+                    {
+                        int x2 = 0, y2 = 0;
+
+                        int counter = x;
+                        while(counter <= width)
+                        {
+                            if (tile[counter, y] == 323)
+                                x2 = counter;
+                            counter++;
+                        }
+
+                        counter = y;
+                        while (counter <= height)
+                        {
+                            if (tile[x, counter] == 325)
+                                y2 = counter;
+                            counter++;
+                        }
+
+                        g.DrawRectangle(new Pen(Brushes.Red, 3), new Rectangle((x+1) * WIDTH, (y+1) * HEIGHT,
+                            (x2 - x - 1) * WIDTH, (y2 - y - 1) * HEIGHT));
+
+                    }
+
+                    if (tile[x, y] == 326)
+                    {
+                        int x2 = 0, y2 = 0;
+
+                        int counter = x;
+                        while (counter < width)
+                        {
+                            if (tile[counter, y] == 327)
+                                x2 = counter;
+                            counter++;
+                        }
+
+                        counter = y;
+                        while (counter < height)
+                        {
+                            if (tile[x, counter] == 329)
+                                y2 = counter;
+                            counter++;
+                        }
+
+                        g.DrawRectangle(new Pen(Brushes.Green, 3), new Rectangle((x + 1) * WIDTH, (y + 1) * HEIGHT,
+                            (x2 - x - 1) * WIDTH, (y2 - y - 1) * HEIGHT));
+
+                    }
+
+                }
+        }
+
 
         private void DrawSquare(int x, int y)
         {
@@ -343,6 +411,7 @@ namespace WindowsFormsApplication1
                 }
             }
             picactivetile.Image = tle;
+            numLabel.Text = activetile.ToString();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -372,6 +441,24 @@ namespace WindowsFormsApplication1
                     MessageBox.Show(undoTilesets.Count.ToString() + " " + redoTilesets.Count.ToString());
                 }
 
+                if (e.KeyCode == Keys.ShiftKey || e.KeyCode == Keys.Shift)
+                {
+                    if(!shiftDown)
+                        FullRefreshLevel();
+
+                    shiftDown = true;
+                }
+
+            }
+
+        }
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.ShiftKey || e.KeyCode == Keys.Shift)
+            {
+                shiftDown = false;
+                FullRefreshLevel();
             }
         }
 
@@ -930,6 +1017,16 @@ namespace WindowsFormsApplication1
                 pictureBox2.Image = Scroller[2];
                 pictureBox3.Image = Scroller[3];
                 pictureBox4.Image = Scroller[4];
+                pictureBox5.Image = Scroller[5];
+                pictureBox6.Image = Scroller[6];
+                pictureBox7.Image = Scroller[7];
+                pictureBox8.Image = Scroller[8];
+                pictureBox9.Image = Scroller[9];
+                pictureBox10.Image = Scroller[10];
+                pictureBox11.Image = Scroller[11];
+                pictureBox12.Image = Scroller[12];
+                pictureBox13.Image = Scroller[13];
+                pictureBox14.Image = Scroller[14];
             }
 
         }
@@ -954,7 +1051,7 @@ namespace WindowsFormsApplication1
             Mushie = new Image[44];
             Characters = new Image[14];
             Enemies = new Image[22];
-            Scroller = new Image[5];
+            Scroller = new Image[15];
             Other = new Image[30];
 
             for (int i = 1; i <= 38; i++)
@@ -1092,7 +1189,7 @@ namespace WindowsFormsApplication1
 
             }
 
-            for (int i = 1; i <= 4; i++)
+            for (int i = 1; i <= 14; i++)
             {
                 counter++;
 

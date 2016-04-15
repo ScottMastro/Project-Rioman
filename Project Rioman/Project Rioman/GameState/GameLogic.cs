@@ -80,7 +80,7 @@ namespace Project_Rioman
                     currentLevel.lifechange = 0;
                 }
 
-                if (!currentLevel.stoprightscreenmovement && !currentLevel.stopleftscreenmovement)
+                if (!currentLevel.stopRightScreenMovement && !currentLevel.stopLeftScreenMovement)
                     currentLevel.CenterRioman(viewportRect, player);
             }
             else if (Health.HealthIncreasing())
@@ -148,16 +148,16 @@ namespace Project_Rioman
 
         private void BackwardScroll()
         {
-            if (currentLevel.stoprightscreenmovement)
+            if (currentLevel.stopRightScreenMovement)
             {
                 if (player.Location.X < viewportRect.Width / 2)
-                    currentLevel.stoprightscreenmovement = false;
+                    currentLevel.stopRightScreenMovement = false;
             }
 
-            if (currentLevel.stopleftscreenmovement)
+            if (currentLevel.stopLeftScreenMovement)
             {
                 if (player.Location.X > viewportRect.Width / 2)
-                     currentLevel.stopleftscreenmovement = false;
+                     currentLevel.stopLeftScreenMovement = false;
             }
         }
 

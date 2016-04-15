@@ -76,7 +76,14 @@ namespace Project_Rioman
         public static int HELLICOPTOR = 315;
         public static int P1H8R = 316;
         public static int MACKS = 317;
-        
+
+        public static int TL_RECT = 322;
+        public static int TR_RECT = 323;
+        public static int BL_RECT = 325;
+
+        public static int TL_LEVEL_RECT = 326;
+        public static int TR_LEVEL_RECT = 327;
+        public static int BL_LEVEL_RECT = 329;
 
         public static int TileNumberToType(int tileNumber)
         {
@@ -100,7 +107,7 @@ namespace Project_Rioman
                 type = 4;
             if (tileNumber == 106)
                 type = 5;
-            if (tileNumber >= 318 && tileNumber <= 321)
+            if (tileNumber >= 318 && tileNumber <= 331)
                 type = 6;
 
             return type;

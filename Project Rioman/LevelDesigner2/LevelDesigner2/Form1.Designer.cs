@@ -112,6 +112,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.refresher = new System.Windows.Forms.Timer(this.components);
             this.panelpanel = new System.Windows.Forms.Panel();
+            this.numLabel = new System.Windows.Forms.Label();
             this.panel = new WindowsFormsApplication1.DoubleBufferedPanel();
             this.menu.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -389,6 +390,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox1.Controls.Add(this.numLabel);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.picactivetile);
             this.groupBox1.Controls.Add(this.pictureBox26);
@@ -457,7 +459,7 @@
             // 
             // picactivetile
             // 
-            this.picactivetile.Location = new System.Drawing.Point(28, 32);
+            this.picactivetile.Location = new System.Drawing.Point(50, 32);
             this.picactivetile.Name = "picactivetile";
             this.picactivetile.Size = new System.Drawing.Size(16, 16);
             this.picactivetile.TabIndex = 50;
@@ -923,6 +925,15 @@
             this.panelpanel.TabIndex = 3;
             this.panelpanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.panelpanel_Scroll);
             // 
+            // numLabel
+            // 
+            this.numLabel.AutoSize = true;
+            this.numLabel.Location = new System.Drawing.Point(9, 32);
+            this.numLabel.Name = "numLabel";
+            this.numLabel.Size = new System.Drawing.Size(13, 13);
+            this.numLabel.TabIndex = 1;
+            this.numLabel.Text = "0";
+            // 
             // panel
             // 
             this.panel.AutoSize = true;
@@ -950,6 +961,7 @@
             this.ResizeEnd += new System.EventHandler(this.Form1_ResizeEnd);
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
@@ -1096,6 +1108,7 @@
         private System.Windows.Forms.Panel panelpanel;
         private DoubleBufferedPanel panel;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
+        private System.Windows.Forms.Label numLabel;
     }
 }
 
