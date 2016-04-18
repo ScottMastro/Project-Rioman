@@ -14,7 +14,7 @@ namespace Project_Rioman
 
         private const float PI = 3.14159f;
 
-        public DeuxKama(int type, int r, int c) : base(type, r, c)
+        public DeuxKama(int type, int x, int y) : base(type, x, y)
         {
             isInvincible = true;
             sprite = EnemyAttributes.GetSprites(type)[0];

@@ -18,7 +18,7 @@ namespace Project_Rioman
         private bool stopLeftMovement;
         private bool stopRightMovement;
 
-        public Hellicoptor(int type, int r, int c) : base(type, r, c)
+        public Hellicoptor(int type, int x, int y) : base(type, x, y)
         {
             sprite = EnemyAttributes.GetSprites(type)[0];
 

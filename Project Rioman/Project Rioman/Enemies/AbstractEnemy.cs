@@ -38,16 +38,13 @@ namespace Project_Rioman
         protected int touchDamage;
 
 
-        public AbstractEnemy(int type, int r, int c)
+        public AbstractEnemy(int type, int x, int y)
         {
             debugSquare = EnemyAttributes.GetSprites(-1)[0];
 
             this.type = type;
 
-            int y = (r+1) * Constant.TILE_SIZE;
-            int x = c * Constant.TILE_SIZE;
-
-            originalLocation = new Rectangle(x, y, 0, 0);
+            originalLocation = new Rectangle(x * Constant.TILE_SIZE, (y + 1) * Constant.TILE_SIZE, 0, 0);
 
             maxHealth = EnemyAttributes.GetMaxHealthAttribute(type);
             touchDamage = EnemyAttributes.GetDamageAttribute(type);

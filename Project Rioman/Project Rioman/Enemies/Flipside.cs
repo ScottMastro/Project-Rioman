@@ -20,7 +20,7 @@ namespace Project_Rioman
         private const float PI = (float)Math.PI;
         private Rectangle nullRect = new Rectangle(0, 0, 0, 0);
 
-        public Flipside(int type, int r, int c) : base(type, r, c)
+        public Flipside(int type, int x, int y) : base(type, x, y)
         {
             sprite = EnemyAttributes.GetSprites(type)[0];
 

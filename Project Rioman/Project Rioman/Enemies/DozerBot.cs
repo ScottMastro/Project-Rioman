@@ -43,7 +43,7 @@ namespace Project_Rioman
         private const int BULLET_SPEED = 12;
 
 
-        public DozerBot(int type, int r, int c) : base(type, r, c)
+        public DozerBot(int type, int x, int y) : base(type, x, y)
         {
             Texture2D[] sprites = EnemyAttributes.GetSprites(type);
             sprite = sprites[0];
