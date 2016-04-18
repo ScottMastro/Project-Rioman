@@ -55,6 +55,7 @@ namespace Project_Rioman
             EnemyAttributes.LoadContent(Content);
             PickupAttributes.LoadContent(Content);
 
+            DebugDraw.LoadContent(Content);
             Audio.LoadAudio(Content);
             Save.LoadContent(Content);
             Opening.LoadContent(Content);

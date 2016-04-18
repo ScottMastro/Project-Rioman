@@ -100,6 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebugDraw.cs" />
     <Compile Include="Pickups\AbstractPickup.cs" />
     <Compile Include="Enemies\AbstractEnemy.cs" />
     <Compile Include="Animation.cs" />
