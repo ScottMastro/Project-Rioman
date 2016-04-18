@@ -122,8 +122,11 @@ namespace Project_Rioman
 
                 if (index >= 0)
                 {
-                    state.Shoot();
-                    bullets[index] = Weapons.CreateBullet(location.X, location.Y, FacingRight());
+                    AbstractBullet newBullet = Weapons.CreateBullet(location.X, location.Y, FacingRight());
+                    bullets[index] = newBullet;
+
+                    if (newBullet != null)
+                        state.Shoot();
 
                 }
             }
@@ -248,7 +251,7 @@ namespace Project_Rioman
         {
             if (!IsInvincible())
             {
-                Health.AdjustHealth(-damage);
+                StatusBar.AdjustHealth(-damage);
                 state.Hit();
 
                 if (state.Hit())

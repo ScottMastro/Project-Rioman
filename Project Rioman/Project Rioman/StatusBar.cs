@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 namespace Project_Rioman
 {
-    static class Health
+    static class StatusBar
     {
-        private static Texture2D healthbar;
+        private static Texture2D bar;
         private static Texture2D healthpoint;
         private static int health;
         private static double increasetime;
@@ -18,27 +18,36 @@ namespace Project_Rioman
 
         public static void LoadHealth(ContentManager content)
         {
-            healthbar = content.Load<Texture2D>("Video\\pause\\bar");
+            bar = content.Load<Texture2D>("Video\\pause\\bar");
             healthpoint = content.Load<Texture2D>("Video\\pause\\health");
             health = Constant.MAX_HEALTH;
         }
 
-        public static void DrawHealth(SpriteBatch spriteBatch)
+        public static void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(healthbar, new Vector2(50, 52), Color.White);
+            spriteBatch.Draw(bar, new Vector2(50, 52), Color.White);
 
             for (int i = 1; i <= health; i++)
-                spriteBatch.Draw(healthpoint, new Vector2(50, 50 + healthbar.Height -
+                spriteBatch.Draw(healthpoint, new Vector2(50, 50 + bar.Height -
                     (healthpoint.Height - 2) * i), Color.White);
 
             if (drawBossHealth)
             {
-                spriteBatch.Draw(healthbar, new Vector2(75, 52), Color.White);
+                spriteBatch.Draw(bar, new Vector2(75, 52), Color.White);
 
                 for (int i = 1; i <= bossHealth; i++)
-                    spriteBatch.Draw(healthpoint, new Vector2(75, 50 + healthbar.Height -
+                    spriteBatch.Draw(healthpoint, new Vector2(75, 50 + bar.Height -
                         (healthpoint.Height - 2) * i), bosshealthcolour);
             }
+
+
+            spriteBatch.Draw(bar, new Vector2(72, 52), Color.White);
+
+            Texture2D ammoPoint = Weapons.GetAmmoPoint();
+
+            for (int i = 1; i <= Weapons.GetAmmo(); i++)
+                spriteBatch.Draw(ammoPoint, new Rectangle(88, 50 + bar.Height - (ammoPoint.Width - 2) * i, ammoPoint.Width, ammoPoint.Height), 
+                    new Rectangle(0,0, ammoPoint.Width, ammoPoint.Height), Color.White, MathHelper.PiOver2, new Vector2(), SpriteEffects.None, 0);
         }
 
         public static void UpdateHealth(double deltaTime)

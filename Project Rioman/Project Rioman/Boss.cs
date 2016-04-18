@@ -196,7 +196,7 @@ namespace Project_Rioman
             if (intro == 1)
                 Fall(elapsedtime, false, 0);
             else if (intro == 2)
-                intro = Health.BossHealth();
+                intro = StatusBar.BossHealth();
             else if (!isdead)
             {
                 if (!isexploding)
@@ -238,7 +238,7 @@ namespace Project_Rioman
             {
                 if (!rioman.IsInvincible() && rioman.Location.Intersects(collisionrect))
                 {
-                    Health.AdjustHealth(-coldamage);
+                    StatusBar.AdjustHealth(-coldamage);
                     //rioman.Hit();
 
                     if (rioman.Location.Left < collisionrect.Left)
@@ -254,9 +254,9 @@ namespace Project_Rioman
                         bulletalive[i] = false;
 
                         if (attacktype[i] == 1)
-                            Health.AdjustHealth(-atk1damage);
+                            StatusBar.AdjustHealth(-atk1damage);
                         else if (attacktype[i] == 2)
-                            Health.AdjustHealth(-atk2damage);
+                            StatusBar.AdjustHealth(-atk2damage);
 
                         //rioman.Hit();
 
@@ -279,7 +279,7 @@ namespace Project_Rioman
                             if (!canthurt)
                             {
                                 hit = true;
-                                Health.AdjustBossHealth(-blt.TakeDamage("TODO"));
+                                StatusBar.AdjustBossHealth(-blt.TakeDamage("TODO"));
                             }
                         }
                     }
@@ -290,7 +290,7 @@ namespace Project_Rioman
                             if (!canthurt)
                             {
                                 hit = true;
-                                Health.AdjustBossHealth(-blt.TakeDamage("TODO"));
+                                StatusBar.AdjustBossHealth(-blt.TakeDamage("TODO"));
                             }
                         }
                     }
@@ -424,12 +424,12 @@ namespace Project_Rioman
                 {
                     isalive = true;
                     intro = 1;
-                    Health.BossHealth(healthcolour);
+                    StatusBar.BossHealth(healthcolour);
                 }
             }
             else if (isalive)
             {
-                if (Health.GetBossHealth() <= 0)
+                if (StatusBar.GetBossHealth() <= 0)
                 {
                     for (int i = 0; i <= 19; i++)
                         bulletalive[i] = false;

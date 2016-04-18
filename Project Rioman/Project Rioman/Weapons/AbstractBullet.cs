@@ -30,6 +30,8 @@ namespace Project_Rioman
 
             isAlive = true;
             hitList = new List<string>();
+
+            Audio.PlayShoot();
         }
 
         public void Update(double deltaTime, Viewport viewport)

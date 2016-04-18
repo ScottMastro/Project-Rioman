@@ -540,7 +540,7 @@ namespace Project_Rioman
 
         public void CheckDeath(Viewport viewportrect, Rioman player)
         {
-            if (player.Location.Y > viewportrect.Height + 100 || Health.GetHealth() <= 0)
+            if (player.Location.Y > viewportrect.Height + 100 || StatusBar.GetHealth() <= 0)
             {
                 go = false;
                 lifechange = -1;

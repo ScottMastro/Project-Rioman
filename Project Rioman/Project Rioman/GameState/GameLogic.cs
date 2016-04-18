@@ -22,7 +22,7 @@ namespace Project_Rioman
         public void LoadContent(ContentManager content, Viewport viewport)
         {
             player = new Rioman(content);
-            Health.LoadHealth(content);
+            StatusBar.LoadHealth(content);
 
             LevelLoader levelLoader = new LevelLoader();
 
@@ -42,7 +42,7 @@ namespace Project_Rioman
                 ChangeLevel();
 
             if (currentLevel.go && !currentLevel.IsBusy() && !GameState.IsPaused()
-                   && !Health.HealthIncreasing() && currentLevel.bosses[currentLevel.activelevel].intro >= 3)
+                   && !StatusBar.HealthIncreasing() && currentLevel.bosses[currentLevel.activelevel].intro >= 3)
             {
 
                 //update player before level
@@ -74,8 +74,8 @@ namespace Project_Rioman
 
                 currentLevel.CenterRioman(viewport, player);
             }
-            else if (Health.HealthIncreasing())
-                Health.UpdateHealth(gameTime.ElapsedGameTime.TotalSeconds);
+            else if (StatusBar.HealthIncreasing())
+                StatusBar.UpdateHealth(gameTime.ElapsedGameTime.TotalSeconds);
             else if (currentLevel.IsBusy())
                 currentLevel.BusyUpdate(player, viewport);
             else if (GameState.IsPaused())
@@ -126,7 +126,7 @@ namespace Project_Rioman
                     for (int i = 0; i <= 9; i++)
                         currentLevel.pickups[i].Draw(spriteBatch);
 
-                    Health.DrawHealth(spriteBatch);
+                    StatusBar.Draw(spriteBatch);
                 }
 
                 if (GameState.IsPaused())
@@ -145,8 +145,8 @@ namespace Project_Rioman
 
             player.Reset();
 
-            Health.SetHealth(27);
-            Health.SetDrawBossHealth(false);
+            StatusBar.SetHealth(27);
+            StatusBar.SetDrawBossHealth(false);
             player.StartWarp();
 
         }

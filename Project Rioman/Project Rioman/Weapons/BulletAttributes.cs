@@ -7,7 +7,7 @@ namespace Project_Rioman
 {
     public static class BulletAttributes
     {
-
+        private static Dictionary<int, int> ammoUse;
         private static Dictionary<int, int> speed;
         private static Dictionary<int, int> damage;
         private static Dictionary<int, Texture2D[]> sprites;
@@ -15,6 +15,7 @@ namespace Project_Rioman
 
         public static void LoadContent(ContentManager content)
         {
+            AmmoUseInit();
             SpeedInit();
             DamageInit();
             SpritesInit(content);
@@ -57,7 +58,7 @@ namespace Project_Rioman
         //    damage.Add(Constant.AURORABULLET, 0);
          //   damage.Add(Constant.LURKERBULLET, 2);
             damage.Add(Constant.INFERNOBULLET, 4);
-         //   damage.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
+         //   damage.Add(Constant.DUELBULLET, 0);
          //   damage.Add(Constant.POSTERBULLET, 6);
          //   damage.Add(Constant.TOXICBULLET, 5);
          //   damage.Add(Constant.CLOVERBULLET, 3);
@@ -82,6 +83,23 @@ namespace Project_Rioman
 
         }
 
+        private static void AmmoUseInit()
+        {
+            ammoUse = new Dictionary<int, int>();
+
+            ammoUse.Add(Constant.RIOBULLET, 0);
+            //    ammoUse.Add(Constant.GEOBULLET, 4);
+            //    ammoUse.Add(Constant.AURORABULLET, 0);
+            //   ammoUse.Add(Constant.LURKERBULLET, 2);
+            ammoUse.Add(Constant.INFERNOBULLET, 2);
+            //   ammoUse.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
+            //   ammoUse.Add(Constant.POSTERBULLET, 6);
+            //   ammoUse.Add(Constant.TOXICBULLET, 5);
+            //   ammoUse.Add(Constant.CLOVERBULLET, 3);
+            //   ammoUse.Add(Constant.BUNNYBULLET, 4);
+
+        }
+
         public static int GetDamageAttribute(int type)
         {
             int value;
@@ -98,6 +116,13 @@ namespace Project_Rioman
             return value;
         }
 
+        public static int GetAmmoUse(int type)
+        {
+            int value;
+            ammoUse.TryGetValue(type, out value);
+
+            return value;
+        }
 
         public static Texture2D[] GetSprites(int type)
         {

@@ -20,7 +20,6 @@ namespace Project_Rioman
 
             location.Y = y + 22;
 
-            Audio.PlayShoot();
         }
 
         public override void Draw(SpriteBatch spriteBatch)

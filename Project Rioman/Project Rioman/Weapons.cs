@@ -9,7 +9,7 @@ namespace Project_Rioman
     static class Weapons
     {
         private static Texture2D[] weapon = new Texture2D[12];
-        private static Texture2D[] power = new Texture2D[12];
+        private static Texture2D[] weaponPoint = new Texture2D[12];
         private static bool[] weaponHave = new bool[12];
         private static int[] weaponAmmo = new int[12];
 
@@ -45,7 +45,7 @@ namespace Project_Rioman
             for (int i = 0; i <= 11; i++)
             {
                 weapon[i] = content.Load<Texture2D>("Video\\pause\\weapon" + i.ToString());
-                power[i] = content.Load<Texture2D>("Video\\pause\\weapon" + i.ToString() + "ammo");
+                weaponPoint[i] = content.Load<Texture2D>("Video\\pause\\weapon" + i.ToString() + "ammo");
             }
 
             pauseBackground = content.Load<Texture2D>("Video\\pause\\PauseMenuBackground");
@@ -69,10 +69,10 @@ namespace Project_Rioman
                     {
                         spriteBatch.Draw(weapon[i], new Vector2(70, counter * 17 + 67), Color.White);
 
-                        spriteBatch.Draw(ammoMeter, new Vector2(98 + power[i].Width, (counter - 1) * 17 + 92), Color.White);
+                        spriteBatch.Draw(ammoMeter, new Vector2(98 + weaponPoint[i].Width, (counter - 1) * 17 + 92), Color.White);
 
                         for (int j = 1; j <= weaponAmmo[i]; j++)
-                            spriteBatch.Draw(power[i], new Vector2(100 + (power[i].Width - 2) * j,
+                            spriteBatch.Draw(weaponPoint[i], new Vector2(100 + (weaponPoint[i].Width - 2) * j,
                                 (counter - 1) * 17 + 92), Color.White);
 
                         if (activeWeapon == i)
@@ -82,10 +82,10 @@ namespace Project_Rioman
                     {
                         spriteBatch.Draw(weapon[i], new Vector2(255, (counter - 1) * 17 + 67), Color.White);
 
-                        spriteBatch.Draw(ammoMeter, new Vector2(283 + power[i].Width, (counter - 1) * 17 + 75), Color.White);
+                        spriteBatch.Draw(ammoMeter, new Vector2(283 + weaponPoint[i].Width, (counter - 1) * 17 + 75), Color.White);
 
                         for (int j = 1; j <= weaponAmmo[i]; j++)
-                            spriteBatch.Draw(power[i], new Vector2(285 + (power[i].Width - 2) * j,
+                            spriteBatch.Draw(weaponPoint[i], new Vector2(285 + (weaponPoint[i].Width - 2) * j,
                                 (counter - 1) * 17 + 75), Color.White);
 
                         if (activeWeapon == i)
@@ -109,13 +109,21 @@ namespace Project_Rioman
 
         public static AbstractBullet CreateBullet(int x, int y, bool facingRight)
         {
+
+            if (weaponAmmo[activeWeapon] < BulletAttributes.GetAmmoUse(activeWeapon))
+                return null;
+
             if (activeWeapon == Constant.RIOBULLET)
                 return new RioBullet(x, y, facingRight);
             else if (activeWeapon == Constant.INFERNOBULLET)
+            {
+                weaponAmmo[activeWeapon] = weaponAmmo[activeWeapon] - BulletAttributes.GetAmmoUse(activeWeapon);
                 return new InfernoBullet(x, y, facingRight);
+            }
 
             return null;
         }
+
 
 
         public static void ChangeActiveWeapon(KeyboardState keyboardstate, KeyboardState previouskeyboardstate)
@@ -158,5 +166,19 @@ namespace Project_Rioman
             if (activeWeapon != tempactive)
                 Audio.PlayPauseSelection();
         }
+
+        public static Texture2D GetAmmoPoint()
+        {
+            return weaponPoint[activeWeapon];
+        }
+        public static int GetAmmo()
+        {
+            return weaponAmmo[activeWeapon];
+        }
+        public static int GetActiveWeapon()
+        {
+            return activeWeapon;
+        }
+
     }
 }

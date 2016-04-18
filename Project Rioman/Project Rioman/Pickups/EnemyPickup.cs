@@ -43,9 +43,9 @@ namespace Project_Rioman
             if (isAlive)
             {
                 if (type == Constant.SMALL_HEALTH)
-                    Health.IncreaseHealth(6);
+                    StatusBar.IncreaseHealth(6);
                 else if (type == Constant.BIG_HEALTH)
-                    Health.IncreaseHealth(27);
+                    StatusBar.IncreaseHealth(27);
                 else if (type == Constant.SMALL_AMM0) { }
                 //TODO
                 else if (type == Constant.BIG_AMMO) { }

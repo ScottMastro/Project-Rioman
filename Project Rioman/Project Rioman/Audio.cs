@@ -28,6 +28,7 @@ namespace Project_Rioman
         public static SoundEffect shoot1;
         public static SoundEffect shoot2;
         public static SoundEffect shoot3;
+        public static SoundEffect infernoBullet;
         public static SoundEffect killEnemy;
         public static SoundEffect killEnemy2;
         public static SoundEffect heal;
@@ -63,6 +64,7 @@ namespace Project_Rioman
             shoot1 = content.Load<SoundEffect>("Audio\\soundeffects\\shoot");
             shoot2 = content.Load<SoundEffect>("Audio\\soundeffects\\shoot2");
             shoot3 = content.Load<SoundEffect>("Audio\\soundeffects\\shoot3");
+            infernoBullet = content.Load<SoundEffect>("Audio\\soundeffects\\infernobullet");
             killEnemy = content.Load<SoundEffect>("Audio\\soundeffects\\killenemy");
             killEnemy2 = content.Load<SoundEffect>("Audio\\soundeffects\\killenemy2");
             heal = content.Load<SoundEffect>("Audio\\soundeffects\\heal");
@@ -136,7 +138,12 @@ namespace Project_Rioman
 
         public static void PlayShoot()
         {
-            shoot1.Play(Constant.VOLUME, 0f, 0f);
+
+            if(Weapons.GetActiveWeapon() == Constant.INFERNOBULLET)
+                infernoBullet.Play(Constant.VOLUME, 0f, 0f);
+            
+            else
+                shoot1.Play(Constant.VOLUME, 0f, 0f);
         }
 
         public static void PlayEnemyShoot1()

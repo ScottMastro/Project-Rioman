@@ -133,9 +133,9 @@ namespace Project_Rioman
                         //add life
                     }
                     else if (type == 14)
-                        Health.IncreaseHealth(10);
+                        StatusBar.IncreaseHealth(10);
                     else if (type == 15)
-                        Health.IncreaseHealth(4);
+                        StatusBar.IncreaseHealth(4);
 
                     Kill(false, viewportrect);
                 }

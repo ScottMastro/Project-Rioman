@@ -100,7 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Rioman\BulletAttributes.cs" />
+    <Compile Include="Weapons\BulletAttributes.cs" />
     <Compile Include="Weapons\AbstractBullet.cs" />
     <Compile Include="DebugDraw.cs" />
     <Compile Include="Pickups\AbstractPickup.cs" />
@@ -132,7 +132,7 @@
     <Compile Include="Enemies\Macebot.cs" />
     <Compile Include="Enemies\Macks.cs" />
     <Compile Include="Enemies\Neolucky.cs" />
-    <Compile Include="Health.cs" />
+    <Compile Include="StatusBar.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\LevelLoader.cs" />
     <Compile Include="Pickups\OldPickup.cs" />
