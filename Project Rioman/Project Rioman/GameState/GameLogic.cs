@@ -16,7 +16,7 @@ namespace Project_Rioman
         private Level currentLevel;
         private Level[] levels = new Level[9];
 
-        Viewport viewportRect;     
+        Viewport viewport;     
 
         KeyboardState prevKeyboardState = new KeyboardState();
 
@@ -34,7 +34,7 @@ namespace Project_Rioman
             for (int i = 0; i <= 8; i++)
                 levels[i] = levelLoader.Load(i + 1, content);
 
-            viewportRect = viewport;
+            this.viewport = viewport;
         }
 
         public void Update(GameTime gameTime)
@@ -44,27 +44,24 @@ namespace Project_Rioman
             if (currentLevel == null || !currentLevel.go)
                 ChangeLevel();
 
-            if (currentLevel.go && !currentLevel.IsBusy() && !currentLevel.isScrolling && !GameState.IsPaused()
+            if (currentLevel.go && !currentLevel.IsBusy() && !GameState.IsPaused()
                    && !Health.HealthIncreasing() && currentLevel.bosses[currentLevel.activelevel].intro >= 3)
             {
 
                 //updater player before level
-                player.Update(gameTime.ElapsedGameTime.TotalSeconds, currentLevel, viewportRect);
+                player.Update(gameTime.ElapsedGameTime.TotalSeconds, currentLevel, viewport);
 
                 if (!player.IsWarping())
                 {
 
                     currentLevel.EnemyCollision(player.GetBullets(), player);
 
-                    currentLevel.UpdateEnemies(player, player.GetBullets(), gameTime.ElapsedGameTime.TotalSeconds, viewportRect);
+                    currentLevel.UpdateEnemies(player, player.GetBullets(), gameTime.ElapsedGameTime.TotalSeconds, viewport);
 
-                    currentLevel.Update(player, gameTime, viewportRect);
+                    currentLevel.Update(player, gameTime, viewport);
 
                 }
-                    bool selectionscreen = currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportRect, player);
-                
-                    BackwardScroll();
-
+                    bool selectionscreen = currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewport, player);
 
                     if (selectionscreen)
                 {
@@ -72,7 +69,7 @@ namespace Project_Rioman
                     GameState.SetState(Constant.SELECTION_SCREEN);
                 }
 
-                currentLevel.CheckDeath(viewportRect, player);
+                currentLevel.CheckDeath(viewport, player);
 
                 if (currentLevel.lifechange != 0)
                 {
@@ -80,25 +77,22 @@ namespace Project_Rioman
                     currentLevel.lifechange = 0;
                 }
 
-                if (!currentLevel.stopRightScreenMovement && !currentLevel.stopLeftScreenMovement)
-                    currentLevel.CenterRioman(viewportRect, player);
+                currentLevel.CenterRioman(viewport, player);
             }
             else if (Health.HealthIncreasing())
                 Health.UpdateHealth(gameTime.ElapsedGameTime.TotalSeconds);
             else if (currentLevel.IsBusy())
-                currentLevel.BusyUpdate();
-            else if (currentLevel.isScrolling)
-                currentLevel.Scroll(player, viewportRect);
+                currentLevel.BusyUpdate(player, viewport);
   //          else if (GameState.IsPaused())
       //          Weapons.ChangeActiveWeapon(keyboardState, prevKeyboardState);     //TODO: weapons
             else if (currentLevel.bosses[currentLevel.activelevel].intro < 3)
-                currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewportRect, player);
+                currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewport, player);
 
-            if (currentLevel.killbullets)
+            if (currentLevel.killBullets)
             {
                 player.KillBullets();
 
-                currentLevel.killbullets = false;
+                currentLevel.killBullets = false;
             }
 
             if (!currentLevel.IsBusy())
@@ -131,7 +125,7 @@ namespace Project_Rioman
                     currentLevel.DrawEnemies(spriteBatch);
                     currentLevel.DrawItems(spriteBatch);
 
-                    player.Draw(spriteBatch);
+                    player.Draw(spriteBatch, currentLevel.IsBusy());
 
 
                     for (int i = 0; i <= 9; i++)
@@ -146,25 +140,10 @@ namespace Project_Rioman
             
     }
 
-        private void BackwardScroll()
-        {
-            if (currentLevel.stopRightScreenMovement)
-            {
-                if (player.Location.X < viewportRect.Width / 2)
-                    currentLevel.stopRightScreenMovement = false;
-            }
-
-            if (currentLevel.stopLeftScreenMovement)
-            {
-                if (player.Location.X > viewportRect.Width / 2)
-                     currentLevel.stopLeftScreenMovement = false;
-            }
-        }
-
         private void ChangeLevel()
         {
             currentLevel = levels[GameState.GetLevel() - 1];
-            currentLevel.Play(viewportRect, player);
+            currentLevel.Play(viewport, player);
 
             currentLevel.TileFader();
             currentLevel.LadderForm();

@@ -26,10 +26,7 @@ namespace Project_Rioman
         public Boss[] bosses = new Boss[17];
         int numberOfEnemies;
 
-        public bool stopLeftScreenMovement;
-        public bool stopRightScreenMovement;
-        public bool stopUpScreenMovement;
-        public bool stopDownScreenMovement;
+
 
         int fadetiles;
         private int doorStopY;
@@ -37,48 +34,24 @@ namespace Project_Rioman
         private bool doorOpening;
         private bool closeDoor;
         private bool doorClosing;
-        public bool isScrolling;
-        public bool killbullets;
+        private bool isScrolling;
+        public bool killBullets;
 
-        private const int SCROLL_SPEED = 10;
         private const int DOOR_SPEED = 2;
 
-        int yscroll;
-        int xscroll;
-        public Rectangle scrollingRect;
+        int scrollSpeedY;
+        int scrollSpeedX;
+        private const int SCROLL_SPEED = 10;
 
-        private Rectangle levelRect;
+        private bool stopRightScreenMovement;
+        private bool stopLeftScreenMovement;
+        private bool preventCenteringLeft;
+        private bool preventCenteringRight;
 
         private Scroller[] scrollers;
 
-        struct Scroller
-        {
-            public Rectangle scrollRect;
-            public bool active;
-
-            public Scroller(Rectangle rect)
-            {
-                scrollRect = rect;
-                active = true;
-            }
-
-            public void Move(int x, int y)
-            {
-                scrollRect.X += x;
-                scrollRect.Y += y;
-            }
-
-            public bool Intersects(Rectangle intersect)
-            {
-                if (active)
-                    return scrollRect.Intersects(intersect);
-                return false;
-            }
-
-        }
-
-        int xscrollamount;
-        int yscrollamount;
+        private int scrollAmountX;
+        private int scrollAmountY;
 
         public int lifechange = 0;
 
@@ -103,14 +76,18 @@ namespace Project_Rioman
 
         }
 
-        public void Reset()
+        public void Reset() 
         {
             ResetTiles();
             ResetEnemies();
 
+            stopLeftScreenMovement = false;
+            stopRightScreenMovement = false;
+            preventCenteringLeft = false;
+            preventCenteringRight = false;
+
             items = new List<AbstractPickup>();
 
-            scrollingRect = new Rectangle();
             scrollers = MakeScroller();
 
             doorOpening = false;
@@ -139,14 +116,22 @@ namespace Project_Rioman
 
         }
 
+        public void BusyUpdate(Rioman player, Viewport viewport)
+        {
+            if (doorOpening)
+                OpenDoor();
+            if (doorClosing)
+                CloseDoor();
+            if (isScrolling)
+                Scroll(player, viewport);
+        }
+
         public void DrawItems(SpriteBatch spriteBatch)
         {
             foreach (AbstractPickup item in items)
             {
                 item.Draw(spriteBatch);
             }
-
-            spriteBatch.Draw(PickupAttributes.GetSprite(-1), scrollers[0].scrollRect, Color.White * 0.5f);
 
         }
 
@@ -166,13 +151,14 @@ namespace Project_Rioman
 
         public void CenterRioman(Viewport viewportrect, Rioman rioman)
         {
-            int middle = viewportrect.Width / 2;
+            if (!preventCenteringRight && !preventCenteringLeft)
+            {
+                int middle = viewportrect.Width / 2;
+                int xoffset = Convert.ToInt32(middle - rioman.Location.X);
 
-            int xoffset = Convert.ToInt32(middle - rioman.Location.X);
-
-            rioman.MoveToX(middle);
-
-            MoveStuff(xoffset, 0);
+                rioman.MoveToX(middle);
+                MoveStuff(xoffset, 0);
+            }
         }
 
         public void InteractWithLevel(Rioman rioman)
@@ -255,163 +241,14 @@ namespace Project_Rioman
                 rioman.BelowLadderTop();
         }
 
-        private Scroller[] MakeScroller()
-        {
-            Scroller[] s = new Scroller[100];
-            int counter = 0;
-
-            Rectangle scroll = new Rectangle();
-
-            for (int i = 0; i <= height; i++)
-            {
-                for (int j = 1; j <= width; j++)
-                {
-
-                    //if tile is a scroller
-                    if (tiles[i, j] != null && tiles[i, j].tile == Constant.TL_LEVEL_RECT)
-                        levelRect = ConstructScroller(i, j, Constant.TR_LEVEL_RECT, Constant.BL_LEVEL_RECT);
-                    else if (tiles[i, j] != null && tiles[i, j].tile == Constant.TL_LEVEL_RECT)
-                    {
-                        Rectangle rect = ConstructScroller(i, j, Constant.TR_RECT, Constant.BL_RECT);
-                        s[counter] = new Scroller(rect);
-
-                        counter++;
-
-                    }
-                }
-            }
-
-
-            if (counter == 0)
-                return new Scroller[1];
-            else
-                return new List<Scroller>(s).GetRange(0, counter).ToArray();
-        }
-
-        private Rectangle ConstructScroller(int i, int j, int topRight, int bottomLeft)
-        {
-            Rectangle returnRect = new Rectangle();
-            int x = 0;
-            int y = 0;
-
-            levelRect = new Rectangle();
-            returnRect.X = tiles[i, j].location.Right;
-            returnRect.Y = tiles[i, j].location.Bottom;
-
-            //find horizontal scroller tile paired with this one
-            while (true)
-            {
-                x++;
-
-                if (tiles[i, j + x] != null && tiles[i, j + x].tile == topRight)
-                {
-                    returnRect.Width = tiles[i, j + x].location.X - tiles[i, j].location.Right;
-                    break;
-                }
-            }
-
-            //find vertical scroller tile paired with this one
-            while (true)
-            {
-                y++;
-
-                if (tiles[i + y, j + x] != null && tiles[i + y, j + x].tile == bottomLeft)
-                {
-                    returnRect.Height = tiles[i + y, j + x].location.Y - tiles[i, j + x].location.Bottom;
-                    break;
-                }
-            }
-
-            return returnRect;
-        }
-
-
-        private void UpdateScrollers(Rioman rioman, Viewport viewportrect)
-        {
-            for (int i = 0; i <= scrollers.Length - 1; i++)
-            {
-
-                if (scrollers[i].Intersects(rioman.Hitbox))
-                {
-      //              if (scrollers[i].direction == "up")
-        //                StartScroll(0, 1, scrollers[i], viewportrect);
-          //          else if (scrollers[i].direction == "down")
-            //            StartScroll(0, -1, scrollers[i], viewportrect);
-              //      else if (scrollers[i].direction == "right")
-                //        StartScroll(-1, 0, scrollers[i], viewportrect);
-                  //  else if (scrollers[i].direction == "left")
-                    //    StartScroll(1, 0, scrollers[i], viewportrect);
-
-                //    scrollers[i].active = false;
-
-                    if (scrollers[i].scrollRect.X < viewportrect.Width)
-                        stopRightScreenMovement = true;
-                    else if (scrollers[i].scrollRect.X > 0)
-                        stopLeftScreenMovement = true;
-                }
-            }
-
-
-            if (scrollingRect.Width > 0)
-            {
-                if (!(scrollingRect.X < 0))
-                    stopLeftScreenMovement = true;
-                if (!(scrollingRect.Right > viewportrect.Width))
-                    stopRightScreenMovement = true;
-            }
-
-        }
-
-
-        private void StartScroll(int xmagnitude, int ymagnitude, Scroller scroller, Viewport viewportrect)
-        {
-            scrollingRect = scroller.scrollRect;
-            xscrollamount = viewportrect.Width - 40;
-            yscrollamount = viewportrect.Height - 32;
-            isScrolling = true;
-            xscroll = xmagnitude * SCROLL_SPEED;
-            yscroll = ymagnitude * SCROLL_SPEED;
-        }
-
-
-        public void Scroll(Rioman rioman, Viewport viewportrect)
-        {
-            MoveStuff(xscroll, yscroll);
-            killbullets = true;
-            xscrollamount -= Math.Abs(xscroll);
-            yscrollamount -= Math.Abs(yscroll);
-            rioman.Move(xscroll, yscroll);
-
-            if (xscroll != 0)
-                rioman.Move(-(xscroll / Math.Abs(xscroll)), 0);
-            if (yscroll != 0)
-                rioman.Move(0, -(yscroll / Math.Abs(yscroll)));
-
-            if (xscrollamount <= 0 || yscrollamount <= 0)
-            {
-
-                if (closeDoor)
-                    doorClosing = true;
-                isScrolling = false;
-                stopLeftScreenMovement = true;
-                stopRightScreenMovement = true;
-                scrollingRect.X -= 32;
-            }
-
-        }
+       
 
         public bool IsBusy()
         {
-            return doorOpening || doorClosing;
+            return doorOpening || doorClosing || isScrolling;
         }
 
-        public void BusyUpdate()
-        {
-            if (doorOpening)
-                OpenDoor();
-            if (doorClosing)
-                CloseDoor();
-        }
+
 
 
         private void StartOpenDoor(Tile tle)
@@ -550,8 +387,6 @@ namespace Project_Rioman
         public void Update(Rioman rioman, GameTime gameTime, Viewport viewport)
         {
             double deltaTime = gameTime.ElapsedGameTime.TotalSeconds;
-            stopLeftScreenMovement = false;
-            stopRightScreenMovement = false;
             bool[] enemycollision = new bool[numberOfEnemies + 1];
             bool bossfalling = true;
 
@@ -706,6 +541,7 @@ namespace Project_Rioman
 
         public void MoveStuff(int x, int y)
         {
+
             foreach (Tile tle in tiles)
             {
                 if (tle != null)
@@ -733,9 +569,6 @@ namespace Project_Rioman
                 aenemy[i].Move(x, y);
 
             bosses[activelevel].Move(x, y);
-
-            scrollingRect.X += x;
-            scrollingRect.Y += y;
         }
 
 
@@ -780,7 +613,7 @@ namespace Project_Rioman
                 {
                     if (Math.Abs(riolocation.X - tle.location.Center.X) <= 16 && !okay)
                     {
-                        if (!stopRightScreenMovement && !stopLeftScreenMovement)
+                        if (!stopLeftScreenMovement && !stopRightScreenMovement)
                             MoveStuff(climbloc - tle.location.Center.X, 0);
                         else
                             location.X = tle.location.Center.X;
@@ -792,7 +625,7 @@ namespace Project_Rioman
                 {
                     if (Math.Abs(riolocation.X - tle.location.Center.X) <= 16 && !okay)
                     {
-                        if (!stopRightScreenMovement && !stopLeftScreenMovement)
+                        if (!stopLeftScreenMovement && !stopRightScreenMovement)
                             MoveStuff(climbloc - tle.location.Center.X, 0);
                         else
                             location.X = tle.location.Center.X;
@@ -989,5 +822,244 @@ namespace Project_Rioman
             return number;
 
         }
+
+        // ----------------------------------------------------------------------------------------------------------------
+        // Scroller Logic
+        // ----------------------------------------------------------------------------------------------------------------
+
+
+        struct Scroller
+        {
+            private Point startPoint;
+            private Point endPoint;
+
+            private enum Direction { horizontal, vertical };
+            private Direction dir;
+
+            public Scroller(bool isVertical, int x1, int y1, int x2, int y2)
+            {
+                if (isVertical)
+                    dir = Direction.vertical;
+                else
+                    dir = Direction.horizontal;
+
+                startPoint = new Point(x1, y1);
+                endPoint = new Point(x2, y2);
+
+            }
+
+            public void Move(int x, int y)
+            {
+                startPoint.X += x;
+                startPoint.Y += y;
+                endPoint.X += x;
+                endPoint.Y += y;
+            }
+
+
+            public bool Intersects(Rectangle intersect)
+            {
+                if (IsVertical())
+                {
+                    if (intersect.Left < startPoint.X && intersect.Right > startPoint.X &&
+                        intersect.Bottom > startPoint.Y && intersect.Top < endPoint.Y)
+                        return true;
+                }
+                else {
+                    if (intersect.Bottom > startPoint.Y && intersect.Top < startPoint.Y &&
+                        intersect.Left < startPoint.X && intersect.Right > endPoint.X)
+                        return true;
+                }
+
+                return false;
+
+            }
+
+            public bool IsVertical()
+            {
+                return dir == Direction.vertical;
+            }
+            public bool IsHorizontal()
+            {
+                return dir == Direction.horizontal;
+            }
+
+            public int X { get { return (startPoint.X + endPoint.X) / 2; } }
+            public int Y { get { return (startPoint.Y + endPoint.Y) / 2; } }
+            public int Top { get { return startPoint.Y; } }
+            public int Bottom { get { return endPoint.Y; } }
+            public int Left { get { return startPoint.X; } }
+            public int Right { get { return endPoint.X; } }
+        }
+
+        private Scroller[] MakeScroller()
+        {
+            List<Scroller> s = new List<Scroller>();
+            int counter = 0;
+
+            Rectangle scroll = new Rectangle();
+
+            for (int i = 0; i <= height; i++)
+            {
+                for (int j = 1; j <= width; j++)
+                {
+                    if (tiles[i, j] != null)
+                    {
+                        if (tiles[i, j].tile == Constant.VERT_SCROLL)
+                        {
+                            int y = 0;
+                            try
+                            {
+                                while (true)
+                                {
+                                    y++;
+
+                                    if (tiles[i + y, j] != null && tiles[i + y, j].tile == Constant.VERT_SCROLL2)
+                                    {
+                                        s.Add(new Scroller(true, j * Constant.TILE_SIZE, i * Constant.TILE_SIZE,
+                                            j * Constant.TILE_SIZE, (i + y) * Constant.TILE_SIZE));
+
+                                        counter++;
+
+                                    }
+                                }
+                            }
+                            catch (IndexOutOfRangeException e)
+                            {
+                                Console.WriteLine("Failed to construct vertical scroller on level " + activelevel.ToString());
+                            }
+                        }
+
+                        else if (tiles[i, j].tile == Constant.HORIZ_SCROLL)
+                        {
+                            int x = 0;
+                            try
+                            {
+                                while (true)
+                                {
+                                    x++;
+
+                                    if (tiles[i, j + x] != null && tiles[i, j + x].tile == Constant.HORIZ_SCROLL2)
+                                    {
+                                        s.Add(new Scroller(true, j * Constant.TILE_SIZE, i * Constant.TILE_SIZE,
+                                            (j + x) * Constant.TILE_SIZE, i * Constant.TILE_SIZE));
+
+                                        counter++;
+                                    }
+                                }
+                            }
+                            catch (IndexOutOfRangeException e)
+                            {
+                                Console.WriteLine("Failed to construct horizontal scroller on level " + activelevel.ToString());
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            if (counter == 0)
+                return new Scroller[0];
+            else
+                return new List<Scroller>(s).GetRange(0, counter).ToArray();
+        }
+
+
+        private void UpdateScrollers(Rioman rioman, Viewport viewport)
+        {
+            Rectangle vp = new Rectangle(viewport.X, viewport.Y, viewport.Width, viewport.Height);
+
+            for (int i = 0; i <= scrollers.Length - 1; i++)
+            {
+
+                if (scrollers[i].Intersects(rioman.Hitbox))
+                {
+                    if (scrollers[i].X < viewport.Width && scrollers[i].X > viewport.Width * 2 / 3 &&
+                        scrollers[i].IsVertical() && rioman.GetLastXMovement() > 0)
+                        StartScroll(1, 0, viewport);
+
+                    if (scrollers[i].X > 0 && scrollers[i].X < viewport.Width * 1 / 3 &&
+                            scrollers[i].IsVertical() && rioman.GetLastXMovement() < 0)
+                        StartScroll(-1, 0, viewport);
+
+                }
+
+                if (scrollers[i].IsVertical())
+                {
+                    if (scrollers[i].X < viewport.Width && scrollers[i].X > viewport.Width * 2 / 3 &&
+                        scrollers[i].Bottom > 0 && scrollers[i].Top < viewport.Height)
+                    {
+                        stopRightScreenMovement = true;
+                        preventCenteringRight = true;
+                    }
+                    else if (scrollers[i].X > 0 && scrollers[i].X < viewport.Width * 1 / 3 &&
+                        scrollers[i].Bottom > 0 && scrollers[i].Top < viewport.Height)
+                    {
+                        stopLeftScreenMovement = true;
+                        preventCenteringLeft = true;
+                    }
+
+                }
+            }
+
+            if (preventCenteringRight && rioman.Location.X < viewport.Width / 2)
+                preventCenteringRight = false;
+            if (preventCenteringLeft && rioman.Location.X > viewport.Width / 2)
+                preventCenteringLeft = false;
+        }
+
+
+        private void StartScroll(int magnitudeX, int magnitudeY, Viewport viewport)
+        {
+            scrollAmountX = (viewport.Width - Constant.TILE_SIZE / 2) * Math.Abs(magnitudeX);
+            scrollAmountY = (viewport.Height - Constant.TILE_SIZE / 2) * Math.Abs(magnitudeY);
+            isScrolling = true;
+            scrollSpeedX = magnitudeX * SCROLL_SPEED;
+            scrollSpeedY = magnitudeY * SCROLL_SPEED;
+            killBullets = true;
+        }
+
+        private bool moveNow = false;
+
+        public void Scroll(Rioman player, Viewport viewport)
+        {
+            MoveStuff(-scrollSpeedX, -scrollSpeedY);
+            scrollAmountX -= Math.Abs(scrollSpeedX);
+            scrollAmountY -= Math.Abs(scrollSpeedY);
+
+            int x = 0, y = 0;
+
+            if (moveNow)
+            {
+                if (scrollSpeedX != 0)
+                    x = scrollSpeedX / Math.Abs(scrollSpeedX);
+                if (scrollSpeedY != 0)
+                    y = scrollSpeedY / Math.Abs(scrollSpeedY);
+            }
+
+            moveNow = !moveNow;
+
+            player.Move(-scrollSpeedX + x, -scrollSpeedY + y);
+
+
+
+            if (scrollAmountX <= 0 && scrollAmountY <= 0)
+            {
+
+                if (closeDoor)
+                    doorClosing = true;
+                isScrolling = false;
+                stopRightScreenMovement = true;
+                stopLeftScreenMovement = true;
+
+                if (scrollSpeedX > 0)
+                    preventCenteringLeft = true;
+            }
+
+        }
+
+        public bool CanMoveLeft() { return !stopLeftScreenMovement && !preventCenteringRight; }
+        public bool CanMoveRight() { return !stopRightScreenMovement && !preventCenteringLeft; }
+
     }
 }

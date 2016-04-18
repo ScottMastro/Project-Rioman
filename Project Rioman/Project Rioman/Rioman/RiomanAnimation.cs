@@ -101,10 +101,13 @@ namespace Project_Rioman
             totalFreezeTime = 0;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Rectangle location, Rioman r)
+        public void Draw(SpriteBatch spriteBatch, Rectangle location, Rioman player, bool levelIsBusy)
         {
 
-            if (state.IsInvincible() && blinkFrames > 0) { }
+            if (!levelIsBusy && state.IsInvincible() && blinkFrames > 0)
+            { 
+                //do nothing
+            }
             else
             {
                 Rectangle locationRect = new Rectangle(location.X, location.Y, sprite.Width, sprite.Height);
@@ -129,9 +132,9 @@ namespace Project_Rioman
 
             if (state.IsFrozen())
             {
-                spriteBatch.Draw(clock, new Rectangle(r.Hitbox.Center.X, r.Hitbox.Center.Y, clock.Width / 2, clock.Height),
+                spriteBatch.Draw(clock, new Rectangle(player.Hitbox.Center.X, player.Hitbox.Center.Y, clock.Width / 2, clock.Height),
                     new Rectangle(0, 0, clock.Width / 2, clock.Height), Color.White * 0.6f, 0f, new Vector2(clock.Width / 4, clock.Height / 2), SpriteEffects.None, 0);
-                spriteBatch.Draw(clock, new Rectangle(r.Hitbox.Center.X, r.Hitbox.Center.Y, clock.Width / 2, clock.Height),
+                spriteBatch.Draw(clock, new Rectangle(player.Hitbox.Center.X, player.Hitbox.Center.Y, clock.Width / 2, clock.Height),
                     new Rectangle(clock.Width / 2, 0, clock.Width / 2, clock.Height), Color.White ,
                     (float)(state.GetFreezeTime()/totalFreezeTime) * -MathHelper.TwoPi, new Vector2(clock.Width / 4, clock.Height / 2), SpriteEffects.None, 0);
 

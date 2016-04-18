@@ -12,6 +12,7 @@ namespace Project_Rioman
         public RiomanAnimation anim;
 
         private Rectangle location;
+        private Vector2 lastMove;
 
         public int invincibledirection;
 
@@ -44,23 +45,26 @@ namespace Project_Rioman
 
         public void Reset()
         {
+            lastMove = new Vector2(0, 0);
             stopLeftMovement = false;
             stopRightMovement = false;
 
             KillBullets();
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, bool levelIsBusy)
         {
             foreach (Bullet blt in bullets)
                 blt.Draw(spriteBatch);
 
-            anim.Draw(spriteBatch, location, this);
+            anim.Draw(spriteBatch, location, this, levelIsBusy);
 
         }
 
         public void Update(double deltaTime, Level level, Viewport viewport)
         {
+            lastMove = Vector2.Zero;
+
             if (!state.IsFrozen())
             {
 
@@ -156,9 +160,9 @@ namespace Project_Rioman
             CheckClimb(keyboardState, level);
 
             if (state.GetFallTime() * 30 > MAX_FALL_SPEED)
-                MoveInWorld(0, MAX_FALL_SPEED, level);
+                Move(0, MAX_FALL_SPEED);
             else
-                MoveInWorld(0, Convert.ToInt32(state.GetFallTime() * 30), level);
+                Move(0, Convert.ToInt32(state.GetFallTime() * 30));
 
         }
 
@@ -168,7 +172,7 @@ namespace Project_Rioman
             HorizontalMovement(keyboardState, level);
             CheckClimb(keyboardState, level);
 
-            MoveInWorld(0, -Convert.ToInt32(10 - state.GetJumpTime() * 22), level);
+            Move(0, -Convert.ToInt32(10 - state.GetJumpTime() * 22));
 
         }
 
@@ -338,41 +342,27 @@ namespace Project_Rioman
 
         public void Move(int x, int y)
         {
+            lastMove = lastMove + new Vector2(x, y);
             location.X += x;
             location.Y += y;
         }
 
         public void MoveInWorld(int x, int y, Level level)
         {
-            if (x < 0 && !stopLeftMovement)
+            if ((x < 0 && stopLeftMovement) ||
+                (x > 0 && stopRightMovement))
+                x = 0;
+
+            if ((x < 0 && !stopLeftMovement && level.CanMoveLeft()) ||
+                (x > 0 && !stopRightMovement && level.CanMoveRight()))
             {
-                if (!level.stopRightScreenMovement)
-                    level.MoveStuff(-x, 0);
-                else
-                    Move(x, 0);
-            }
-            else if(x > 0 && !stopRightMovement)
-            {
-                if (!level.stopLeftScreenMovement)
-                    level.MoveStuff(-x, 0);
-                else
-                    Move(x, 0);
+                level.MoveStuff(-x, 0);
+                lastMove.X += x;
+                x = 0;
             }
 
-            if (y < 0)
-            {
-                if (!level.stopUpScreenMovement)
-                    level.MoveStuff(0, -y);
-                else
-                    Move(0, y);
-            }
-            else
-            {
-                if (!level.stopDownScreenMovement)
-                    level.MoveStuff(0, -y);
-                else
-                    Move(0, y);
-            }
+
+            Move(x, y);
         }
 
         public void MoveToX(int x)
@@ -420,6 +410,9 @@ namespace Project_Rioman
                 bullets[i].isAlive = false;
 
         }
+
+        public int GetLastXMovement() { return (int)lastMove.X; }
+        public int GetLastYMovement() { return (int)lastMove.Y; }
 
 
         public void StartWarp() { state.Warp(); }

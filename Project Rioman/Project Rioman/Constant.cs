@@ -77,13 +77,10 @@ namespace Project_Rioman
         public static int P1H8R = 316;
         public static int MACKS = 317;
 
-        public static int TL_RECT = 322;
-        public static int TR_RECT = 323;
-        public static int BL_RECT = 325;
-
-        public static int TL_LEVEL_RECT = 326;
-        public static int TR_LEVEL_RECT = 327;
-        public static int BL_LEVEL_RECT = 329;
+        public static int VERT_SCROLL2 = 318;
+        public static int VERT_SCROLL = 319;
+        public static int HORIZ_SCROLL = 320;
+        public static int HORIZ_SCROLL2 = 321;
 
         public static int TileNumberToType(int tileNumber)
         {
