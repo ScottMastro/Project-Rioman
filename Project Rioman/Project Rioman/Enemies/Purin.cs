@@ -71,7 +71,7 @@ namespace Project_Rioman
         private PurinBullet[] bullets = new PurinBullet[6];
 
 
-        public Purin(int type, int r, int c) : base(type, r, c)
+        public Purin(int type, int x, int y) : base(type, x, y)
         {
             Texture2D[] sprites = EnemyAttributes.GetSprites(type);
 

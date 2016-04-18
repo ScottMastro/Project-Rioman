@@ -16,7 +16,7 @@ namespace Project_Rioman
 
         private bool stopUpMovement;
 
-        public MegaHopper(int type, int r, int c) : base(type, r, c)
+        public MegaHopper(int type, int x, int y) : base(type, x, y)
         {
             sprite = EnemyAttributes.GetSprites(type)[0];
 

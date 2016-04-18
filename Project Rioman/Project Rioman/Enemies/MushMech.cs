@@ -33,7 +33,7 @@ namespace Project_Rioman
         private MushBullet rightBullet = new MushBullet();
 
 
-        public MushMech(int type, int r, int c) : base(type, r, c)
+        public MushMech(int type, int x, int y) : base(type, x, y)
         {
             Texture2D[] sprites = EnemyAttributes.GetSprites(type);
             sprite = sprites[0];

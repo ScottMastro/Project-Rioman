@@ -28,7 +28,7 @@ namespace Project_Rioman
         private H8Bullet[] bullets = new H8Bullet[3];
 
 
-        public P1H8R(int type, int r, int c) : base(type, r, c)
+        public P1H8R(int type, int x, int y) : base(type, x, y)
 
         {
             Texture2D[] sprites = EnemyAttributes.GetSprites(type);

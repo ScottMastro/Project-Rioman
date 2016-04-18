@@ -16,8 +16,8 @@ namespace Project_Rioman
     class Tile
     {
         private Texture2D sprite;
-        private int row;
-        private int column;
+        private int x;
+        private int y;
 
         public Texture2D[] frames;
 
@@ -33,20 +33,17 @@ namespace Project_Rioman
 
         public bool isTop;
 
-        public Tile(Texture2D texture, int tileNumber, int tileType, int r, int c, ContentManager content)
+        public Tile(Texture2D texture, int tileNumber, int tileType, int x, int y, ContentManager content)
         {
             sprite = texture;
             tile = tileNumber;
             type = tileType;
             originalType = type;
 
-            row = r;
-            column = c;
+            this.x = x;
+            this.y = y;
 
-            int y = row * Constant.TILE_SIZE;
-            int x = column * Constant.TILE_SIZE;
-
-            location = new Rectangle(x, y, Constant.TILE_SIZE, Constant.TILE_SIZE);
+            location = new Rectangle(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE, Constant.TILE_SIZE, Constant.TILE_SIZE);
             originalLocation = location;
 
             isTop = false;
@@ -156,8 +153,8 @@ namespace Project_Rioman
 
         public int X { get { return location.X; } }
         public int Y { get { return location.Y; } }
-        public int Row { get { return row; } }
-        public int Column { get { return column; } }
+        public int Row { get { return x; } }
+        public int Column { get { return y; } }
         public int Width { get { return location.Width; } }
         public void ChangeType(int newType) { type = newType; }
 

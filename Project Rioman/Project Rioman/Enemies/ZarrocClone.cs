@@ -29,7 +29,7 @@ namespace Project_Rioman
 
         private ZarrocBullet[] bullets = new ZarrocBullet[6];
 
-        public ZarrocClone(int type, int r, int c) : base(type, r, c)
+        public ZarrocClone(int type, int x, int y) : base(type, x, y)
         {
             Texture2D[] sprites = EnemyAttributes.GetSprites(type);
 

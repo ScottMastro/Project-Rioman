@@ -20,7 +20,7 @@ namespace Project_Rioman
         private const int MOVE_SPEED = 16;
 
 
-        public Serverbot(int type, int r, int c) : base(type, r, c)
+        public Serverbot(int type, int x, int y) : base(type, x, y)
         {
             sprite = EnemyAttributes.GetSprites(type)[0];
 

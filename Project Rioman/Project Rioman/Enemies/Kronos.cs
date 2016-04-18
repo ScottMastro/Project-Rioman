@@ -15,7 +15,7 @@ namespace Project_Rioman
 
         private const int SPEED = 1;
 
-        public Kronos(int type, int r, int c) : base(type, r, c)
+        public Kronos(int type, int x, int y) : base(type, x, y)
         {
             sprite = EnemyAttributes.GetSprites(type)[0];
 

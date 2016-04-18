@@ -20,14 +20,14 @@ namespace Project_Rioman
         private Vector2 startPos;
 
         private Tile[,] tiles;
-        private List<Enemy> enemies;
-        private List<AbstractEnemy> aenemy;
+        private List<AbstractEnemy> enemies;
         private OldPickup[] pickups = new OldPickup[10];
         private Boss[] bosses = new Boss[17];
 
         public LevelLoader() { }
 
-        public void LoadLevelContent(ContentManager content) {
+        public void LoadLevelContent(ContentManager content)
+        {
 
             SetLetters();
 
@@ -62,7 +62,7 @@ namespace Project_Rioman
 
                 backgroundColour = new Color(Convert.ToByte(parts[2]), Convert.ToByte(parts[3]), Convert.ToByte(parts[4]));
 
-                tilePos = new int[height + 1, width + 1];
+                tilePos = new int[width + 1, height + 1];
 
                 string line = "";
 
@@ -73,12 +73,12 @@ namespace Project_Rioman
                     for (int x = 0; x <= width * 2 - 2; x += 2)
                     {
                         if (line.Substring(x, 2) == "%%")
-                            tilePos[y, x / 2] = 0;
+                            tilePos[x / 2, y] = 0;
                         else
                         {
                             int val = 0;
                             letters.TryGetValue(line.Substring(x, 2), out val);
-                            tilePos[y, x / 2] = val;
+                            tilePos[x / 2, y] = val;
                         }
                     }
 
@@ -88,93 +88,87 @@ namespace Project_Rioman
 
                 //Step2: Convert string to tiles
 
-                tiles = new Tile[height + 1, width + 1];
-                enemies = new List<Enemy>();
-                aenemy = new List<AbstractEnemy>();
+                tiles = new Tile[width + 1, height + 1];
+                enemies = new List<AbstractEnemy>();
 
 
-                for (int r = 0; r <= height; r++)
+                for (int x = 0; x <= width; x++)
                 {
-                    for (int c = 0; c <= width; c++)
+                    for (int y = 0; y <= height; y++)
                     {
-                        CreateLevelElement(tilePos[r, c], r, c, content);
+                        CreateLevelElement(tilePos[x, y], x, y, content);
 
-                        if (tilePos[r, c] == 284)
-                            startPos = new Vector2(c * 32, r * 32 - 15);
+                        if (tilePos[x, y] == 284)
+                            startPos = new Vector2(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE - 15);
                     }
                 }
 
 
-                return new Level(backgroundColour, width, height, startPos, tiles, 
-                    enemies.ToArray(), aenemy.ToArray(), pickups, bosses);
+                return new Level(backgroundColour, width, height, startPos, tiles,
+                    enemies.ToArray(), pickups, bosses);
 
             }
 
             return null;
         }
 
-        private void CreateLevelElement(int value, int r, int c, ContentManager content)
+        private void CreateLevelElement(int value, int x, int y, ContentManager content)
         {
-           int type = Constant.TileNumberToType(value);
+            int type = Constant.TileNumberToType(value);
 
             //tile is a tile
             if (type >= 0)
-                tiles[r, c] = new Tile(tileSprites[value], value, type, r, c, content);
+                tiles[x, y] = new Tile(tileSprites[value], value, type, x, y, content);
 
             //tile is an enemy
             if (value >= 297 && value <= 317)
-                CreateEnemy(value, r, c, content);
+                CreateEnemy(value, x, y, content);
 
             //tile is a boss
             if (value == 289)
-                bosses[5].SetBoss(c * 32, r * 32);
+                bosses[5].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
             if (value == 285)
-                bosses[3].SetBoss(c * 32, r * 32);
+                bosses[3].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
         }
 
-        private void CreateEnemy(int value, int r, int c, ContentManager content)
+        private void CreateEnemy(int value, int x, int y, ContentManager content)
         {
             if (value == Constant.NEOLUCKY)
-                aenemy.Add(new Neolucky(value, r, c));
+                enemies.Add(new Neolucky(value, x, y));
             else if (value == Constant.DOZERBOT)
-                aenemy.Add(new DozerBot(value, r, c));
+                enemies.Add(new DozerBot(value, x, y));
             else if (value == Constant.DEUXKAMA)
-                aenemy.Add(new DeuxKama(value, r, c));
+                enemies.Add(new DeuxKama(value, x, y));
             else if (value == Constant.MACKS)
-                aenemy.Add(new Macks(value, r, c));
+                enemies.Add(new Macks(value, x, y));
             else if (value == Constant.MACEBOT)
-                aenemy.Add(new Macebot(value, r, c));
+                enemies.Add(new Macebot(value, x, y));
             else if (value == Constant.PURIN)
-                aenemy.Add(new Purin(value, r, c));
+                enemies.Add(new Purin(value, x, y));
             else if (value == Constant.FLIPSIDE)
-                aenemy.Add(new Flipside(value, r, c));
+                enemies.Add(new Flipside(value, x, y));
             else if (value == Constant.SPIKEBOMB)
-                aenemy.Add(new SpikeBomb(value, r, c));
+                enemies.Add(new SpikeBomb(value, x, y));
             else if (value == Constant.CHANCEBOMB)
-                aenemy.Add(new ChanceBomb(value, r, c));
+                enemies.Add(new ChanceBomb(value, x, y));
             else if (value == Constant.MEGAHOPPER)
-                aenemy.Add(new MegaHopper(value, r, c));
+                enemies.Add(new MegaHopper(value, x, y));
             else if (value == Constant.SERVERBOT)
-                aenemy.Add(new Serverbot(value, r, c));
+                enemies.Add(new Serverbot(value, x, y));
             else if (value == Constant.TOTEM)
-                aenemy.Add(new Totem(value, r, c));
+                enemies.Add(new Totem(value, x, y));
             else if (value == Constant.ZARROCCLONE)
-                aenemy.Add(new ZarrocClone(value, r, c));
+                enemies.Add(new ZarrocClone(value, x, y));
             else if (value == Constant.MMUSHMECH)
-                aenemy.Add(new MushMech(value, r, c));
+                enemies.Add(new MushMech(value, x, y));
             else if (value == Constant.TMUSHMECH)
-                aenemy.Add(new MushMech(value, r, c));
+                enemies.Add(new MushMech(value, x, y));
             else if (value == Constant.P1H8R)
-                aenemy.Add(new P1H8R(value, r, c));
+                enemies.Add(new P1H8R(value, x, y));
             else if (value == Constant.HELLICOPTOR)
-                aenemy.Add(new Hellicoptor(value, r, c));
+                enemies.Add(new Hellicoptor(value, x, y));
             else if (value == Constant.KRONOS)
-                aenemy.Add(new Kronos(value, r, c));
-            else if (value >= 297 && value <= 317)
-            {
-                enemies.Add(new Enemy(value, r, c, content));
-            }
-
+                enemies.Add(new Kronos(value, x, y));
         }
 
         private void SetLetters()
@@ -197,8 +191,5 @@ namespace Project_Rioman
                 }
             }
         }
-
-
-
     }
 }

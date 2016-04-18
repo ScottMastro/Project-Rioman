@@ -47,7 +47,7 @@ namespace Project_Rioman
 
         private NeoBullet[] bullets = new NeoBullet[3];
 
-        public Neolucky(int type, int r, int c) : base(type, r, c)
+        public Neolucky(int type, int x, int y) : base(type, x, y)
         {
             Texture2D[] sprites = EnemyAttributes.GetSprites(type);
 

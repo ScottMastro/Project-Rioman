@@ -48,7 +48,7 @@ namespace Project_Rioman
 
         private Spike[] spikes = new Spike[8];
 
-        public SpikeBomb(int type, int r, int c) : base(type, r, c)
+        public SpikeBomb(int type, int x, int y) : base(type, x, y)
         {
             Texture2D[] sprites = EnemyAttributes.GetSprites(type);
             sprite = sprites[0];

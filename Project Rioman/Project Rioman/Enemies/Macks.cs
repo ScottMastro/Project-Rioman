@@ -61,7 +61,7 @@ namespace Project_Rioman
         private const int BULLET_SPEED = 8;
         private const int BULLET_DAMAGE = 5;
 
-        public Macks(int type, int r, int c) : base(type, r, c)
+        public Macks(int type, int x, int y) : base(type, x, y)
         {
             Texture2D[] sprites = EnemyAttributes.GetSprites(type);
             sprite = sprites[0];

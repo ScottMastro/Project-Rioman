@@ -54,8 +54,6 @@ namespace Project_Rioman
                 if (!player.IsWarping())
                 {
 
-                    currentLevel.EnemyCollision(player.GetBullets(), player);
-
                     currentLevel.UpdateEnemies(player, player.GetBullets(), gameTime.ElapsedGameTime.TotalSeconds, viewport);
 
                     currentLevel.Update(player, gameTime, viewport);

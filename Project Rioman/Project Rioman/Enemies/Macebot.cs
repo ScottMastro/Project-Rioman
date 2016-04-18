@@ -28,7 +28,7 @@ namespace Project_Rioman
         private Vector2 vectorToPlayer;
         private float angleToPlayer;
 
-        public Macebot(int type, int r, int c) : base(type, r, c)
+        public Macebot(int type, int x, int y) : base(type, x, y)
         {
             Texture2D[] sprites = EnemyAttributes.GetSprites(Constant.MACEBOT);
             ball = sprites[0];

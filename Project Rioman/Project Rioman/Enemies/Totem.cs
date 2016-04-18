@@ -219,7 +219,7 @@ namespace Project_Rioman
         //TOTEM LOGIC
         //----------------------------------------------------------------------------------------------
 
-        public Totem(int type, int r, int c) : base(type, r, c)
+        public Totem(int type, int x, int y) : base(type, x, y)
         {
 
             Texture2D[] sprites = EnemyAttributes.GetSprites(type);
