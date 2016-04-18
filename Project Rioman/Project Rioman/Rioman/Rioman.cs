@@ -36,7 +36,7 @@ namespace Project_Rioman
             anim = new RiomanAnimation(content, state);
 
             for (int i = 0; i <= 2; i++)
-                bullets[i] = new RioBullet(content.Load<Texture2D>("Video\\bullet"));
+                bullets[i] = new RioBullet(content.Load<Texture2D>("Video\\weapons\\bullet"));
 
             location = new Rectangle(70, 400, GetSprite().Width, GetSprite().Height);
 

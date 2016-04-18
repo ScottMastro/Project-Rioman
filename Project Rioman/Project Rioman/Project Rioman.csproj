@@ -100,7 +100,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Rioman\AbstractBullet.cs" />
+    <Compile Include="Rioman\BulletAttributes.cs" />
+    <Compile Include="Weapons\AbstractBullet.cs" />
     <Compile Include="DebugDraw.cs" />
     <Compile Include="Pickups\AbstractPickup.cs" />
     <Compile Include="Enemies\AbstractEnemy.cs" />
@@ -120,7 +121,7 @@
     <Compile Include="Enemies\ZarrocClone.cs" />
     <Compile Include="Pickups\EnemyPickup.cs" />
     <Compile Include="Pickups\PickupAttributes.cs" />
-    <Compile Include="Rioman\RioBullet.cs" />
+    <Compile Include="Weapons\RioBullet.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Enemies\DeuxKama.cs" />
     <Compile Include="Enemies\DozerBot.cs" />

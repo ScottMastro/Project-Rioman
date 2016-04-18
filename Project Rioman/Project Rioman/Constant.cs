@@ -55,6 +55,19 @@ namespace Project_Rioman
         public static int TOXICMAN = 16;
         public static int MUSH = 14;
 
+
+        public static int RIOBULLET = 0;
+        public static int GEOBULLET = 1;
+        public static int AURORABULLET = 2;
+        public static int LURKERBULLET = 3;
+        public static int INFERNOBULLET = 4;
+        public static int DUELBULLET = 12;
+        public static int POSTERBULLET = 6;
+        public static int TOXICBULLET = 7;
+        public static int CLOVERBULLET = 8;
+        public static int BUNNYBULLET = 9;
+
+
         public static int TOTEM = 297;
         public static int NEOLUCKY = 298;
         public static int KRONOS = 299;

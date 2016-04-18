@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,6 +23,7 @@ namespace Project_Rioman
         private static int eTanks;
         private static int wTanks;
 
+
         private static Texture2D[] lives = new Texture2D[10];
 
         public static void LoadContent(ContentManager content)
@@ -39,8 +38,6 @@ namespace Project_Rioman
                 weaponHave[i] = true;
                 weaponAmmo[i] = 27;
             }
-
-            weaponHave[1] = false;
 
             eTanks = 4;
             wTanks = 4;

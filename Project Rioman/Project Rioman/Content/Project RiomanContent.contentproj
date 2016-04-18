@@ -40,11 +40,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Video\bullet.png">
-      <Name>bullet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Video\rioman\riomanjumpgun.png">
       <Name>riomanjumpgun</Name>
       <Importer>TextureImporter</Importer>
@@ -3281,6 +3276,25 @@
   <ItemGroup>
     <Compile Include="Video\debug\px.png">
       <Name>px</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Video\weapons\bullet.png">
+      <Name>bullet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Video\weapons\infernoattack.png">
+      <Name>infernoattack</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\weapons\infernosword.png">
+      <Name>infernosword</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

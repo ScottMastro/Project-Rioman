@@ -1,4 +1,3 @@
-Content\Video\bullet.xnb
 Content\Video\rioman\riomanjumpgun.xnb
 Content\Video\rioman\riomanrungun.xnb
 Content\Video\rioman\riomanstandgun.xnb
@@ -618,3 +617,6 @@ Content\Audio\soundeffects\killenemy2.xnb
 Content\Audio\soundeffects\shoot3.xnb
 Content\Audio\soundeffects\shieldhit.xnb
 Content\Audio\soundeffects\heal.xnb
+Content\Video\weapons\bullet.xnb
+Content\Video\weapons\infernoattack.xnb
+Content\Video\weapons\infernosword.xnb

@@ -1214,7 +1214,6 @@ C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\Project Rioman\bin
 C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\warp.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\Project Rioman\bin\x86\Debug\Project Rioman.exe
 C:\Users\Scott\Older Files\Old Coding Projects\Project Rioman\Project Rioman\bin\x86\Debug\Project Rioman.pdb
-C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bullet.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\riomanjumpgun.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\riomanrungun.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\riomanstandgun.xnb
@@ -1839,3 +1838,7 @@ C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Pro
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clockandhand.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\heal.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\px.xnb
+C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\bullet.xnb
+C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\infernoattack.xnb
+C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\infernosword.xnb
+C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\obj\x86\Debug\Project Rioman.csprojResolveAssemblyReference.cache
