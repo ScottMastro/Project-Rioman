@@ -12,19 +12,6 @@ namespace Project_Rioman
         protected int direction;
         protected int damage;
 
-        public void BulletSpawn(int x, int y, SpriteEffects dir)
-        {
-            location.X = x;
-            location.Y = y;
-
-            if (dir == SpriteEffects.None)
-                direction = 1;
-            else
-                direction = -1;
-
-            isAlive = true;
-        }
-
         public void Update(Viewport viewport)
         {
             if (location.X > viewport.Width || location.X < 0 - sprite.Width)
@@ -34,6 +21,7 @@ namespace Project_Rioman
 
         }
 
+        public abstract void BulletSpawn(int x, int y, SpriteEffects dir);
         public abstract void Draw(SpriteBatch spriteBatch);
         protected abstract void SubUpdate();
 

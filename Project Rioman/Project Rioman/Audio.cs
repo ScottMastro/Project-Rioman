@@ -158,5 +158,10 @@ namespace Project_Rioman
         {
             heal.Play(Constant.VOLUME, 0.4f, 0f);
         }
+
+        public static void PlayPauseSelection()
+        {
+            selection.Play(Constant.VOLUME, 1f, 0f);
+        }
     }
 }

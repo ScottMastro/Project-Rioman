@@ -120,7 +120,6 @@ namespace Project_Rioman
 
                 if (index >= 0)
                 {
-                    Audio.PlayShoot();
                     state.Shoot();
                     if (!FacingRight())
                         bullets[index].BulletSpawn(location.X - 20, location.Center.Y - 8, SpriteEffects.FlipHorizontally);

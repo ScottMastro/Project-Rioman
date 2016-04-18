@@ -60,6 +60,7 @@ namespace Project_Rioman
             Save.LoadContent(Content);
             Opening.LoadContent(Content);
             StageSelection.LoadContent(Content, viewportRect);
+            Weapons.LoadContent(Content);
             gameLogic.LoadContent(Content, viewportRect);
 
         }

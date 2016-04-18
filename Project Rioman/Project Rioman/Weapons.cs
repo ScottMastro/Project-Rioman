@@ -8,35 +8,42 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Project_Rioman
 {
-    class Weapons
+    static class Weapons
     {
-        public Texture2D[] weapon = new Texture2D[12];
-        public Texture2D[] power = new Texture2D[12];
-        public bool[] weaponhave = new bool[12];
-        public int[] weaponammo = new int[12];
+        private static Texture2D[] weapon = new Texture2D[12];
+        private static Texture2D[] power = new Texture2D[12];
+        private static bool[] weaponHave = new bool[12];
+        private static int[] weaponAmmo = new int[12];
 
-        public Texture2D pauseselector;
-        public int activeweapon;
+        private static Texture2D pauseSelector;
+        private static int activeWeapon;
 
-        public Texture2D pausebackground;
-        public Texture2D ammometer;
+        private static Texture2D pauseBackground;
+        private static Texture2D ammoMeter;
 
-        public Texture2D tank;
-        public int etanks;
-        public int wtanks;
+        private static Texture2D tank;
+        private static int eTanks;
+        private static int wTanks;
 
-        public Texture2D[] lives = new Texture2D[10];
+        private static Texture2D[] lives = new Texture2D[10];
 
-        public Weapons(ContentManager content)
+        public static void LoadContent(ContentManager content)
         {
-            pauseselector = content.Load<Texture2D>("Video\\pause\\pauseselector");
+            pauseSelector = content.Load<Texture2D>("Video\\pause\\pauseselector");
 
-            activeweapon = 0;
-            weaponhave[0] = true;
-            weaponammo[0] = 27;
+            activeWeapon = 0;
+            weaponHave[0] = true;
 
-            etanks = 4;
-            wtanks = 4;
+            for (int i = 0; i <= 11; i++)
+            {
+                weaponHave[i] = true;
+                weaponAmmo[i] = 27;
+            }
+
+            weaponHave[1] = false;
+
+            eTanks = 4;
+            wTanks = 4;
 
             for (int i = 0; i <= 11; i++)
             {
@@ -44,109 +51,104 @@ namespace Project_Rioman
                 power[i] = content.Load<Texture2D>("Video\\pause\\weapon" + i.ToString() + "ammo");
             }
 
-            pausebackground = content.Load<Texture2D>("Video\\pause\\PauseMenuBackground");
-            ammometer = content.Load<Texture2D>("Video\\pause\\ammometer");
+            pauseBackground = content.Load<Texture2D>("Video\\pause\\PauseMenuBackground");
+            ammoMeter = content.Load<Texture2D>("Video\\pause\\ammometer");
             tank = content.Load<Texture2D>("Video\\pause\\tank");
 
             for (int i = 0; i <= 5; i++)
                 lives[i] = content.Load<Texture2D>("Video\\pause\\" + i.ToString());
         }
 
-        public void DrawPause(SpriteBatch spriteBatch, int lvs)
+        public static void DrawPause(SpriteBatch spriteBatch, int numLives)
         {
-            spriteBatch.Draw(pausebackground, new Vector2(50, 50), Color.White);
+            spriteBatch.Draw(pauseBackground, new Vector2(50, 50), Color.White);
 
-            int loc = 0;
+            int counter = 0;
             for (int i = 0; i <= 11; i++)
             {
-                if (weaponhave[i])
+                if (weaponHave[i])
                 {
-                    if (loc % 2 == 0)
+                    if (counter % 2 == 0)
                     {
-                        spriteBatch.Draw(weapon[i], new Vector2(70, loc * 17 + 67), Color.White);
+                        spriteBatch.Draw(weapon[i], new Vector2(70, counter * 17 + 67), Color.White);
 
-                        spriteBatch.Draw(ammometer, new Vector2(98 + power[i].Width, (loc - 1) * 17 + 92), Color.White);
+                        spriteBatch.Draw(ammoMeter, new Vector2(98 + power[i].Width, (counter - 1) * 17 + 92), Color.White);
 
-                        for (int z = 1; z <= weaponammo[i]; z++)
-                            spriteBatch.Draw(power[i], new Vector2(100 + (power[i].Width - 2) * z,
-                                (loc - 1) * 17 + 92), Color.White);
+                        for (int j = 1; j <= weaponAmmo[i]; j++)
+                            spriteBatch.Draw(power[i], new Vector2(100 + (power[i].Width - 2) * j,
+                                (counter - 1) * 17 + 92), Color.White);
 
-                        if (activeweapon == i)
-                            spriteBatch.Draw(pauseselector, new Vector2(70, loc * 17 + 67), Color.White);
+                        if (activeWeapon == i)
+                            spriteBatch.Draw(pauseSelector, new Vector2(70, counter * 17 + 67), Color.White);
                     }
                     else
                     {
-                        spriteBatch.Draw(weapon[i], new Vector2(255, (loc - 1) * 17 + 67), Color.White);
+                        spriteBatch.Draw(weapon[i], new Vector2(255, (counter - 1) * 17 + 67), Color.White);
 
-                        spriteBatch.Draw(ammometer, new Vector2(283 + power[i].Width, (loc - 1) * 17 + 75), Color.White);
+                        spriteBatch.Draw(ammoMeter, new Vector2(283 + power[i].Width, (counter - 1) * 17 + 75), Color.White);
 
-                        for (int z = 1; z <= weaponammo[i]; z++)
-                            spriteBatch.Draw(power[i], new Vector2(285 + (power[i].Width - 2) * z,
-                                (loc - 1) * 17 + 75), Color.White);
+                        for (int j = 1; j <= weaponAmmo[i]; j++)
+                            spriteBatch.Draw(power[i], new Vector2(285 + (power[i].Width - 2) * j,
+                                (counter - 1) * 17 + 75), Color.White);
 
-                        if (activeweapon == i)
-                            spriteBatch.Draw(pauseselector, new Vector2(255, (loc - 1) * 17 + 67), Color.White);
+                        if (activeWeapon == i)
+                            spriteBatch.Draw(pauseSelector, new Vector2(255, (counter - 1) * 17 + 67), Color.White);
                     }
 
-                    loc++;
+                    counter++;
                 }
             }
 
-            if (lvs <= 9)
-                spriteBatch.Draw(lives[lvs], new Vector2(370, 287), Color.White);
+            if (numLives <= 5)
+                spriteBatch.Draw(lives[numLives], new Vector2(370, 287), Color.White);
 
-            for (int i = 1; i <= etanks; i++)
+            for (int i = 1; i <= eTanks; i++)
                 spriteBatch.Draw(tank, new Vector2(90 + 30 * i, 274), Color.White);
 
-            for (int i = 1; i <= wtanks; i++)
+            for (int i = 1; i <= wTanks; i++)
                 spriteBatch.Draw(tank, new Vector2(90 + 30 * i, 300), Color.White);
 
         }
 
-        public void ChangeActiveWeapon(KeyboardState keyboardstate, KeyboardState previouskeyboardstate)
+        public static void ChangeActiveWeapon(KeyboardState keyboardstate, KeyboardState previouskeyboardstate)
         {
-            int tempactive = activeweapon;
+            int tempactive = activeWeapon;
 
-            if (keyboardstate.IsKeyDown(Keys.Up) && !previouskeyboardstate.IsKeyDown(Keys.Up))
+            int jump = 0;
+            int pos = activeWeapon;
+
+            if (keyboardstate.IsKeyDown(Constant.UP) && !previouskeyboardstate.IsKeyDown(Constant.UP))
+                jump = -2;
+            if (keyboardstate.IsKeyDown(Constant.DOWN) && !previouskeyboardstate.IsKeyDown(Constant.DOWN))
+                jump = 2;
+            if (keyboardstate.IsKeyDown(Constant.LEFT) && !previouskeyboardstate.IsKeyDown(Constant.LEFT))
+                jump = -1;
+            if (keyboardstate.IsKeyDown(Constant.RIGHT) && !previouskeyboardstate.IsKeyDown(Constant.RIGHT))
+                jump = 1;
+
+            while (jump != 0)
             {
-                int count = 1;
+                pos += jump / Math.Abs(jump);
 
-                while (true)
+                if (pos < 0 || pos > 11)
+                    break;
+
+                if (weaponHave[pos])
                 {
-                    if (activeweapon - count < 0)
-                        break;
-
-                    if (weaponhave[activeweapon - count])
-                    {
-                        activeweapon -= count;
+                    if (jump == 2)
+                        jump = 1;
+                    else if (jump == -2)
+                        jump = -1;
+                    else {
+                        activeWeapon = pos;
                         break;
                     }
-
-                    count++;
                 }
             }
 
-            if (keyboardstate.IsKeyDown(Keys.Down) && !previouskeyboardstate.IsKeyDown(Keys.Down))
-            {
-                int count = 1;
 
-                while (true)
-                {
-                    if (activeweapon + count > 11)
-                        break;
-
-                    if (weaponhave[activeweapon + count])
-                    {
-                        activeweapon += count;
-                        break;
-                    }
-
-                    count++;
-                }
-            }
-
-            if (activeweapon != tempactive)
-                Audio.selection.Play(0.5f, 1f, 0f);
+            if (activeWeapon != tempactive)
+                Audio.PlayPauseSelection();
         }
     }
 }

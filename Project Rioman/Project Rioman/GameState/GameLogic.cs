@@ -11,7 +11,6 @@ namespace Project_Rioman
     {
 
         private Rioman player;
-        Weapons weapons;
 
         private Level currentLevel;
         private Level[] levels = new Level[9];
@@ -24,8 +23,6 @@ namespace Project_Rioman
         {
             player = new Rioman(content);
             Health.LoadHealth(content);
-
-            weapons = new Weapons(content);
 
             LevelLoader levelLoader = new LevelLoader();
 
@@ -48,7 +45,7 @@ namespace Project_Rioman
                    && !Health.HealthIncreasing() && currentLevel.bosses[currentLevel.activelevel].intro >= 3)
             {
 
-                //updater player before level
+                //update player before level
                 player.Update(gameTime.ElapsedGameTime.TotalSeconds, currentLevel, viewport);
 
                 if (!player.IsWarping())
@@ -81,8 +78,8 @@ namespace Project_Rioman
                 Health.UpdateHealth(gameTime.ElapsedGameTime.TotalSeconds);
             else if (currentLevel.IsBusy())
                 currentLevel.BusyUpdate(player, viewport);
-  //          else if (GameState.IsPaused())
-      //          Weapons.ChangeActiveWeapon(keyboardState, prevKeyboardState);     //TODO: weapons
+            else if (GameState.IsPaused())
+                Weapons.ChangeActiveWeapon(keyboardState, prevKeyboardState);
             else if (currentLevel.bosses[currentLevel.activelevel].intro < 3)
                 currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewport, player);
 
@@ -133,7 +130,7 @@ namespace Project_Rioman
                 }
 
                 if (GameState.IsPaused())
-                    weapons.DrawPause(spriteBatch, player.state.GetLives());
+                    Weapons.DrawPause(spriteBatch, player.state.GetLives());
             }
             
     }

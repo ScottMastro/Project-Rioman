@@ -528,9 +528,9 @@ namespace Project_Rioman
                 {
                     if (x > 0 && tiles[x, y] != null && tiles[x, y].type == 3)
                     {
-                        if (tiles[x - 1, y] == null)
+                        if (tiles[x, y - 1] == null)
                             tiles[x, y].isTop = true;
-                        else if (tiles[x - 1, y] != null && tiles[x - 1, y].type != 3)
+                        else if (tiles[x, y - 1] != null && tiles[x, y - 1].type != 3)
                             tiles[x, y].isTop = true;
                     }
                 }

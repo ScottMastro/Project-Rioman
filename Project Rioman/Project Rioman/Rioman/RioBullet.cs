@@ -15,6 +15,20 @@ namespace Project_Rioman
             location = new Rectangle(0, 0, bullet.Width, bullet.Height);
         }
 
+        public override void BulletSpawn(int x, int y, SpriteEffects dir)
+        {
+            location.X = x;
+            location.Y = y;
+
+            if (dir == SpriteEffects.None)
+                direction = 1;
+            else
+                direction = -1;
+
+            isAlive = true;
+            Audio.PlayShoot();
+        }
+
 
         public override void Draw(SpriteBatch spriteBatch)
         {
