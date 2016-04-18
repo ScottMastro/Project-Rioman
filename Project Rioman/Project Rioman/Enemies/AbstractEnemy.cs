@@ -7,6 +7,8 @@ namespace Project_Rioman
 {
     abstract class AbstractEnemy
     {
+
+        private string uniqueID;
         private Level level;
         
         protected int type;
@@ -64,7 +66,11 @@ namespace Project_Rioman
             health = maxHealth;
             killTime = 0;
             droppedItem = null;
+
+            Guid guid = Guid.NewGuid();
+            uniqueID = guid.ToString();
         }
+
 
         public void Reset(bool fullReset)
         {
@@ -183,15 +189,18 @@ namespace Project_Rioman
                 if (!isInvincible)
                 {
                     for (int i = 0; i <= rioBullets.Length - 1; i++)
-                        if (rioBullets[i].GetCollisionRect().Intersects(GetCollisionRect()))
+                        if (rioBullets[i] != null)
                         {
-                            int damage = rioBullets[i].TakeDamage();
-                            if (damage > 0)
+                            if (rioBullets[i].Hits(GetCollisionRect()))
                             {
-                                TakeDamage(damage);
-                                blinkFrames = 2;
-                            }
+                                int damage = rioBullets[i].TakeDamage(uniqueID);
+                                if (damage > 0)
+                                {
+                                    TakeDamage(damage);
+                                    blinkFrames = 2;
+                                }
 
+                            }
                         }
                 }
             }
@@ -260,6 +269,11 @@ namespace Project_Rioman
             droppedItem = null;
 
             return temp;
+        }
+
+        public string GetID()
+        {
+            return uniqueID;
         }
     }
 }

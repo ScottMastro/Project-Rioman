@@ -111,6 +111,7 @@ namespace Project_Rioman
 
         struct TotemPart
         {
+            public string uniqueID;
             public bool isAlive;
             public bool justDied;
             public bool shoot;
@@ -127,6 +128,9 @@ namespace Project_Rioman
 
             public void Init(int totemType, int posX, int posY, Texture2D sprite, double randomTime)
             {
+                Guid guid = Guid.NewGuid();
+                uniqueID = guid.ToString();
+
                 isAlive = true;
                 blinkFrames = 0;
                 health = 2;
@@ -183,10 +187,10 @@ namespace Project_Rioman
                 {
                     for (int i = 0; i <= rioBullets.Length - 1; i++)
                     {
-                        if (rioBullets[i].Hits(CollisionRect()))
+                        if (rioBullets[i] != null && rioBullets[i].Hits(CollisionRect()))
                         {
                             blinkFrames = 2;
-                            health -= rioBullets[i].TakeDamage();
+                            health -= rioBullets[i].TakeDamage(uniqueID);
                             if (health <= 0)
                             {
                                 isAlive = false;

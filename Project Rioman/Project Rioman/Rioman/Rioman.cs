@@ -35,9 +35,6 @@ namespace Project_Rioman
             state = new RiomanState(this);
             anim = new RiomanAnimation(content, state);
 
-            for (int i = 0; i <= 2; i++)
-                bullets[i] = new RioBullet(content.Load<Texture2D>("Video\\weapons\\bullet"));
-
             location = new Rectangle(70, 400, GetSprite().Width, GetSprite().Height);
 
             Reset();
@@ -55,7 +52,10 @@ namespace Project_Rioman
         public void Draw(SpriteBatch spriteBatch, bool levelIsBusy)
         {
             foreach (AbstractBullet blt in bullets)
-                blt.Draw(spriteBatch);
+            {
+                if (blt != null)
+                    blt.Draw(spriteBatch);
+            }
 
             anim.Draw(spriteBatch, location, this, levelIsBusy);
 
@@ -88,9 +88,11 @@ namespace Project_Rioman
 
                 CheckShoot(keyboardState);
 
-                foreach (RioBullet blt in bullets)
-                    blt.Update(viewport);
-
+                foreach (AbstractBullet blt in bullets)
+                {
+                    if (blt != null)
+                        blt.Update(deltaTime, viewport);
+                }
 
                 stopLeftMovement = false;
                 stopRightMovement = false;
@@ -111,7 +113,7 @@ namespace Project_Rioman
 
                 for (int i = 0; i <= 2; i++)
                 {
-                    if (!bullets[i].IsAlive())
+                    if (bullets[i] == null || !bullets[i].IsAlive())
                     {
                         index = i;
                         break;
@@ -121,10 +123,8 @@ namespace Project_Rioman
                 if (index >= 0)
                 {
                     state.Shoot();
-                    if (!FacingRight())
-                        bullets[index].BulletSpawn(location.X - 20, location.Center.Y - 8, SpriteEffects.FlipHorizontally);
-                    else
-                        bullets[index].BulletSpawn(location.X + 20, location.Center.Y - 8, SpriteEffects.None);
+                    bullets[index] = Weapons.CreateBullet(location.X, location.Y, FacingRight());
+
                 }
             }
         }
@@ -406,8 +406,10 @@ namespace Project_Rioman
         public void KillBullets()
         {
             for (int i = 0; i <= 2; i++)
-                bullets[i].Kill();
-
+            {
+                if (bullets[i] != null)
+                    bullets[i].Kill();
+            }
         }
 
         public int GetLastXMovement() { return (int)lastMove.X; }

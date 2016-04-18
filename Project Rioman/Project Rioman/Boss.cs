@@ -279,7 +279,7 @@ namespace Project_Rioman
                             if (!canthurt)
                             {
                                 hit = true;
-                                Health.AdjustBossHealth(-blt.TakeDamage());
+                                Health.AdjustBossHealth(-blt.TakeDamage("TODO"));
                             }
                         }
                     }
@@ -290,7 +290,7 @@ namespace Project_Rioman
                             if (!canthurt)
                             {
                                 hit = true;
-                                Health.AdjustBossHealth(-blt.TakeDamage());
+                                Health.AdjustBossHealth(-blt.TakeDamage("TODO"));
                             }
                         }
                     }

@@ -51,7 +51,7 @@ namespace Project_Rioman
             {
                 if (!exploding)
                 {
-                    foreach (RioBullet b in rioBullets)
+                    foreach (AbstractBullet b in rioBullets)
                     {
                         if (b.Hits(GetCollisionRect()))
                         {

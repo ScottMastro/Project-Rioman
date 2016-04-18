@@ -107,6 +107,17 @@ namespace Project_Rioman
 
         }
 
+        public static AbstractBullet CreateBullet(int x, int y, bool facingRight)
+        {
+            if (activeWeapon == Constant.RIOBULLET)
+                return new RioBullet(x, y, facingRight);
+            else if (activeWeapon == Constant.INFERNOBULLET)
+                return new InfernoBullet(x, y, facingRight);
+
+            return null;
+        }
+
+
         public static void ChangeActiveWeapon(KeyboardState keyboardstate, KeyboardState previouskeyboardstate)
         {
             int tempactive = activeWeapon;

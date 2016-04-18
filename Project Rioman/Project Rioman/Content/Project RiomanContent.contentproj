@@ -3288,13 +3288,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Video\weapons\infernoattack.png">
-      <Name>infernoattack</Name>
+    <Compile Include="Video\weapons\infernosword.png">
+      <Name>infernosword</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Video\weapons\infernosword.png">
-      <Name>infernosword</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Video\weapons\infernobullet.png">
+      <Name>infernobullet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Video\weapons\aurorabullet.png">
+      <Name>aurorabullet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

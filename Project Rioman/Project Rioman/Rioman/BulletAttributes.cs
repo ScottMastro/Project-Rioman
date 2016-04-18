@@ -8,12 +8,14 @@ namespace Project_Rioman
     public static class BulletAttributes
     {
 
+        private static Dictionary<int, int> speed;
         private static Dictionary<int, int> damage;
         private static Dictionary<int, Texture2D[]> sprites;
 
 
         public static void LoadContent(ContentManager content)
         {
+            SpeedInit();
             DamageInit();
             SpritesInit(content);
         }
@@ -54,12 +56,29 @@ namespace Project_Rioman
         //    damage.Add(Constant.GEOBULLET, 4);
         //    damage.Add(Constant.AURORABULLET, 0);
          //   damage.Add(Constant.LURKERBULLET, 2);
-            damage.Add(Constant.INFERNOBULLET, 6);
+            damage.Add(Constant.INFERNOBULLET, 4);
          //   damage.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
          //   damage.Add(Constant.POSTERBULLET, 6);
          //   damage.Add(Constant.TOXICBULLET, 5);
          //   damage.Add(Constant.CLOVERBULLET, 3);
          //   damage.Add(Constant.BUNNYBULLET, 4);
+
+        }
+
+        private static void SpeedInit()
+        {
+            speed = new Dictionary<int, int>();
+
+            speed.Add(Constant.RIOBULLET, 9);
+            //    speed.Add(Constant.GEOBULLET, 4);
+            //    speed.Add(Constant.AURORABULLET, 0);
+            //   speed.Add(Constant.LURKERBULLET, 2);
+            speed.Add(Constant.INFERNOBULLET, 4);
+            //   speed.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
+            //   speed.Add(Constant.POSTERBULLET, 6);
+            //   speed.Add(Constant.TOXICBULLET, 5);
+            //   speed.Add(Constant.CLOVERBULLET, 3);
+            //   speed.Add(Constant.BUNNYBULLET, 4);
 
         }
 
@@ -70,6 +89,15 @@ namespace Project_Rioman
 
             return value;
         }
+
+        public static int GetSpeedAttribute(int type)
+        {
+            int value;
+            speed.TryGetValue(type, out value);
+
+            return value;
+        }
+
 
         public static Texture2D[] GetSprites(int type)
         {

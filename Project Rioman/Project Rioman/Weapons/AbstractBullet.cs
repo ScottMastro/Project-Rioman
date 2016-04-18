@@ -1,39 +1,49 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 
 namespace Project_Rioman
 {
     abstract class AbstractBullet
     {
+        protected int type;
         protected Texture2D sprite;
         protected bool isAlive;
         protected Rectangle location;
+        protected Rectangle drawRect;
         protected int direction;
         protected int damage;
+        protected int speed;
+        protected List<string> hitList;
 
-        public void Update(Viewport viewport)
+        protected AbstractBullet(int type, bool facingRight)
         {
-            if (location.X > viewport.Width || location.X < 0 - sprite.Width)
+            this.type = type;
+            if (facingRight)
+                direction = 1;
+            else
+                direction = -1;
+
+            speed = BulletAttributes.GetSpeedAttribute(type);
+            damage = BulletAttributes.GetDamageAttribute(type);
+
+            isAlive = true;
+            hitList = new List<string>();
+        }
+
+        public void Update(double deltaTime, Viewport viewport)
+        {
+            if (location.X > viewport.Width || location.X < 0 - drawRect.Width)
                 isAlive = false;
 
-            SubUpdate();
+            SubUpdate(deltaTime);
 
         }
 
-        public abstract void BulletSpawn(int x, int y, SpriteEffects dir);
         public abstract void Draw(SpriteBatch spriteBatch);
-        protected abstract void SubUpdate();
-
-        public int TakeDamage()
-        {
-            if (isAlive)
-            {
-                isAlive = false;
-                return damage;
-            }
-            else return 0;
-        }
+        protected abstract void SubUpdate(double deltaTime);
+        public abstract int TakeDamage(string enemyID);
 
         public void MoveBullet(int x, int y)
         {

@@ -618,5 +618,6 @@ Content\Audio\soundeffects\shoot3.xnb
 Content\Audio\soundeffects\shieldhit.xnb
 Content\Audio\soundeffects\heal.xnb
 Content\Video\weapons\bullet.xnb
-Content\Video\weapons\infernoattack.xnb
 Content\Video\weapons\infernosword.xnb
+Content\Video\weapons\infernobullet.xnb
+Content\Video\weapons\aurorabullet.xnb

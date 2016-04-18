@@ -6,29 +6,22 @@ namespace Project_Rioman
 {
     class RioBullet : AbstractBullet
     {
-
-        public RioBullet(Texture2D bullet)
+        public RioBullet(int x, int y, bool facingRight) : base(Constant.RIOBULLET, facingRight)
         {
-            damage = 1;
-            sprite = bullet;
-            isAlive = false;
-            location = new Rectangle(0, 0, bullet.Width, bullet.Height);
-        }
+            sprite = BulletAttributes.GetSprites(Constant.RIOBULLET)[0];
 
-        public override void BulletSpawn(int x, int y, SpriteEffects dir)
-        {
-            location.X = x;
-            location.Y = y;
+            drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
+            location = new Rectangle(0, 0, drawRect.Width, drawRect.Height);
 
-            if (dir == SpriteEffects.None)
-                direction = 1;
+            if (facingRight)
+                location.X = x - 20;
             else
-                direction = -1;
+                location.X = x + 20;
 
-            isAlive = true;
+            location.Y = y + 22;
+
             Audio.PlayShoot();
         }
-
 
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -41,11 +34,21 @@ namespace Project_Rioman
             return location;
         }
 
-        protected override void SubUpdate()
+
+        protected override void SubUpdate(double deltaTime)
         {
             if (isAlive)
-                location.X += 9 * direction;
+                location.X += speed * direction;
         }
 
+        public override int TakeDamage(string enemyID)
+        {
+            if (isAlive)
+            {
+                isAlive = false;
+                return damage;
+            }
+            else return 0;
+        }
     }
 }

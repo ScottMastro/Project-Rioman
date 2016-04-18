@@ -5582,15 +5582,6 @@
       <Time>2010-01-06T00:33:08-05:00</Time>
     </Item>
     <Item>
-      <Source>Video\weapons\infernoattack.png</Source>
-      <Name>Video\weapons\infernoattack</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\infernoattack.xnb</Output>
-      <Time>2016-04-18T15:06:34.4493024-04:00</Time>
-    </Item>
-    <Item>
       <Source>Video\weapons\infernosword.png</Source>
       <Name>Video\weapons\infernosword</Name>
       <Importer>TextureImporter</Importer>
@@ -5598,6 +5589,24 @@
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\infernosword.xnb</Output>
       <Time>2016-04-18T14:46:25.4885165-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\weapons\infernobullet.png</Source>
+      <Name>Video\weapons\infernobullet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\infernobullet.xnb</Output>
+      <Time>2016-04-18T15:06:34.4493024-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\weapons\aurorabullet.png</Source>
+      <Name>Video\weapons\aurorabullet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\aurorabullet.xnb</Output>
+      <Time>2010-02-28T13:13:22-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
