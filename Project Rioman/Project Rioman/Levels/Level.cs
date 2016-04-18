@@ -586,7 +586,7 @@ namespace Project_Rioman
             return riolocation;
         }
 
-        public void UpdateEnemies(Rioman player, Bullet[] bullets, double deltaTime, Viewport viewport)
+        public void UpdateEnemies(Rioman player, AbstractBullet[] bullets, double deltaTime, Viewport viewport)
         {
 
             for (int i = 0; i <= enemies.Length - 1; i++)

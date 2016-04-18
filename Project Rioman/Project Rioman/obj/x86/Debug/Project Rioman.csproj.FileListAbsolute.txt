@@ -1827,7 +1827,6 @@ C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Pro
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\obj\x86\Debug\Project Rioman.exe
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\obj\x86\Debug\Project Rioman.pdb
-C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\obj\x86\Debug\Project Rioman.csprojResolveAssemblyReference.cache
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug1.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug2.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug3.xnb

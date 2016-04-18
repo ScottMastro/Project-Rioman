@@ -232,7 +232,7 @@ namespace Project_Rioman
             return go;
         }
 
-        public void Collision(Bullet[] bullets, Rioman rioman)
+        public void Collision(AbstractBullet[] bullets, Rioman rioman)
         {
             if (isalive)
             {
@@ -270,30 +270,28 @@ namespace Project_Rioman
                 if (boss == 5)
                     collisionrect.X -= 18;
 
-                foreach (Bullet blt in bullets)
+                foreach (AbstractBullet blt in bullets)
                 {
                     if (boss == 5)
                     {
-                        if (blt.isAlive && blt.location.Intersects(collisionrect))
+                        if (blt.Hits(collisionrect))
                         {
                             if (!canthurt)
                             {
                                 hit = true;
-                                Health.AdjustBossHealth(-1);
+                                Health.AdjustBossHealth(-blt.TakeDamage());
                             }
-                            blt.isAlive = false;
                         }
                     }
                     else
                     {
-                        if (blt.isAlive && blt.location.Intersects(location))
+                        if (blt.Hits(location))
                         {
                             if (!canthurt)
                             {
                                 hit = true;
-                                Health.AdjustBossHealth(-1);
+                                Health.AdjustBossHealth(-blt.TakeDamage());
                             }
-                            blt.isAlive = false;
                         }
                     }
                 }

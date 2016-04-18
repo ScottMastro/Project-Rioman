@@ -49,7 +49,7 @@ namespace Project_Rioman
             location.Y -= stand.Height;
         }
 
-        protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
+        protected override void SubUpdate(Rioman player, AbstractBullet[] rioBullets, double deltaTime, Viewport viewport)
         {
 
             if (isAlive)
@@ -104,14 +104,14 @@ namespace Project_Rioman
             }
         }
 
-        protected override void SubCheckHit(Rioman player, Bullet[] rioBullets)
+        protected override void SubCheckHit(Rioman player, AbstractBullet[] rioBullets)
         {
             if (isAlive)
             {
                 for (int i = 0; i <= rioBullets.Length - 1; i++)
-                    if (rioBullets[i].isAlive && rioBullets[i].location.Intersects(GetShieldRect()))
+                    if (rioBullets[i].Hits(GetShieldRect()))
                     {
-                        rioBullets[i].isAlive = false;
+                        rioBullets[i].Kill();
                         Audio.PlayShieldHit();
 
                     }

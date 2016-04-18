@@ -26,7 +26,7 @@ namespace Project_Rioman
         private const int WARP_SPEED = 15;
         private const int MAX_FALL_SPEED = 10;
 
-        private Bullet[] bullets = new Bullet[3];
+        private AbstractBullet[] bullets = new AbstractBullet[3];
 
         private KeyboardState prevKeyboardState;
 
@@ -36,7 +36,7 @@ namespace Project_Rioman
             anim = new RiomanAnimation(content, state);
 
             for (int i = 0; i <= 2; i++)
-                bullets[i] = new Bullet(content.Load<Texture2D>("Video\\bullet"));
+                bullets[i] = new RioBullet(content.Load<Texture2D>("Video\\bullet"));
 
             location = new Rectangle(70, 400, GetSprite().Width, GetSprite().Height);
 
@@ -54,7 +54,7 @@ namespace Project_Rioman
 
         public void Draw(SpriteBatch spriteBatch, bool levelIsBusy)
         {
-            foreach (Bullet blt in bullets)
+            foreach (AbstractBullet blt in bullets)
                 blt.Draw(spriteBatch);
 
             anim.Draw(spriteBatch, location, this, levelIsBusy);
@@ -88,8 +88,8 @@ namespace Project_Rioman
 
                 CheckShoot(keyboardState);
 
-                foreach (Bullet blt in bullets)
-                    blt.BulletUpdate(viewport.Width);
+                foreach (RioBullet blt in bullets)
+                    blt.Update(viewport);
 
 
                 stopLeftMovement = false;
@@ -111,7 +111,7 @@ namespace Project_Rioman
 
                 for (int i = 0; i <= 2; i++)
                 {
-                    if (!bullets[i].isAlive)
+                    if (!bullets[i].IsAlive())
                     {
                         index = i;
                         break;
@@ -403,11 +403,11 @@ namespace Project_Rioman
         public void FreezeFor(double x) { state.Freeze(x); anim.SetFreezeTime(x); }
         public bool IsFrozen() { return state.IsFrozen(); }
 
-        public Bullet[] GetBullets() { return bullets; }
+        public AbstractBullet[] GetBullets() { return bullets; }
         public void KillBullets()
         {
             for (int i = 0; i <= 2; i++)
-                bullets[i].isAlive = false;
+                bullets[i].Kill();
 
         }
 

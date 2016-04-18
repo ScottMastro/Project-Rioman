@@ -40,7 +40,7 @@ namespace Project_Rioman
         }
 
 
-        protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
+        protected override void SubUpdate(Rioman player, AbstractBullet[] rioBullets, double deltaTime, Viewport viewport)
         {
             if (isAlive)
             {
@@ -132,7 +132,7 @@ namespace Project_Rioman
             }
         }
 
-        protected override void SubCheckHit(Rioman player, Bullet[] rioBullets)
+        protected override void SubCheckHit(Rioman player, AbstractBullet[] rioBullets)
         {
             //do nothing
         }

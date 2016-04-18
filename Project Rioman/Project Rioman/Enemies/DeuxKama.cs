@@ -35,7 +35,7 @@ namespace Project_Rioman
         }
 
 
-        protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
+        protected override void SubUpdate(Rioman player, AbstractBullet[] rioBullets, double deltaTime, Viewport viewport)
         {
             rotation = (rotation + 0.075f);
             if (rotation > PI * 2f)
@@ -86,7 +86,7 @@ namespace Project_Rioman
             //do nothing
         }
 
-        protected override void SubCheckHit(Rioman player, Bullet[] rioBullets)
+        protected override void SubCheckHit(Rioman player, AbstractBullet[] rioBullets)
         {
             //do nothing
         }

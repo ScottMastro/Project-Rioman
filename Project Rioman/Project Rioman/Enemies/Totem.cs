@@ -177,13 +177,13 @@ namespace Project_Rioman
                 }
             }
 
-            public void CheckHit(Bullet[] rioBullets)
+            public void CheckHit(AbstractBullet[] rioBullets)
             {
                 if (isAlive)
                 {
                     for (int i = 0; i <= rioBullets.Length - 1; i++)
                     {
-                        if (rioBullets[i].isAlive && rioBullets[i].location.Intersects(CollisionRect()))
+                        if (rioBullets[i].Hits(CollisionRect()))
                         {
                             blinkFrames = 2;
                             health -= rioBullets[i].TakeDamage();
@@ -256,7 +256,7 @@ namespace Project_Rioman
         }
 
 
-        protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
+        protected override void SubUpdate(Rioman player, AbstractBullet[] rioBullets, double deltaTime, Viewport viewport)
         {
             bool aliveFlag = false;
             for (int i = 0; i <= numberOfTotems - 1; i++)
@@ -352,7 +352,7 @@ namespace Project_Rioman
 
         }
 
-        protected override void SubCheckHit(Rioman player, Bullet[] rioBullets)
+        protected override void SubCheckHit(Rioman player, AbstractBullet[] rioBullets)
         {
             for (int i = 0; i <= numberOfTotems - 1; i++)
                 totems[i].CheckHit(rioBullets);

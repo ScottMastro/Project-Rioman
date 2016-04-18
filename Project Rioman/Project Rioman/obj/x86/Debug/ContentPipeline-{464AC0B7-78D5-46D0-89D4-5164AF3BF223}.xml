@@ -5141,6 +5141,69 @@
       <Time>2016-02-28T19:07:43.5140972-05:00</Time>
     </Item>
     <Item>
+      <Source>Video\debug\debug1.png</Source>
+      <Name>Video\debug\debug1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug1.xnb</Output>
+      <Time>2016-03-21T21:52:13.4570255-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\debug\debug2.png</Source>
+      <Name>Video\debug\debug2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug2.xnb</Output>
+      <Time>2016-03-21T21:52:24.4943375-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\debug\debug3.png</Source>
+      <Name>Video\debug\debug3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug3.xnb</Output>
+      <Time>2016-03-21T21:52:34.206991-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\debug\debug4.png</Source>
+      <Name>Video\debug\debug4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug4.xnb</Output>
+      <Time>2016-03-21T21:52:43.6083417-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\enemies\ttbullets4.png</Source>
+      <Name>Video\enemies\ttbullets4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\enemies\ttbullets4.xnb</Output>
+      <Time>2016-04-05T13:00:59.4868939-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clockandhand.png</Source>
+      <Name>Video\rioman\clockandhand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clockandhand.xnb</Output>
+      <Time>2016-04-10T15:34:05.6124778-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\debug\px.png</Source>
+      <Name>Video\debug\px</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\px.xnb</Output>
+      <Time>2016-04-17T22:04:12.7333059-04:00</Time>
+    </Item>
+    <Item>
       <Source>Audio\auroraman.wav</Source>
       <Name>Audio\auroraman</Name>
       <Importer>WavImporter</Importer>
@@ -5474,42 +5537,6 @@
       <Time>2010-02-08T20:48:34-05:00</Time>
     </Item>
     <Item>
-      <Source>Video\debug\debug1.png</Source>
-      <Name>Video\debug\debug1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug1.xnb</Output>
-      <Time>2016-03-21T21:52:13.4570255-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\debug\debug2.png</Source>
-      <Name>Video\debug\debug2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug2.xnb</Output>
-      <Time>2016-03-21T21:52:24.4943375-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\debug\debug3.png</Source>
-      <Name>Video\debug\debug3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug3.xnb</Output>
-      <Time>2016-03-21T21:52:34.206991-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\debug\debug4.png</Source>
-      <Name>Video\debug\debug4</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\debug4.xnb</Output>
-      <Time>2016-03-21T21:52:43.6083417-04:00</Time>
-    </Item>
-    <Item>
       <Source>Audio\soundeffects\killenemy.wav</Source>
       <Name>Audio\soundeffects\killenemy</Name>
       <Importer>WavImporter</Importer>
@@ -5537,15 +5564,6 @@
       <Time>2016-03-27T23:52:44.0078753-04:00</Time>
     </Item>
     <Item>
-      <Source>Video\enemies\ttbullets4.png</Source>
-      <Name>Video\enemies\ttbullets4</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\enemies\ttbullets4.xnb</Output>
-      <Time>2016-04-05T13:00:59.4868939-04:00</Time>
-    </Item>
-    <Item>
       <Source>Audio\soundeffects\shieldhit.wav</Source>
       <Name>Audio\soundeffects\shieldhit</Name>
       <Importer>WavImporter</Importer>
@@ -5555,15 +5573,6 @@
       <Time>2016-04-05T23:36:58.1077619-04:00</Time>
     </Item>
     <Item>
-      <Source>Video\rioman\clockandhand.png</Source>
-      <Name>Video\rioman\clockandhand</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clockandhand.xnb</Output>
-      <Time>2016-04-10T15:34:05.6124778-04:00</Time>
-    </Item>
-    <Item>
       <Source>Audio\soundeffects\heal.wav</Source>
       <Name>Audio\soundeffects\heal</Name>
       <Importer>WavImporter</Importer>
@@ -5571,15 +5580,6 @@
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\heal.xnb</Output>
       <Time>2016-04-13T23:00:33.4832698-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\debug\px.png</Source>
-      <Name>Video\debug\px</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\debug\px.xnb</Output>
-      <Time>2016-04-17T22:04:12.7333059-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

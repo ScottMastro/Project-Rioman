@@ -143,7 +143,7 @@ namespace Project_Rioman
         }
 
 
-        public void Update(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
+        public void Update(Rioman player, AbstractBullet[] rioBullets, double deltaTime, Viewport viewport)
         {
             if (!isAlive && readyToSpawn && !Offscreen(viewport))
             {
@@ -173,7 +173,7 @@ namespace Project_Rioman
             wasAlive = isAlive;
         }
 
-        protected void CheckHit(Rioman player, Bullet[] rioBullets)
+        protected void CheckHit(Rioman player, AbstractBullet[] rioBullets)
         {
             if (isAlive)
             {
@@ -183,10 +183,14 @@ namespace Project_Rioman
                 if (!isInvincible)
                 {
                     for (int i = 0; i <= rioBullets.Length - 1; i++)
-                        if (rioBullets[i].isAlive && rioBullets[i].location.Intersects(GetCollisionRect()))
+                        if (rioBullets[i].GetCollisionRect().Intersects(GetCollisionRect()))
                         {
-                            TakeDamage(rioBullets[i].TakeDamage());
-                            blinkFrames = 2;
+                            int damage = rioBullets[i].TakeDamage();
+                            if (damage > 0)
+                            {
+                                TakeDamage(damage);
+                                blinkFrames = 2;
+                            }
 
                         }
                 }
@@ -218,8 +222,8 @@ namespace Project_Rioman
         }
 
         protected abstract void SubReset();
-        protected abstract void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport);
-        protected abstract void SubCheckHit(Rioman player, Bullet[] rioBullets);
+        protected abstract void SubUpdate(Rioman player, AbstractBullet[] rioBullets, double deltaTime, Viewport viewport);
+        protected abstract void SubCheckHit(Rioman player, AbstractBullet[] rioBullets);
         protected abstract void SubDrawEnemy(SpriteBatch spriteBatch);
         protected abstract void SubDrawOther(SpriteBatch spriteBatch);
         protected abstract void SubMove(int x, int y);

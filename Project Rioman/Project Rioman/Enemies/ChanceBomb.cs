@@ -45,17 +45,17 @@ namespace Project_Rioman
             hasExploded = false;
         }
 
-        protected override void SubUpdate(Rioman player, Bullet[] rioBullets, double deltaTime, Viewport viewport)
+        protected override void SubUpdate(Rioman player, AbstractBullet[] rioBullets, double deltaTime, Viewport viewport)
         {
             if (isAlive && !hasExploded)
             {
                 if (!exploding)
                 {
-                    foreach (Bullet b in rioBullets)
+                    foreach (RioBullet b in rioBullets)
                     {
-                        if (b.isAlive && b.location.Intersects(GetCollisionRect()))
+                        if (b.Hits(GetCollisionRect()))
                         {
-                            b.isAlive = false;
+                            b.Kill();
                             if (counter == 0)
                                 counter = 1;
                         }
@@ -124,7 +124,7 @@ namespace Project_Rioman
             }
         }
 
-        protected override void SubCheckHit(Rioman player, Bullet[] rioBullets)
+        protected override void SubCheckHit(Rioman player, AbstractBullet[] rioBullets)
         {
             if (isAlive && !hasExploded)
             {
