@@ -113,7 +113,7 @@ namespace Project_Rioman
 
         protected override void SubCheckHit(Rioman player, AbstractBullet[] rioBullets)
         {
-            if (!player.IsInvincible() && hitTimer <= 0 && player.Hitbox.Intersects(GetCollisionRect()))
+            if (isAlive && !player.IsInvincible() && hitTimer <= 0 && player.Hitbox.Intersects(GetCollisionRect()))
             {
                 player.FreezeFor(2);
                 hitTimer = 3;
