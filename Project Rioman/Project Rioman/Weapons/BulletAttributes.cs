@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ namespace Project_Rioman
 {
     public static class BulletAttributes
     {
+        private static Dictionary<int, Color> riomanColour;
         private static Dictionary<int, int> ammoUse;
         private static Dictionary<int, int> speed;
         private static Dictionary<int, int> damage;
@@ -15,6 +17,7 @@ namespace Project_Rioman
 
         public static void LoadContent(ContentManager content)
         {
+            ColourInit();
             AmmoUseInit();
             SpeedInit();
             DamageInit();
@@ -100,6 +103,23 @@ namespace Project_Rioman
 
         }
 
+        private static void ColourInit()
+        {
+            riomanColour = new Dictionary<int, Color>();
+
+            riomanColour.Add(Constant.RIOBULLET, Color.White * 0f);
+            //    riomanColour.Add(Constant.GEOBULLET, 4);
+            riomanColour.Add(Constant.AURORABULLET, Color.SkyBlue);
+            //   riomanColour.Add(Constant.LURKERBULLET, 2);
+            riomanColour.Add(Constant.INFERNOBULLET, Color.Red);
+            //   riomanColour.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
+            //   riomanColour.Add(Constant.POSTERBULLET, 6);
+            //   riomanColour.Add(Constant.TOXICBULLET, 5);
+            //   riomanColour.Add(Constant.CLOVERBULLET, 3);
+            //   riomanColour.Add(Constant.BUNNYBULLET, 4);
+
+        }
+
         public static int GetDamageAttribute(int type)
         {
             int value;
@@ -130,6 +150,14 @@ namespace Project_Rioman
             sprites.TryGetValue(type, out s);
 
             return s;
+        }
+
+        public static Color GetRiomanColour(int type)
+        {
+            Color value;
+            riomanColour.TryGetValue(type, out value);
+
+            return value;
         }
     }
 }

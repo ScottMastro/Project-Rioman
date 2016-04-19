@@ -180,5 +180,10 @@ namespace Project_Rioman
             return activeWeapon;
         }
 
+        public static Color GetRiomanColour()
+        {
+            return BulletAttributes.GetRiomanColour(activeWeapon);
+        }
+
     }
 }

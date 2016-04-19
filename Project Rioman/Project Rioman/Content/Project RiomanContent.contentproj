@@ -45,11 +45,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Video\rioman\riomanrungun.png">
-      <Name>riomanrungun</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Video\rioman\riomanstandgun.png">
       <Name>riomanstandgun</Name>
       <Importer>TextureImporter</Importer>
@@ -57,11 +52,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Video\rioman\riomanrun.png">
-      <Name>riomanrun</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Video\rioman\riomanjump.png">
       <Name>riomanjump</Name>
       <Importer>TextureImporter</Importer>
@@ -3313,6 +3303,117 @@
       <Name>infernobullet</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Video\rioman\clothes\riomanstandgun.png">
+      <Name>riomanstandgun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Video\rioman\clothes\riomanstand.png">
+      <Name>riomanstand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Video\rioman\clothes\hitair.png">
+      <Name>hitair</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\hitground.png">
+      <Name>hitground</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\riomanclimb.png">
+      <Name>riomanclimb</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\riomanclimbflop.png">
+      <Name>riomanclimbflop</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\riomanclimbgun.png">
+      <Name>riomanclimbgun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\riomanclimbtop.png">
+      <Name>riomanclimbtop</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\riomanjump.png">
+      <Name>riomanjump</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\riomanjumpgun.png">
+      <Name>riomanjumpgun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\riomanrun1.png">
+      <Name>riomanrun1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\riomanrun2.png">
+      <Name>riomanrun2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\riomanrun3.png">
+      <Name>riomanrun3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\riomanrungun1.png">
+      <Name>riomanrungun1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\riomanrungun2.png">
+      <Name>riomanrungun2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\riomanrungun3.png">
+      <Name>riomanrungun3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\riomanrungun4.png">
+      <Name>riomanrungun4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\warp1.png">
+      <Name>warp1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\warp2.png">
+      <Name>warp2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\warp3.png">
+      <Name>warp3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Video\rioman\clothes\warp4.png">
+      <Name>warp4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
