@@ -91,7 +91,7 @@ namespace Project_Rioman
                 foreach (AbstractBullet blt in bullets)
                 {
                     if (blt != null)
-                        blt.Update(deltaTime, viewport);
+                        blt.Update(this, deltaTime, viewport);
                 }
 
                 stopLeftMovement = false;

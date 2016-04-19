@@ -122,7 +122,9 @@ namespace Project_Rioman
                 return new InfernoBullet(x, y, facingRight);
             else if (activeWeapon == Constant.AURORABULLET)
                 return new AuroraBullet(x, y, facingRight);
-            
+            else if (activeWeapon == Constant.CLOVERBULLET)
+                return new CloverBullet(x, y, facingRight);
+
             return null;
         }
 

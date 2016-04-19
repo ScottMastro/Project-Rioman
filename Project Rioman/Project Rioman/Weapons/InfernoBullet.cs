@@ -47,16 +47,15 @@ namespace Project_Rioman
                     se = SpriteEffects.FlipHorizontally;
 
                 spriteBatch.Draw(sprite, location, drawRect, Color.White, 0f, new Vector2(), se, 0);
-
             }
         }
 
         public override Rectangle GetCollisionRect()
         {
-            return location;
+            return new Rectangle(location.X + drawRect.Width / 2, location.Y + 10, drawRect.Width / 2, drawRect.Height - 20);
         }
 
-        protected override void SubUpdate(double deltaTime)
+        protected override void SubUpdate(Rioman player, double deltaTime)
         {
             frameTime += deltaTime;
            
@@ -85,6 +84,16 @@ namespace Project_Rioman
             if (isAlive)
                 return damage;
             else return 0;
+        }
+
+        public override bool Hits(Rectangle collisionRect)
+        {
+            return isAlive && collisionRect.Intersects(GetCollisionRect());
+        }
+
+        protected override void SubMove(int x, int y)
+        {
+            //do nothing
         }
     }
 }

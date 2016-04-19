@@ -34,23 +34,27 @@ namespace Project_Rioman
             Audio.PlayShoot();
         }
 
-        public void Update(double deltaTime, Viewport viewport)
+        public void Update(Rioman player, double deltaTime, Viewport viewport)
         {
             if (location.X > viewport.Width || location.X < 0 - drawRect.Width)
                 isAlive = false;
 
-            SubUpdate(deltaTime);
+            SubUpdate(player, deltaTime);
 
         }
 
         public abstract void Draw(SpriteBatch spriteBatch);
-        protected abstract void SubUpdate(double deltaTime);
+        protected abstract void SubUpdate(Rioman player, double deltaTime);
+        protected abstract void SubMove(int x, int y);
         public abstract int TakeDamage(string enemyID);
+        public abstract bool Hits(Rectangle collisionRect);
 
         public void MoveBullet(int x, int y)
         {
             location.X += x;
             location.Y += y;
+
+            SubMove(x, y);
         }
 
         public void Kill()
@@ -63,10 +67,6 @@ namespace Project_Rioman
             return isAlive;
         }
 
-        public bool Hits(Rectangle collisionRect)
-        {
-            return isAlive && collisionRect.Intersects(GetCollisionRect());
-        }
 
         public abstract Rectangle GetCollisionRect();
     }

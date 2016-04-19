@@ -53,7 +53,7 @@ namespace Project_Rioman
                 {
                     foreach (AbstractBullet b in rioBullets)
                     {
-                        if (b.Hits(GetCollisionRect()))
+                        if (b!= null && b.Hits(GetCollisionRect()))
                         {
                             b.Kill();
                             if (counter == 0)

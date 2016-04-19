@@ -37,7 +37,7 @@ namespace Project_Rioman
           //  sprites.Add(Constant.DUELBULLET, LoadSprites(c, new string[] {}));
            // sprites.Add(Constant.POSTERBULLET, LoadSprites(c, new string[] {}));
            // sprites.Add(Constant.TOXICBULLET, LoadSprites(c, new string[] {}));
-           // sprites.Add(Constant.CLOVERBULLET, LoadSprites(c, new string[] {}));
+            sprites.Add(Constant.CLOVERBULLET, LoadSprites(c, new string[] {"cloverbullet"}));
            // sprites.Add(Constant.BUNNYBULLET, LoadSprites(c, new string[] {}));
           
         }
@@ -64,7 +64,7 @@ namespace Project_Rioman
          //   damage.Add(Constant.DUELBULLET, 0);
          //   damage.Add(Constant.POSTERBULLET, 6);
          //   damage.Add(Constant.TOXICBULLET, 5);
-         //   damage.Add(Constant.CLOVERBULLET, 3);
+            damage.Add(Constant.CLOVERBULLET, 4);
          //   damage.Add(Constant.BUNNYBULLET, 4);
 
         }
@@ -81,7 +81,7 @@ namespace Project_Rioman
             //   speed.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
             //   speed.Add(Constant.POSTERBULLET, 6);
             //   speed.Add(Constant.TOXICBULLET, 5);
-            //   speed.Add(Constant.CLOVERBULLET, 3);
+               speed.Add(Constant.CLOVERBULLET, 3);
             //   speed.Add(Constant.BUNNYBULLET, 4);
 
         }
@@ -98,7 +98,7 @@ namespace Project_Rioman
             //   ammoUse.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
             //   ammoUse.Add(Constant.POSTERBULLET, 6);
             //   ammoUse.Add(Constant.TOXICBULLET, 5);
-            //   ammoUse.Add(Constant.CLOVERBULLET, 3);
+               ammoUse.Add(Constant.CLOVERBULLET, 1);
             //   ammoUse.Add(Constant.BUNNYBULLET, 4);
 
         }
@@ -115,7 +115,7 @@ namespace Project_Rioman
             //   riomanColour.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
             //   riomanColour.Add(Constant.POSTERBULLET, 6);
             //   riomanColour.Add(Constant.TOXICBULLET, 5);
-            //   riomanColour.Add(Constant.CLOVERBULLET, 3);
+               riomanColour.Add(Constant.CLOVERBULLET, Color.Lime);
             //   riomanColour.Add(Constant.BUNNYBULLET, 4);
 
         }

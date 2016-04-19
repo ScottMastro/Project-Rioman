@@ -641,3 +641,4 @@ Content\Video\rioman\clothes\warp1.xnb
 Content\Video\rioman\clothes\warp2.xnb
 Content\Video\rioman\clothes\warp3.xnb
 Content\Video\rioman\clothes\warp4.xnb
+Content\Video\weapons\cloverbullet.xnb

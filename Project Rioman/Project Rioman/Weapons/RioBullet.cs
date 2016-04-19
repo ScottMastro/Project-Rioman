@@ -34,7 +34,7 @@ namespace Project_Rioman
         }
 
 
-        protected override void SubUpdate(double deltaTime)
+        protected override void SubUpdate(Rioman player, double deltaTime)
         {
             if (isAlive)
                 location.X += speed * direction;
@@ -48,6 +48,16 @@ namespace Project_Rioman
                 return damage;
             }
             else return 0;
+        }
+
+        public override bool Hits(Rectangle collisionRect)
+        {
+            return isAlive && collisionRect.Intersects(GetCollisionRect());
+        }
+
+        protected override void SubMove(int x, int y)
+        {
+            //do nothing
         }
     }
 }

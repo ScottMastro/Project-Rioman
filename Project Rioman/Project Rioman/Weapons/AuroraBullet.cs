@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -37,7 +34,6 @@ namespace Project_Rioman
                     se = SpriteEffects.FlipHorizontally;
 
                 spriteBatch.Draw(sprite, location, drawRect, Color.White, 0f, new Vector2(), se, 0);
-
             }
         }
 
@@ -46,7 +42,7 @@ namespace Project_Rioman
             return location;
         }
 
-        protected override void SubUpdate(double deltaTime)
+        protected override void SubUpdate(Rioman player, double deltaTime)
         {
             location.X += direction * speed;
         }
@@ -61,6 +57,16 @@ namespace Project_Rioman
             if (isAlive)
                 return damage;
             else return 0;
+        }
+
+        public override bool Hits(Rectangle collisionRect)
+        {
+            return isAlive && collisionRect.Intersects(GetCollisionRect());
+        }
+
+        protected override void SubMove(int x, int y)
+        {
+            //do nothing
         }
     }
 }
