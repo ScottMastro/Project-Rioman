@@ -115,12 +115,14 @@ namespace Project_Rioman
 
             if (activeWeapon == Constant.RIOBULLET)
                 return new RioBullet(x, y, facingRight);
-            else if (activeWeapon == Constant.INFERNOBULLET)
-            {
-                weaponAmmo[activeWeapon] = weaponAmmo[activeWeapon] - BulletAttributes.GetAmmoUse(activeWeapon);
-                return new InfernoBullet(x, y, facingRight);
-            }
 
+            weaponAmmo[activeWeapon] = weaponAmmo[activeWeapon] - BulletAttributes.GetAmmoUse(activeWeapon);
+
+            if (activeWeapon == Constant.INFERNOBULLET)
+                return new InfernoBullet(x, y, facingRight);
+            else if (activeWeapon == Constant.AURORABULLET)
+                return new AuroraBullet(x, y, facingRight);
+            
             return null;
         }
 

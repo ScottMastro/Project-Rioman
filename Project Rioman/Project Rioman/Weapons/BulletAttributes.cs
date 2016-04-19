@@ -58,7 +58,7 @@ namespace Project_Rioman
 
             damage.Add(Constant.RIOBULLET, 1);
         //    damage.Add(Constant.GEOBULLET, 4);
-        //    damage.Add(Constant.AURORABULLET, 0);
+            damage.Add(Constant.AURORABULLET, 2);
          //   damage.Add(Constant.LURKERBULLET, 2);
             damage.Add(Constant.INFERNOBULLET, 4);
          //   damage.Add(Constant.DUELBULLET, 0);
@@ -75,7 +75,7 @@ namespace Project_Rioman
 
             speed.Add(Constant.RIOBULLET, 9);
             //    speed.Add(Constant.GEOBULLET, 4);
-            //    speed.Add(Constant.AURORABULLET, 0);
+            speed.Add(Constant.AURORABULLET, 12);
             //   speed.Add(Constant.LURKERBULLET, 2);
             speed.Add(Constant.INFERNOBULLET, 4);
             //   speed.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
@@ -92,7 +92,7 @@ namespace Project_Rioman
 
             ammoUse.Add(Constant.RIOBULLET, 0);
             //    ammoUse.Add(Constant.GEOBULLET, 4);
-            //    ammoUse.Add(Constant.AURORABULLET, 0);
+            ammoUse.Add(Constant.AURORABULLET, 1);
             //   ammoUse.Add(Constant.LURKERBULLET, 2);
             ammoUse.Add(Constant.INFERNOBULLET, 2);
             //   ammoUse.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);

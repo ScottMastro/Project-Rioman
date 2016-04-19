@@ -109,7 +109,7 @@ namespace Project_Rioman
             if (isAlive)
             {
                 for (int i = 0; i <= rioBullets.Length - 1; i++)
-                    if (rioBullets[i].Hits(GetShieldRect()))
+                    if (rioBullets[i] != null && rioBullets[i].Hits(GetShieldRect()))
                     {
                         rioBullets[i].Kill();
                         Audio.PlayShieldHit();

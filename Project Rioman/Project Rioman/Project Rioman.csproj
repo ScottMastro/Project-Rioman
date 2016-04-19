@@ -100,6 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Weapons\AuroraBullet.cs" />
     <Compile Include="Weapons\BulletAttributes.cs" />
     <Compile Include="Weapons\AbstractBullet.cs" />
     <Compile Include="DebugDraw.cs" />
