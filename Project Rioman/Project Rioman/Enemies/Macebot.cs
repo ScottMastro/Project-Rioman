@@ -57,7 +57,6 @@ namespace Project_Rioman
 
         }
 
-
         protected override void SubUpdate(Rioman player, AbstractBullet[] rioBullets, double deltaTime, Viewport viewport)
         {
             if (isAlive)

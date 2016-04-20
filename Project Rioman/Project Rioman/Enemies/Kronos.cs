@@ -107,13 +107,10 @@ namespace Project_Rioman
         {
             return new Rectangle(location.X + 6, location.Y + 6, drawRect.Width - 12, drawRect.Height - 30);
         }
-        
-
-
 
         protected override void SubCheckHit(Rioman player, AbstractBullet[] rioBullets)
         {
-            if (isAlive && !player.IsInvincible() && hitTimer <= 0 && player.Hitbox.Intersects(GetCollisionRect()))
+            if (isAlive && !player.IsInvincible() && !player.IsLurking() && hitTimer <= 0 && player.Hitbox.Intersects(GetCollisionRect()))
             {
                 player.FreezeFor(2);
                 hitTimer = 3;

@@ -141,7 +141,7 @@ namespace Project_Rioman
             {
                 for (int i = 0; i <= spikes.Length - 1; i++)
                 {
-                    if (spikes[i].isAlive && spikes[i].LocRect().Intersects(player.Hitbox))
+                    if (spikes[i].isAlive && !player.IsLurking() && spikes[i].LocRect().Intersects(player.Hitbox))
                     {
                         player.Hit(BULLET_DAMAGE);
                         spikes[i].isAlive = false;

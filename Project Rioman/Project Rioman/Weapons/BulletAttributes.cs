@@ -61,7 +61,7 @@ namespace Project_Rioman
             damage.Add(Constant.RIOBULLET, 1);
         //    damage.Add(Constant.GEOBULLET, 4);
             damage.Add(Constant.AURORABULLET, 2);
-         //   damage.Add(Constant.LURKERBULLET, 2);
+            damage.Add(Constant.LURKERBULLET, 0);
             damage.Add(Constant.INFERNOBULLET, 4);
          //   damage.Add(Constant.DUELBULLET, 0);
          //   damage.Add(Constant.POSTERBULLET, 6);
@@ -78,7 +78,7 @@ namespace Project_Rioman
             speed.Add(Constant.RIOBULLET, 9);
             //    speed.Add(Constant.GEOBULLET, 4);
             speed.Add(Constant.AURORABULLET, 12);
-            //   speed.Add(Constant.LURKERBULLET, 2);
+               speed.Add(Constant.LURKERBULLET, 0);
             speed.Add(Constant.INFERNOBULLET, 4);
             //   speed.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
             //   speed.Add(Constant.POSTERBULLET, 6);
@@ -95,12 +95,12 @@ namespace Project_Rioman
             ammoUse.Add(Constant.RIOBULLET, 0);
             //    ammoUse.Add(Constant.GEOBULLET, 4);
             ammoUse.Add(Constant.AURORABULLET, 1);
-            //   ammoUse.Add(Constant.LURKERBULLET, 2);
+               ammoUse.Add(Constant.LURKERBULLET, 1);
             ammoUse.Add(Constant.INFERNOBULLET, 2);
             //   ammoUse.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
             //   ammoUse.Add(Constant.POSTERBULLET, 6);
             //   ammoUse.Add(Constant.TOXICBULLET, 5);
-               ammoUse.Add(Constant.CLOVERBULLET, 1);
+               ammoUse.Add(Constant.CLOVERBULLET, 4);
             //   ammoUse.Add(Constant.BUNNYBULLET, 4);
 
         }
@@ -112,12 +112,12 @@ namespace Project_Rioman
             weight.Add(Constant.RIOBULLET, 3);
             //    weight.Add(Constant.GEOBULLET, 4);
             weight.Add(Constant.AURORABULLET, 3);
-            //   weight.Add(Constant.LURKERBULLET, 2);
+            weight.Add(Constant.LURKERBULLET, 0);
             weight.Add(Constant.INFERNOBULLET, 3);
             //   weight.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
             //   weight.Add(Constant.POSTERBULLET, 6);
             //   weight.Add(Constant.TOXICBULLET, 5);
-            weight.Add(Constant.CLOVERBULLET, 10);
+            weight.Add(Constant.CLOVERBULLET, 6);
             //   weight.Add(Constant.BUNNYBULLET, 4);
 
         }
@@ -130,7 +130,7 @@ namespace Project_Rioman
             riomanColour.Add(Constant.RIOBULLET, Color.White * 0f);
             //    riomanColour.Add(Constant.GEOBULLET, 4);
             riomanColour.Add(Constant.AURORABULLET, Color.SkyBlue);
-            //   riomanColour.Add(Constant.LURKERBULLET, 2);
+            riomanColour.Add(Constant.LURKERBULLET, Color.LightGray);
             riomanColour.Add(Constant.INFERNOBULLET, Color.Red);
             //   riomanColour.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
             //   riomanColour.Add(Constant.POSTERBULLET, 6);

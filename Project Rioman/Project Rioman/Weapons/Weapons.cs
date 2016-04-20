@@ -181,10 +181,20 @@ namespace Project_Rioman
         {
             return weaponAmmo[activeWeapon];
         }
+        public static int GetAmmo(int value)
+        {
+            return weaponAmmo[value];
+        }
         public static int GetActiveWeapon()
         {
             return activeWeapon;
         }
+
+        public static void Lurk()
+        {
+            weaponAmmo[Constant.LURKERBULLET] -= BulletAttributes.GetAmmoUse(Constant.LURKERBULLET);
+        }
+
 
         public static Color GetRiomanColour()
         {

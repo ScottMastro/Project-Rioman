@@ -165,7 +165,7 @@ namespace Project_Rioman
         protected override void SubCheckHit(Rioman player, AbstractBullet[] rioBullets)
         {
             for (int i = 0; i <= bullets.Length - 1; i++)
-                if (bullets[i].isAlive && player.Hitbox.Intersects(new Rectangle(bullets[i].X, bullets[i].Y, bullet.Width/3, bullet.Height)))
+                if (bullets[i].isAlive && !player.IsLurking() && player.Hitbox.Intersects(new Rectangle(bullets[i].X, bullets[i].Y, bullet.Width/3, bullet.Height)))
                 {
                     player.Hit(BULLET_DAMAGE);
                     bullets[i].isAlive = false;

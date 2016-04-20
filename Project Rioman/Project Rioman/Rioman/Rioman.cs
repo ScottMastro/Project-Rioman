@@ -45,6 +45,7 @@ namespace Project_Rioman
             lastMove = new Vector2(0, 0);
             stopLeftMovement = false;
             stopRightMovement = false;
+            state.SetLurking(false);
 
             KillBullets();
         }
@@ -109,25 +110,29 @@ namespace Project_Rioman
         {
             if (keyboardState.IsKeyDown(Constant.SHOOT) && !prevKeyboardState.IsKeyDown(Constant.SHOOT) && state.CanShoot())
             {
-                int index = -1;
-                int weight = 0;
+                if (Weapons.GetActiveWeapon() == Constant.LURKERBULLET && Weapons.GetAmmo(Constant.LURKERBULLET) > 0)
+                    state.SetLurking(!state.IsLurking());
+                else {
+                    int index = -1;
+                    int weight = 0;
 
-                for (int i = 0; i <= 2; i++)
-                {
-                    if (bullets[i] == null || !bullets[i].IsAlive())
-                        index = i;
-                    else if (bullets[i] != null && bullets[i].IsAlive())
-                        weight += bullets[i].GetWeight();
-                }
+                    for (int i = 0; i <= 2; i++)
+                    {
+                        if (bullets[i] == null || !bullets[i].IsAlive())
+                            index = i;
+                        else if (bullets[i] != null && bullets[i].IsAlive())
+                            weight += bullets[i].GetWeight();
+                    }
 
-                if (index >= 0)
-                {
-                    AbstractBullet newBullet = Weapons.CreateBullet(weight, location.X, location.Y, FacingRight());
-                    bullets[index] = newBullet;
+                    if (index >= 0)
+                    {
+                        AbstractBullet newBullet = Weapons.CreateBullet(weight, location.X, location.Y, FacingRight());
+                        bullets[index] = newBullet;
 
-                    if (newBullet != null)
-                        state.Shoot();
+                        if (newBullet != null)
+                            state.Shoot();
 
+                    }
                 }
             }
         }
@@ -249,7 +254,7 @@ namespace Project_Rioman
 
         public void Hit(int damage)
         {
-            if (!IsInvincible())
+            if (!IsInvincible() && !state.IsLurking())
             {
                 StatusBar.AdjustHealth(-damage);
                 state.Hit();
@@ -404,6 +409,7 @@ namespace Project_Rioman
 
         public void FreezeFor(double x) { state.Freeze(x); anim.SetFreezeTime(x); }
         public bool IsFrozen() { return state.IsFrozen(); }
+        public bool IsLurking() { return state.IsLurking(); }
 
         public AbstractBullet[] GetBullets() { return bullets; }
         public void KillBullets()

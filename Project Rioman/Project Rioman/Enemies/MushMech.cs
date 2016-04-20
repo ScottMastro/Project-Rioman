@@ -129,14 +129,14 @@ namespace Project_Rioman
         protected override void SubCheckHit(Rioman player, AbstractBullet[] rioBullets)
         {
             
-            if (leftBullet.isAlive && !leftBullet.isAttached &&
+            if (leftBullet.isAlive && !leftBullet.isAttached && !player.IsLurking() &&
                 player.Hitbox.Intersects(new Rectangle(leftBullet.X, leftBullet.Y, bullet.Width, bullet.Height)))
             {
                 leftBullet.isAlive = false;
                 player.Hit(bulletDamage);
             }
 
-            if(rightBullet.isAlive && !leftBullet.isAttached &&
+            if(rightBullet.isAlive && !leftBullet.isAttached && !player.IsLurking() &&
                 player.Hitbox.Intersects(new Rectangle(rightBullet.X, rightBullet.Y, bullet.Width, bullet.Height)))
             {
                 rightBullet.isAlive = false;

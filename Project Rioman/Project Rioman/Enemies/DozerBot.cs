@@ -101,7 +101,7 @@ namespace Project_Rioman
 
                 isGroundBelow = false;
 
-                if (player.Hitbox.Intersects(KillPoint()))
+                if (!player.IsLurking() && player.Hitbox.Intersects(KillPoint()))
                     player.Hit(Constant.MAX_HEALTH);
 
                 if(!shooting)
@@ -157,8 +157,6 @@ namespace Project_Rioman
 
                 if (bulletCounter < bullets.Length)
                 {
-                    //Audio.PlayEnemyShoot1();
-
                     bullets[bulletCounter].isAlive = true;
 
                     if (FacingLeft())
@@ -183,7 +181,7 @@ namespace Project_Rioman
         protected override void SubCheckHit(Rioman player, AbstractBullet[] rioBullets)
         {
             for (int i = 0; i <= bullets.Length - 1; i++)
-                if (bullets[i].isAlive && player.Hitbox.Intersects(new Rectangle(bullets[i].X, bullets[i].Y, bullet.Width, bullet.Height)))
+                if (bullets[i].isAlive && !player.IsLurking() && player.Hitbox.Intersects(new Rectangle(bullets[i].X, bullets[i].Y, bullet.Width, bullet.Height)))
                 {
                     player.Hit(BULLET_DAMAGE);
                     bullets[i].isAlive = false;

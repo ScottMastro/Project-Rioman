@@ -362,7 +362,7 @@ namespace Project_Rioman
                 totems[i].CheckHit(rioBullets);
 
             for (int i = 0; i <= bullets.Length - 1; i++) {
-                if (bullets[i].isAlive && bullets[i].CollisionRect().Intersects(player.Hitbox))
+                if (bullets[i].isAlive && !player.IsLurking() && bullets[i].CollisionRect().Intersects(player.Hitbox))
                 {
                     player.Hit(bullets[i].damage);
                     bullets[i].isAlive = false;

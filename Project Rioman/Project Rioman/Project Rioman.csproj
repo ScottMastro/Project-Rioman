@@ -149,7 +149,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="Rioman\Rioman.cs" />
     <Compile Include="Levels\Tile.cs" />
-    <Compile Include="Weapons.cs" />
+    <Compile Include="Weapons\Weapons.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

@@ -24,6 +24,9 @@ namespace Project_Rioman
 
         private double freezeTime;
 
+        private bool lurking;
+        private double lurkTime;
+
         private bool invincible;
         private double invincibleTime;
         private const double MAX_INVINCIBLE_TIME = 2.5;
@@ -53,6 +56,7 @@ namespace Project_Rioman
             jumpTime = 0;
             fallTime = 0;
             freezeTime = 0;
+            lurking = false;
         }
 
         public void Update(double deltaTime)
@@ -90,6 +94,18 @@ namespace Project_Rioman
             {
                 shooting = false;
                 shootTime = 0;
+            }
+
+            if (lurking)
+            {
+                lurkTime += deltaTime;
+                if (lurkTime > 0.52)
+                {
+                    lurkTime = 0;
+                    Weapons.Lurk();
+                }
+                if (Weapons.GetAmmo(Constant.LURKERBULLET) <= 0)
+                    SetLurking(false);
             }
 
             if (hit)
@@ -231,7 +247,7 @@ namespace Project_Rioman
         {
             bool hitBefore = IsHit();
 
-            if (!IsHit() && !IsInvincible() && !IsWarping())
+            if (!IsHit() && !IsInvincible() && !IsWarping() && !IsLurking())
             {
                 freezeTime = 0;
                 invincibleTime = 0;
@@ -270,6 +286,8 @@ namespace Project_Rioman
         public void SetAnimateWarp(bool x) { animateWarp = x; }
         public bool IsAnimateWarp() { return animateWarp == true; }
         public bool IsHit() { return hit; }
+        public bool IsLurking() { return lurking; }
+        public void SetLurking(bool lurking) { this.lurking = lurking; }
         public bool IsInvincible() { return invincible; }
         public bool IsOnEnemy() { return onEnemy; }
         public bool Airborne() { return IsFalling() || IsJumping(); }

@@ -69,8 +69,10 @@ namespace Project_Rioman
 
         protected override void SubCheckHit(Rioman player, AbstractBullet[] rioBullets)
         {
-            if (player.Hitbox.Intersects(EvilRect()))
+            if (!player.IsLurking() && player.Hitbox.Intersects(EvilRect()))
                 player.Die();
+            //                    player.Hit(Constant.MAX_HEALTH);
+
 
             if (IsGood() && player.Feet.Intersects(GoodRect()))
                 player.SetOnEnemy(GoodRect().Top);

@@ -149,16 +149,20 @@ namespace Project_Rioman
             }
             else
             {
+                Color colour = Color.White;
+                if (state.IsLurking())
+                    colour = Color.Gray * 0.2f;
+
                 Rectangle locationRect = new Rectangle(location.X, location.Y, sprite.Width, sprite.Height);
                 Rectangle drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
 
                 if (state.IsClimbing() && !state.IsShooting())
                 {
-                    spriteBatch.Draw(sprite, locationRect, drawRect, Color.White, 0f, new Vector2(sprite.Width / 2, 0f), SpriteEffects.None, 0f);
+                    spriteBatch.Draw(sprite, locationRect, drawRect, colour, 0f, new Vector2(sprite.Width / 2, 0f), SpriteEffects.None, 0f);
                     spriteBatch.Draw(spriteClothes, locationRect, drawRect, Weapons.GetRiomanColour(), 0f, new Vector2(sprite.Width / 2, 0f), SpriteEffects.None, 0f);
                 }
                 else {
-                    spriteBatch.Draw(sprite, locationRect, drawRect, Color.White, 0f, new Vector2(sprite.Width / 2, 0f), direction, 0f);
+                    spriteBatch.Draw(sprite, locationRect, drawRect, colour, 0f, new Vector2(sprite.Width / 2, 0f), direction, 0f);
                     spriteBatch.Draw(spriteClothes, locationRect, drawRect, Weapons.GetRiomanColour(), 0f, new Vector2(sprite.Width / 2, 0f), direction, 0f);
                 }
             }
