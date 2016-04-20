@@ -23,7 +23,6 @@ namespace Project_Rioman
         private static int eTanks;
         private static int wTanks;
 
-
         private static Texture2D[] lives = new Texture2D[10];
 
         public static void LoadContent(ContentManager content)
@@ -107,8 +106,11 @@ namespace Project_Rioman
 
         }
 
-        public static AbstractBullet CreateBullet(int x, int y, bool facingRight)
+        public static AbstractBullet CreateBullet(int totalWeight, int x, int y, bool facingRight)
         {
+
+            if (totalWeight + BulletAttributes.GetWeight(activeWeapon) > Constant.MAX_BULLET)
+                return null;
 
             if (weaponAmmo[activeWeapon] < BulletAttributes.GetAmmoUse(activeWeapon))
                 return null;

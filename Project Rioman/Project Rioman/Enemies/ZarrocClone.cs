@@ -111,7 +111,7 @@ namespace Project_Rioman
                 for (int i = 0; i <= rioBullets.Length - 1; i++)
                     if (rioBullets[i] != null && rioBullets[i].Hits(GetShieldRect()))
                     {
-                        rioBullets[i].Kill();
+                        rioBullets[i].TakeDamage(uniqueID);
                         Audio.PlayShieldHit();
 
                     }

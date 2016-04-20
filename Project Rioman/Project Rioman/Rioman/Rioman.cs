@@ -26,7 +26,7 @@ namespace Project_Rioman
         private const int WARP_SPEED = 15;
         private const int MAX_FALL_SPEED = 10;
 
-        private AbstractBullet[] bullets = new AbstractBullet[3];
+        private AbstractBullet[] bullets = new AbstractBullet[10];
 
         private KeyboardState prevKeyboardState;
 
@@ -110,19 +110,19 @@ namespace Project_Rioman
             if (keyboardState.IsKeyDown(Constant.SHOOT) && !prevKeyboardState.IsKeyDown(Constant.SHOOT) && state.CanShoot())
             {
                 int index = -1;
+                int weight = 0;
 
                 for (int i = 0; i <= 2; i++)
                 {
                     if (bullets[i] == null || !bullets[i].IsAlive())
-                    {
                         index = i;
-                        break;
-                    }
+                    else if (bullets[i] != null && bullets[i].IsAlive())
+                        weight += bullets[i].GetWeight();
                 }
 
                 if (index >= 0)
                 {
-                    AbstractBullet newBullet = Weapons.CreateBullet(location.X, location.Y, FacingRight());
+                    AbstractBullet newBullet = Weapons.CreateBullet(weight, location.X, location.Y, FacingRight());
                     bullets[index] = newBullet;
 
                     if (newBullet != null)

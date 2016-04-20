@@ -42,7 +42,7 @@ namespace Project_Rioman
             return location;
         }
 
-        protected override void SubUpdate(Rioman player, double deltaTime)
+        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport)
         {
             location.X += direction * speed;
         }

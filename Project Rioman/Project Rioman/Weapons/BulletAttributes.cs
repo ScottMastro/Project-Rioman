@@ -9,6 +9,7 @@ namespace Project_Rioman
     public static class BulletAttributes
     {
         private static Dictionary<int, Color> riomanColour;
+        private static Dictionary<int, int> weight;
         private static Dictionary<int, int> ammoUse;
         private static Dictionary<int, int> speed;
         private static Dictionary<int, int> damage;
@@ -17,6 +18,7 @@ namespace Project_Rioman
 
         public static void LoadContent(ContentManager content)
         {
+            WeightInit();
             ColourInit();
             AmmoUseInit();
             SpeedInit();
@@ -81,7 +83,7 @@ namespace Project_Rioman
             //   speed.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
             //   speed.Add(Constant.POSTERBULLET, 6);
             //   speed.Add(Constant.TOXICBULLET, 5);
-               speed.Add(Constant.CLOVERBULLET, 3);
+               speed.Add(Constant.CLOVERBULLET, 7);
             //   speed.Add(Constant.BUNNYBULLET, 4);
 
         }
@@ -102,6 +104,24 @@ namespace Project_Rioman
             //   ammoUse.Add(Constant.BUNNYBULLET, 4);
 
         }
+
+        private static void WeightInit()
+        {
+            weight = new Dictionary<int, int>();
+
+            weight.Add(Constant.RIOBULLET, 3);
+            //    weight.Add(Constant.GEOBULLET, 4);
+            weight.Add(Constant.AURORABULLET, 3);
+            //   weight.Add(Constant.LURKERBULLET, 2);
+            weight.Add(Constant.INFERNOBULLET, 3);
+            //   weight.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
+            //   weight.Add(Constant.POSTERBULLET, 6);
+            //   weight.Add(Constant.TOXICBULLET, 5);
+            weight.Add(Constant.CLOVERBULLET, 10);
+            //   weight.Add(Constant.BUNNYBULLET, 4);
+
+        }
+
 
         private static void ColourInit()
         {
@@ -144,7 +164,15 @@ namespace Project_Rioman
             return value;
         }
 
-        public static Texture2D[] GetSprites(int type)
+        public static int GetWeight(int type)
+        {
+            int value;
+            weight.TryGetValue(type, out value);
+
+            return value;
+        }
+
+    public static Texture2D[] GetSprites(int type)
         {
             Texture2D[] s;
             sprites.TryGetValue(type, out s);

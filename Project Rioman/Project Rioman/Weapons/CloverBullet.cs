@@ -1,13 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Project_Rioman
 {
     class CloverBullet : AbstractBullet
     {
 
-        Clover[] clovers = new Clover[4];
+        private Clover[] clovers = new Clover[4];
+        private bool release;
+        private KeyboardState prevKeyboardState;
 
         private struct Clover
         {
@@ -16,6 +19,7 @@ namespace Project_Rioman
             private bool go;
             private bool comingOut;
             private int comingOutDist;
+            private int releaseDist;
 
             private int direction;
             private int speed;
@@ -32,13 +36,13 @@ namespace Project_Rioman
                 go = false;
                 comingOut = true;
                 comingOutDist = 0;
+                releaseDist = 0;
                 direction = dir;
                 speed = spd;
 
                 radius = 46;
                 rotation = 0f;
                 collision = false;
-
             }
 
             public void Draw(SpriteBatch spriteBatch, Texture2D sprite)
@@ -51,15 +55,16 @@ namespace Project_Rioman
 
             public void Update(Rioman player)
             {
-                origin = player.Hitbox.Center;
+                if (releaseDist == 0)
+                    origin = player.Hitbox.Center;
 
                 if (isAlive && go)
                 {
                     if (comingOut)
                     {
-                        location.X = origin.X + (comingOutDist + speed) * direction;
+                        location.X = origin.X + (comingOutDist + 3) * direction;
                         location.Y = origin.Y;
-                        comingOutDist += speed;
+                        comingOutDist += 3;
 
                         rotation = direction * MathHelper.PiOver2 * comingOutDist / radius;
 
@@ -73,7 +78,7 @@ namespace Project_Rioman
                     {
                         rotation += 0.1f;
                         rotation = MathHelper.WrapAngle(rotation);
-                        location.X = (int)(origin.X + radius * Math.Sin(rotation));
+                        location.X = (int)(origin.X + radius * Math.Sin(rotation)) + releaseDist;
                         location.Y = (int)(origin.Y + radius * Math.Cos(rotation));
 
                     }
@@ -83,7 +88,7 @@ namespace Project_Rioman
             public bool Hits(Rectangle collisionRect)
             {
                 if (isAlive && collisionRect.Intersects(new Rectangle(location.X - location.Width / 2,
-                    location.Y - location.Height/2, location.Width, location.Height)))
+                    location.Y - location.Height / 2, location.Width, location.Height)))
                 {
                     collision = true;
                     return true;
@@ -98,17 +103,24 @@ namespace Project_Rioman
                 location.Y += y;
             }
 
+            public void ReleaseMove()
+            {
+                releaseDist += speed * direction;
+            }
+
             public bool HasCollided() { return collision; }
             public void Kill() { isAlive = false; }
             public bool IsAlive() { return isAlive; }
             public bool ComingOut() { return comingOut; }
+            public void SetDirection(int dir) { direction = dir; }
             public void Go() { go = true; }
+            public Rectangle Location() { return location; }
 
         }
 
         public CloverBullet(int x, int y, bool facingRight) : base(Constant.CLOVERBULLET, facingRight)
         {
-
+            release = false;
             sprite = BulletAttributes.GetSprites(Constant.CLOVERBULLET)[0];
 
             if (facingRight)
@@ -122,6 +134,7 @@ namespace Project_Rioman
                 clovers[i].MakeClover(location, direction, speed, sprite);
 
             clovers[0].Go();
+
         }
 
 
@@ -139,26 +152,75 @@ namespace Project_Rioman
             return new Rectangle();
         }
 
-        protected override void SubUpdate(Rioman player, double deltaTime)
+        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport)
         {
+            canDie = false;
+
             if (isAlive)
             {
                 bool stillAlive = false;
 
+                //Update bullets
                 for (int i = 0; i <= clovers.Length - 1; i++)
                 {
                     if ((!clovers[i].ComingOut() || !clovers[i].IsAlive()) && i < clovers.Length - 1)
                         clovers[i + 1].Go();
                     
-
                     if (clovers[i].IsAlive())
                         stillAlive = true;
+
+                    if (release)
+                    {
+                        clovers[i].ReleaseMove();
+                        weight = 0;
+                    }
 
                     clovers[i].Update(player);
                 }
 
+
+                //check if offscreen
+                if (release)
+                {
+                    canDie = true;
+                    bool outOfBounds = true;
+
+                    for (int i = 0; i <= clovers.Length - 1; i++)
+                    {
+                        Rectangle loc = clovers[i].Location();
+                        if (!clovers[i].IsAlive() || loc.X < -loc.Width || loc.X > viewport.Width ||
+                            loc.Y < -loc.Height || loc.Y > viewport.Height) { }
+                        else outOfBounds = false;
+                    }
+                    if (outOfBounds)
+                        stillAlive = false;
+                }
+
+                //check if can be released
+                if (!release)
+                {
+                    if (Keyboard.GetState().IsKeyDown(Constant.SHOOT) && !prevKeyboardState.IsKeyDown(Constant.SHOOT))
+                    {
+                        bool readyToRelease = true;
+
+                        for (int i = 0; i <= clovers.Length - 1; i++)
+                            if (clovers[i].ComingOut() && (clovers[i].IsAlive()))
+                                readyToRelease = false;
+
+                        release = readyToRelease;
+
+                        if (release)
+                        {
+                            for (int i = 0; i <= clovers.Length - 1; i++)
+                                clovers[i].SetDirection(player.FacingRight() ? 1 : -1);
+                        }
+                    }
+                }
+                
                 isAlive = stillAlive;
+                prevKeyboardState = Keyboard.GetState();
             }
+
         }
 
         public override int TakeDamage(string enemyID)

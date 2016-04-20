@@ -55,7 +55,7 @@ namespace Project_Rioman
                     {
                         if (b!= null && b.Hits(GetCollisionRect()))
                         {
-                            b.Kill();
+                            b.TakeDamage(uniqueID);
                             if (counter == 0)
                                 counter = 1;
                         }

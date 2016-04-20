@@ -16,7 +16,7 @@ namespace Project_Rioman
             if (facingRight)
                 location.X = x - 20;
             else
-                location.X = x + 20;
+                location.X = x + 10;
 
             location.Y = y + 22;
 
@@ -34,7 +34,7 @@ namespace Project_Rioman
         }
 
 
-        protected override void SubUpdate(Rioman player, double deltaTime)
+        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport)
         {
             if (isAlive)
                 location.X += speed * direction;

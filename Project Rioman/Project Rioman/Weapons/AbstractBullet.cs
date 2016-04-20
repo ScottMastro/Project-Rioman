@@ -7,6 +7,8 @@ namespace Project_Rioman
 {
     abstract class AbstractBullet
     {
+        protected int weight;
+        protected bool canDie;
         protected int type;
         protected Texture2D sprite;
         protected bool isAlive;
@@ -19,6 +21,7 @@ namespace Project_Rioman
 
         protected AbstractBullet(int type, bool facingRight)
         {
+            canDie = true;
             this.type = type;
             if (facingRight)
                 direction = 1;
@@ -27,6 +30,7 @@ namespace Project_Rioman
 
             speed = BulletAttributes.GetSpeedAttribute(type);
             damage = BulletAttributes.GetDamageAttribute(type);
+            weight = BulletAttributes.GetWeight(type);
 
             isAlive = true;
             hitList = new List<string>();
@@ -36,15 +40,16 @@ namespace Project_Rioman
 
         public void Update(Rioman player, double deltaTime, Viewport viewport)
         {
-            if (location.X > viewport.Width || location.X < 0 - drawRect.Width)
-                isAlive = false;
+            if(canDie)
+                if (location.X > viewport.Width || location.X < 0 - drawRect.Width)
+                    isAlive = false;
 
-            SubUpdate(player, deltaTime);
+            SubUpdate(player, deltaTime, viewport);
 
         }
 
         public abstract void Draw(SpriteBatch spriteBatch);
-        protected abstract void SubUpdate(Rioman player, double deltaTime);
+        protected abstract void SubUpdate(Rioman player, double deltaTime, Viewport viewport);
         protected abstract void SubMove(int x, int y);
         public abstract int TakeDamage(string enemyID);
         public abstract bool Hits(Rectangle collisionRect);
@@ -67,6 +72,10 @@ namespace Project_Rioman
             return isAlive;
         }
 
+        public int GetWeight()
+        {
+            return weight;
+        }
 
         public abstract Rectangle GetCollisionRect();
     }

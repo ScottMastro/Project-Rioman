@@ -5177,6 +5177,240 @@
       <Time>2016-04-17T22:04:12.7333059-04:00</Time>
     </Item>
     <Item>
+      <Source>Video\weapons\bullet.png</Source>
+      <Name>Video\weapons\bullet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\bullet.xnb</Output>
+      <Time>2010-01-06T00:33:08-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\weapons\infernosword.png</Source>
+      <Name>Video\weapons\infernosword</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\infernosword.xnb</Output>
+      <Time>2016-04-18T14:46:25.4885165-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\weapons\infernobullet.png</Source>
+      <Name>Video\weapons\infernobullet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\infernobullet.xnb</Output>
+      <Time>2016-04-18T15:06:34.4493024-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\weapons\aurorabullet.png</Source>
+      <Name>Video\weapons\aurorabullet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\aurorabullet.xnb</Output>
+      <Time>2010-02-28T13:13:22-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanstandgun.png</Source>
+      <Name>Video\rioman\clothes\riomanstandgun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanstandgun.xnb</Output>
+      <Time>2016-04-18T20:49:48.1471307-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanstand.png</Source>
+      <Name>Video\rioman\clothes\riomanstand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanstand.xnb</Output>
+      <Time>2016-04-18T20:46:54.0302158-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\hitair.png</Source>
+      <Name>Video\rioman\clothes\hitair</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\hitair.xnb</Output>
+      <Time>2016-04-18T20:48:14.0633039-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\hitground.png</Source>
+      <Name>Video\rioman\clothes\hitground</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\hitground.xnb</Output>
+      <Time>2016-04-18T20:48:25.9685497-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanclimb.png</Source>
+      <Name>Video\rioman\clothes\riomanclimb</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanclimb.xnb</Output>
+      <Time>2016-04-18T20:24:17.8089653-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanclimbflop.png</Source>
+      <Name>Video\rioman\clothes\riomanclimbflop</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanclimbflop.xnb</Output>
+      <Time>2016-04-18T20:23:48.2301096-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanclimbgun.png</Source>
+      <Name>Video\rioman\clothes\riomanclimbgun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanclimbgun.xnb</Output>
+      <Time>2016-04-18T20:22:41.0889068-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanclimbtop.png</Source>
+      <Name>Video\rioman\clothes\riomanclimbtop</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanclimbtop.xnb</Output>
+      <Time>2016-04-18T20:21:24.2330746-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanjump.png</Source>
+      <Name>Video\rioman\clothes\riomanjump</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanjump.xnb</Output>
+      <Time>2016-04-18T20:48:42.6864763-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanjumpgun.png</Source>
+      <Name>Video\rioman\clothes\riomanjumpgun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanjumpgun.xnb</Output>
+      <Time>2016-04-18T20:48:52.7316574-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanrun1.png</Source>
+      <Name>Video\rioman\clothes\riomanrun1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrun1.xnb</Output>
+      <Time>2016-04-18T20:49:02.5020629-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanrun2.png</Source>
+      <Name>Video\rioman\clothes\riomanrun2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrun2.xnb</Output>
+      <Time>2016-04-18T20:17:43.3857797-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanrun3.png</Source>
+      <Name>Video\rioman\clothes\riomanrun3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrun3.xnb</Output>
+      <Time>2016-04-18T20:15:00.7489259-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanrungun1.png</Source>
+      <Name>Video\rioman\clothes\riomanrungun1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrungun1.xnb</Output>
+      <Time>2016-04-18T20:49:13.7098742-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanrungun2.png</Source>
+      <Name>Video\rioman\clothes\riomanrungun2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrungun2.xnb</Output>
+      <Time>2016-04-18T20:49:23.0549725-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanrungun3.png</Source>
+      <Name>Video\rioman\clothes\riomanrungun3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrungun3.xnb</Output>
+      <Time>2016-04-18T20:49:34.0441533-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\riomanrungun4.png</Source>
+      <Name>Video\rioman\clothes\riomanrungun4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrungun4.xnb</Output>
+      <Time>2016-04-18T20:10:26.4117417-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\warp1.png</Source>
+      <Name>Video\rioman\clothes\warp1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\warp1.xnb</Output>
+      <Time>2016-04-18T20:35:46.0894821-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\warp2.png</Source>
+      <Name>Video\rioman\clothes\warp2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\warp2.xnb</Output>
+      <Time>2016-04-18T20:36:27.8539314-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\warp3.png</Source>
+      <Name>Video\rioman\clothes\warp3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\warp3.xnb</Output>
+      <Time>2016-04-18T20:36:52.3970841-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\rioman\clothes\warp4.png</Source>
+      <Name>Video\rioman\clothes\warp4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\warp4.xnb</Output>
+      <Time>2016-04-18T20:37:20.3342445-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\weapons\cloverbullet.png</Source>
+      <Name>Video\weapons\cloverbullet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\cloverbullet.xnb</Output>
+      <Time>2016-04-18T21:49:27.2514982-04:00</Time>
+    </Item>
+    <Item>
       <Source>Audio\auroraman.wav</Source>
       <Name>Audio\auroraman</Name>
       <Importer>WavImporter</Importer>
@@ -5555,42 +5789,6 @@
       <Time>2016-04-13T23:00:33.4832698-04:00</Time>
     </Item>
     <Item>
-      <Source>Video\weapons\bullet.png</Source>
-      <Name>Video\weapons\bullet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\bullet.xnb</Output>
-      <Time>2010-01-06T00:33:08-05:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\weapons\infernosword.png</Source>
-      <Name>Video\weapons\infernosword</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\infernosword.xnb</Output>
-      <Time>2016-04-18T14:46:25.4885165-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\weapons\infernobullet.png</Source>
-      <Name>Video\weapons\infernobullet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\infernobullet.xnb</Output>
-      <Time>2016-04-18T15:06:34.4493024-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\weapons\aurorabullet.png</Source>
-      <Name>Video\weapons\aurorabullet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\aurorabullet.xnb</Output>
-      <Time>2010-02-28T13:13:22-05:00</Time>
-    </Item>
-    <Item>
       <Source>Audio\soundeffects\infernobullet.wav</Source>
       <Name>Audio\soundeffects\infernobullet</Name>
       <Importer>WavImporter</Importer>
@@ -5598,204 +5796,6 @@
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\infernobullet.xnb</Output>
       <Time>2016-04-18T19:10:46.7593351-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanstandgun.png</Source>
-      <Name>Video\rioman\clothes\riomanstandgun</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanstandgun.xnb</Output>
-      <Time>2016-04-18T20:49:48.1471307-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanstand.png</Source>
-      <Name>Video\rioman\clothes\riomanstand</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanstand.xnb</Output>
-      <Time>2016-04-18T20:46:54.0302158-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\hitair.png</Source>
-      <Name>Video\rioman\clothes\hitair</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\hitair.xnb</Output>
-      <Time>2016-04-18T20:48:14.0633039-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\hitground.png</Source>
-      <Name>Video\rioman\clothes\hitground</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\hitground.xnb</Output>
-      <Time>2016-04-18T20:48:25.9685497-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanclimb.png</Source>
-      <Name>Video\rioman\clothes\riomanclimb</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanclimb.xnb</Output>
-      <Time>2016-04-18T20:24:17.8089653-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanclimbflop.png</Source>
-      <Name>Video\rioman\clothes\riomanclimbflop</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanclimbflop.xnb</Output>
-      <Time>2016-04-18T20:23:48.2301096-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanclimbgun.png</Source>
-      <Name>Video\rioman\clothes\riomanclimbgun</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanclimbgun.xnb</Output>
-      <Time>2016-04-18T20:22:41.0889068-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanclimbtop.png</Source>
-      <Name>Video\rioman\clothes\riomanclimbtop</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanclimbtop.xnb</Output>
-      <Time>2016-04-18T20:21:24.2330746-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanjump.png</Source>
-      <Name>Video\rioman\clothes\riomanjump</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanjump.xnb</Output>
-      <Time>2016-04-18T20:48:42.6864763-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanjumpgun.png</Source>
-      <Name>Video\rioman\clothes\riomanjumpgun</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanjumpgun.xnb</Output>
-      <Time>2016-04-18T20:48:52.7316574-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanrun1.png</Source>
-      <Name>Video\rioman\clothes\riomanrun1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrun1.xnb</Output>
-      <Time>2016-04-18T20:49:02.5020629-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanrun2.png</Source>
-      <Name>Video\rioman\clothes\riomanrun2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrun2.xnb</Output>
-      <Time>2016-04-18T20:17:43.3857797-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanrun3.png</Source>
-      <Name>Video\rioman\clothes\riomanrun3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrun3.xnb</Output>
-      <Time>2016-04-18T20:15:00.7489259-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanrungun1.png</Source>
-      <Name>Video\rioman\clothes\riomanrungun1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrungun1.xnb</Output>
-      <Time>2016-04-18T20:49:13.7098742-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanrungun2.png</Source>
-      <Name>Video\rioman\clothes\riomanrungun2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrungun2.xnb</Output>
-      <Time>2016-04-18T20:49:23.0549725-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanrungun3.png</Source>
-      <Name>Video\rioman\clothes\riomanrungun3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrungun3.xnb</Output>
-      <Time>2016-04-18T20:49:34.0441533-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\riomanrungun4.png</Source>
-      <Name>Video\rioman\clothes\riomanrungun4</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\riomanrungun4.xnb</Output>
-      <Time>2016-04-18T20:10:26.4117417-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\warp1.png</Source>
-      <Name>Video\rioman\clothes\warp1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\warp1.xnb</Output>
-      <Time>2016-04-18T20:35:46.0894821-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\warp2.png</Source>
-      <Name>Video\rioman\clothes\warp2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\warp2.xnb</Output>
-      <Time>2016-04-18T20:36:27.8539314-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\warp3.png</Source>
-      <Name>Video\rioman\clothes\warp3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\warp3.xnb</Output>
-      <Time>2016-04-18T20:36:52.3970841-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\rioman\clothes\warp4.png</Source>
-      <Name>Video\rioman\clothes\warp4</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\rioman\clothes\warp4.xnb</Output>
-      <Time>2016-04-18T20:37:20.3342445-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\weapons\cloverbullet.png</Source>
-      <Name>Video\weapons\cloverbullet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\cloverbullet.xnb</Output>
-      <Time>2016-04-18T21:49:27.2514982-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

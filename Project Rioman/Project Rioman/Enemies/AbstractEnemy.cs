@@ -8,7 +8,7 @@ namespace Project_Rioman
     abstract class AbstractEnemy
     {
 
-        private string uniqueID;
+        protected string uniqueID;
         private Level level;
         
         protected int type;
