@@ -125,6 +125,7 @@
     <Compile Include="Weapons\CloverBullet.cs" />
     <Compile Include="Weapons\GeoBullet.cs" />
     <Compile Include="Weapons\InfernoBullet.cs" />
+    <Compile Include="Weapons\PosterBullet.cs" />
     <Compile Include="Weapons\RioBullet.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Enemies\DeuxKama.cs" />

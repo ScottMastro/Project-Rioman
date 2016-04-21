@@ -5806,6 +5806,15 @@
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\geobullet.xnb</Output>
       <Time>2016-04-20T22:39:34.8586134-04:00</Time>
     </Item>
+    <Item>
+      <Source>Video\weapons\posterbullet.png</Source>
+      <Name>Video\weapons\posterbullet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\posterbullet.xnb</Output>
+      <Time>2016-04-20T23:56:58.5328401-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{464AC0B7-78D5-46D0-89D4-5164AF3BF223}</ContentProjectGUID>

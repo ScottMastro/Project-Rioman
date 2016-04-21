@@ -128,6 +128,8 @@ namespace Project_Rioman
                 return new CloverBullet(x, y, facingRight);
             else if (activeWeapon == Constant.GEOBULLET)
                 return new GeoBullet(x, y, facingRight);
+            else if (activeWeapon == Constant.POSTERBULLET)
+                return new PosterBullet(x, y, facingRight);
 
             return null;
         }
