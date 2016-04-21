@@ -123,6 +123,7 @@
     <Compile Include="Pickups\EnemyPickup.cs" />
     <Compile Include="Pickups\PickupAttributes.cs" />
     <Compile Include="Weapons\CloverBullet.cs" />
+    <Compile Include="Weapons\GeoBullet.cs" />
     <Compile Include="Weapons\InfernoBullet.cs" />
     <Compile Include="Weapons\RioBullet.cs" />
     <Compile Include="Constant.cs" />

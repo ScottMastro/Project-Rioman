@@ -40,8 +40,9 @@ namespace Project_Rioman
 
         public void Update(Rioman player, double deltaTime, Viewport viewport)
         {
-            if(canDie)
-                if (location.X > viewport.Width || location.X < 0 - drawRect.Width)
+            if (canDie)
+                if (location.X > viewport.Width || location.X < - drawRect.Width ||
+                    location.Y < - drawRect.Height || location.Y > viewport.Height)
                     isAlive = false;
 
             SubUpdate(player, deltaTime, viewport);

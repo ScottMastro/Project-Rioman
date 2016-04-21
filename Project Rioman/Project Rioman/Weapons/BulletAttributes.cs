@@ -32,7 +32,7 @@ namespace Project_Rioman
             sprites = new Dictionary<int, Texture2D[]>();
 
             sprites.Add(Constant.RIOBULLET, LoadSprites(c, new string[] { "bullet"}));
-           // sprites.Add(Constant.GEOBULLET, LoadSprites(c, new string[] {}));
+            sprites.Add(Constant.GEOBULLET, LoadSprites(c, new string[] {"geobullet"}));
             sprites.Add(Constant.AURORABULLET, LoadSprites(c, new string[] {"aurorabullet" }));
            // sprites.Add(Constant.LURKERBULLET, LoadSprites(c, new string[] { }));
             sprites.Add(Constant.INFERNOBULLET, LoadSprites(c, new string[] {"infernosword", "infernobullet"}));
@@ -59,7 +59,7 @@ namespace Project_Rioman
             damage = new Dictionary<int, int>();
 
             damage.Add(Constant.RIOBULLET, 1);
-        //    damage.Add(Constant.GEOBULLET, 4);
+            damage.Add(Constant.GEOBULLET, 5);
             damage.Add(Constant.AURORABULLET, 2);
             damage.Add(Constant.LURKERBULLET, 0);
             damage.Add(Constant.INFERNOBULLET, 4);
@@ -76,9 +76,9 @@ namespace Project_Rioman
             speed = new Dictionary<int, int>();
 
             speed.Add(Constant.RIOBULLET, 9);
-            //    speed.Add(Constant.GEOBULLET, 4);
+            speed.Add(Constant.GEOBULLET, 9);
             speed.Add(Constant.AURORABULLET, 12);
-               speed.Add(Constant.LURKERBULLET, 0);
+            speed.Add(Constant.LURKERBULLET, 0);
             speed.Add(Constant.INFERNOBULLET, 4);
             //   speed.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
             //   speed.Add(Constant.POSTERBULLET, 6);
@@ -93,9 +93,9 @@ namespace Project_Rioman
             ammoUse = new Dictionary<int, int>();
 
             ammoUse.Add(Constant.RIOBULLET, 0);
-            //    ammoUse.Add(Constant.GEOBULLET, 4);
+            ammoUse.Add(Constant.GEOBULLET, 3);
             ammoUse.Add(Constant.AURORABULLET, 1);
-               ammoUse.Add(Constant.LURKERBULLET, 1);
+            ammoUse.Add(Constant.LURKERBULLET, 1);
             ammoUse.Add(Constant.INFERNOBULLET, 2);
             //   ammoUse.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
             //   ammoUse.Add(Constant.POSTERBULLET, 6);
@@ -110,7 +110,7 @@ namespace Project_Rioman
             weight = new Dictionary<int, int>();
 
             weight.Add(Constant.RIOBULLET, 3);
-            //    weight.Add(Constant.GEOBULLET, 4);
+            weight.Add(Constant.GEOBULLET, 6);
             weight.Add(Constant.AURORABULLET, 3);
             weight.Add(Constant.LURKERBULLET, 0);
             weight.Add(Constant.INFERNOBULLET, 3);
@@ -128,7 +128,7 @@ namespace Project_Rioman
             riomanColour = new Dictionary<int, Color>();
 
             riomanColour.Add(Constant.RIOBULLET, Color.White * 0f);
-            //    riomanColour.Add(Constant.GEOBULLET, 4);
+            riomanColour.Add(Constant.GEOBULLET, Color.DarkOrange);
             riomanColour.Add(Constant.AURORABULLET, Color.SkyBlue);
             riomanColour.Add(Constant.LURKERBULLET, Color.LightGray);
             riomanColour.Add(Constant.INFERNOBULLET, Color.Red);

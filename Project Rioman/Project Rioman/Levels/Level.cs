@@ -154,7 +154,7 @@ namespace Project_Rioman
                 int xoffset = Convert.ToInt32(middle - player.Location.X);
 
                 player.MoveToX(middle);
-                MoveStuff(xoffset, 0);
+                MoveStuff(player, xoffset, 0);
             }
         }
 
@@ -362,7 +362,7 @@ namespace Project_Rioman
             int offsetX = Convert.ToInt32(centerPos.X - startPos.X);
             int offsetY = Convert.ToInt32(centerPos.Y - startPos.Y);
 
-            MoveStuff(offsetX, offsetY);
+            MoveStuff(player, offsetX, offsetY);
 
             player.MoveToY(-100);
             player.MoveToX(Convert.ToInt32(centerPos.X));
@@ -489,7 +489,7 @@ namespace Project_Rioman
 
 
 
-        public void MoveStuff(int x, int y)
+        public void MoveStuff(Rioman player, int x, int y)
         {
 
             foreach (Tile tle in tiles)
@@ -515,6 +515,8 @@ namespace Project_Rioman
                 enemies[i].Move(x, y);
 
             bosses[activelevel].Move(x, y);
+
+            player.MoveBullets(x, y);
         }
 
 
@@ -549,30 +551,31 @@ namespace Project_Rioman
             }
         }
 
-        public Rectangle CheckClimb(Rectangle riolocation, int climbloc, bool up, ref Rectangle location)
+        public Rectangle CheckClimb(Rioman player, int climbloc, bool up, ref Rectangle location)
         {
+            Rectangle rioLocation = player.Location;
             bool okay = false;
 
             foreach (Tile tle in tiles)
             {
-                if (up && tle != null && tle.type == 3 && riolocation.Intersects(tle.Floor) && riolocation.Intersects(tle.IgnoreFloor))
+                if (up && tle != null && tle.type == 3 && rioLocation.Intersects(tle.Floor) && rioLocation.Intersects(tle.IgnoreFloor))
                 {
-                    if (Math.Abs(riolocation.X - tle.location.Center.X) <= 16 && !okay)
+                    if (Math.Abs(rioLocation.X - tle.location.Center.X) <= 16 && !okay)
                     {
                         if (!stopLeftScreenMovement && !stopRightScreenMovement)
-                            MoveStuff(climbloc - tle.location.Center.X, 0);
+                            MoveStuff(player, climbloc - tle.location.Center.X, 0);
                         else
                             location.X = tle.location.Center.X;
                         okay = true;
                     }
                 }
 
-                if (!up && tle != null && tle.type == 3 && riolocation.Intersects(tle.Floor) && !riolocation.Intersects(tle.IgnoreFloor) && tle.isTop)
+                if (!up && tle != null && tle.type == 3 && rioLocation.Intersects(tle.Floor) && !rioLocation.Intersects(tle.IgnoreFloor) && tle.isTop)
                 {
-                    if (Math.Abs(riolocation.X - tle.location.Center.X) <= 16 && !okay)
+                    if (Math.Abs(rioLocation.X - tle.location.Center.X) <= 16 && !okay)
                     {
                         if (!stopLeftScreenMovement && !stopRightScreenMovement)
-                            MoveStuff(climbloc - tle.location.Center.X, 0);
+                            MoveStuff(player, climbloc - tle.location.Center.X, 0);
                         else
                             location.X = tle.location.Center.X;
                         okay = true;
@@ -581,9 +584,9 @@ namespace Project_Rioman
             }
 
             if (!okay)
-                riolocation.Width = 0;
+                rioLocation.Width = 0;
 
-            return riolocation;
+            return rioLocation;
         }
 
         public void UpdateEnemies(Rioman player, AbstractBullet[] bullets, double deltaTime, Viewport viewport)
@@ -865,7 +868,7 @@ namespace Project_Rioman
 
         public void Scroll(Rioman player, Viewport viewport)
         {
-            MoveStuff(-scrollSpeedX, -scrollSpeedY);
+            MoveStuff(player, -scrollSpeedX, -scrollSpeedY);
             scrollAmountX -= Math.Abs(scrollSpeedX);
             scrollAmountY -= Math.Abs(scrollSpeedY);
 

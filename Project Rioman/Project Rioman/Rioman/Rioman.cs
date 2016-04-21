@@ -227,7 +227,7 @@ namespace Project_Rioman
 
             if (keyboardState.IsKeyDown(Constant.UP))
             {
-                Rectangle result = level.CheckClimb(location, location.X, true, ref location);
+                Rectangle result = level.CheckClimb(this, location.X, true, ref location);
 
                 if (result.Width != 0)
                 {
@@ -240,7 +240,7 @@ namespace Project_Rioman
 
             if (keyboardState.IsKeyDown(Constant.DOWN) && !prevKeyboardState.IsKeyDown(Constant.DOWN))
             {
-                Rectangle result = level.CheckClimb(location, location.X, false, ref location);
+                Rectangle result = level.CheckClimb(this, location.X, false, ref location);
                 if (result.Width != 0)
                 {
                     Move(0, 20);
@@ -354,6 +354,13 @@ namespace Project_Rioman
             location.Y += y;
         }
 
+        public void MoveBullets(int x, int y)
+        {
+            for (int i = 0; i <= bullets.Length - 1; i++)
+                if (bullets[i] != null)
+                    bullets[i].MoveBullet(x, y);
+        }
+
         public void MoveInWorld(int x, int y, Level level)
         {
             if ((x < 0 && stopLeftMovement) ||
@@ -363,7 +370,7 @@ namespace Project_Rioman
             if ((x < 0 && !stopLeftMovement && level.CanMoveLeft()) ||
                 (x > 0 && !stopRightMovement && level.CanMoveRight()))
             {
-                level.MoveStuff(-x, 0);
+                level.MoveStuff(this, -x, 0);
                 lastMove.X += x;
                 x = 0;
             }

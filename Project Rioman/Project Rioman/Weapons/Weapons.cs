@@ -126,6 +126,8 @@ namespace Project_Rioman
                 return new AuroraBullet(x, y, facingRight);
             else if (activeWeapon == Constant.CLOVERBULLET)
                 return new CloverBullet(x, y, facingRight);
+            else if (activeWeapon == Constant.GEOBULLET)
+                return new GeoBullet(x, y, facingRight);
 
             return null;
         }
