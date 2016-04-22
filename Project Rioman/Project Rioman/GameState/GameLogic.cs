@@ -79,7 +79,7 @@ namespace Project_Rioman
             else if (currentLevel.IsBusy())
                 currentLevel.BusyUpdate(player, viewport);
             else if (GameState.IsPaused())
-                Weapons.ChangeActiveWeapon(keyboardState, prevKeyboardState);
+                Weapons.ChangeActiveWeapon(player);
             else if (currentLevel.bosses[currentLevel.activelevel].intro < 3)
                 currentLevel.bosses[currentLevel.activelevel].Update(gameTime.ElapsedGameTime.TotalSeconds, viewport, player);
 

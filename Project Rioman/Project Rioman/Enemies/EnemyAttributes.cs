@@ -12,8 +12,7 @@ namespace Project_Rioman
         private static Dictionary<int, int> damage;
         private static Dictionary<int, Texture2D[]> sprites;
         private static Texture2D killExplosion;
-
-
+        
      
         public static void LoadContent(ContentManager content)
         {

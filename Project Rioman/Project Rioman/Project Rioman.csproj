@@ -100,13 +100,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation.cs" />
     <Compile Include="Weapons\AuroraBullet.cs" />
     <Compile Include="Weapons\BulletAttributes.cs" />
     <Compile Include="Weapons\AbstractBullet.cs" />
     <Compile Include="DebugDraw.cs" />
     <Compile Include="Pickups\AbstractPickup.cs" />
     <Compile Include="Enemies\AbstractEnemy.cs" />
-    <Compile Include="Animation.cs" />
     <Compile Include="Audio.cs" />
     <Compile Include="Boss.cs" />
     <Compile Include="Enemies\ChanceBomb.cs" />
@@ -151,6 +151,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="Rioman\Rioman.cs" />
     <Compile Include="Levels\Tile.cs" />
+    <Compile Include="Weapons\ToxicBullet.cs" />
     <Compile Include="Weapons\Weapons.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -417,6 +417,7 @@ namespace Project_Rioman
         public void FreezeFor(double x) { state.Freeze(x); anim.SetFreezeTime(x); }
         public bool IsFrozen() { return state.IsFrozen(); }
         public bool IsLurking() { return state.IsLurking(); }
+        public void StopLurking() { state.SetLurking(false); }
 
         public AbstractBullet[] GetBullets() { return bullets; }
         public void KillBullets()

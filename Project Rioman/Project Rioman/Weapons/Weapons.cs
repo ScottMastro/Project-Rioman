@@ -23,6 +23,9 @@ namespace Project_Rioman
         private static int eTanks;
         private static int wTanks;
 
+        private static KeyboardState previousKeyboardState;
+
+
         private static Texture2D[] lives = new Texture2D[10];
 
         public static void LoadContent(ContentManager content)
@@ -53,6 +56,8 @@ namespace Project_Rioman
 
             for (int i = 0; i <= 5; i++)
                 lives[i] = content.Load<Texture2D>("Video\\pause\\" + i.ToString());
+
+            previousKeyboardState = new KeyboardState();
         }
 
         public static void DrawPause(SpriteBatch spriteBatch, int numLives)
@@ -130,26 +135,29 @@ namespace Project_Rioman
                 return new GeoBullet(x, y, facingRight);
             else if (activeWeapon == Constant.POSTERBULLET)
                 return new PosterBullet(x, y, facingRight);
-
+            else if (activeWeapon == Constant.TOXICBULLET)
+                return new ToxicBullet(x, y, facingRight);
             return null;
         }
 
 
 
-        public static void ChangeActiveWeapon(KeyboardState keyboardstate, KeyboardState previouskeyboardstate)
+        public static void ChangeActiveWeapon(Rioman player)
         {
+            KeyboardState keyboardState = Keyboard.GetState();
+
             int tempactive = activeWeapon;
 
             int jump = 0;
             int pos = activeWeapon;
 
-            if (keyboardstate.IsKeyDown(Constant.UP) && !previouskeyboardstate.IsKeyDown(Constant.UP))
+            if (keyboardState.IsKeyDown(Constant.UP) && !previousKeyboardState.IsKeyDown(Constant.UP))
                 jump = -2;
-            if (keyboardstate.IsKeyDown(Constant.DOWN) && !previouskeyboardstate.IsKeyDown(Constant.DOWN))
+            if (keyboardState.IsKeyDown(Constant.DOWN) && !previousKeyboardState.IsKeyDown(Constant.DOWN))
                 jump = 2;
-            if (keyboardstate.IsKeyDown(Constant.LEFT) && !previouskeyboardstate.IsKeyDown(Constant.LEFT))
+            if (keyboardState.IsKeyDown(Constant.LEFT) && !previousKeyboardState.IsKeyDown(Constant.LEFT))
                 jump = -1;
-            if (keyboardstate.IsKeyDown(Constant.RIGHT) && !previouskeyboardstate.IsKeyDown(Constant.RIGHT))
+            if (keyboardState.IsKeyDown(Constant.RIGHT) && !previousKeyboardState.IsKeyDown(Constant.RIGHT))
                 jump = 1;
 
             while (jump != 0)
@@ -174,7 +182,12 @@ namespace Project_Rioman
 
 
             if (activeWeapon != tempactive)
+            {
                 Audio.PlayPauseSelection();
+                player.StopLurking();
+            }
+
+            previousKeyboardState = keyboardState;
         }
 
         public static Texture2D GetAmmoPoint()
