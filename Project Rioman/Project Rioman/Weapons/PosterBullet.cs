@@ -7,6 +7,7 @@ namespace Project_Rioman
     class PosterBullet : AbstractBullet
     {
         private const double TIME_BETWEEN_BULLETS = 0.1;
+        private double weightTime;
 
         private Post[] posts = new Post[4];
 
@@ -80,6 +81,7 @@ namespace Project_Rioman
             public bool HasCollided() { return collision; }
             public void Kill() { isAlive = false; }
             public bool IsAlive() { return isAlive; }
+            public bool IsBorn() { return isBorn; }
             public Rectangle Location() { return location; }
 
         }
@@ -102,6 +104,8 @@ namespace Project_Rioman
 
             for (int i = 0; i <= posts.Length - 1; i++)
                 posts[i].MakePost(location, direction, speed, sprite, TIME_BETWEEN_BULLETS * i);
+
+            weightTime = 0;
 
         }
         public override void Draw(SpriteBatch spriteBatch)
@@ -160,6 +164,7 @@ namespace Project_Rioman
 
                 bool stillAlive = false;
                 bool outOfBounds = true;
+                bool allBorn = true;
 
                 for (int i = 0; i <= posts.Length - 1; i++)
                 {
@@ -170,11 +175,24 @@ namespace Project_Rioman
                     if (!posts[i].IsAlive() || loc.X < -loc.Width || loc.X > viewport.Width ||
                         loc.Y < -loc.Height || loc.Y > viewport.Height) { }
                     else outOfBounds = false;
+
+                    if (!posts[i].IsBorn())
+                        allBorn = false;
                 }
+
                 if (outOfBounds)
                     stillAlive = false;
-
+                if (allBorn && weightTime > TIME_BETWEEN_BULLETS)
+                    weight = 0;
+                else if (allBorn)
+                    weightTime += deltaTime;
+                else 
+                    weight = 10;
+                
                 isAlive = stillAlive;
+
+                
+
             }
         }
     }
