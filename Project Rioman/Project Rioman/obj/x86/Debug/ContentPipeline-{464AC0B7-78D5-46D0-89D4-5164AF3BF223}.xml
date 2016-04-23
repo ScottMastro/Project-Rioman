@@ -5842,6 +5842,24 @@
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\toxbullet2.xnb</Output>
       <Time>2016-04-21T23:12:55.0766607-04:00</Time>
     </Item>
+    <Item>
+      <Source>Video\weapons\toxbullet3.png</Source>
+      <Name>Video\weapons\toxbullet3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\toxbullet3.xnb</Output>
+      <Time>2016-04-22T22:53:44.2034564-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\weapons\toxbullet4.png</Source>
+      <Name>Video\weapons\toxbullet4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\toxbullet4.xnb</Output>
+      <Time>2016-04-23T00:55:19.1209844-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{464AC0B7-78D5-46D0-89D4-5164AF3BF223}</ContentProjectGUID>

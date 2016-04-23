@@ -30,6 +30,11 @@ namespace Project_Rioman
                 null, colour * transparency, rotation, new Vector2(), SpriteEffects.None, 0.0f);
         }
 
+        public static void DrawRect(SpriteBatch spriteBatch, Rectangle rect, float transparency)
+        {
+            spriteBatch.Draw(pixel, rect, null, Color.Magenta * transparency, 0f, new Vector2(), SpriteEffects.None, 0.0f);
+        }
+
         public static void DrawRect(SpriteBatch spriteBatch, int x, int y, int width, int height)
         {
             spriteBatch.Draw(pixel, new Rectangle(x, y, width, height),

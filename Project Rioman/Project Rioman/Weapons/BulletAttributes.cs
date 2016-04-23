@@ -38,7 +38,7 @@ namespace Project_Rioman
             sprites.Add(Constant.INFERNOBULLET, LoadSprites(c, new string[] {"infernosword", "infernobullet"}));
           //  sprites.Add(Constant.DUELBULLET, LoadSprites(c, new string[] {}));
             sprites.Add(Constant.POSTERBULLET, LoadSprites(c, new string[] {"posterbullet"}));
-            sprites.Add(Constant.TOXICBULLET, LoadSprites(c, new string[] {"toxbullet1", "toxbullet2"}));
+            sprites.Add(Constant.TOXICBULLET, LoadSprites(c, new string[] {"toxbullet1", "toxbullet2", "toxbullet3", "toxbullet4"}));
             sprites.Add(Constant.CLOVERBULLET, LoadSprites(c, new string[] {"cloverbullet"}));
            // sprites.Add(Constant.BUNNYBULLET, LoadSprites(c, new string[] {}));
           
