@@ -910,5 +910,6 @@ namespace Project_Rioman
         public bool CanMoveLeft() { return !stopLeftScreenMovement && !preventCenteringRight; }
         public bool CanMoveRight() { return !stopRightScreenMovement && !preventCenteringLeft; }
 
+        public AbstractEnemy[] GetEnemies() { return enemies; }
     }
 }

@@ -62,7 +62,7 @@ namespace Project_Rioman
 
         }
 
-        public void Update(double deltaTime, Level level, Viewport viewport)
+        public void Update(double deltaTime, Level level, Viewport viewport, AbstractEnemy[] enemies)
         {
             lastMove = Vector2.Zero;
 
@@ -92,7 +92,7 @@ namespace Project_Rioman
                 foreach (AbstractBullet blt in bullets)
                 {
                     if (blt != null)
-                        blt.Update(this, deltaTime, viewport);
+                        blt.Update(this, deltaTime, viewport, enemies);
                 }
 
                 stopLeftMovement = false;

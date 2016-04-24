@@ -133,10 +133,14 @@ namespace Project_Rioman
                 return new CloverBullet(x, y, facingRight);
             else if (activeWeapon == Constant.GEOBULLET)
                 return new GeoBullet(x, y, facingRight);
+            else if (activeWeapon == Constant.LURKERBULLET)
+                return null;
             else if (activeWeapon == Constant.POSTERBULLET)
                 return new PosterBullet(x, y, facingRight);
             else if (activeWeapon == Constant.TOXICBULLET)
                 return new ToxicBullet(x, y, facingRight);
+            else if (activeWeapon == Constant.BUNNYBULLET)
+                return new BunnyBullet(x, y, facingRight);
             return null;
         }
 

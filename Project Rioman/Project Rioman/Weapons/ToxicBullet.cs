@@ -39,6 +39,9 @@ namespace Project_Rioman
             drawRect = new Rectangle(0, 0, bubbleBorder.Width / 3, bubbleBorder.Height);
             location = new Rectangle(0, 0, drawRect.Width, drawRect.Height);
 
+
+            //TODO: adjust location
+
             if (facingRight)
                 location.X = x - 10;
             else
@@ -134,7 +137,7 @@ namespace Project_Rioman
             //do nothing
         }
 
-        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport)
+        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport, AbstractEnemy[] enemies)
         {
             if (isAlive) {
                 if (hit)

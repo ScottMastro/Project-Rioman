@@ -152,7 +152,7 @@ namespace Project_Rioman
             return new Rectangle();
         }
 
-        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport)
+        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport, AbstractEnemy[] enemies)
         {
             canDie = false;
 

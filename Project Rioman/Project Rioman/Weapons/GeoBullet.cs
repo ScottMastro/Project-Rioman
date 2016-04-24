@@ -36,7 +36,7 @@ namespace Project_Rioman
             prevKeyboardState = Keyboard.GetState();
         }
 
-        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport)
+        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport, AbstractEnemy[] enemies)
         {
             if (!shoot && Keyboard.GetState().IsKeyDown(Constant.SHOOT) && !prevKeyboardState.IsKeyDown(Constant.SHOOT))
             {

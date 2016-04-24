@@ -40,8 +40,8 @@ namespace Project_Rioman
             sprites.Add(Constant.POSTERBULLET, LoadSprites(c, new string[] {"posterbullet"}));
             sprites.Add(Constant.TOXICBULLET, LoadSprites(c, new string[] {"toxbullet1", "toxbullet2", "toxbullet3", "toxbullet4"}));
             sprites.Add(Constant.CLOVERBULLET, LoadSprites(c, new string[] {"cloverbullet"}));
-           // sprites.Add(Constant.BUNNYBULLET, LoadSprites(c, new string[] {}));
-          
+            sprites.Add(Constant.BUNNYBULLET, LoadSprites(c, new string[] {"bunnybullet"}));
+
         }
 
         private static Texture2D[] LoadSprites(ContentManager content, string[] location)
@@ -67,7 +67,7 @@ namespace Project_Rioman
             damage.Add(Constant.POSTERBULLET, 1);
             damage.Add(Constant.TOXICBULLET, 3);
             damage.Add(Constant.CLOVERBULLET, 4);
-         //   damage.Add(Constant.BUNNYBULLET, 4);
+            damage.Add(Constant.BUNNYBULLET, 4);
 
         }
 
@@ -83,8 +83,8 @@ namespace Project_Rioman
             //   speed.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
             speed.Add(Constant.POSTERBULLET, 12);
             speed.Add(Constant.TOXICBULLET, 2);
-               speed.Add(Constant.CLOVERBULLET, 7);
-            //   speed.Add(Constant.BUNNYBULLET, 4);
+            speed.Add(Constant.CLOVERBULLET, 7);
+            speed.Add(Constant.BUNNYBULLET, 4);
 
         }
 
@@ -101,7 +101,7 @@ namespace Project_Rioman
             ammoUse.Add(Constant.POSTERBULLET, 1);
             ammoUse.Add(Constant.TOXICBULLET, 3);
                ammoUse.Add(Constant.CLOVERBULLET, 4);
-            //   ammoUse.Add(Constant.BUNNYBULLET, 4);
+            ammoUse.Add(Constant.BUNNYBULLET, 2);
 
         }
 
@@ -118,7 +118,7 @@ namespace Project_Rioman
             weight.Add(Constant.POSTERBULLET, 2);
             weight.Add(Constant.TOXICBULLET, 3);
             weight.Add(Constant.CLOVERBULLET, 6);
-            //   weight.Add(Constant.BUNNYBULLET, 4);
+            weight.Add(Constant.BUNNYBULLET, 3);
 
         }
 
@@ -128,15 +128,15 @@ namespace Project_Rioman
             riomanColour = new Dictionary<int, Color>();
 
             riomanColour.Add(Constant.RIOBULLET, Color.White * 0f);
-            riomanColour.Add(Constant.GEOBULLET, Color.DarkOrange);
-            riomanColour.Add(Constant.AURORABULLET, Color.SkyBlue);
-            riomanColour.Add(Constant.LURKERBULLET, Color.LightGray);
+            riomanColour.Add(Constant.GEOBULLET, Color.Peru);
+            riomanColour.Add(Constant.AURORABULLET, Color.CornflowerBlue);
+            riomanColour.Add(Constant.LURKERBULLET, Color.Gray);
             riomanColour.Add(Constant.INFERNOBULLET, Color.Red);
             //   riomanColour.Add(Constant.DUELBULLET, Constant.MAX_HEALTH);
-            riomanColour.Add(Constant.POSTERBULLET, Color.BlueViolet);
-            riomanColour.Add(Constant.TOXICBULLET, Color.Magenta);
-               riomanColour.Add(Constant.CLOVERBULLET, Color.Lime);
-            //   riomanColour.Add(Constant.BUNNYBULLET, 4);
+            riomanColour.Add(Constant.POSTERBULLET, Color.CadetBlue);
+            riomanColour.Add(Constant.TOXICBULLET, Color.DarkOrchid);
+            riomanColour.Add(Constant.CLOVERBULLET, Color.LimeGreen);
+            riomanColour.Add(Constant.BUNNYBULLET, Color.HotPink);
 
         }
 

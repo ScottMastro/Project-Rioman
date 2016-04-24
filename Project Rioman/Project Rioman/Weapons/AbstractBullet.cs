@@ -38,19 +38,19 @@ namespace Project_Rioman
             Audio.PlayShoot();
         }
 
-        public void Update(Rioman player, double deltaTime, Viewport viewport)
+        public void Update(Rioman player, double deltaTime, Viewport viewport, AbstractEnemy[] enemies)
         {
             if (canDie)
                 if (location.X > viewport.Width || location.X < - drawRect.Width ||
                     location.Y < - drawRect.Height || location.Y > viewport.Height)
                     isAlive = false;
 
-            SubUpdate(player, deltaTime, viewport);
+            SubUpdate(player, deltaTime, viewport, enemies);
 
         }
 
         public abstract void Draw(SpriteBatch spriteBatch);
-        protected abstract void SubUpdate(Rioman player, double deltaTime, Viewport viewport);
+        protected abstract void SubUpdate(Rioman player, double deltaTime, Viewport viewport, AbstractEnemy[] enemies);
         protected abstract void SubMove(int x, int y);
         public abstract int TakeDamage(string enemyID);
         public abstract bool Hits(Rectangle collisionRect);

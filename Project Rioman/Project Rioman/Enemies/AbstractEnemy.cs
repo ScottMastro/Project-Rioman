@@ -271,9 +271,9 @@ namespace Project_Rioman
             return temp;
         }
 
-        public string GetID()
-        {
-            return uniqueID;
-        }
+        public string GetID() { return uniqueID; }
+        public bool IsAlive() { return isAlive; }
+        public bool IsInvincible() { return isInvincible; }
+
     }
 }

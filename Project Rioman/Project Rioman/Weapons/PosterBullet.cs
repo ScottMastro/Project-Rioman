@@ -155,7 +155,7 @@ namespace Project_Rioman
                 posts[i].Move(x, y);
         }
 
-        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport)
+        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport, AbstractEnemy[] enemies)
         {
             if (isAlive)
             {

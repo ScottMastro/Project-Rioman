@@ -55,7 +55,7 @@ namespace Project_Rioman
             return new Rectangle(location.X + drawRect.Width / 2, location.Y + 10, drawRect.Width / 2, drawRect.Height - 20);
         }
 
-        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport)
+        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport, AbstractEnemy[] enemies)
         {
             frameTime += deltaTime;
            

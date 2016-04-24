@@ -46,7 +46,7 @@ namespace Project_Rioman
             {
 
                 //update player before level
-                player.Update(gameTime.ElapsedGameTime.TotalSeconds, currentLevel, viewport);
+                player.Update(gameTime.ElapsedGameTime.TotalSeconds, currentLevel, viewport, currentLevel.GetEnemies());
 
                 if (!player.IsWarping())
                 {

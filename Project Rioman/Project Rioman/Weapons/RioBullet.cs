@@ -34,7 +34,7 @@ namespace Project_Rioman
         }
 
 
-        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport)
+        protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport, AbstractEnemy[] enemies)
         {
             if (isAlive)
                 location.X += speed * direction;

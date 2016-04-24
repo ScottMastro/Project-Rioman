@@ -122,6 +122,7 @@
     <Compile Include="Enemies\ZarrocClone.cs" />
     <Compile Include="Pickups\EnemyPickup.cs" />
     <Compile Include="Pickups\PickupAttributes.cs" />
+    <Compile Include="Weapons\BunnyBullet.cs" />
     <Compile Include="Weapons\CloverBullet.cs" />
     <Compile Include="Weapons\GeoBullet.cs" />
     <Compile Include="Weapons\InfernoBullet.cs" />
@@ -211,8 +212,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>if exist "$(TargetPath).locked" del "$(TargetPath).locked"
+if not exist "$(TargetPath).locked" move "$(TargetPath)" "$(TargetPath).locked"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
