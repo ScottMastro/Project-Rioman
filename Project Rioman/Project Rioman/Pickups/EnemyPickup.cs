@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Project_Rioman
 {
@@ -45,14 +45,32 @@ namespace Project_Rioman
                 if (type == Constant.SMALL_HEALTH)
                     StatusBar.IncreaseHealth(6);
                 else if (type == Constant.BIG_HEALTH)
-                    StatusBar.IncreaseHealth(27);
-                else if (type == Constant.SMALL_AMM0) { }
-                //TODO
-                else if (type == Constant.BIG_AMMO) { }
-                //TODO
+                    StatusBar.IncreaseHealth(Constant.MAX_HEALTH);
+                else if (type == Constant.SMALL_AMMO)
+                    StatusBar.IncreaseAmmo(6);
+                else if (type == Constant.BIG_AMMO)
+                    StatusBar.IncreaseAmmo(Constant.MAX_AMMO);
+            
                 isAlive = false;
             }
 
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            Color colour = Color.White;
+
+            if (type == Constant.BIG_AMMO || type == Constant.SMALL_AMMO)
+            {
+                colour = BulletAttributes.GetRiomanColour(Weapons.GetActiveWeapon());
+                if (Weapons.GetActiveWeapon() == Constant.RIOBULLET)
+                    colour = Color.Gold;
+            }
+
+
+            if (isAlive)
+                spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, drawRect.Width, drawRect.Height),
+                    drawRect, colour, 0f, new Vector2(drawRect.Width / 2, drawRect.Height / 2), SpriteEffects.None, 0);
         }
     }
 }

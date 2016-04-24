@@ -60,24 +60,27 @@ namespace Project_Rioman
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!hit)
+            if (isAlive)
             {
-                drawRect = new Rectangle(bubbleBorder.Width / 3 * frame, 0, bubbleBorder.Width / 3, bubbleBorder.Height);
+                if (!hit)
+                {
+                    drawRect = new Rectangle(bubbleBorder.Width / 3 * frame, 0, bubbleBorder.Width / 3, bubbleBorder.Height);
 
-                spriteBatch.Draw(bubbleBorder, location, drawRect, Color.White);
-                spriteBatch.Draw(bubbleInside, location, drawRect, Color.White * 0.8f);
-            }
-            else
-            {
-                drawRect = new Rectangle(0, 0, cloud1.Width, cloud1.Height);
+                    spriteBatch.Draw(bubbleBorder, location, drawRect, Color.White);
+                    spriteBatch.Draw(bubbleInside, location, drawRect, Color.White * 0.8f);
+                }
+                else
+                {
+                    drawRect = new Rectangle(0, 0, cloud1.Width, cloud1.Height);
 
 
-                DrawCloud(spriteBatch, 0, 0);
-                DrawCloud(spriteBatch, 30, 50);
-                DrawCloud(spriteBatch, -40, -30);
-                DrawCloud(spriteBatch, -50, 40);
-                DrawCloud(spriteBatch, 50, -50);
+                    DrawCloud(spriteBatch, 0, 0);
+                    DrawCloud(spriteBatch, 30, 50);
+                    DrawCloud(spriteBatch, -40, -30);
+                    DrawCloud(spriteBatch, -50, 40);
+                    DrawCloud(spriteBatch, 50, -50);
 
+                }
             }
         }
 

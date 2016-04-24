@@ -123,7 +123,7 @@ namespace Project_Rioman
             //drop small ammo
             dropProb += Constant.AMMO_DROP_PERCENT_SMALL;
             if (n < dropProb) {
-                droppedItem = new EnemyPickup(Constant.SMALL_AMM0, x, y);
+                droppedItem = new EnemyPickup(Constant.SMALL_AMMO, x, y);
                 return;
             }
 

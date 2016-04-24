@@ -45,12 +45,7 @@ namespace Project_Rioman
         }
 
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            if (isAlive)
-                spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, drawRect.Width, drawRect.Height),
-                    drawRect, Color.White, 0f, new Vector2(drawRect.Width / 2, drawRect.Height / 2), SpriteEffects.None, 0);
-        }
+        public abstract void Draw(SpriteBatch spriteBatch);
 
         public void Move(int x, int y)
         {

@@ -161,7 +161,7 @@ namespace Project_Rioman
             shieldHit.Play(Constant.VOLUME, 0.5f, 0f);
         }
 
-        public static void PlayHeal()
+        public static void PlayRestorePoint()
         {
             heal.Play(Constant.VOLUME, 0.4f, 0f);
         }

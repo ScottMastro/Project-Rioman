@@ -42,7 +42,7 @@ namespace Project_Rioman
                 ChangeLevel();
 
             if (currentLevel.go && !currentLevel.IsBusy() && !GameState.IsPaused()
-                   && !StatusBar.HealthIncreasing() && currentLevel.bosses[currentLevel.activelevel].intro >= 3)
+                   && !StatusBar.IsBusy() && currentLevel.bosses[currentLevel.activelevel].intro >= 3)
             {
 
                 //update player before level
@@ -74,8 +74,8 @@ namespace Project_Rioman
 
                 currentLevel.CenterRioman(viewport, player);
             }
-            else if (StatusBar.HealthIncreasing())
-                StatusBar.UpdateHealth(gameTime.ElapsedGameTime.TotalSeconds);
+            else if (StatusBar.IsBusy())
+                StatusBar.BusyUpdate(gameTime.ElapsedGameTime.TotalSeconds);
             else if (currentLevel.IsBusy())
                 currentLevel.BusyUpdate(player, viewport);
             else if (GameState.IsPaused())

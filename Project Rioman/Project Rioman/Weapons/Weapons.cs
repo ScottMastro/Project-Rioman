@@ -206,6 +206,10 @@ namespace Project_Rioman
         {
             return weaponAmmo[value];
         }
+        public static int AddAmmo(int value)
+        {
+            return weaponAmmo[activeWeapon] += value;
+        }
         public static int GetActiveWeapon()
         {
             return activeWeapon;

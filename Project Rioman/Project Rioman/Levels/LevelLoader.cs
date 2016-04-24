@@ -99,7 +99,7 @@ namespace Project_Rioman
                         CreateLevelElement(tilePos[x, y], x, y, content);
 
                         if (tilePos[x, y] == 284)
-                            startPos = new Vector2(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE - 15);
+                            startPos = new Vector2(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE - Constant.TILE_SIZE);
                     }
                 }
 

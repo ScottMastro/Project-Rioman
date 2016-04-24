@@ -4922,7 +4922,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\pickups\bigweapon.xnb</Output>
-      <Time>2010-02-18T21:47:02-05:00</Time>
+      <Time>2016-04-24T17:42:33.8808949-04:00</Time>
     </Item>
     <Item>
       <Source>Video\pickups\smallweapon.png</Source>
@@ -4931,7 +4931,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\pickups\smallweapon.xnb</Output>
-      <Time>2010-02-18T21:54:12-05:00</Time>
+      <Time>2016-04-24T17:52:18.1362002-04:00</Time>
     </Item>
     <Item>
       <Source>Video\rioman\hit.png</Source>

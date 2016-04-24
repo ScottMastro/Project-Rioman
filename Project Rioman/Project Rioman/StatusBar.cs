@@ -6,11 +6,13 @@ namespace Project_Rioman
 {
     static class StatusBar
     {
+
         private static Texture2D bar;
         private static Texture2D healthpoint;
         private static int health;
         private static double increasetime;
-        private static int increaseAmount;
+        private static int healthIncreaseAmount;
+        private static int ammoIncreaseAmount;
 
         private static bool drawBossHealth;
         private static int bossHealth;
@@ -50,22 +52,36 @@ namespace Project_Rioman
                     new Rectangle(0,0, ammoPoint.Width, ammoPoint.Height), Color.White, MathHelper.PiOver2, new Vector2(), SpriteEffects.None, 0);
         }
 
-        public static void UpdateHealth(double deltaTime)
+        public static void BusyUpdate(double deltaTime)
         {
             increasetime += deltaTime;
 
             if (increasetime > 0.05)
             {
                 increasetime = 0;
-                increaseAmount--;
 
-                if (health < Constant.MAX_HEALTH)
+                if (healthIncreaseAmount > 0)
                 {
-                    health++;
-                    Audio.heal.Play();
+                    healthIncreaseAmount--;
+
+                    if (health < Constant.MAX_HEALTH)
+                    {
+                        health++;
+                        Audio.PlayRestorePoint();
+                    }
+                    else
+                        healthIncreaseAmount = 0;
                 }
-                else
-                    increaseAmount = 0;
+                else if (ammoIncreaseAmount > 0)
+                {
+                    ammoIncreaseAmount--;
+
+                    if(Weapons.GetAmmo() < Constant.MAX_AMMO)
+                    {
+                        Weapons.AddAmmo(1);
+                        Audio.PlayRestorePoint();
+                    }
+                }
                 
             }
         }
@@ -97,13 +113,24 @@ namespace Project_Rioman
         public static void IncreaseHealth(int amount) {
             if (health < Constant.MAX_HEALTH)
             {
-                increaseAmount = amount;
+                healthIncreaseAmount = amount;
                 increasetime = 0;
+            }
+        }
+
+        public static void IncreaseAmmo(int amount)
+        {
+            if (Weapons.GetAmmo() < Constant.MAX_AMMO)
+            {
+                ammoIncreaseAmount = amount;
+                increasetime = 0;
+
             }
         }
         public static void AdjustHealth(int amount) { health += amount; }
         public static int GetHealth() { return health; }
         public static void SetHealth(int x) { health = x; }
-        public static bool HealthIncreasing() { return increaseAmount > 0; }
+
+        public static bool IsBusy() { return healthIncreaseAmount > 0 || ammoIncreaseAmount > 0; }
     }
 }
