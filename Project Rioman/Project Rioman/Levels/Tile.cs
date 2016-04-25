@@ -153,8 +153,8 @@ namespace Project_Rioman
 
         public int X { get { return location.X; } }
         public int Y { get { return location.Y; } }
-        public int Row { get { return x; } }
-        public int Column { get { return y; } }
+        public int GridX { get { return x; } }
+        public int GridY { get { return y; } }
         public int Width { get { return location.Width; } }
         public void ChangeType(int newType) { type = newType; }
 
@@ -164,5 +164,7 @@ namespace Project_Rioman
         public Rectangle Left { get { return new Rectangle(location.X, location.Y, location.Width / 2, location.Height); } }
         public Rectangle Right { get { return new Rectangle(location.X + location.Width / 2, location.Y, location.Width / 2, location.Height); } }
         public Rectangle Bottom { get { return new Rectangle(location.X, location.Y + location.Height / 2, location.Width, location.Height / 2); } }
+        public Rectangle Center { get { return new Rectangle(location.X + 8, location.Y + 8, location.Width - 16, location.Height - 16); } }
+
     }
 }

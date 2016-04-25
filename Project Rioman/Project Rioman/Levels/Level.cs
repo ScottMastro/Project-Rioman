@@ -29,6 +29,7 @@ namespace Project_Rioman
         int fadetiles;
         private int doorStopY;
         private Tile doorTop;
+        private bool allowScrolling = false;
         private bool doorOpening;
         private bool closeDoor;
         private bool doorClosing;
@@ -84,6 +85,7 @@ namespace Project_Rioman
             items = new List<AbstractPickup>();
 
             scrollers = MakeScroller();
+            allowScrolling = true;
 
             doorOpening = false;
 
@@ -187,17 +189,18 @@ namespace Project_Rioman
 
                         if (player.Head.Intersects(tle.Bottom))
                         {
-                            player.StopClimingUp();
-
                             if (!player.IsClimbing())
                                 player.state.Fall();
                         }
+
+                        if (player.Head.Intersects(tle.Center))
+                            player.StopClimingUp();
 
                     }
                     //kill player
                     else if (tle.type == 2)
                     {
-                        if (player.Hitbox.Intersects(tle.location) && !player.IsInvincible())
+                        if (player.Hitbox.Intersects(tle.Center) && !player.IsInvincible())
                         {
                             lifechange = -1;
                             player.Die();
@@ -262,16 +265,16 @@ namespace Project_Rioman
             doorTop = tle;
             doorOpening = true;
 
-            int row = tle.Row;
-            int column = tle.Column;
+            int x = tle.GridX;
+            int y = tle.GridY;
 
             //Check for door tiles above tle
             while (true)
             {
-                if (row > 0 && tiles[row - 1, column] != null && tiles[row - 1, column].type == 4)
+                if (y > 0 && tiles[x, y - 1] != null && tiles[x, y - 1].type == 4)
                 {
-                    doorTop = tiles[row - 1, column];
-                    row--;
+                    doorTop = tiles[x, y - 1];
+                    y--;
                 }
                 else
                     break;
@@ -284,20 +287,20 @@ namespace Project_Rioman
         {
             bool stillOpening = false;
 
-            int row = doorTop.Row;
-            int column = doorTop.Column;
+            int x = doorTop.GridX;
+            int y = doorTop.GridY;
 
             while (true)
             {
-                if (row < height && tiles[row, column] != null && tiles[row, column].type == 4)
+                if (y < height && tiles[x, y] != null && tiles[x, y].type == 4)
                 {
-                    if (tiles[row, column].Y > doorStopY)
+                    if (tiles[x, y].Y > doorStopY)
                     {
                         stillOpening = true;
-                        tiles[row, column].Move(0, -DOOR_SPEED);
+                        tiles[x, y].Move(0, -DOOR_SPEED);
                     }
 
-                    row++;
+                    y++;
                 }
                 else
                     break;
@@ -317,21 +320,21 @@ namespace Project_Rioman
         {
             bool stillClosing = false;
 
-            int row = doorTop.Row;
-            int column = doorTop.Column;
+            int x = doorTop.GridX;
+            int y = doorTop.GridY;
 
             while (true)
             {
-                if (row < height && tiles[row, column] != null && tiles[row, column].type == 4)
+                if (y < height && tiles[x, y] != null && tiles[x, y].type == 4)
                 {
-                    if (row > 0 && tiles[row - 1, column] != null &&
-                        tiles[row, column].Y < tiles[row - 1, column].location.Bottom)
+                    if (y > 0 && tiles[x, y - 1] != null &&
+                        tiles[x, y].Y < tiles[x, y - 1].location.Bottom)
                     {
                         stillClosing = true;
-                        tiles[row, column].Move(0, DOOR_SPEED);
+                        tiles[x, y].Move(0, DOOR_SPEED);
                     }
 
-                    row++;
+                    y++;
                 }
                 else
                     break;
@@ -341,18 +344,19 @@ namespace Project_Rioman
                 Audio.PlayDoor();
             else
             {
+                allowScrolling = false;
                 closeDoor = false;
                 doorClosing = false;
 
                 //make door a wall
-                row = doorTop.Row;
+                y = doorTop.GridY;
 
                 while (true)
                 {
-                    if (row < height && tiles[row, column] != null && tiles[row, column].type == 4)
+                    if (y < height && tiles[x, y] != null && tiles[x, y].type == 4)
                     {
-                        tiles[row, column].ChangeType(1);
-                        row++;
+                        tiles[x, y].ChangeType(1);
+                        y++;
                     }
                     else
                         break;
@@ -454,7 +458,7 @@ namespace Project_Rioman
                 if (tle != null)
                 {
 
-                    for (int e = 0; e <= enemies.Length-1; e++)
+                    for (int e = 0; e <= enemies.Length - 1; e++)
                         enemies[e].DetectTileCollision(tle);
 
 
@@ -500,7 +504,6 @@ namespace Project_Rioman
 
         public void MoveStuff(Rioman player, int x, int y)
         {
-
             foreach (Tile tle in tiles)
             {
                 if (tle != null)
@@ -520,14 +523,14 @@ namespace Project_Rioman
             for (int i = 0; i <= items.Count - 1; i++)
                 items[i].Move(x, y);
 
-            for (int i = 0; i <= enemies.Length -1; i++)
+            for (int i = 0; i <= enemies.Length - 1; i++)
                 enemies[i].Move(x, y);
 
             bosses[activelevel].Move(x, y);
 
             player.MoveBullets(x, y);
         }
-
+    
 
 
 
@@ -803,6 +806,13 @@ namespace Project_Rioman
 
         private void UpdateScrollers(Rioman player, Viewport viewport)
         {
+            if (!allowScrolling)
+            {
+                stopLeftScreenMovement = true;
+                stopRightScreenMovement = true;
+                return;
+            }
+
             Rectangle vp = new Rectangle(viewport.X, viewport.Y, viewport.Width, viewport.Height);
 
             bool atTop = player.Location.Top < 3;

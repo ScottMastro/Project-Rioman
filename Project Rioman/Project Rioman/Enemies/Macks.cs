@@ -109,7 +109,7 @@ namespace Project_Rioman
 
                 shootTime += deltaTime;
                 distance = GetCollisionRect().Center.Y - player.Hitbox.Center.Y;
-                if (shootTime > 0.5 && distance < 10)
+                if (shootTime > 0.65 && (Math.Abs(distance) < 10 || stopDownMovement || stopUpMovement))
                     Shoot();
 
                 if (!collideWithTile)

@@ -40,7 +40,7 @@ namespace Project_Rioman
             prevState = state;
             state = value;
 
-            Audio.ChangeActiveSong(state);
+          //  Audio.ChangeActiveSong(state);
         }
         public static int GetPrevState() { return prevState; }
         public static bool IsPaused() { return pause; }

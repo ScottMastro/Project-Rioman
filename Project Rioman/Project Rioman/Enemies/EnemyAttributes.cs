@@ -106,12 +106,12 @@ namespace Project_Rioman
             maxHealth.Add(Constant.ZARROCCLONE, 3);
             maxHealth.Add(Constant.DEUXKAMA, 0);
             maxHealth.Add(Constant.SERVERBOT, 4);
-            maxHealth.Add(Constant.MEGAHOPPER, 6);
+            maxHealth.Add(Constant.MEGAHOPPER, 12);
             maxHealth.Add(Constant.DOZERBOT, 7);
             maxHealth.Add(Constant.BLACKY, 5);
             maxHealth.Add(Constant.HELLICOPTOR, 4);
             maxHealth.Add(Constant.P1H8R, 4);
-            maxHealth.Add(Constant.MACKS, 5);
+            maxHealth.Add(Constant.MACKS, 4);
         }
         private static void DamageInit()
         {
@@ -132,7 +132,7 @@ namespace Project_Rioman
             damage.Add(Constant.ZARROCCLONE, 2);
             damage.Add(Constant.DEUXKAMA, 5);
             damage.Add(Constant.SERVERBOT, 4);
-            damage.Add(Constant.MEGAHOPPER, 6);
+            damage.Add(Constant.MEGAHOPPER, 5);
             damage.Add(Constant.DOZERBOT, Constant.MAX_HEALTH);
             damage.Add(Constant.BLACKY, 3);
             damage.Add(Constant.HELLICOPTOR, 4);

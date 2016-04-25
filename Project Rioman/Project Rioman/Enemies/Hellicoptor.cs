@@ -11,7 +11,7 @@ namespace Project_Rioman
         private int frame;
         private bool chasing;
 
-        private const int SPEED = 2;
+        private const int SPEED = 3;
 
         private bool stopDownMovement;
         private bool stopUpMovement;
@@ -28,6 +28,7 @@ namespace Project_Rioman
         protected override void SubReset()
         {
             drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
+            location.Y -= drawRect.Height;
 
             frameTime = 0;
             frame = 0;
@@ -52,19 +53,19 @@ namespace Project_Rioman
 
                 if (!chasing)
                 {
-                    if (Math.Abs(thisX - playerX) < 200 &&
-                        (Math.Abs(thisY - playerY) < 200))
+                    if (Math.Abs(thisX - playerX) < 380 &&
+                        (Math.Abs(thisY - playerY) < 380))
                         chasing = true;
                 }
                 if (chasing)
                 {
-                    if (Math.Abs(thisX - playerX) > 250 ||
-                        (Math.Abs(thisY - playerY) > 250))
+                    if (Math.Abs(thisX - playerX) > 400 ||
+                        (Math.Abs(thisY - playerY) > 400))
                         chasing = false;
 
-                    if (playerY < thisY && !stopUpMovement)
+                    if (playerY - thisY < -6 && !stopUpMovement)
                         location.Y -= SPEED;
-                    else if (playerY > thisY && !stopDownMovement)
+                    else if (playerY - thisY > 6  && !stopDownMovement)
                         location.Y += SPEED;
 
                     if (thisX - playerX > 4 && !stopLeftMovement)

@@ -26,7 +26,8 @@ namespace Project_Rioman
         protected override void SubReset()
         {
             frame = 0;
-
+            fallTime = 0;
+            jumpTime = 0;
             location.Y -= sprite.Height;
             drawRect = new Rectangle(0, 0, sprite.Width / 6, sprite.Height);
         }
@@ -45,7 +46,7 @@ namespace Project_Rioman
                     {
                         frameTime = 0;
                         frame++;
-                        if (frame == 5)
+                        if (frame == 5 && fallTime <= 0.1)
                             jumping = true;
                     }
 
@@ -73,8 +74,6 @@ namespace Project_Rioman
                     {
                         if (!stopUpMovement) 
                             Move(0, -Convert.ToInt32(14 - jumpTime * 14));
-
-                        Move(0, Convert.ToInt32(fallTime * 22));
                     }
                     else {
                         jumpTime = 0;
@@ -82,6 +81,9 @@ namespace Project_Rioman
                         frame = 0;
                     }
                 }
+
+                Move(0, Convert.ToInt32(fallTime * 22));
+
             }
         }
 
@@ -91,7 +93,6 @@ namespace Project_Rioman
 
             spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, drawRect.Width, drawRect.Height), drawRect,
                 Color.White, 0f, new Vector2(), direction, 0);
-
         }
 
         public override void DetectTileCollision(Tile tile)

@@ -60,7 +60,6 @@ namespace Project_Rioman
             }
 
             anim.Draw(spriteBatch, location, this, levelIsBusy);
-
         }
 
         public void Update(double deltaTime, Level level, Viewport viewport, AbstractEnemy[] enemies)
@@ -336,6 +335,9 @@ namespace Project_Rioman
             get
             {
                 int shiftX = 0;
+
+                if(state.IsClimbing())
+                    return new Rectangle(location.X -12, location.Y + 42, 20, 12);
 
                 if (FacingRight())
                     shiftX = -22;
