@@ -17,6 +17,7 @@ namespace Project_Rioman
         public int invincibledirection;
 
         public bool climbDown;
+
         private int startPosX;
         private int startPosY;
 
@@ -147,7 +148,7 @@ namespace Project_Rioman
 
         private void UpdateClimb(double deltaTime, KeyboardState keyboardState, Level level)
         {
-            if (keyboardState.IsKeyDown(Constant.UP))
+            if (keyboardState.IsKeyDown(Constant.UP) && !state.GetStopClimbUp())
             {
                 Move(0, -3);
                 climbDown = false;
@@ -225,25 +226,23 @@ namespace Project_Rioman
         private void CheckClimb(KeyboardState keyboardState, Level level)
         {
 
-            if (keyboardState.IsKeyDown(Constant.UP))
+            if (keyboardState.IsKeyDown(Constant.UP) && !state.IsHit())
             {
-                Rectangle result = level.CheckClimb(this, location.X, true, ref location);
-
-                if (result.Width != 0)
+                if (level.CheckClimb(this, location.X, true, ref location))
                 {
-                    Move(0, -10);
+                    if(!state.GetStopClimbUp())
+                        Move(0, -3);
                     state.Climb();
                     climbDown = false;
                 }
             }
 
 
-            if (keyboardState.IsKeyDown(Constant.DOWN) && !prevKeyboardState.IsKeyDown(Constant.DOWN))
+            if (keyboardState.IsKeyDown(Constant.DOWN) && !state.IsHit())
             {
-                Rectangle result = level.CheckClimb(this, location.X, false, ref location);
-                if (result.Width != 0)
+                if (level.CheckClimb(this, location.X, false, ref location))
                 {
-                    Move(0, 20);
+                    Move(0, 16);
                     state.Climb();
                     climbDown = true;
                 }
@@ -399,6 +398,11 @@ namespace Project_Rioman
         public Texture2D GetSprite() { return anim.GetSprite(); }
         public void AtLadderTop() { state.SetClimbTopState(true); }
         public void BelowLadderTop() { state.SetClimbTopState(false); }
+        public void StopClimingUp() { state.SetStopClimbUp(true); }
+        public void AllowClimingUp() { state.SetStopClimbUp(false); }
+        public void OnLadder() { state.SetOnLadder(true); }
+        public void OffLadder() { state.SetOnLadder(false); }
+
         public void SetStartPos(int x, int y)
         {
             startPosX = x;

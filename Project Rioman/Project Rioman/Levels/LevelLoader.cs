@@ -13,7 +13,7 @@ namespace Project_Rioman
         Dictionary<string, int> letters = new Dictionary<string, int>();
 
         private Color backgroundColour;
-        private Texture2D[] tileSprites = new Texture2D[332];
+        private Texture2D[] tileSprites = new Texture2D[500];
         private int width;
         private int height;
         private int[,] tilePos;
@@ -32,7 +32,7 @@ namespace Project_Rioman
             SetLetters();
 
             //load level resources
-            for (int i = 1; i <= 321; i++)
+            for (int i = 1; i <= 350; i++)
                 tileSprites[i] = content.Load<Texture2D>("Video\\tiles\\" + i.ToString());
 
             for (int j = 0; j <= 9; j++)

@@ -31,7 +31,7 @@ namespace Project_Rioman
 
         public static int HEALTH_DROP_PERCENT_SMALL = 6;
         public static int HEALTH_DROP_PERCENT_BIG = 3;
-        public static int AMMO_DROP_PERCENT_SMALL = 100;
+        public static int AMMO_DROP_PERCENT_SMALL = 6;
         public static int AMMO_DROP_PERCENT_BIG = 3;
 
         public static int ETANK = 10;
@@ -107,7 +107,8 @@ namespace Project_Rioman
                 type = 1;
             if (tileNumber >= 103 && tileNumber <= 105 || tileNumber == 109)
                 type = 1;
-            if (tileNumber >= 39 && tileNumber <= 45 || tileNumber >= 50 && tileNumber <= 55)
+            if (tileNumber >= 39 && tileNumber <= 45 || tileNumber >= 50 && tileNumber <= 55
+                || tileNumber >= 333 && tileNumber <= 336)
                 type = 1;
             if (tileNumber == 58)
                 type = 4;

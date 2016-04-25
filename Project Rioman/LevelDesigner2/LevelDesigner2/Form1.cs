@@ -1017,16 +1017,16 @@ namespace WindowsFormsApplication1
                 pictureBox2.Image = Scroller[2];
                 pictureBox3.Image = Scroller[3];
                 pictureBox4.Image = Scroller[4];
-                pictureBox5.Image = Scroller[5];
-                pictureBox6.Image = Scroller[6];
-                pictureBox7.Image = Scroller[7];
-                pictureBox8.Image = Scroller[8];
-                pictureBox9.Image = Scroller[9];
-                pictureBox10.Image = Scroller[10];
-                pictureBox11.Image = Scroller[11];
-                pictureBox12.Image = Scroller[12];
-                pictureBox13.Image = Scroller[13];
-                pictureBox14.Image = Scroller[14];
+         //       pictureBox5.Image = Scroller[5];
+           //     pictureBox6.Image = Scroller[6];
+             //   pictureBox7.Image = Scroller[7];
+             //   pictureBox8.Image = Scroller[8];
+           //     pictureBox9.Image = Scroller[9];
+            //    pictureBox10.Image = Scroller[10];
+             //   pictureBox11.Image = Scroller[11];
+              //  pictureBox12.Image = Scroller[12];
+               // pictureBox13.Image = Scroller[13];
+               // pictureBox14.Image = Scroller[14];
             }
 
         }
@@ -1189,7 +1189,7 @@ namespace WindowsFormsApplication1
 
             }
 
-            for (int i = 1; i <= 14; i++)
+            for (int i = 1; i <= 4; i++)
             {
                 counter++;
 

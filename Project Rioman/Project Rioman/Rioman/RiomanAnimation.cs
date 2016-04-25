@@ -267,7 +267,7 @@ namespace Project_Rioman
 
         private void GetDirection()
         {
-            if (!state.IsWarping())
+            if (!state.IsWarping() && !state.IsHit())
             {
                 KeyboardState k = Keyboard.GetState();
                 if (k.IsKeyDown(Constant.RIGHT))

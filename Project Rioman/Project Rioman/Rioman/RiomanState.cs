@@ -32,6 +32,8 @@ namespace Project_Rioman
         private const double MAX_INVINCIBLE_TIME = 2.5;
 
         private bool climbTop;
+        private bool stopClimbingUp;
+        private bool onLadder;
 
         private int lives;
         private KeyboardState prevKeyboardState;
@@ -85,6 +87,8 @@ namespace Project_Rioman
                     UpdateJump(k, deltaTime);
                     break;
                 case State.climbing:
+                    if (!onLadder)
+                        Fall();
                     CheckJump(k);
                     break;
             }
@@ -112,6 +116,8 @@ namespace Project_Rioman
                 UpdateHit(deltaTime);
             if (invincible)
                 UpdateInvincible(deltaTime);
+
+
 
             prevKeyboardState = k;
 
@@ -158,8 +164,11 @@ namespace Project_Rioman
         private void CheckJump(KeyboardState k)
         {
             if (k.IsKeyDown(Constant.JUMP) && !prevKeyboardState.IsKeyDown(Constant.JUMP))
-                Jump();
-
+            {
+                if (IsClimbing() && stopClimbingUp)
+                    Fall();
+                else Jump();
+            }
         }
 
         private void CheckRun(KeyboardState k)
@@ -292,6 +301,9 @@ namespace Project_Rioman
         public bool IsOnEnemy() { return onEnemy; }
         public bool Airborne() { return IsFalling() || IsJumping(); }
         public bool Grounded() { return IsStanding() || IsRunning() || IsOnEnemy(); }
+        public bool GetStopClimbUp() { return stopClimbingUp; }
+        public void SetStopClimbUp(bool value) { stopClimbingUp = value; }
+        public void SetOnLadder(bool value) { onLadder = value; }
 
         public void Freeze(double x) {
             if (!IsWarping())

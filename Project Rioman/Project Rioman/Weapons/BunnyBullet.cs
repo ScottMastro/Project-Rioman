@@ -39,8 +39,6 @@ namespace Project_Rioman
                 spriteBatch.Draw(sprite, location, drawRect, Color.White, 0f, new Vector2(),
                     direction < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
-                if (target != null)
-                    DebugDraw.DrawRect(spriteBatch, target.GetCollisionRect(), 0.3f);
             }
         }
 
@@ -66,6 +64,7 @@ namespace Project_Rioman
 
         protected override void SubMove(int x, int y)
         {
+            //do nothing
         }
 
         protected override void SubUpdate(Rioman player, double deltaTime, Viewport viewport, AbstractEnemy[] enemies)
