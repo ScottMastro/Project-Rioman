@@ -13,7 +13,7 @@ namespace Project_Rioman
         Dictionary<string, int> letters = new Dictionary<string, int>();
 
         private Color backgroundColour;
-        private Texture2D[] tileSprites = new Texture2D[500];
+        private Texture2D[] tileSprites = new Texture2D[Constant.NUMBER_OF_TILES + 1];
         private int width;
         private int height;
         private int[,] tilePos;
@@ -32,7 +32,7 @@ namespace Project_Rioman
             SetLetters();
 
             //load level resources
-            for (int i = 1; i <= 350; i++)
+            for (int i = 1; i <= Constant.NUMBER_OF_TILES; i++)
                 tileSprites[i] = content.Load<Texture2D>("Video\\tiles\\" + i.ToString());
 
             for (int j = 0; j <= 9; j++)
@@ -93,15 +93,8 @@ namespace Project_Rioman
 
 
                 for (int x = 0; x <= width; x++)
-                {
                     for (int y = 0; y <= height; y++)
-                    {
                         CreateLevelElement(tilePos[x, y], x, y, content);
-
-                        if (tilePos[x, y] == 284)
-                            startPos = new Vector2(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE - Constant.TILE_SIZE);
-                    }
-                }
 
 
                 return new Level(backgroundColour, width, height, startPos, tiles,
@@ -114,21 +107,33 @@ namespace Project_Rioman
 
         private void CreateLevelElement(int value, int x, int y, ContentManager content)
         {
-            int type = Constant.TileNumberToType(value);
-
-            //tile is a tile
-            if (type >= 0)
-                tiles[x, y] = new Tile(tileSprites[value], value, type, x, y, content);
 
             //tile is an enemy
             if (value >= 297 && value <= 317)
+            {
                 CreateEnemy(value, x, y, content);
+                return;
+            }
+
+            //tile is player
+            if (value == 284)
+                startPos = new Vector2(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE - Constant.TILE_SIZE);
+
 
             //tile is a boss
             if (value == 289)
                 bosses[5].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
             if (value == 285)
                 bosses[3].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
+
+            int type = Constant.TileNumberToType(value);
+
+            //tile is a tile
+            if (type >= 0)
+                tiles[x, y] = new Tile(tileSprites[value], value, type, x, y, content);
+
+            if (value == 323)
+                Console.WriteLine(type);
         }
 
         private void CreateEnemy(int value, int x, int y, ContentManager content)

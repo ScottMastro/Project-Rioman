@@ -332,7 +332,7 @@ namespace Project_Rioman
                 if (upDownPress)
                     climbShootTime += deltaTime;
 
-                if (climbShootTime > 0.175)
+                if (climbShootTime > 0.2)
                 {
                     state.StopShooting();
 

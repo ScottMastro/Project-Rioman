@@ -56,6 +56,7 @@ namespace Project_Rioman
             PickupAttributes.LoadContent(Content);
             BulletAttributes.LoadContent(Content);
 
+            Constant.MakeKey();
             DebugDraw.LoadContent(Content);
             Audio.LoadAudio(Content);
             Save.LoadContent(Content);
