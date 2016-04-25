@@ -22,7 +22,7 @@ namespace Project_Rioman
         private Tile[,] tiles;
         private List<AbstractEnemy> enemies;
         private OldPickup[] pickups = new OldPickup[10];
-        private Boss[] bosses = new Boss[17];
+        private AbstractBoss boss;
 
         public LevelLoader() { }
 
@@ -35,14 +35,6 @@ namespace Project_Rioman
             for (int i = 1; i <= Constant.NUMBER_OF_TILES; i++)
                 tileSprites[i] = content.Load<Texture2D>("Video\\tiles\\" + i.ToString());
 
-            for (int j = 0; j <= 9; j++)
-            {
-                pickups[j] = new OldPickup();
-                pickups[j].LoadPickupSprites(content);
-
-                bosses[j] = new Boss();
-                bosses[j].LoadBoss(content, j);
-            }
         }
 
         public Level Load(int level, ContentManager content)
@@ -98,7 +90,7 @@ namespace Project_Rioman
 
 
                 return new Level(backgroundColour, width, height, startPos, tiles,
-                    enemies.ToArray(), pickups, bosses);
+                    enemies.ToArray(), pickups, boss);
 
             }
 
@@ -107,11 +99,10 @@ namespace Project_Rioman
 
         private void CreateLevelElement(int value, int x, int y, ContentManager content)
         {
-
             //tile is an enemy
             if (value >= 297 && value <= 317)
             {
-                CreateEnemy(value, x, y, content);
+                CreateEnemy(value, x, y);
                 return;
             }
 
@@ -121,10 +112,12 @@ namespace Project_Rioman
 
 
             //tile is a boss
-            if (value == 289)
-                bosses[5].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
-            if (value == 285)
-                bosses[3].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
+            if (value == 286)
+                boss = new BunnyMan(x, y);
+      //      if (value == 289)
+        //        bosses[5].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
+          //  if (value == 285)
+            //    bosses[3].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
 
             int type = Constant.TileNumberToType(value);
 
@@ -136,7 +129,7 @@ namespace Project_Rioman
                 Console.WriteLine(type);
         }
 
-        private void CreateEnemy(int value, int x, int y, ContentManager content)
+        private void CreateEnemy(int value, int x, int y)
         {
             if (value == Constant.NEOLUCKY)
                 enemies.Add(new Neolucky(value, x, y));

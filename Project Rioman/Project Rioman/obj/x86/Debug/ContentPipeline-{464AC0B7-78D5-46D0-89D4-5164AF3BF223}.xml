@@ -5869,6 +5869,24 @@
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\bunnybullet.xnb</Output>
       <Time>2016-04-24T00:20:03.994386-04:00</Time>
     </Item>
+    <Item>
+      <Source>Video\bosses\bunnyman1.png</Source>
+      <Name>Video\bosses\bunnyman1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\bunnyman1.xnb</Output>
+      <Time>2016-04-25T17:19:02.1200715-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\bosses\bunnyman2.png</Source>
+      <Name>Video\bosses\bunnyman2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\bunnyman2.xnb</Output>
+      <Time>2016-04-25T17:21:26.5787001-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{464AC0B7-78D5-46D0-89D4-5164AF3BF223}</ContentProjectGUID>

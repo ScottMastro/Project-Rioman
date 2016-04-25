@@ -52,6 +52,7 @@ namespace Project_Rioman
             GameState.getInstance();
             backgroundcolor = Color.Black;
 
+            BossAttributes.LoadContent(Content);
             EnemyAttributes.LoadContent(Content);
             PickupAttributes.LoadContent(Content);
             BulletAttributes.LoadContent(Content);

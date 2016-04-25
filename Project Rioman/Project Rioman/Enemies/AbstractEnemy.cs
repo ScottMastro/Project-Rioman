@@ -21,8 +21,6 @@ namespace Project_Rioman
 
         protected SpriteEffects direction;
         protected Texture2D sprite;
-        protected Texture2D debugSquare;
-
         protected Rectangle drawRect;
 
         protected int blinkFrames;
@@ -42,8 +40,6 @@ namespace Project_Rioman
 
         public AbstractEnemy(int type, int x, int y)
         {
-            debugSquare = EnemyAttributes.GetSprites(-1)[0];
-
             this.type = type;
 
             originalLocation = new Rectangle(x * Constant.TILE_SIZE, (y + 1) * Constant.TILE_SIZE, 0, 0);

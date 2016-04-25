@@ -11,7 +11,7 @@ namespace Project_Rioman
 
         private Tile[,] tiles;
 
-        public int activelevel;
+        public int levelID;
 
         public Color backgroundcolour;
         public int width;
@@ -20,11 +20,8 @@ namespace Project_Rioman
         private Vector2 startPos;
 
         private AbstractEnemy[] enemies;
-        public OldPickup[] pickups = new OldPickup[10];
         private List<AbstractPickup> items;
-
-        public Boss[] bosses = new Boss[17];
-
+        private AbstractBoss boss;
 
         int fadetiles;
         private int doorStopY;
@@ -57,7 +54,7 @@ namespace Project_Rioman
 
 
         public Level(Color bg, int width, int height, Vector2 startpos, Tile[,] tiles,
-            AbstractEnemy[] enemies, OldPickup[] pickups, Boss[] bosses)
+            AbstractEnemy[] enemies, OldPickup[] pickups, AbstractBoss boss)
         {
             backgroundcolour = bg;
             this.width = width;
@@ -65,10 +62,29 @@ namespace Project_Rioman
             this.startPos = startpos;
             this.tiles = tiles;
             this.enemies = enemies;
-            this.pickups = pickups;
+           //TODO this.pickups = pickups;
             items = new List<AbstractPickup>();
-            this.bosses = bosses;
+            this.boss = boss;
             go = false;
+
+        }
+
+        public void StartLevel(Viewport viewport, Rioman player)
+        {
+            Reset();
+            go = true;
+
+            Vector2 centerPos = new Vector2(viewport.Width / 2, viewport.Height - 32 * 4);
+
+            int offsetX = Convert.ToInt32(centerPos.X - startPos.X);
+            int offsetY = Convert.ToInt32(centerPos.Y - startPos.Y);
+
+            MoveStuff(player, offsetX, offsetY);
+
+            player.MoveToY(-100);
+            player.MoveToX(Convert.ToInt32(centerPos.X));
+            player.SetStartPos(Convert.ToInt32(centerPos.X), Convert.ToInt32(centerPos.Y));
+            player.StartWarp();
 
         }
 
@@ -76,6 +92,7 @@ namespace Project_Rioman
         {
             ResetTiles();
             ResetEnemies();
+            boss.Reset();
 
             stopLeftScreenMovement = false;
             stopRightScreenMovement = false;
@@ -107,9 +124,10 @@ namespace Project_Rioman
                         tiles[x, y].Reset();
                 }
             }
-
         }
 
+
+        public bool IsBusy() { return doorOpening || doorClosing || isScrolling; }
         public void BusyUpdate(Rioman player, Viewport viewport)
         {
             if (doorOpening)
@@ -119,34 +137,122 @@ namespace Project_Rioman
             if (isScrolling)
                 Scroll(player, viewport);
         }
-
-        public void DrawItems(SpriteBatch spriteBatch)
+        
+        public void Update(Rioman player, GameTime gameTime, Viewport viewport)
         {
-            foreach (AbstractPickup item in items)
+
+            double deltaTime = gameTime.ElapsedGameTime.TotalSeconds;
+            bool[] enemycollision = new bool[enemies.Length];
+            bool bossfalling = true;
+
+            UpdateScrollers(player, viewport);
+            InteractWithLevel(player);
+
+            if (boss.IsAlive())
+                boss.Update(player, player.GetBullets(), deltaTime, viewport);
+
+            foreach (Tile tle in tiles)
             {
-                item.Draw(spriteBatch);
+                if (tle != null)
+                {
+                    if (tle.type == 5)
+                        tle.Fade(gameTime);
+
+                    if (tle.tile == 102)
+                        tle.Wave(gameTime);
+
+                    if (tle != null)
+                    {
+
+                        for (int e = 0; e <= enemies.Length - 1; e++)
+                            enemies[e].DetectTileCollision(tle);
+
+
+                        for (int i = 0; i <= items.Count - 1; i++)
+                            items[i].DetectTileCollision(tle);
+                    }
+
+                }
+            }
+
+            for (int i = 0; i <= items.Count - 1; i++)
+                items[i].Update(player, deltaTime, viewport);
+        }
+
+        public void MoveStuff(Rioman player, int x, int y)
+        {
+            foreach (Tile tle in tiles)
+            {
+                if (tle != null)
+                    tle.Move(x, y);
+            }
+
+            for (int i = 0; i <= scrollers.Length - 1; i++)
+                scrollers[i].Move(x, y);
+
+            for (int i = 0; i <= items.Count - 1; i++)
+                items[i].Move(x, y);
+
+            for (int i = 0; i <= enemies.Length - 1; i++)
+                enemies[i].Move(x, y);
+
+            boss.Move(x, y);
+
+            player.MoveBullets(x, y);
+        }
+    
+
+
+        public void UpdateEnemies(Rioman player, AbstractBullet[] bullets, double deltaTime, Viewport viewport)
+        {
+
+            for (int i = 0; i <= enemies.Length - 1; i++)
+            {
+                enemies[i].Update(player, bullets, deltaTime, viewport);
+                AbstractPickup p = enemies[i].GetDroppedPickup();
+                if (p != null)
+                    items.Add(p);
             }
 
         }
 
-        public void DrawTiles(SpriteBatch spriteBatch)
+        // ----------------------------------------------------------------------------------------------------------------
+        // Tile Logic
+        // ----------------------------------------------------------------------------------------------------------------
+
+        public void LadderForm()
+        {
+            for (int x = 0; x <= width; x++)
+            {
+                for (int y = 1; y <= height; y++)
+                {
+                    if (tiles[x, y] != null && tiles[x, y].type == 3)
+                    {
+                        if (tiles[x, y - 1] == null)
+                            tiles[x, y].isTop = true;
+                    }
+                }
+            }
+        }
+
+        public void TileFader()
         {
             for (int x = 0; x <= width; x++)
             {
                 for (int y = 0; y <= height; y++)
                 {
-                    if (tiles[x, y] != null)
-                        tiles[x, y].Draw(spriteBatch);
+                    if (tiles[x, y] != null && tiles[x, y].type == 5)
+                    {
+                        tiles[x, y].fadetime = fadetiles;
+                        fadetiles++;
+                    }
                 }
             }
-
-
-            //For debugging
-            for (int i = 0; i <= scrollers.Length - 1; i++)
-                scrollers[i].Draw(spriteBatch);
-
+            fadetiles = 0;
         }
-
+        // ----------------------------------------------------------------------------------------------------------------
+        // Player Logic
+        // ----------------------------------------------------------------------------------------------------------------
 
         public void CenterRioman(Viewport viewport, Rioman player)
         {
@@ -251,14 +357,102 @@ namespace Project_Rioman
         }
 
 
-
-        public bool IsBusy()
+        public void CheckDeath(Viewport viewportrect, Rioman player)
         {
-            return doorOpening || doorClosing || isScrolling;
+            if (player.Location.Y > viewportrect.Height + 100 || StatusBar.GetHealth() <= 0)
+            {
+                go = false;
+                lifechange = -1;
+                player.Die();
+
+            }
+        }
+
+        public bool CheckClimb(Rioman player, int climbloc, bool up, ref Rectangle location)
+        {
+            bool result = false;
+            Tile validTile = null;
+
+            for (int x = 0; x <= width; x++)
+            {
+                for (int y = 0; y <= height; y++)
+                {
+                    Tile tle = tiles[x, y];
+
+                    if (tle != null && tle.type == 3 && (player.Hitbox.Intersects(tle.location) ||
+                        !up && player.Location.Intersects(tle.location)))
+                    {
+                        if (!up && tiles[x, y + 1] != null && tiles[x, y + 1].type == 1)
+                            return false;
+
+                        if (Math.Abs(player.Hitbox.Center.X - tle.location.Center.X) <= 20)
+                        {
+                            validTile = tle;
+                            result = true;
+                        }
+                    }
+                }
+
+            }
+
+            if (result)
+            {
+                if (!stopLeftScreenMovement && !stopRightScreenMovement)
+                    MoveStuff(player, climbloc - validTile.location.Center.X, 0);
+                else
+                    location.X = validTile.location.Center.X;
+            }
+
+            return result;
         }
 
 
 
+        // ----------------------------------------------------------------------------------------------------------------
+        // Draw Logic
+        // ----------------------------------------------------------------------------------------------------------------
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            DrawTiles(spriteBatch);
+            boss.Draw(spriteBatch);
+            DrawEnemies(spriteBatch);
+            DrawItems(spriteBatch);
+
+            //For debugging
+            for (int i = 0; i <= scrollers.Length - 1; i++)
+                scrollers[i].Draw(spriteBatch);
+        }
+
+        private void DrawItems(SpriteBatch spriteBatch)
+        {
+            foreach (AbstractPickup item in items)
+                item.Draw(spriteBatch);
+        }
+
+        private void DrawTiles(SpriteBatch spriteBatch)
+        {
+            for (int x = 0; x <= width; x++)
+            {
+                for (int y = 0; y <= height; y++)
+                {
+                    if (tiles[x, y] != null)
+                        tiles[x, y].Draw(spriteBatch);
+                }
+            }
+        }
+
+
+        private void DrawEnemies(SpriteBatch spriteBatch)
+        {
+            for (int i = 0; i <= enemies.Length - 1; i++)
+                enemies[i].Draw(spriteBatch);
+        }
+
+
+        // ----------------------------------------------------------------------------------------------------------------
+        // Door Logic
+        // ----------------------------------------------------------------------------------------------------------------
 
         private void StartOpenDoor(Tile tle)
         {
@@ -362,282 +556,6 @@ namespace Project_Rioman
                         break;
                 }
             }
-        }
-
-        public void Play(Viewport viewport, Rioman player)
-        {
-
-            Reset();
-            go = true;
-
-            Vector2 centerPos = new Vector2(viewport.Width / 2, viewport.Height - 32 * 4);
-
-            int offsetX = Convert.ToInt32(centerPos.X - startPos.X);
-            int offsetY = Convert.ToInt32(centerPos.Y - startPos.Y);
-
-            MoveStuff(player, offsetX, offsetY);
-
-            player.MoveToY(-100);
-            player.MoveToX(Convert.ToInt32(centerPos.X));
-            player.SetStartPos(Convert.ToInt32(centerPos.X), Convert.ToInt32(centerPos.Y));
-            player.StartWarp();
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-        public void Update(Rioman player, GameTime gameTime, Viewport viewport)
-        {
-
-            double deltaTime = gameTime.ElapsedGameTime.TotalSeconds;
-            bool[] enemycollision = new bool[enemies.Length];
-            bool bossfalling = true;
-
-
-            UpdateScrollers(player, viewport);
-            InteractWithLevel(player);
-            foreach (Tile tle in tiles)
-            {
-                if (tle != null)
-                {
-
-
-                    if (tle.type == 1 || tle.type == 4 || tle.type == 5)
-                    {
-                        foreach (OldPickup pickup in pickups)
-                            pickup.PickupUpdate(tle);
-
-                        if (bosses[activelevel].pickup)
-                            bosses[activelevel].weapon.PickupUpdate(tle);
-                    }
-
-
-
-
-
-                    if (tle.type == 5)
-                        tle.Fade(gameTime);
-
-                    if (tle.tile == 102)
-                        tle.Wave(gameTime);
-
-                    if (bosses[activelevel].isalive)
-                    {
-                        if (tle.type == 1 || tle.type == 3 && tle.isTop || tle.type == 4 || tle.type == 5)
-                        {
-                            if (tle.type != 4 && bosses[activelevel].location.Intersects(tle.Floor) && !bosses[activelevel].location.Intersects(tle.IgnoreFloor))
-                            {
-                                bosses[activelevel].location.Y = tle.location.Y - bosses[activelevel].location.Height + 2;
-                                bossfalling = false;
-                                bosses[activelevel].falltime = 0;
-                            }
-                        }
-
-                        if (!bosses[activelevel].isjumping)
-                            bosses[activelevel].isfalling = bossfalling;
-
-                        if (bosses[activelevel].boss == 3)
-                        {
-                            if (bosses[activelevel].location.Intersects(tle.Top) && tle.type != 3)
-                                bosses[activelevel].direction = SpriteEffects.None;
-                            else if (bosses[activelevel].location.Intersects(tle.Bottom) && tle.type != 3)
-                                bosses[activelevel].direction = SpriteEffects.FlipHorizontally;
-                        }
-                    }
-                }
-
-
-                if (tle != null)
-                {
-
-                    for (int e = 0; e <= enemies.Length - 1; e++)
-                        enemies[e].DetectTileCollision(tle);
-
-
-                    for (int i = 0; i <= items.Count - 1; i++)
-                        items[i].DetectTileCollision(tle);
-                }
-
-            }
-
-            foreach (OldPickup pickup in pickups)
-                pickup.PickupUpdate(player, viewport);
-
-
-            for (int i = 0; i <= items.Count - 1; i++)
-                items[i].Update(player, deltaTime, viewport);
-
-
-
-
-
-        }
-
-
-
-        public void TileFader()
-        {
-            for (int x = 0; x <= width; x++)
-            {
-                for (int y = 0; y <= height; y++)
-                {
-                    if (tiles[x, y] != null && tiles[x, y].type == 5)
-                    {
-                        tiles[x, y].fadetime = fadetiles;
-                        fadetiles++;
-                    }
-                }
-            }
-            fadetiles = 0;
-        }
-
-
-
-
-        public void MoveStuff(Rioman player, int x, int y)
-        {
-            foreach (Tile tle in tiles)
-            {
-                if (tle != null)
-                    tle.Move(x, y);
-            }
-
-
-            for (int i = 0; i <= scrollers.Length - 1; i++)
-                scrollers[i].Move(x, y);
-
-            foreach (OldPickup pickup in pickups)
-            {
-                if (pickup.isalive)
-                    pickup.MovePickup(x, y);
-            }
-
-            for (int i = 0; i <= items.Count - 1; i++)
-                items[i].Move(x, y);
-
-            for (int i = 0; i <= enemies.Length - 1; i++)
-                enemies[i].Move(x, y);
-
-            bosses[activelevel].Move(x, y);
-
-            player.MoveBullets(x, y);
-        }
-    
-
-
-
-        public void LadderForm()
-        {
-            for (int x = 0; x <= width; x++)
-            {
-                for (int y = 1; y <= height; y++)
-                {
-                    if (tiles[x, y] != null && tiles[x, y].type == 3)
-                    {
-                        if (tiles[x, y - 1] == null)
-                            tiles[x, y].isTop = true;
-                    }
-                }
-            }
-        }
-
-
-        public void CheckDeath(Viewport viewportrect, Rioman player)
-        {
-            if (player.Location.Y > viewportrect.Height + 100 || StatusBar.GetHealth() <= 0)
-            {
-                go = false;
-                lifechange = -1;
-                player.Die();
-
-            }
-        }
-
-        public bool CheckClimb(Rioman player, int climbloc, bool up, ref Rectangle location)
-        {
-            bool result = false;
-            Tile validTile = null;
-
-            for (int x = 0; x <= width; x++)
-            {
-                for (int y = 0; y <= height; y++)
-                {
-                    Tile tle = tiles[x, y];
-
-                    if (tle != null && tle.type == 3 && (player.Hitbox.Intersects(tle.location) ||
-                        !up && player.Location.Intersects(tle.location)))
-                    {
-                        if (!up && tiles[x, y + 1] != null && tiles[x, y + 1].type == 1)
-                            return false;
-
-                        if (Math.Abs(player.Hitbox.Center.X - tle.location.Center.X) <= 20)
-                        {
-                            validTile = tle;
-                            result = true;
-                        }
-                    }
-                }
-
-            }
-
-            if (result)
-            {
-                if (!stopLeftScreenMovement && !stopRightScreenMovement)
-                    MoveStuff(player, climbloc - validTile.location.Center.X, 0);
-                else
-                    location.X = validTile.location.Center.X;
-            }
-
-            return result;
-        }
-
-        public void UpdateEnemies(Rioman player, AbstractBullet[] bullets, double deltaTime, Viewport viewport)
-        {
-
-            for (int i = 0; i <= enemies.Length - 1; i++)
-            {
-                enemies[i].Update(player, bullets, deltaTime, viewport);
-                AbstractPickup p = enemies[i].GetDroppedPickup();
-                if (p != null)
-                    items.Add(p);
-            }
-
-            foreach (OldPickup pickup in pickups)
-            {
-                if (pickup.isalive)
-                    pickup.Animate(deltaTime);
-            }
-        }
-
-        public void DrawEnemies(SpriteBatch spriteBatch)
-        {
-            for (int i = 0; i <= enemies.Length - 1; i++)
-                enemies[i].Draw(spriteBatch);
-        }
-
-        private int GetPickupIndex()
-        {
-            int number = 0;
-
-            for (int i = 0; i <= 9; i++)
-            {
-                if (!pickups[i].isalive)
-                {
-                    number = i;
-                    break;
-                }
-            }
-
-            return number;
-
         }
 
         // ----------------------------------------------------------------------------------------------------------------
@@ -765,7 +683,7 @@ namespace Project_Rioman
                             }
                             catch (IndexOutOfRangeException e)
                             {
-                                Console.WriteLine("Failed to construct vertical scroller on level " + activelevel.ToString());
+                                Console.WriteLine("Failed to construct vertical scroller on level " + levelID.ToString());
                             }
                         }
 
@@ -789,7 +707,7 @@ namespace Project_Rioman
                             }
                             catch (IndexOutOfRangeException e)
                             {
-                                Console.WriteLine("Failed to construct horizontal scroller on level " + activelevel.ToString());
+                                Console.WriteLine("Failed to construct horizontal scroller on level " + levelID.ToString());
                             }
                         }
 

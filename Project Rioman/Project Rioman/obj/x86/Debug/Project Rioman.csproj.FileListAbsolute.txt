@@ -1872,3 +1872,5 @@ C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Pro
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\toxbullet3.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\toxbullet4.xnb
 C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\weapons\bunnybullet.xnb
+C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\bunnyman1.xnb
+C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\bunnyman2.xnb
