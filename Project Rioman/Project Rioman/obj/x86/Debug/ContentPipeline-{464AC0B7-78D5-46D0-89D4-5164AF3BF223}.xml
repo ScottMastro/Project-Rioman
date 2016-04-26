@@ -4994,7 +4994,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\explode.xnb</Output>
-      <Time>2010-02-25T01:03:46-05:00</Time>
+      <Time>2016-04-25T22:16:43.6098462-04:00</Time>
     </Item>
     <Item>
       <Source>Video\bosses\AM\AM1.png</Source>
@@ -5886,6 +5886,15 @@
       <Options>None</Options>
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\bunnyman2.xnb</Output>
       <Time>2016-04-25T17:21:26.5787001-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\soundeffects\killboss.wav</Source>
+      <Name>Audio\soundeffects\killboss</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\killboss.xnb</Output>
+      <Time>2016-04-25T23:18:01.7728059-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

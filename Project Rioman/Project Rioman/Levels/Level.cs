@@ -52,8 +52,6 @@ namespace Project_Rioman
 
         public int lifechange = 0;
 
-
-
         public Level(Color bg, int width, int height, Vector2 startpos, Tile[,] tiles,
             AbstractEnemy[] enemies, OldPickup[] pickups, AbstractBoss boss)
         {
@@ -148,8 +146,7 @@ namespace Project_Rioman
             UpdateScrollers(player, viewport);
             InteractWithLevel(player);
 
-            if (boss.IsAlive())
-                boss.Update(player, player.GetBullets(), deltaTime, viewport);
+            boss.Update(player, player.GetBullets(), deltaTime, viewport);
 
             foreach (Tile tile in tileType(Constant.TILE_DISAPPEAR))
                 tile.Fade(gameTime);

@@ -24,6 +24,8 @@ namespace Project_Rioman
         protected int blinkFrames;
 
         protected Texture2D killExplosion;
+        protected const int EXPLOSION_SPEED = 35;
+
         protected double killTime;
 
         protected bool isAlive;
@@ -106,7 +108,7 @@ namespace Project_Rioman
             {
                 killTime += deltaTime;
                 if (wasAlive)
-                    Audio.PlayKillEnemy();
+                    Audio.PlayKillBoss();
             }
 
             wasAlive = isAlive;
@@ -148,16 +150,40 @@ namespace Project_Rioman
                 blinkFrames--;
 
 
-            if (killTime <= 0.25 && !isAlive && health <= 0)
+            if (killTime < 5 && !isAlive && health <= 0)
             {
-                int frame = (int)Math.Floor(killTime / 0.05);
-                Rectangle killDrawRect = new Rectangle(frame * killExplosion.Width / 5, 0, killExplosion.Width / 5, killExplosion.Height);
-                Rectangle killLocationRect = new Rectangle(location.X + drawRect.Width / 2 - killExplosion.Width / 10,
-                    location.Y + drawRect.Height / 2 - killExplosion.Height / 2, killDrawRect.Width, killDrawRect.Height);
 
-                spriteBatch.Draw(killExplosion, killLocationRect, killDrawRect, Color.White);
+                for (int i = 0; i < 4; i++)
+                    DrawExplosion(spriteBatch, EXPLOSION_SPEED / 8, MathHelper.TwoPi / 4f * i);
+
+                for (int i = 0; i < 6; i++)
+                    DrawExplosion(spriteBatch, EXPLOSION_SPEED / 2, MathHelper.TwoPi / 6f * i);
+
+                for (int i = 0; i < 8; i++)
+                    DrawExplosion(spriteBatch, EXPLOSION_SPEED, MathHelper.TwoPi / 8f * i);
 
             }
+        }
+
+        private void DrawExplosion(SpriteBatch spriteBatch, int speed, float angle)
+        {
+            int frame = (int)Math.Floor(killTime);
+
+            int x = GetCollisionRect().Center.X;
+            int y = GetCollisionRect().Center.Y;
+            int width = killExplosion.Width / 5;
+            int height = killExplosion.Height;
+            int move = (int)(killTime * speed);
+
+            Rectangle killDrawRect = new Rectangle(frame * width, 0, width, height);
+            Rectangle killRect = new Rectangle(x, y - move, width, height);
+            Vector2 origin = new Vector2(width / 2, height / 2 + move * 3);
+
+            float alpha = Math.Min(1f, 5f - (float)killTime);
+
+            spriteBatch.Draw(killExplosion, killRect, killDrawRect, Color.White * alpha,
+                angle, origin, SpriteEffects.None, 0);
+
         }
 
         protected abstract void SubReset();
