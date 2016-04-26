@@ -5896,6 +5896,15 @@
       <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\killboss.xnb</Output>
       <Time>2016-04-25T23:18:01.7728059-04:00</Time>
     </Item>
+    <Item>
+      <Source>Video\bosses\bunnyman3.png</Source>
+      <Name>Video\bosses\bunnyman3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Older Files\Old Coding Projects\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\bunnyman3.xnb</Output>
+      <Time>2016-04-25T23:53:18.7946694-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{464AC0B7-78D5-46D0-89D4-5164AF3BF223}</ContentProjectGUID>

@@ -93,27 +93,27 @@ namespace Project_Rioman
             if (activesong != null)
                 activesong.Dispose();
 
-            if (part == 0)
+            if (part == Constant.TITLE_SCREEN)
                 ChangeActiveSong(titlescreen);
-            else if (part == 1)
+            else if (part == Constant.SELECTION_SCREEN)
                 ChangeActiveSong(stageselect);
-            else if (part == 10)
+            else if (part == Constant.GEOGIRL)
                 ChangeActiveSong(geogirl);
-            else if (part == 11)
+            else if (part == Constant.INFERNOMAN)
                 ChangeActiveSong(infernoman);
-            else if (part == 12)
+            else if (part == Constant.TOXICMAN)
                 ChangeActiveSong(toxman);
-            else if (part == 13)
+            else if (part == Constant.AURORAMAN)
                 ChangeActiveSong(auroraman);
             else if (part == 14)
                 ChangeActiveSong(fortressstage);
-            else if (part == 15)
+            else if (part == Constant.CLOVERMAN)
                 ChangeActiveSong(cloverman);
-            else if (part == 16)
+            else if (part == Constant.LURKERMAN)
                 ChangeActiveSong(lurkerman);
-            else if (part == 17)
+            else if (part == Constant.POSTERMAN)
                 ChangeActiveSong(posterman);
-            else if (part == 18)
+            else if (part == Constant.BUNNYMAN)
                 ChangeActiveSong(bunnyman);
         }
 

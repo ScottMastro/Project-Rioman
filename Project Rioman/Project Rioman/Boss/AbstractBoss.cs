@@ -23,6 +23,10 @@ namespace Project_Rioman
 
         protected int blinkFrames;
 
+        protected enum State { standing, jumping, falling, running, crouching }
+        protected bool shooting;
+        protected State state;
+
         protected Texture2D killExplosion;
         protected const int EXPLOSION_SPEED = 35;
 
@@ -48,9 +52,11 @@ namespace Project_Rioman
 
         public void Reset()
         {
+            state = State.standing;
+            shooting = false;
             location.X = originalLocation.X;
-            location.Y = originalLocation.Y;
-            isAlive = true;
+            location.Y = originalLocation.Y - drawRect.Height;
+            isAlive = false;
             direction = SpriteEffects.None;
             health = Constant.MAX_HEALTH;
             killTime = 0;
@@ -79,7 +85,6 @@ namespace Project_Rioman
 
         public void SetAlive(Rioman player)
         {
-            Reset();
             isAlive = true;
 
             if (player.Hitbox.Center.X < location.X)
@@ -144,7 +149,7 @@ namespace Project_Rioman
         public void Draw(SpriteBatch spriteBatch)
         {
             SubDrawOther(spriteBatch);
-            if (isAlive && blinkFrames <= 0)
+            if (health > 0 && blinkFrames <= 0)
                 SubDrawBoss(spriteBatch);
             else if (blinkFrames > 0)
                 blinkFrames--;
@@ -193,6 +198,11 @@ namespace Project_Rioman
         protected abstract void SubDrawOther(SpriteBatch spriteBatch);
 
         public abstract Rectangle GetCollisionRect();
+        public abstract Rectangle Feet();
+        public abstract Rectangle Head();
+        public abstract Rectangle Left();
+        public abstract Rectangle Right();
+
 
         public abstract void DetectTileCollision(Tile tile);
 
@@ -209,5 +219,10 @@ namespace Project_Rioman
         public string GetID() { return uniqueID; }
         public bool IsAlive() { return isAlive; }
 
+        protected bool IsStanding() { return state == State.standing; }
+        protected bool IsRunning() { return state == State.running; }
+        protected bool IsJumping() { return state == State.jumping; }
+        protected bool IsFalling() { return state == State.falling; }
+        protected bool IsCrouching() { return state == State.crouching; }
     }
 }

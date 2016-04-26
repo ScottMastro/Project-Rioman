@@ -131,7 +131,7 @@ namespace Project_Rioman
             if (doorOpening)
                 OpenDoor();
             if (doorClosing)
-                CloseDoor();
+                CloseDoor(player);
             if (isScrolling)
                 Scroll(player, viewport);
         }
@@ -158,6 +158,9 @@ namespace Project_Rioman
 
                 for (int i = 0; i <= items.Count - 1; i++)
                     items[i].DetectTileCollision(tile);
+
+                if (boss.IsAlive())
+                    boss.DetectTileCollision(tile);
             }
 
             for (int i = 0; i <= items.Count - 1; i++)
@@ -495,7 +498,7 @@ namespace Project_Rioman
         }
 
 
-        public void CloseDoor()
+        public void CloseDoor(Rioman player)
         {
             bool stillClosing = false;
 
@@ -526,6 +529,7 @@ namespace Project_Rioman
                 allowScrolling = false;
                 closeDoor = false;
                 doorClosing = false;
+                boss.SetAlive(player);
 
                 //make door a wall
                 y = doorTop.GridY;
