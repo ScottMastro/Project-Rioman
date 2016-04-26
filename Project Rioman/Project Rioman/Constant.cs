@@ -100,10 +100,19 @@ namespace Project_Rioman
         public static int HORIZ_SCROLL = 320;
         public static int HORIZ_SCROLL2 = 321;
 
+        public static int TILE_IGNORE = -1;
+        public static int TILE_DECO = 0;
+        public static int TILE_SOLID = 1;
+        public static int TILE_KILL = 2;
+        public static int TILE_CLIMB = 3;
+        public static int TILE_DOOR = 4;
+        public static int TILE_DISAPPEAR = 5;
+        public static int TILE_SCROLL = 6;
+
         public static int TileNumberToType(int tileNumber)
         {
             if (tileNumber > NUMBER_OF_TILES)
-                return -1;
+                return TILE_IGNORE;
             
             return tileKey[tileNumber];
         }
@@ -112,16 +121,7 @@ namespace Project_Rioman
         {
             tileKey = new int[NUMBER_OF_TILES +1];
 
-            //type -1 = ignore
-            //type 0 = decoration
-            //type 1 = walkable
-            //type 2 = death
-            //type 3 = climb
-            //type 4 = door
-            //type 5 = disappearing
-            //type 6 = scroll
-
-            tileKey[0] = -1;
+            tileKey[0] = TILE_IGNORE;
 
             tileKey[1] = 1;
             tileKey[2] = 1;

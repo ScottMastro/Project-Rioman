@@ -28,7 +28,7 @@ namespace Project_Rioman
         public Rectangle location;
         private Rectangle originalLocation;
 
-        public double fadetime;
+        public double fadeTime;
         public double animationtime;
 
         public bool isTop;
@@ -97,25 +97,27 @@ namespace Project_Rioman
 
         public void Fade(GameTime gameTime)
         {
-            fadetime -= gameTime.ElapsedGameTime.TotalSeconds;
+            fadeTime -= gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (fadetime <= -5)
+            if (fadeTime <= -5)
             {
                 sprite = frames[0];
-                fadetime = 1.5;
+                fadeTime = 1.5;
                 Move(0, 100000);
             }
 
-            if (fadetime < 0 && location.Y > 0)
+            if (fadeTime < 0 && location.Y > 0)
                 Move(0, -100000);
 
-            if (fadetime <= 1)
+            if (fadeTime <= 1)
                 sprite = frames[1];
 
-            if (fadetime <= 0.5)
+            if (fadeTime <= 0.5)
                 sprite = frames[2];
         }
 
+
+        //tile 102
         public void Wave(GameTime gameTime)
         {
             animationtime += gameTime.ElapsedGameTime.TotalSeconds;
@@ -146,7 +148,7 @@ namespace Project_Rioman
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (type != 6 && type >= 0)
+            if (type != Constant.TILE_SCROLL && type != Constant.TILE_IGNORE)
                 spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, sprite.Width, sprite.Height), Color.White);
 
         }

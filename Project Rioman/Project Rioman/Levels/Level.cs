@@ -9,7 +9,9 @@ namespace Project_Rioman
     class Level
     {
 
-        private Tile[,] tiles;
+        private Tile[,] tileGrid;
+        private List<List<Tile>> tiles;
+        private List<Tile> allTiles;
 
         public int levelID;
 
@@ -23,7 +25,6 @@ namespace Project_Rioman
         private List<AbstractPickup> items;
         private AbstractBoss boss;
 
-        int fadetiles;
         private int doorStopY;
         private Tile doorTop;
         private bool allowScrolling = false;
@@ -60,7 +61,7 @@ namespace Project_Rioman
             this.width = width;
             this.height = height;
             this.startPos = startpos;
-            this.tiles = tiles;
+            this.tileGrid = tiles;
             this.enemies = enemies;
            //TODO this.pickups = pickups;
             items = new List<AbstractPickup>();
@@ -91,6 +92,7 @@ namespace Project_Rioman
         public void Reset()
         {
             ResetTiles();
+            OrganizeTiles();
             ResetEnemies();
             boss.Reset();
 
@@ -117,13 +119,11 @@ namespace Project_Rioman
         public void ResetTiles()
         {
             for (int x = 0; x <= width; x++)
-            {
                 for (int y = 0; y <= height; y++)
                 {
-                    if (tiles[x, y] != null)
-                        tiles[x, y].Reset();
+                    if (tileGrid[x, y] != null)
+                        tileGrid[x, y].Reset();
                 }
-            }
         }
 
 
@@ -151,28 +151,16 @@ namespace Project_Rioman
             if (boss.IsAlive())
                 boss.Update(player, player.GetBullets(), deltaTime, viewport);
 
-            foreach (Tile tle in tiles)
-            {
-                if (tle != null)
-                {
-                    if (tle.type == 5)
-                        tle.Fade(gameTime);
+            foreach (Tile tile in tileType(Constant.TILE_DISAPPEAR))
+                tile.Fade(gameTime);
 
-                    if (tle.tile == 102)
-                        tle.Wave(gameTime);
+            foreach (Tile tile in tileType(Constant.TILE_SOLID)) {
 
-                    if (tle != null)
-                    {
+                for (int e = 0; e <= enemies.Length - 1; e++)
+                    enemies[e].DetectTileCollision(tile);
 
-                        for (int e = 0; e <= enemies.Length - 1; e++)
-                            enemies[e].DetectTileCollision(tle);
-
-
-                        for (int i = 0; i <= items.Count - 1; i++)
-                            items[i].DetectTileCollision(tle);
-                    }
-
-                }
+                for (int i = 0; i <= items.Count - 1; i++)
+                    items[i].DetectTileCollision(tile);
             }
 
             for (int i = 0; i <= items.Count - 1; i++)
@@ -181,11 +169,8 @@ namespace Project_Rioman
 
         public void MoveStuff(Rioman player, int x, int y)
         {
-            foreach (Tile tle in tiles)
-            {
-                if (tle != null)
-                    tle.Move(x, y);
-            }
+            foreach (Tile tile in allTiles)
+                tile.Move(x, y);
 
             for (int i = 0; i <= scrollers.Length - 1; i++)
                 scrollers[i].Move(x, y);
@@ -220,35 +205,50 @@ namespace Project_Rioman
         // Tile Logic
         // ----------------------------------------------------------------------------------------------------------------
 
-        public void LadderForm()
+        private void OrganizeTiles()
         {
+            tiles = new List<List<Tile>>();
+            allTiles = new List<Tile>();
+
+            for (int i = 0; i <= 6; i++)
+                tiles.Add(new List<Tile>());
+
             for (int x = 0; x <= width; x++)
-            {
-                for (int y = 1; y <= height; y++)
+                for (int y = 0; y <= height; y++)
                 {
-                    if (tiles[x, y] != null && tiles[x, y].type == 3)
+                    if (tileGrid[x, y] != null)
                     {
-                        if (tiles[x, y - 1] == null)
-                            tiles[x, y].isTop = true;
+                        tiles[tileGrid[x, y].type].Add(tileGrid[x, y]);
+                        allTiles.Add(tileGrid[x, y]);
                     }
                 }
+        }
+
+        private List<Tile> tileType(int type)
+        {
+            return tiles[type];
+        }
+
+        public void LadderForm()
+        {
+            foreach (Tile tile in tileType(Constant.TILE_CLIMB))
+            {
+                int x = tile.GridX;
+                int y = tile.GridY;
+
+                if(y <= 0 || tileGrid[x, y - 1] == null || tileGrid[x, y - 1].type != Constant.TILE_CLIMB)
+                    tile.isTop = true;
             }
         }
 
         public void TileFader()
         {
-            for (int x = 0; x <= width; x++)
+            int num = 0;
+            foreach (Tile tile in tileType(Constant.TILE_DISAPPEAR))
             {
-                for (int y = 0; y <= height; y++)
-                {
-                    if (tiles[x, y] != null && tiles[x, y].type == 5)
-                    {
-                        tiles[x, y].fadetime = fadetiles;
-                        fadetiles++;
-                    }
-                }
+                tile.fadeTime = num;
+                num++;
             }
-            fadetiles = 0;
         }
         // ----------------------------------------------------------------------------------------------------------------
         // Player Logic
@@ -274,75 +274,73 @@ namespace Project_Rioman
             player.OffLadder();
             player.AllowClimingUp();
 
-            foreach (Tile tle in tiles)
-            {
-                if (tle != null)
+            //limit player motion against solid tiles
+            foreach (Tile tile in tileType(Constant.TILE_SOLID)){
+
+                if (player.Right.Intersects(tile.Left))
                 {
-                    //limit player motion against solid tiles
-                    if (tle.type == 1)
+                    player.StopRightMovement();
+                    player.invincibledirection = 0;
+                }
+
+                if (player.Left.Intersects(tile.Right))
+                {
+                    player.StopLeftMovement();
+                    player.invincibledirection = 0;
+                }
+
+                if (player.Head.Intersects(tile.Bottom))
+                {
+                    if (!player.IsClimbing())
+                        player.state.Fall();
+                }
+
+                if (player.Head.Intersects(tile.Center))
+                    player.StopClimingUp();
+
+            }
+
+            //kill player
+            foreach (Tile tile in tileType(Constant.TILE_KILL)) {
+
+                if (player.Hitbox.Intersects(tile.Center) && !player.IsInvincible())
+                {
+                    lifechange = -1;
+                    player.Die();
+                    go = false;
+                }
+            }
+
+            //open door
+            foreach (Tile tile in tileType(Constant.TILE_DOOR))
+            {
+                if (player.Hitbox.Intersects(tile.location))
+                    StartOpenDoor(tile);
+            }
+
+            foreach (Tile tile in tileType(Constant.TILE_CLIMB))
+            {
+                if (tile.isTop && player.IsClimbing() && player.Feet.Intersects(tile.Top))
+                    climbTop = true;
+                if (player.Feet.Intersects(tile.location))
+                    player.OnLadder();
+            }
+
+            foreach (Tile tile in allTiles) {
+
+                if (tile.type == 1 || (player.IsInvincible() && tile.type == 2) || 
+                    tile.type == 4 || tile.type == 5 || tile.type == 3 && tile.isTop)
+                {
+
+                    if (!player.IsJumping() && player.Feet.Intersects(tile.Floor) &&
+                        !player.Feet.Intersects(tile.IgnoreFloor))
                     {
-                        if (player.Right.Intersects(tle.Left))
-                        {
-                            player.StopRightMovement();
-                            player.invincibledirection = 0;
-                        }
+                        onGround = true;
+                        player.MoveToY(tile.Y - player.GetSprite().Height + 8);
 
-                        if (player.Left.Intersects(tle.Right))
-                        {
-                            player.StopLeftMovement();
-                            player.invincibledirection = 0;
-                        }
-
-                        if (player.Head.Intersects(tle.Bottom))
-                        {
-                            if (!player.IsClimbing())
-                                player.state.Fall();
-                        }
-
-                        if (player.Head.Intersects(tle.Center))
-                            player.StopClimingUp();
-
-                    }
-                    //kill player
-                    else if (tle.type == 2)
-                    {
-                        if (player.Hitbox.Intersects(tle.Center) && !player.IsInvincible())
-                        {
-                            lifechange = -1;
-                            player.Die();
-                            go = false;
-                        }
-                    }
-                    //open door
-                    else if (tle.type == 4)
-                    {
-                        if (player.Hitbox.Intersects(tle.location))
-                            StartOpenDoor(tle);
-
-                    }
-
-                    if (tle.type == 3)
-                    {
-                        if (tle.isTop && player.IsClimbing() && player.Feet.Intersects(tle.Top))
-                            climbTop = true;
-                        if (player.Feet.Intersects(tle.location))
-                            player.OnLadder();
-                    }
-
-                    if (tle.type == 1 || (player.IsInvincible() && tle.type == 2) || tle.type == 4 || tle.type == 5 || tle.type == 3 && tle.isTop)
-                    {
-
-                        if (!player.IsJumping() && player.Feet.Intersects(tle.Floor) && !player.Feet.Intersects(tle.IgnoreFloor))
-                        {
-                            onGround = true;
-                            player.MoveToY(tle.Y - player.GetSprite().Height + 8);
-
-                            if (player.IsFalling() || player.IsClimbing())
-                            {
-                                player.state.Stand();
-                            }
-                        }
-
+                        if (player.IsFalling() || player.IsClimbing())
+                            player.state.Stand();
+                        
                     }
                 }
             }
@@ -373,26 +371,22 @@ namespace Project_Rioman
             bool result = false;
             Tile validTile = null;
 
-            for (int x = 0; x <= width; x++)
+            foreach (Tile tile in tileType(Constant.TILE_CLIMB))
             {
-                for (int y = 0; y <= height; y++)
+
+                if (tile != null && tile.type == 3 && (player.Hitbox.Intersects(tile.location) ||
+                    !up && player.Location.Intersects(tile.location)))
                 {
-                    Tile tle = tiles[x, y];
+                    if (!up && tileGrid[tile.GridX, tile.GridY + 1] != null &&
+                        tileGrid[tile.GridX, tile.GridY + 1].type == 1)
+                        return false;
 
-                    if (tle != null && tle.type == 3 && (player.Hitbox.Intersects(tle.location) ||
-                        !up && player.Location.Intersects(tle.location)))
+                    if (Math.Abs(player.Hitbox.Center.X - tile.location.Center.X) <= 20)
                     {
-                        if (!up && tiles[x, y + 1] != null && tiles[x, y + 1].type == 1)
-                            return false;
-
-                        if (Math.Abs(player.Hitbox.Center.X - tle.location.Center.X) <= 20)
-                        {
-                            validTile = tle;
-                            result = true;
-                        }
+                        validTile = tile;
+                        result = true;
                     }
                 }
-
             }
 
             if (result)
@@ -432,14 +426,8 @@ namespace Project_Rioman
 
         private void DrawTiles(SpriteBatch spriteBatch)
         {
-            for (int x = 0; x <= width; x++)
-            {
-                for (int y = 0; y <= height; y++)
-                {
-                    if (tiles[x, y] != null)
-                        tiles[x, y].Draw(spriteBatch);
-                }
-            }
+            foreach (Tile tile in allTiles)
+                tile.Draw(spriteBatch);
         }
 
 
@@ -465,9 +453,9 @@ namespace Project_Rioman
             //Check for door tiles above tle
             while (true)
             {
-                if (y > 0 && tiles[x, y - 1] != null && tiles[x, y - 1].type == 4)
+                if (y > 0 && tileGrid[x, y - 1] != null && tileGrid[x, y - 1].type == 4)
                 {
-                    doorTop = tiles[x, y - 1];
+                    doorTop = tileGrid[x, y - 1];
                     y--;
                 }
                 else
@@ -486,12 +474,12 @@ namespace Project_Rioman
 
             while (true)
             {
-                if (y < height && tiles[x, y] != null && tiles[x, y].type == 4)
+                if (y < height && tileGrid[x, y] != null && tileGrid[x, y].type == 4)
                 {
-                    if (tiles[x, y].Y > doorStopY)
+                    if (tileGrid[x, y].Y > doorStopY)
                     {
                         stillOpening = true;
-                        tiles[x, y].Move(0, -DOOR_SPEED);
+                        tileGrid[x, y].Move(0, -DOOR_SPEED);
                     }
 
                     y++;
@@ -519,13 +507,13 @@ namespace Project_Rioman
 
             while (true)
             {
-                if (y < height && tiles[x, y] != null && tiles[x, y].type == 4)
+                if (y < height && tileGrid[x, y] != null && tileGrid[x, y].type == 4)
                 {
-                    if (y > 0 && tiles[x, y - 1] != null &&
-                        tiles[x, y].Y < tiles[x, y - 1].location.Bottom)
+                    if (y > 0 && tileGrid[x, y - 1] != null &&
+                        tileGrid[x, y].Y < tileGrid[x, y - 1].location.Bottom)
                     {
                         stillClosing = true;
-                        tiles[x, y].Move(0, DOOR_SPEED);
+                        tileGrid[x, y].Move(0, DOOR_SPEED);
                     }
 
                     y++;
@@ -547,9 +535,10 @@ namespace Project_Rioman
 
                 while (true)
                 {
-                    if (y < height && tiles[x, y] != null && tiles[x, y].type == 4)
+                    if (y < height && tileGrid[x, y] != null && tileGrid[x, y].type == 4)
                     {
-                        tiles[x, y].ChangeType(1);
+                        tileGrid[x, y].ChangeType(Constant.TILE_SOLID);
+                        tiles[Constant.TILE_SOLID].Add(tileGrid[x, y]);
                         y++;
                     }
                     else
@@ -656,63 +645,60 @@ namespace Project_Rioman
 
             Rectangle scroll = new Rectangle();
 
-            for (int i = 0; i <= width; i++)
+            foreach (Tile tile in tileType(Constant.TILE_SCROLL))
             {
-                for (int j = 1; j <= height; j++)
+                int i = tile.GridX;
+                int j = tile.GridY;
+                int y = 0;
+                int x = 0;
+
+                if (tileGrid[i, j].tile == Constant.VERT_SCROLL)
                 {
-                    if (tiles[i, j] != null)
+                    try
                     {
-                        if (tiles[i, j].tile == Constant.VERT_SCROLL)
+                        while (true)
                         {
-                            int y = 0;
-                            try
+                            y++;
+
+                            if (tileGrid[i, j + y] != null && tileGrid[i, j + y].tile == Constant.VERT_SCROLL2)
                             {
-                                while (true)
-                                {
-                                    y++;
+                                s.Add(new Scroller(true, i * Constant.TILE_SIZE, j * Constant.TILE_SIZE,
+                                    i * Constant.TILE_SIZE, (j + y) * Constant.TILE_SIZE));
 
-                                    if (tiles[i, j + y] != null && tiles[i, j + y].tile == Constant.VERT_SCROLL2)
-                                    {
-                                        s.Add(new Scroller(true, i * Constant.TILE_SIZE, j * Constant.TILE_SIZE,
-                                            i * Constant.TILE_SIZE, (j + y) * Constant.TILE_SIZE));
+                                counter++;
 
-                                        counter++;
-
-                                    }
-                                }
-                            }
-                            catch (IndexOutOfRangeException e)
-                            {
-                                Console.WriteLine("Failed to construct vertical scroller on level " + levelID.ToString());
                             }
                         }
-
-                        else if (tiles[i, j].tile == Constant.HORIZ_SCROLL)
-                        {
-                            int x = 0;
-                            try
-                            {
-                                while (true)
-                                {
-                                    x++;
-
-                                    if (tiles[i + x, j] != null && tiles[i + x, j].tile == Constant.HORIZ_SCROLL2)
-                                    {
-                                        s.Add(new Scroller(false, i * Constant.TILE_SIZE, j * Constant.TILE_SIZE,
-                                            (i + x) * Constant.TILE_SIZE, j * Constant.TILE_SIZE));
-
-                                        counter++;
-                                    }
-                                }
-                            }
-                            catch (IndexOutOfRangeException e)
-                            {
-                                Console.WriteLine("Failed to construct horizontal scroller on level " + levelID.ToString());
-                            }
-                        }
-
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        Console.WriteLine("Failed to construct vertical scroller on level " + levelID.ToString());
                     }
                 }
+
+                else if (tileGrid[i, j].tile == Constant.HORIZ_SCROLL)
+                {
+                    try
+                    {
+                        while (true)
+                        {
+                            x++;
+
+                            if (tileGrid[i + x, j] != null && tileGrid[i + x, j].tile == Constant.HORIZ_SCROLL2)
+                            {
+                                s.Add(new Scroller(false, i * Constant.TILE_SIZE, j * Constant.TILE_SIZE,
+                                    (i + x) * Constant.TILE_SIZE, j * Constant.TILE_SIZE));
+
+                                counter++;
+                            }
+                        }
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        Console.WriteLine("Failed to construct horizontal scroller on level " + levelID.ToString());
+                    }
+                }
+
             }
 
             if (counter == 0)

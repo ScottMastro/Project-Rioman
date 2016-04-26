@@ -28,7 +28,6 @@ namespace Project_Rioman
         protected override void SubDrawBoss(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite, location, drawRect, Color.White, 0f, new Vector2(), SpriteEffects.None, 0);
-            DebugDraw.DrawRect(spriteBatch, new Rectangle(location.X, location.Y, 100, 100), 0.5f);
         }
 
         protected override void SubDrawOther(SpriteBatch spriteBatch)

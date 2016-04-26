@@ -16,7 +16,6 @@ namespace Project_Rioman
         private Level[] levels = new Level[9];
 
         Viewport viewport;     
-
         KeyboardState prevKeyboardState = new KeyboardState();
 
         public void LoadContent(ContentManager content, Viewport viewport)
@@ -41,8 +40,7 @@ namespace Project_Rioman
             if (currentLevel == null || !currentLevel.go)
                 ChangeLevel();
 
-            if (currentLevel.go && !currentLevel.IsBusy() && !GameState.IsPaused()
-                   && !StatusBar.IsBusy())
+            if (currentLevel.go && !currentLevel.IsBusy() && !GameState.IsPaused() && !StatusBar.IsBusy())
             {
 
                 //update player before level
