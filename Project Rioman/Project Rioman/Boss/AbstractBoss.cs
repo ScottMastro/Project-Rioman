@@ -7,6 +7,12 @@ namespace Project_Rioman
 {
     abstract class AbstractBoss
     {
+        private Texture2D pose;
+        private double poseTime;
+        private int poseFrame;
+        private int poseAnimateDir;
+        protected bool posing;
+
 
         protected string uniqueID;
         private Level level;
@@ -41,6 +47,8 @@ namespace Project_Rioman
 
         public AbstractBoss(int type, int x, int y)
         {
+
+            pose = BossAttributes.GetSprites(Constant.BUNNYMAN)[0];
             this.type = type;
 
             originalLocation = new Rectangle(x * Constant.TILE_SIZE, (y + 1) * Constant.TILE_SIZE, 0, 0);
@@ -60,6 +68,10 @@ namespace Project_Rioman
             direction = SpriteEffects.None;
             health = Constant.MAX_HEALTH;
             killTime = 0;
+
+            poseFrame = 0;
+            poseTime = 0;
+            poseAnimateDir = 1;
 
             Guid guid = Guid.NewGuid();
             uniqueID = guid.ToString();
@@ -92,6 +104,9 @@ namespace Project_Rioman
             else
                 direction = SpriteEffects.FlipHorizontally;
 
+            posing = true;
+            poseTime = 0;
+
         }
 
         public void Move(int x, int y)
@@ -105,8 +120,32 @@ namespace Project_Rioman
         {
             if (isAlive)
             {
-                SubUpdate(player, rioBullets, deltaTime, viewport);
-                CheckHit(player, rioBullets);
+                if (posing)
+                {
+                    poseTime += deltaTime;
+                    if (poseTime > 0.1 && poseFrame == 0 && poseAnimateDir == -1)
+                    {
+                        posing = false;
+                        poseTime = 0;
+                        poseAnimateDir = 1;
+                    }
+                    else if (poseTime > 0.1 && poseFrame != 4)
+                    {
+                        poseTime = 0;
+                        poseFrame += poseAnimateDir;
+                    }
+                    else if (poseTime > 2 && poseFrame == 4)
+                    {
+                        poseTime = 0;
+                        poseAnimateDir = -1;
+                        poseFrame += poseAnimateDir;
+                    }
+                }
+                else
+                {
+                    SubUpdate(player, rioBullets, deltaTime, viewport);
+                    CheckHit(player, rioBullets);
+                }
             }
 
             if (!isAlive && health <= 0)
@@ -148,25 +187,32 @@ namespace Project_Rioman
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            SubDrawOther(spriteBatch);
-            if (health > 0 && blinkFrames <= 0)
-                SubDrawBoss(spriteBatch);
-            else if (blinkFrames > 0)
-                blinkFrames--;
-
-
-            if (killTime < 5 && !isAlive && health <= 0)
+            if (isAlive && posing)
             {
+                spriteBatch.Draw(pose, location, new Rectangle(pose.Width/5 * poseFrame, 0, pose.Width/5, pose.Height),
+                    Color.White, 0f, new Vector2(), direction, 0);
+            }
+            else {
+                SubDrawOther(spriteBatch);
+                if (health > 0 && blinkFrames <= 0)
+                    SubDrawBoss(spriteBatch);
+                else if (blinkFrames > 0)
+                    blinkFrames--;
 
-                for (int i = 0; i < 4; i++)
-                    DrawExplosion(spriteBatch, EXPLOSION_SPEED / 8, MathHelper.TwoPi / 4f * i);
 
-                for (int i = 0; i < 6; i++)
-                    DrawExplosion(spriteBatch, EXPLOSION_SPEED / 2, MathHelper.TwoPi / 6f * i);
+                if (killTime < 5 && !isAlive && health <= 0)
+                {
 
-                for (int i = 0; i < 8; i++)
-                    DrawExplosion(spriteBatch, EXPLOSION_SPEED, MathHelper.TwoPi / 8f * i);
+                    for (int i = 0; i < 4; i++)
+                        DrawExplosion(spriteBatch, EXPLOSION_SPEED / 8, MathHelper.TwoPi / 4f * i);
 
+                    for (int i = 0; i < 6; i++)
+                        DrawExplosion(spriteBatch, EXPLOSION_SPEED / 2, MathHelper.TwoPi / 6f * i);
+
+                    for (int i = 0; i < 8; i++)
+                        DrawExplosion(spriteBatch, EXPLOSION_SPEED, MathHelper.TwoPi / 8f * i);
+
+                }
             }
         }
 

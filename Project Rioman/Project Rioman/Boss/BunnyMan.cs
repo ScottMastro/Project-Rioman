@@ -16,9 +16,9 @@ namespace Project_Rioman
         public BunnyMan(int x, int y) : base(Constant.BUNNYMAN, x, y)
         {
             Texture2D[] sprites = BossAttributes.GetSprites(Constant.BUNNYMAN);
-            defaultSprite = sprites[0];
-            shootSprite = sprites[1];
-            crouchSprite = sprites[2];
+            defaultSprite = sprites[1];
+            shootSprite = sprites[2];
+            crouchSprite = sprites[3];
 
 
             sprite = defaultSprite;
@@ -35,7 +35,7 @@ namespace Project_Rioman
 
         protected override void SubDrawBoss(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, location, drawRect, Color.White, 0f, new Vector2(), SpriteEffects.None, 0);
+            spriteBatch.Draw(sprite, location, drawRect, Color.White, 0f, new Vector2(), direction, 0);
 
             DebugDraw.DrawRect(spriteBatch, GetCollisionRect(), 0.2f);
             DebugDraw.DrawRect(spriteBatch, Head(), 0.3f);
