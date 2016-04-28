@@ -172,6 +172,7 @@ namespace Project_Rioman
 
         protected override void SubUpdate(Rioman player, AbstractBullet[] rioBullets, double deltaTime, Viewport viewport)
         {
+
             for (int i = 0; i <= bullets.Length - 1; i++)
                 bullets[i].Update(viewport, player, deltaTime);
 
@@ -180,10 +181,8 @@ namespace Project_Rioman
                 standTime += deltaTime;
 
                 if (!shooting && standTime > 0.2)
-                {
-                    Shoot(SEAGULL);
-                    seagullBulletsShot = 1;
-                }
+                    ShootSeagull();
+                
 
                 if (standTime > 0.8)
                     Crouch();
@@ -196,8 +195,7 @@ namespace Project_Rioman
                 if(shootTime > 0.2 && seagullBulletsShot < 3)
                 {
                     shootTime = 0;
-                    Shoot(SEAGULL);
-                    seagullBulletsShot++;
+                    ShootSeagull();
                 }
 
             }
@@ -231,7 +229,6 @@ namespace Project_Rioman
                             location.X = viewport.Width - drawRect.Width - 38;
 
                         fallingAlongSide = true;
-                        seagullBulletsShot = 0;
                     }
                     //land on screen
                     else
@@ -251,23 +248,11 @@ namespace Project_Rioman
                 if (fallingAlongSide && seagullBulletsShot == 0 && location.Y > viewport.Height / 6)
                 {
                     shootTime = 0;
-                    Shoot(SEAGULL);
-                    seagullBulletsShot++;
+                    ShootSeagull();
                 }
             }
 
 
-        }
-
-        private int CountBullets(int type)
-        {
-            int counter = 0;
-
-            foreach (Bullet bullet in bullets)
-                if (bullet.isAlive && bullet.type == type)
-                    counter++;
-
-            return counter;
         }
 
         protected override void SubCheckHit(Rioman player, AbstractBullet[] rioBullets)
@@ -331,6 +316,8 @@ namespace Project_Rioman
 
         private void Fall()
         {
+            seagullBulletsShot = 0;
+
             if (!shooting)
                 sprite = defaultSprite;
             else
@@ -340,22 +327,24 @@ namespace Project_Rioman
             drawRect = new Rectangle(sprite.Width / 2, 0, sprite.Width / 2, sprite.Height);
         }
 
-        private void Shoot(int bulletType)
+        private void ShootSeagull()
         {
             int index = GetNextBulletIndex();
 
             if (index > -1)
             {
+                shootTime = 0;
+                seagullBulletsShot++;
                 sprite = shootSprite;
                 shooting = true;
-                if(bulletType == SEAGULL)
-                    bullets[index].MakeBullet(seagullBullet , SEAGULL, GetCollisionRect().Center.X,
-                        GetCollisionRect().Center.Y, 4, FacingLeft());
+                bullets[index].MakeBullet(seagullBullet, SEAGULL, GetCollisionRect().Center.X,
+                     GetCollisionRect().Center.Y, 4, FacingLeft());
             }
         }
 
         private void Stand(int groundTop)
         {
+            seagullBulletsShot = 0;
             fallingAlongSide = false;
             standTime = 0;
             location.Y = groundTop - drawRect.Height;
@@ -365,10 +354,8 @@ namespace Project_Rioman
         private void Stand()
         {
             state = State.standing;
-            if (!shooting)
-                sprite = defaultSprite;
-            else
-                sprite = shootSprite;
+            shooting = false;
+            sprite = defaultSprite;
 
             drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
 

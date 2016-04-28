@@ -13,6 +13,7 @@ namespace Project_Rioman
         private static double increaseTime;
         private static int healthIncreaseAmount;
         private static int ammoIncreaseAmount;
+        private static int bossIncreaseAmount;
 
         private static bool drawBossHealth;
         private static int bossHealth;
@@ -39,7 +40,7 @@ namespace Project_Rioman
 
                 for (int i = 1; i <= bossHealth; i++)
                     spriteBatch.Draw(healthPoint, new Vector2(x, 50 + bar.Height -
-                        (healthPoint.Height - 2) * i), Color.Magenta);
+                        (healthPoint.Height - 2) * i), Color.LightCoral);
             }
 
 
@@ -72,17 +73,31 @@ namespace Project_Rioman
                     else
                         healthIncreaseAmount = 0;
                 }
-                else if (ammoIncreaseAmount > 0)
+                if (ammoIncreaseAmount > 0)
                 {
                     ammoIncreaseAmount--;
 
-                    if(Weapons.GetAmmo() < Constant.MAX_AMMO)
+                    if (Weapons.GetAmmo() < Constant.MAX_AMMO)
                     {
                         Weapons.AddAmmo(1);
                         Audio.PlayRestorePoint();
                     }
+                    else
+                        ammoIncreaseAmount = 0;
                 }
-                
+                if (bossIncreaseAmount > 0)
+                {
+                    bossIncreaseAmount--;
+
+                    if (bossHealth < Constant.MAX_HEALTH)
+                    {
+                        bossHealth++;
+                        Audio.PlayRestorePoint();
+                    }
+                    else
+                        bossIncreaseAmount = 0;
+                }
+
             }
         }
 
@@ -90,6 +105,7 @@ namespace Project_Rioman
         public static void DrawBossHealth() { drawBossHealth = true; }
         public static bool GetDrawBossHealth() { return drawBossHealth; }
         public static void SetBossHealth(int x) { bossHealth = x; }
+        public static void IncreaseBossHealth(int amount) { bossIncreaseAmount = amount; }
 
 
 
@@ -115,6 +131,7 @@ namespace Project_Rioman
         public static int GetHealth() { return health; }
         public static void SetHealth(int x) { health = x; }
 
-        public static bool IsBusy() { return healthIncreaseAmount > 0 || ammoIncreaseAmount > 0; }
+        public static bool IsBusy() { return healthIncreaseAmount > 0 || ammoIncreaseAmount > 0 ||
+                bossIncreaseAmount > 0; }
     }
 }

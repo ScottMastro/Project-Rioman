@@ -65,12 +65,15 @@ namespace Project_Rioman
 
                 currentLevel.CenterRioman(viewport, player);
             }
-            else if (StatusBar.IsBusy())
-                StatusBar.BusyUpdate(gameTime.ElapsedGameTime.TotalSeconds);
-            else if (currentLevel.IsBusy())
-                currentLevel.BusyUpdate(player, viewport);
             else if (GameState.IsPaused())
                 Weapons.ChangeActiveWeapon(player);
+            else {
+
+                if (StatusBar.IsBusy())
+                    StatusBar.BusyUpdate(gameTime.ElapsedGameTime.TotalSeconds);
+                if (currentLevel.IsBusy())
+                    currentLevel.BusyUpdate(player, gameTime.ElapsedGameTime.TotalSeconds, viewport);
+            }
 
             if (currentLevel.killBullets)
             {

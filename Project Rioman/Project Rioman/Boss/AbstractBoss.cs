@@ -44,7 +44,6 @@ namespace Project_Rioman
         protected int health;
         protected const int TOUCH_DAMAGE = 4;
 
-
         public AbstractBoss(int type, int x, int y)
         {
 
@@ -102,7 +101,9 @@ namespace Project_Rioman
 
             posing = true;
             poseTime = 0;
-            StatusBar.SetBossHealth(health);
+            StatusBar.SetBossHealth(0);
+            StatusBar.DrawBossHealth();
+            StatusBar.IncreaseBossHealth(Constant.MAX_HEALTH);
         }
 
         public void Move(int x, int y)
@@ -111,43 +112,46 @@ namespace Project_Rioman
             location.Y += y;
         }
 
+        public void BusyUpdate(double deltaTime)
+        {
+            if (posing && isAlive)
+            {
+                poseTime += deltaTime;
+                if (poseTime > 0.08 && poseFrame == 0 && poseAnimateDir == -1)
+                {
+                    posing = false;
+                    poseTime = 0;
+                    poseAnimateDir = 1;
+                }
+                else if (poseTime > 0.08 && poseFrame != 4)
+                {
+                    poseTime = 0;
+                    poseFrame += poseAnimateDir;
+                }
+                else if (poseTime > 1 && poseFrame == 4)
+                {
+                    poseTime = 0;
+                    poseAnimateDir = -1;
+                    poseFrame += poseAnimateDir;
+                }
+            }
+        }
+
 
         public void Update(Rioman player, AbstractBullet[] rioBullets, double deltaTime, Viewport viewport)
         {
-            StatusBar.SetBossHealth(health);
-
             if (isAlive)
             {
-                if (posing)
-                {
-                    poseTime += deltaTime;
-                    if (poseTime > 0.1 && poseFrame == 0 && poseAnimateDir == -1)
-                    {
-                        posing = false;
-                        poseTime = 0;
-                        poseAnimateDir = 1;
-                    }
-                    else if (poseTime > 0.1 && poseFrame != 4)
-                    {
-                        poseTime = 0;
-                        poseFrame += poseAnimateDir;
-                    }
-                    else if (poseTime > 1.6 && poseFrame == 4)
-                    {
-                        poseTime = 0;
-                        poseAnimateDir = -1;
-                        poseFrame += poseAnimateDir;
-                    }
-                }
-                else
-                {
-                    SubUpdate(player, rioBullets, deltaTime, viewport);
-                    CheckHit(player, rioBullets);
-                }
+                StatusBar.SetBossHealth(health);
+
+                SubUpdate(player, rioBullets, deltaTime, viewport);
+                CheckHit(player, rioBullets);
             }
 
             if (!isAlive && health <= 0)
             {
+                StatusBar.SetBossHealth(health);
+
                 killTime += deltaTime;
                 if (wasAlive)
                     Audio.PlayKillBoss();
@@ -270,6 +274,7 @@ namespace Project_Rioman
 
         public string GetID() { return uniqueID; }
         public bool IsAlive() { return isAlive; }
+        public bool IsBusy() { return posing; }
         public int Type() { return type; }
 
         protected bool IsStanding() { return state == State.standing; }

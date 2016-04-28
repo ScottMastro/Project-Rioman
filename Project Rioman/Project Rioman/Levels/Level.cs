@@ -125,8 +125,8 @@ namespace Project_Rioman
         }
 
 
-        public bool IsBusy() { return doorOpening || doorClosing || isScrolling; }
-        public void BusyUpdate(Rioman player, Viewport viewport)
+        public bool IsBusy() { return doorOpening || doorClosing || isScrolling || boss.IsBusy(); }
+        public void BusyUpdate(Rioman player, double deltaTime, Viewport viewport)
         {
             if (doorOpening)
                 OpenDoor();
@@ -134,6 +134,8 @@ namespace Project_Rioman
                 CloseDoor(player);
             if (isScrolling)
                 Scroll(player, viewport);
+            if (boss.IsBusy())
+                boss.BusyUpdate(deltaTime);
         }
         
         public void Update(Rioman player, GameTime gameTime, Viewport viewport)
@@ -205,7 +207,6 @@ namespace Project_Rioman
         {
             allowScrolling = false;
             boss.SetAlive(player);
-            StatusBar.DrawBossHealth();
         }
 
         // ----------------------------------------------------------------------------------------------------------------
