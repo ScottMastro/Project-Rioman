@@ -8,38 +8,38 @@ namespace Project_Rioman
     {
 
         private static Texture2D bar;
-        private static Texture2D healthpoint;
+        private static Texture2D healthPoint;
         private static int health;
-        private static double increasetime;
+        private static double increaseTime;
         private static int healthIncreaseAmount;
         private static int ammoIncreaseAmount;
 
         private static bool drawBossHealth;
         private static int bossHealth;
-        private static Color bosshealthcolour;
 
         public static void LoadHealth(ContentManager content)
         {
             bar = content.Load<Texture2D>("Video\\pause\\bar");
-            healthpoint = content.Load<Texture2D>("Video\\pause\\health");
+            healthPoint = content.Load<Texture2D>("Video\\pause\\health");
             health = Constant.MAX_HEALTH;
         }
 
-        public static void Draw(SpriteBatch spriteBatch)
+        public static void Draw(SpriteBatch spriteBatch, Viewport viewport)
         {
             spriteBatch.Draw(bar, new Vector2(50, 52), Color.White);
 
             for (int i = 1; i <= health; i++)
-                spriteBatch.Draw(healthpoint, new Vector2(50, 50 + bar.Height -
-                    (healthpoint.Height - 2) * i), Color.White);
+                spriteBatch.Draw(healthPoint, new Vector2(50, 50 + bar.Height -
+                    (healthPoint.Height - 2) * i), Color.White);
 
             if (drawBossHealth)
             {
-                spriteBatch.Draw(bar, new Vector2(75, 52), Color.White);
+                int x = viewport.Width - 50 - bar.Width;
+                spriteBatch.Draw(bar, new Vector2(x, 52), Color.White);
 
                 for (int i = 1; i <= bossHealth; i++)
-                    spriteBatch.Draw(healthpoint, new Vector2(75, 50 + bar.Height -
-                        (healthpoint.Height - 2) * i), bosshealthcolour);
+                    spriteBatch.Draw(healthPoint, new Vector2(x, 50 + bar.Height -
+                        (healthPoint.Height - 2) * i), Color.Magenta);
             }
 
 
@@ -54,11 +54,11 @@ namespace Project_Rioman
 
         public static void BusyUpdate(double deltaTime)
         {
-            increasetime += deltaTime;
+            increaseTime += deltaTime;
 
-            if (increasetime > 0.05)
+            if (increaseTime > 0.05)
             {
-                increasetime = 0;
+                increaseTime = 0;
 
                 if (healthIncreaseAmount > 0)
                 {
@@ -86,35 +86,18 @@ namespace Project_Rioman
             }
         }
 
-        public static void BossHealth(Color healthcolour)
-        {
-            bosshealthcolour = healthcolour;
-            drawBossHealth = true;
-        }
-
-        public static int BossHealth()
-        {
-            int done = 2;
-            bossHealth++;
-
-            if (bossHealth >= Constant.MAX_HEALTH)
-                done = 3;
-
-            return done;
-
-        }
-
-        public static void SetDrawBossHealth(bool b) { drawBossHealth = b; }
+        public static void StopDrawBossHealth() { drawBossHealth = false; }
+        public static void DrawBossHealth() { drawBossHealth = true; }
         public static bool GetDrawBossHealth() { return drawBossHealth; }
-        public static void AdjustBossHealth(int x) { bossHealth += x; }
-        public static int GetBossHealth() { return bossHealth; }
+        public static void SetBossHealth(int x) { bossHealth = x; }
+
 
 
         public static void IncreaseHealth(int amount) {
             if (health < Constant.MAX_HEALTH)
             {
                 healthIncreaseAmount = amount;
-                increasetime = 0;
+                increaseTime = 0;
             }
         }
 
@@ -123,11 +106,12 @@ namespace Project_Rioman
             if (Weapons.GetAmmo() < Constant.MAX_AMMO)
             {
                 ammoIncreaseAmount = amount;
-                increasetime = 0;
+                increaseTime = 0;
 
             }
         }
         public static void AdjustHealth(int amount) { health += amount; }
+
         public static int GetHealth() { return health; }
         public static void SetHealth(int x) { health = x; }
 

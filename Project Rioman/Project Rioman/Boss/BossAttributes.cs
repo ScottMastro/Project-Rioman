@@ -24,7 +24,7 @@ namespace Project_Rioman
             sprites = new Dictionary<int, Texture2D[]>();
 
             sprites.Add(Constant.BUNNYMAN, LoadSprites(c, new string[]
-                {"bunnymanpose", "bunnyman1", "bunnyman2", "bunnyman3" }));
+                {"bunnymanpose", "bunnyman1", "bunnyman2", "bunnyman3", "bunnybullet1", "bunnybullet2" }));
 
         }
 

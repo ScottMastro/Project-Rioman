@@ -111,7 +111,6 @@
     <Compile Include="Pickups\AbstractPickup.cs" />
     <Compile Include="Enemies\AbstractEnemy.cs" />
     <Compile Include="Audio.cs" />
-    <Compile Include="Boss.cs" />
     <Compile Include="Enemies\ChanceBomb.cs" />
     <Compile Include="Enemies\Flipside.cs" />
     <Compile Include="Enemies\Hellicoptor.cs" />

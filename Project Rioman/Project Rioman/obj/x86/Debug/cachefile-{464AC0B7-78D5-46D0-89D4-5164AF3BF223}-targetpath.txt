@@ -655,3 +655,5 @@ Content\Video\bosses\bunnyman2.xnb
 Content\Audio\soundeffects\killboss.xnb
 Content\Video\bosses\bunnyman3.xnb
 Content\Video\bosses\bunnymanpose.xnb
+Content\Video\bosses\bunnybullet1.xnb
+Content\Video\bosses\bunnybullet2.xnb

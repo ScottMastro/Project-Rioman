@@ -98,15 +98,11 @@ namespace Project_Rioman
         public void SetAlive(Rioman player)
         {
             isAlive = true;
-
-            if (player.Hitbox.Center.X < location.X)
-                direction = SpriteEffects.None;
-            else
-                direction = SpriteEffects.FlipHorizontally;
+            FacePlayer(player);
 
             posing = true;
             poseTime = 0;
-
+            StatusBar.SetBossHealth(health);
         }
 
         public void Move(int x, int y)
@@ -118,6 +114,8 @@ namespace Project_Rioman
 
         public void Update(Rioman player, AbstractBullet[] rioBullets, double deltaTime, Viewport viewport)
         {
+            StatusBar.SetBossHealth(health);
+
             if (isAlive)
             {
                 if (posing)
@@ -134,7 +132,7 @@ namespace Project_Rioman
                         poseTime = 0;
                         poseFrame += poseAnimateDir;
                     }
-                    else if (poseTime > 2 && poseFrame == 4)
+                    else if (poseTime > 1.6 && poseFrame == 4)
                     {
                         poseTime = 0;
                         poseAnimateDir = -1;
@@ -257,6 +255,14 @@ namespace Project_Rioman
             return direction == SpriteEffects.None;
         }
 
+        protected void FacePlayer(Rioman player)
+        {
+            if (player.Hitbox.Center.X < location.X)
+                direction = SpriteEffects.None;
+            else
+                direction = SpriteEffects.FlipHorizontally;
+        }
+
         public AbstractPickup GetPowerUp()
         {
             return powerUp;
@@ -264,6 +270,7 @@ namespace Project_Rioman
 
         public string GetID() { return uniqueID; }
         public bool IsAlive() { return isAlive; }
+        public int Type() { return type; }
 
         protected bool IsStanding() { return state == State.standing; }
         protected bool IsRunning() { return state == State.running; }

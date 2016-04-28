@@ -201,6 +201,13 @@ namespace Project_Rioman
 
         }
 
+        private void SetBossAlive(Rioman player)
+        {
+            allowScrolling = false;
+            boss.SetAlive(player);
+            StatusBar.DrawBossHealth();
+        }
+
         // ----------------------------------------------------------------------------------------------------------------
         // Tile Logic
         // ----------------------------------------------------------------------------------------------------------------
@@ -357,7 +364,7 @@ namespace Project_Rioman
 
         public void CheckDeath(Viewport viewportrect, Rioman player)
         {
-            if (player.Location.Y > viewportrect.Height + 100 || StatusBar.GetHealth() <= 0)
+            if (player.Location.Y > viewportrect.Height + player.Location.Height + 10 || StatusBar.GetHealth() <= 0)
             {
                 go = false;
                 lifechange = -1;
@@ -526,10 +533,11 @@ namespace Project_Rioman
                 Audio.PlayDoor();
             else
             {
-                allowScrolling = false;
+
+                SetBossAlive(player);
+
                 closeDoor = false;
                 doorClosing = false;
-                boss.SetAlive(player);
 
                 //make door a wall
                 y = doorTop.GridY;

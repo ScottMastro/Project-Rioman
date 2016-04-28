@@ -95,7 +95,7 @@ namespace Project_Rioman
 
         }
 
-        public void Draw(GraphicsDevice graphics, SpriteBatch spriteBatch, Viewport viewportRect)
+        public void Draw(GraphicsDevice graphics, SpriteBatch spriteBatch, Viewport viewport)
         {
             graphics.Clear(currentLevel.backgroundcolour);
 
@@ -107,7 +107,7 @@ namespace Project_Rioman
                     currentLevel.Draw(spriteBatch);
                     player.Draw(spriteBatch, currentLevel.IsBusy());
 
-                    StatusBar.Draw(spriteBatch);
+                    StatusBar.Draw(spriteBatch, viewport);
                 }
 
                 if (GameState.IsPaused())
@@ -126,8 +126,8 @@ namespace Project_Rioman
 
             player.Reset();
 
-            StatusBar.SetHealth(27);
-            StatusBar.SetDrawBossHealth(false);
+            StatusBar.SetHealth(Constant.MAX_HEALTH);
+            StatusBar.StopDrawBossHealth();
             player.StartWarp();
 
         }
