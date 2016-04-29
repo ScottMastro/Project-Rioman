@@ -657,3 +657,6 @@ Content\Video\bosses\bunnyman3.xnb
 Content\Video\bosses\bunnymanpose.xnb
 Content\Video\bosses\bunnybullet1.xnb
 Content\Video\bosses\bunnybullet2.xnb
+Content\Video\pickups\textbg.xnb
+Content\Video\pickups\text0.xnb
+Content\Video\pickups\text9.xnb

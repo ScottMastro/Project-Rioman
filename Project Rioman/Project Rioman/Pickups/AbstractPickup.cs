@@ -60,7 +60,7 @@ namespace Project_Rioman
                 if (tile.type == 1 || tile.type == 3 && tile.isTop)
                     if (tile.Top.Intersects(GetCollisionRect()))
                         onGround = true;
-                    
+
             }
 
         }
@@ -73,12 +73,7 @@ namespace Project_Rioman
                     isAlive = false;
         }
 
-        public Rectangle GetCollisionRect()
-        {
-            return new Rectangle(location.X - drawRect.Width / 2, location.Y - drawRect.Height / 2, drawRect.Width, drawRect.Height);
-        }
-
-
+        protected abstract Rectangle GetCollisionRect();
         protected abstract void SubUpdate(double deltaTime);
         protected abstract void PickedUp();
 

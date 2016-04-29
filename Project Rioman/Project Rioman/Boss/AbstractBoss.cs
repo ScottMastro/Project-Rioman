@@ -13,15 +13,16 @@ namespace Project_Rioman
         private int poseAnimateDir;
         protected bool posing;
 
-
         protected string uniqueID;
         private Level level;
 
         protected int type;
         protected Rectangle location;
         protected Rectangle originalLocation;
+        protected Rectangle netMovement;
 
         protected AbstractPickup powerUp;
+        protected bool madePowerUp;
 
         protected SpriteEffects direction;
         protected Texture2D sprite;
@@ -54,7 +55,6 @@ namespace Project_Rioman
             killExplosion = BossAttributes.GetKillSprite();
             blinkFrames = 0;
 
-            Reset();
         }
 
         public void Reset()
@@ -63,10 +63,14 @@ namespace Project_Rioman
             shooting = false;
             location.X = originalLocation.X;
             location.Y = originalLocation.Y - drawRect.Height;
+            netMovement = new Rectangle(0, 0, 0, 0);
+
             isAlive = false;
             direction = SpriteEffects.None;
             health = Constant.MAX_HEALTH;
             killTime = 0;
+            powerUp = null;
+            madePowerUp = false;
 
             poseFrame = 0;
             poseTime = 0;
@@ -110,6 +114,8 @@ namespace Project_Rioman
         {
             location.X += x;
             location.Y += y;
+            netMovement.X += x;
+            netMovement.Y += y;
         }
 
         public void BusyUpdate(double deltaTime)
@@ -153,16 +159,26 @@ namespace Project_Rioman
                 StatusBar.SetBossHealth(health);
 
                 killTime += deltaTime;
+
+                if (killTime > 5 && !madePowerUp)
+                {
+                    madePowerUp = true;
+                    powerUp = new PowerUp(type - 9, 
+                        originalLocation.X + netMovement.X,
+                        originalLocation.Y + netMovement.Y);
+                }
+
                 if (wasAlive)
                     Audio.PlayKillBoss();
             }
+
 
             wasAlive = isAlive;
         }
 
         protected void CheckHit(Rioman player, AbstractBullet[] rioBullets)
         {
-            if (isAlive)
+            if (isAlive && !player.IsLurking())
             {
                 if (GetCollisionRect().Intersects(player.Hitbox))
                     player.Hit(TOUCH_DAMAGE);
@@ -269,7 +285,9 @@ namespace Project_Rioman
 
         public AbstractPickup GetPowerUp()
         {
-            return powerUp;
+            AbstractPickup p = powerUp;
+            powerUp = null;
+            return p;
         }
 
         public string GetID() { return uniqueID; }

@@ -104,6 +104,7 @@
     <Compile Include="Boss\AbstractBoss.cs" />
     <Compile Include="Boss\BossAttributes.cs" />
     <Compile Include="Boss\BunnyMan.cs" />
+    <Compile Include="Pickups\PowerUp.cs" />
     <Compile Include="Weapons\AuroraBullet.cs" />
     <Compile Include="Weapons\BulletAttributes.cs" />
     <Compile Include="Weapons\AbstractBullet.cs" />

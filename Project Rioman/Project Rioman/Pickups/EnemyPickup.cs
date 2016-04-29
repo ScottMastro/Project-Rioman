@@ -72,5 +72,11 @@ namespace Project_Rioman
                 spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, drawRect.Width, drawRect.Height),
                     drawRect, colour, 0f, new Vector2(drawRect.Width / 2, drawRect.Height / 2), SpriteEffects.None, 0);
         }
+
+        protected override Rectangle GetCollisionRect()
+        {
+            return new Rectangle(location.X - drawRect.Width / 2, location.Y - drawRect.Height / 2, drawRect.Width, drawRect.Height);
+        }
+
     }
 }

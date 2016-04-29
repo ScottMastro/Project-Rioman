@@ -23,6 +23,7 @@ namespace Project_Rioman
 
         private AbstractEnemy[] enemies;
         private List<AbstractPickup> items;
+        private PowerUp bossPowerUp;
         private AbstractBoss boss;
 
         private int doorStopY;
@@ -100,7 +101,8 @@ namespace Project_Rioman
             preventCenteringRight = false;
 
             items = new List<AbstractPickup>();
-
+            bossPowerUp = null;
+             
             scrollers = MakeScroller();
             allowScrolling = true;
 
@@ -148,8 +150,6 @@ namespace Project_Rioman
             UpdateScrollers(player, viewport);
             InteractWithLevel(player);
 
-            boss.Update(player, player.GetBullets(), deltaTime, viewport);
-
             foreach (Tile tile in tileType(Constant.TILE_DISAPPEAR))
                 tile.Fade(gameTime);
 
@@ -161,12 +161,18 @@ namespace Project_Rioman
                 for (int i = 0; i <= items.Count - 1; i++)
                     items[i].DetectTileCollision(tile);
 
+                if (bossPowerUp != null)
+                    bossPowerUp.DetectTileCollision(tile);
+
                 if (boss.IsAlive())
                     boss.DetectTileCollision(tile);
             }
 
             for (int i = 0; i <= items.Count - 1; i++)
                 items[i].Update(player, deltaTime, viewport);
+
+            if (bossPowerUp != null)
+                bossPowerUp.Update(player, deltaTime, viewport);
         }
 
         public void MoveStuff(Rioman player, int x, int y)
@@ -180,6 +186,9 @@ namespace Project_Rioman
             for (int i = 0; i <= items.Count - 1; i++)
                 items[i].Move(x, y);
 
+            if (bossPowerUp != null)
+                bossPowerUp.Move(x, y);
+
             for (int i = 0; i <= enemies.Length - 1; i++)
                 enemies[i].Move(x, y);
 
@@ -192,14 +201,21 @@ namespace Project_Rioman
 
         public void UpdateEnemies(Rioman player, AbstractBullet[] bullets, double deltaTime, Viewport viewport)
         {
+            AbstractPickup pickUp;
 
             for (int i = 0; i <= enemies.Length - 1; i++)
             {
                 enemies[i].Update(player, bullets, deltaTime, viewport);
-                AbstractPickup p = enemies[i].GetDroppedPickup();
-                if (p != null)
-                    items.Add(p);
+                pickUp = enemies[i].GetDroppedPickup();
+                if (pickUp != null)
+                    items.Add(pickUp);
             }
+
+            boss.Update(player, player.GetBullets(), deltaTime, viewport);
+
+            pickUp = boss.GetPowerUp();
+            if (pickUp != null)
+                bossPowerUp = (PowerUp)pickUp;
 
         }
 
@@ -207,6 +223,14 @@ namespace Project_Rioman
         {
             allowScrolling = false;
             boss.SetAlive(player);
+        }
+
+        public int GetPowerUpState()
+        {
+            if (bossPowerUp == null)
+                return 0;
+            else
+                return bossPowerUp.GetState();
         }
 
         // ----------------------------------------------------------------------------------------------------------------
@@ -430,6 +454,9 @@ namespace Project_Rioman
         {
             foreach (AbstractPickup item in items)
                 item.Draw(spriteBatch);
+
+            if (bossPowerUp != null)
+                bossPowerUp.Draw(spriteBatch);
         }
 
         private void DrawTiles(SpriteBatch spriteBatch)

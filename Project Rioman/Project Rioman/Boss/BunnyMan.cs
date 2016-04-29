@@ -144,12 +144,18 @@ namespace Project_Rioman
 
             drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
             location = new Rectangle(x, y, drawRect.Width, drawRect.Height);
+
+            Reset();
         }
 
         protected override void SubReset()
         {
             bullets = new Bullet[6];
 
+            sprite = defaultSprite;
+            drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
+
+            seagullBulletsShot = 0;
             crouchTime = 0;
             airTime = 0;
             shootTime = 0;

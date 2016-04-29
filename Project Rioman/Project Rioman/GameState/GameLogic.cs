@@ -9,8 +9,8 @@ namespace Project_Rioman
 {
     class GameLogic
     {
-
         private Rioman player;
+        private bool hideRioman;
 
         private Level currentLevel;
         private Level[] levels = new Level[9];
@@ -43,8 +43,15 @@ namespace Project_Rioman
             if (currentLevel.go && !currentLevel.IsBusy() && !GameState.IsPaused() && !StatusBar.IsBusy())
             {
 
+                int state = currentLevel.GetPowerUpState();
+                if (state == 1)
+                    hideRioman = true;
+                else if (state == 2)
+                    GameState.SetState(Constant.SELECTION_SCREEN);
+
                 //update player before level
-                player.Update(gameTime.ElapsedGameTime.TotalSeconds, currentLevel, viewport, currentLevel.GetEnemies());
+                if(!hideRioman)
+                    player.Update(gameTime.ElapsedGameTime.TotalSeconds, currentLevel, viewport, currentLevel.GetEnemies());
 
                 if (!player.IsWarping())
                 {
@@ -108,7 +115,9 @@ namespace Project_Rioman
                 if (currentLevel.go)
                 {
                     currentLevel.Draw(spriteBatch);
-                    player.Draw(spriteBatch, currentLevel.IsBusy());
+
+                    if(!hideRioman)
+                        player.Draw(spriteBatch, currentLevel.IsBusy());
 
                     StatusBar.Draw(spriteBatch, viewport);
                 }
@@ -128,6 +137,7 @@ namespace Project_Rioman
             currentLevel.LadderForm();
 
             player.Reset();
+            hideRioman = false;
 
             StatusBar.SetHealth(Constant.MAX_HEALTH);
             StatusBar.StopDrawBossHealth();
