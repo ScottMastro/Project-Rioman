@@ -135,7 +135,7 @@ namespace WindowsFormsApplication1
                 for (int x = 0; x <= width - 1; x++)
                     for (int y = 0; y <= height - 1; y++)
                         DrawSquare(x, y);
-                
+
 
                 DrawMouseLocation();
 
@@ -153,7 +153,7 @@ namespace WindowsFormsApplication1
 
                 int[,] mouse = GetMouseTiles();
 
-                
+
                 for (int x = 0; x <= width - 1; x++)
                     for (int y = 0; y <= height - 1; y++)
                     {
@@ -189,6 +189,14 @@ namespace WindowsFormsApplication1
             for (int x = 0; x <= width - 1; x++)
                 for (int y = 0; y <= height - 1; y++)
                 {
+                    if (tile[x, y] == 351 && x - 5 >= 0 && y - 5 >= 0)
+                    {
+                        g.DrawRectangle(new Pen(Brushes.Green, 3), new Rectangle((x - 5) * WIDTH, (y - 5) * HEIGHT,
+                               11 * WIDTH, 11 * HEIGHT));
+
+                    }
+
+                    /*
                     if (tile[x, y] == 322)
                     {
                         int x2 = 0, y2 = 0;
@@ -236,9 +244,9 @@ namespace WindowsFormsApplication1
 
                         g.DrawRectangle(new Pen(Brushes.Green, 3), new Rectangle((x + 1) * WIDTH, (y + 1) * HEIGHT,
                             (x2 - x - 1) * WIDTH, (y2 - y - 1) * HEIGHT));
-
-                    }
-
+                    
+                }
+                */
                 }
         }
 
@@ -1016,7 +1024,7 @@ namespace WindowsFormsApplication1
                 pictureBox1.Image = Scroller[1];
                 pictureBox2.Image = Scroller[2];
                 pictureBox3.Image = Scroller[3];
-                pictureBox4.Image = Scroller[4];
+                pictureBox17.Image = Other[30];
          //       pictureBox5.Image = Scroller[5];
            //     pictureBox6.Image = Scroller[6];
              //   pictureBox7.Image = Scroller[7];
@@ -1052,7 +1060,7 @@ namespace WindowsFormsApplication1
             Characters = new Image[14];
             Enemies = new Image[22];
             Scroller = new Image[15];
-            Other = new Image[30];
+            Other = new Image[31];
 
             for (int i = 1; i <= 38; i++)
             {
@@ -1198,7 +1206,7 @@ namespace WindowsFormsApplication1
 
             }
 
-            for (int i = 1; i <= 29; i++)
+            for (int i = 1; i <= 30; i++)
             {
                 if (File.Exists(Application.StartupPath + @"/tiles/other/other" + i.ToString() + ".png"))
                 {
