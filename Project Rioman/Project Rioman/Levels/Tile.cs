@@ -11,7 +11,7 @@ namespace Project_Rioman
     //type 3 = climb
     //type 4 = door
     //type 5 = disappearing
-    //type 6 = scroll
+    //type 6 = functional
 
     class Tile
     {
@@ -148,7 +148,7 @@ namespace Project_Rioman
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (type != Constant.TILE_SCROLL && type != Constant.TILE_IGNORE)
+            if (type != Constant.TILE_FUNCTION && type != Constant.TILE_IGNORE)
                 spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, sprite.Width, sprite.Height), Color.White);
 
         }

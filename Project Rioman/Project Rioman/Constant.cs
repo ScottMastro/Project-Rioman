@@ -9,7 +9,7 @@ namespace Project_Rioman
     public static class Constant
     {
         private static int[] tileKey;
-        public static int NUMBER_OF_TILES = 350;
+        public static int NUMBER_OF_TILES = 351;
 
         public static Keys END_GAME { get { return Keys.Escape; } }
         public static Keys FULL_SCREEN { get { return Keys.F11; } }
@@ -99,6 +99,7 @@ namespace Project_Rioman
         public static int VERT_SCROLL = 319;
         public static int HORIZ_SCROLL = 320;
         public static int HORIZ_SCROLL2 = 321;
+        public static int RESPAWN = 351;
 
         public static int TILE_IGNORE = -1;
         public static int TILE_DECO = 0;
@@ -107,7 +108,7 @@ namespace Project_Rioman
         public static int TILE_CLIMB = 3;
         public static int TILE_DOOR = 4;
         public static int TILE_DISAPPEAR = 5;
-        public static int TILE_SCROLL = 6;
+        public static int TILE_FUNCTION = 6;
 
         public static int TileNumberToType(int tileNumber)
         {
@@ -473,6 +474,8 @@ namespace Project_Rioman
             tileKey[348] = -1;
             tileKey[349] = -1;
             tileKey[350] = -1;
+            tileKey[351] = 6;
+
 
 
         }

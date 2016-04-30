@@ -660,3 +660,4 @@ Content\Video\bosses\bunnybullet2.xnb
 Content\Video\pickups\textbg.xnb
 Content\Video\pickups\text0.xnb
 Content\Video\pickups\text9.xnb
+Content\Video\tiles\351.xnb

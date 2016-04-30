@@ -17,7 +17,7 @@ namespace Project_Rioman
         private int width;
         private int height;
         private int[,] tilePos;
-        private Vector2 startPos;
+        private Point startPos;
 
         private Tile[,] tiles;
         private List<AbstractEnemy> enemies;
@@ -108,7 +108,7 @@ namespace Project_Rioman
 
             //tile is player
             if (value == 284)
-                startPos = new Vector2(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE - Constant.TILE_SIZE);
+                startPos = new Point(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE - Constant.TILE_SIZE);
 
 
             //tile is a boss

@@ -18,8 +18,12 @@ namespace Project_Rioman
         public Color backgroundcolour;
         public int width;
         public int height;
-        public bool go;
-        private Vector2 startPos;
+        public bool active;
+
+        public bool respawn;
+        private int respawnViewportY;
+        private Point originalStartPos;
+        private Point startPos;
 
         private AbstractEnemy[] enemies;
         private List<AbstractPickup> items;
@@ -47,35 +51,53 @@ namespace Project_Rioman
         private bool preventCenteringRight;
 
         private Scroller[] scrollers;
+        private Respawn[] respawns;
 
         private int scrollAmountX;
         private int scrollAmountY;
 
         public int lifechange = 0;
 
-        public Level(Color bg, int width, int height, Vector2 startpos, Tile[,] tiles,
+
+        public Level(Color bg, int width, int height, Point startpos, Tile[,] tiles,
             AbstractEnemy[] enemies, OldPickup[] pickups, AbstractBoss boss)
         {
             backgroundcolour = bg;
             this.width = width;
             this.height = height;
             this.startPos = startpos;
+            originalStartPos = startPos;
             this.tileGrid = tiles;
             this.enemies = enemies;
            //TODO this.pickups = pickups;
             items = new List<AbstractPickup>();
             this.boss = boss;
-            go = false;
+            active = false;
+            respawn = false;
 
         }
 
         public void StartLevel(Viewport viewport, Rioman player)
         {
+            startPos = originalStartPos;
+            respawnViewportY = viewport.Height - Constant.TILE_SIZE * 4;
             Reset();
-            go = true;
+            SetRespawnsAlive();
 
-            Vector2 centerPos = new Vector2(viewport.Width / 2, viewport.Height - 32 * 4);
+            Start(player, new Point(viewport.Width / 2, viewport.Height - Constant.TILE_SIZE * 4));
+        }
 
+        public void RestartLevel(Viewport viewport, Rioman player)
+        {
+
+            Reset();
+
+            int centerY = viewport.Height - Constant.TILE_SIZE * 4;
+            Start(player, new Point(viewport.Width / 2, centerY + (respawnViewportY - centerY)));
+        }
+
+        private void Start(Rioman player, Point centerPos)
+        {
             int offsetX = Convert.ToInt32(centerPos.X - startPos.X);
             int offsetY = Convert.ToInt32(centerPos.Y - startPos.Y);
 
@@ -85,13 +107,17 @@ namespace Project_Rioman
             player.MoveToX(Convert.ToInt32(centerPos.X));
             player.SetStartPos(Convert.ToInt32(centerPos.X), Convert.ToInt32(centerPos.Y));
             player.StartWarp();
-
         }
 
         public void Reset()
         {
+            active = true;
+            respawn = false;
+
             ResetTiles();
             OrganizeTiles();
+            TileFader();
+            LadderForm();
             ResetEnemies();
             boss.Reset();
 
@@ -103,7 +129,9 @@ namespace Project_Rioman
             items = new List<AbstractPickup>();
             bossPowerUp = null;
              
-            scrollers = MakeScroller();
+            scrollers = MakeScrollers();
+            respawns = MakeRespawns();
+
             allowScrolling = true;
 
             doorOpening = false;
@@ -148,6 +176,7 @@ namespace Project_Rioman
             bool bossfalling = true;
 
             UpdateScrollers(player, viewport);
+            UpdateRespawns(player, viewport);
             InteractWithLevel(player);
 
             foreach (Tile tile in tileType(Constant.TILE_DISAPPEAR))
@@ -183,6 +212,9 @@ namespace Project_Rioman
             for (int i = 0; i <= scrollers.Length - 1; i++)
                 scrollers[i].Move(x, y);
 
+            for (int i = 0; i <= respawns.Length - 1; i++)
+                respawns[i].Move(x, y);
+
             for (int i = 0; i <= items.Count - 1; i++)
                 items[i].Move(x, y);
 
@@ -197,8 +229,6 @@ namespace Project_Rioman
             player.MoveBullets(x, y);
         }
     
-
-
         public void UpdateEnemies(Rioman player, AbstractBullet[] bullets, double deltaTime, Viewport viewport)
         {
             AbstractPickup pickUp;
@@ -339,7 +369,7 @@ namespace Project_Rioman
                 {
                     lifechange = -1;
                     player.Die();
-                    go = false;
+                    respawn = true;
                 }
             }
 
@@ -391,10 +421,9 @@ namespace Project_Rioman
         {
             if (player.Location.Y > viewportrect.Height + player.Location.Height + 10 || StatusBar.GetHealth() <= 0)
             {
-                go = false;
                 lifechange = -1;
                 player.Die();
-
+                respawn = true;
             }
         }
 
@@ -448,6 +477,9 @@ namespace Project_Rioman
             //For debugging
             for (int i = 0; i <= scrollers.Length - 1; i++)
                 scrollers[i].Draw(spriteBatch);
+
+            for (int i = 0; i <= respawns.Length - 1; i++)
+                respawns[i].Draw(spriteBatch);
         }
 
         private void DrawItems(SpriteBatch spriteBatch)
@@ -585,11 +617,103 @@ namespace Project_Rioman
         }
 
         // ----------------------------------------------------------------------------------------------------------------
+        //  Respawn Logic
+        // ----------------------------------------------------------------------------------------------------------------
+
+
+        private struct Respawn
+        {
+            private Rectangle respawnRect;
+            private Point startPos;
+            private Point startViewportPos;
+
+            private bool isAlive;
+
+            public Respawn(int x, int y)
+            {
+                isAlive = true;
+                startPos = new Point(x, y - Constant.TILE_SIZE);
+                startViewportPos = new Point(x, y - Constant.TILE_SIZE);
+
+                respawnRect = new Rectangle(x - Constant.TILE_SIZE * 4, y - Constant.TILE_SIZE * 5,
+                    Constant.TILE_SIZE * 9, Constant.TILE_SIZE * 11);
+            }
+
+            public void Move(int x, int y)
+            {
+                respawnRect.X += x;
+                respawnRect.Y += y;
+                startViewportPos.X += x;
+                startViewportPos.Y += y;
+            }
+
+            public bool InsideRespawnZone(Rectangle playerRect)
+            {
+                return isAlive && playerRect.Intersects(respawnRect);
+            }
+
+            public Point GetRespawnPoint()
+            {
+                isAlive = false;
+                return startPos;
+            }
+
+            public int GetViewportY()
+            {
+                return startViewportPos.Y;
+            }
+
+
+            public void SetAlive()
+            {
+                isAlive = true;
+            }
+
+            public void Draw(SpriteBatch spriteBatch)
+            {
+                DebugDraw.DrawRect(spriteBatch, respawnRect, 0.1f);
+
+            }
+        }
+
+        private Respawn[] MakeRespawns()
+        {
+            List<Respawn> r = new List<Respawn>();
+
+            foreach (Tile tile in tileType(Constant.TILE_FUNCTION))
+            {
+                if (tile.tile == Constant.RESPAWN)
+                    r.Add(new Respawn(tile.X, tile.Y));
+            }
+
+            return new List<Respawn>(r).GetRange(0, r.Count).ToArray();
+        }
+
+        private void UpdateRespawns(Rioman player, Viewport viewport)
+        {
+            for(int i = 0; i<= respawns.Length-1; i++)
+            {
+                if (respawns[i].InsideRespawnZone(player.Hitbox))
+                {
+                    startPos = respawns[i].GetRespawnPoint();
+                    Console.WriteLine(startPos.Y);
+                    respawnViewportY = respawns[i].GetViewportY();
+                }
+            }
+        }
+
+        private void SetRespawnsAlive()
+        {
+            for (int i = 0; i <= respawns.Length - 1; i++)
+                respawns[i].SetAlive();
+        }
+
+        // ----------------------------------------------------------------------------------------------------------------
         // Scroller Logic
         // ----------------------------------------------------------------------------------------------------------------
 
 
-        struct Scroller
+        private struct Scroller
         {
             private Point startPoint;
             private Point endPoint;
@@ -675,14 +799,14 @@ namespace Project_Rioman
             public int Right { get { return endPoint.X; } }
         }
 
-        private Scroller[] MakeScroller()
+        private Scroller[] MakeScrollers()
         {
             List<Scroller> s = new List<Scroller>();
             int counter = 0;
 
             Rectangle scroll = new Rectangle();
 
-            foreach (Tile tile in tileType(Constant.TILE_SCROLL))
+            foreach (Tile tile in tileType(Constant.TILE_FUNCTION))
             {
                 int i = tile.GridX;
                 int j = tile.GridY;

@@ -191,8 +191,8 @@ namespace WindowsFormsApplication1
                 {
                     if (tile[x, y] == 351 && x - 5 >= 0 && y - 5 >= 0)
                     {
-                        g.DrawRectangle(new Pen(Brushes.Green, 3), new Rectangle((x - 5) * WIDTH, (y - 5) * HEIGHT,
-                               11 * WIDTH, 11 * HEIGHT));
+                        g.DrawRectangle(new Pen(Brushes.Green, 3), new Rectangle((x - 4) * WIDTH, (y - 5) * HEIGHT,
+                               9 * WIDTH, 11 * HEIGHT));
 
                     }
 

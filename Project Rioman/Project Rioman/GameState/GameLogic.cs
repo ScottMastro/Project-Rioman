@@ -37,10 +37,12 @@ namespace Project_Rioman
         {
             KeyboardState keyboardState = Keyboard.GetState();
 
-            if (currentLevel == null || !currentLevel.go)
+            if (currentLevel == null || !currentLevel.active)
                 ChangeLevel();
+            else if (currentLevel.respawn)
+                Respawn();
 
-            if (currentLevel.go && !currentLevel.IsBusy() && !GameState.IsPaused() && !StatusBar.IsBusy())
+            if (currentLevel.active && !currentLevel.IsBusy() && !GameState.IsPaused() && !StatusBar.IsBusy())
             {
 
                 int state = currentLevel.GetPowerUpState();
@@ -66,7 +68,7 @@ namespace Project_Rioman
 
                 if (currentLevel.lifechange != 0)
                 {
-                    player.state.AdjustLivesByX(currentLevel.lifechange);
+           //         player.state.AdjustLivesByX(currentLevel.lifechange);
                     currentLevel.lifechange = 0;
                 }
 
@@ -112,7 +114,7 @@ namespace Project_Rioman
 
             if (currentLevel != null)
             {
-                if (currentLevel.go)
+                if (currentLevel.active)
                 {
                     currentLevel.Draw(spriteBatch);
 
@@ -133,16 +135,25 @@ namespace Project_Rioman
             currentLevel = levels[GameState.GetLevel() - 1];
             currentLevel.StartLevel(viewport, player);
 
-            currentLevel.TileFader();
-            currentLevel.LadderForm();
+            ResetLevel();
 
+        }
+
+        private void Respawn()
+        {
+            currentLevel.RestartLevel(viewport, player);
+            ResetLevel();
+
+        }
+
+        private void ResetLevel()
+        {
             player.Reset();
             hideRioman = false;
 
             StatusBar.SetHealth(Constant.MAX_HEALTH);
             StatusBar.StopDrawBossHealth();
             player.StartWarp();
-
         }
     }
 }
