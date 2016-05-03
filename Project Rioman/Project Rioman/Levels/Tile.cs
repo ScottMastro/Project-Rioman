@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Project_Rioman
 {
@@ -12,6 +15,7 @@ namespace Project_Rioman
     //type 4 = door
     //type 5 = disappearing
     //type 6 = functional
+    //type 7 = laser
 
     class Tile
     {
@@ -19,7 +23,10 @@ namespace Project_Rioman
         private int x;
         private int y;
 
-        public Texture2D[] frames;
+        private Texture2D[] frames;
+        private int numFrames;
+        private int currentFrame;
+        private int animateDir;
 
         public int tile;
         public int type;
@@ -49,44 +56,39 @@ namespace Project_Rioman
             isTop = false;
 
             CheckLoadFrames(content);
+            animateDir = 1;
+            currentFrame = 0;
         }
 
         private void CheckLoadFrames(ContentManager content)
         {
-            if (tile == 177 || tile == 178)
-                LoadFrames(content, 2);
-            if (tile == 106 || tile == 130 || tile == 160 || tile == 223)
-                LoadFrames(content, 3);
-            if (tile == 56)
-                LoadFrames(content, 4);
-            if (tile == 102)
-                LoadFrames(content, 9);
+            List<Texture2D> textures = new List<Texture2D>();
+            textures.Add(sprite);
+            int counter = 1;
+
+            while (true)
+            {
+                try
+                {
+                    Texture2D t = content.Load<Texture2D>("Video\\tiles\\" + tile.ToString() + "-" + counter.ToString());
+                    textures.Add(t);
+                }
+                catch
+                {
+                    break;
+                }
+
+                counter++;
+            }
+
+            frames = textures.ToArray();
+            numFrames = counter;
         }
 
         public void Reset()
         {
             type = originalType;
             location = originalLocation;
-        }
-
-        public void LoadFrames(ContentManager content, int frm)
-        {
-            frames = new Texture2D[frm];
-            frames[0] = sprite;
-            frames[1] = content.Load<Texture2D>("Video\\tiles\\" + tile.ToString() + "b");
-            if (frm > 2)
-                frames[2] = content.Load<Texture2D>("Video\\tiles\\" + tile.ToString() + "c");
-            if (frm > 3)
-                frames[3] = content.Load<Texture2D>("Video\\tiles\\" + tile.ToString() + "d");
-            if (frm > 4)
-                frames[4] = content.Load<Texture2D>("Video\\tiles\\" + tile.ToString() + "e");
-            if (frm > 5)
-            {
-                frames[5] = content.Load<Texture2D>("Video\\tiles\\" + tile.ToString() + "f");
-                frames[6] = content.Load<Texture2D>("Video\\tiles\\" + tile.ToString() + "g");
-                frames[7] = content.Load<Texture2D>("Video\\tiles\\" + tile.ToString() + "h");
-                frames[8] = content.Load<Texture2D>("Video\\tiles\\" + tile.ToString() + "i");
-            }
         }
 
         public void Move(int x, int y)
@@ -117,33 +119,26 @@ namespace Project_Rioman
         }
 
 
-        //tile 102
-        public void Wave(GameTime gameTime)
+        public void Animate(double deltaTime)
         {
-            animationtime += gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (animationtime > 2.25)
+            if (numFrames == 1 || type == 5)
+                return;
+
+            animationtime += deltaTime;
+
+            if (animationtime > 0.25)
             {
                 animationtime = 0;
-                sprite = frames[0];
-            }
+                currentFrame += animateDir;
 
-            if (animationtime > 2)
-                sprite = frames[8];
-            else if (animationtime > 1.75)
-                sprite = frames[7];
-            else if (animationtime > 1.5)
-                sprite = frames[6];
-            else if (animationtime > 1.25)
-                sprite = frames[5];
-            else if (animationtime > 1)
-                sprite = frames[4];
-            else if (animationtime > 0.75)
-                sprite = frames[3];
-            else if (animationtime > 0.5)
-                sprite = frames[2];
-            else if (animationtime > 0.25)
-                sprite = frames[1];
+                if (currentFrame == 0)
+                    animateDir = 1;
+                else if (currentFrame == numFrames - 1)
+                    animateDir = -1;
+
+                sprite = frames[currentFrame];
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

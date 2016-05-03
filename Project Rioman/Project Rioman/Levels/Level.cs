@@ -179,6 +179,9 @@ namespace Project_Rioman
             UpdateRespawns(player, viewport);
             InteractWithLevel(player);
 
+            foreach (Tile tile in allTiles)
+                tile.Animate(deltaTime);
+
             foreach (Tile tile in tileType(Constant.TILE_DISAPPEAR))
                 tile.Fade(gameTime);
 

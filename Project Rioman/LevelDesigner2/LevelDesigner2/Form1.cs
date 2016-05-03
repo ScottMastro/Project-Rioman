@@ -253,7 +253,9 @@ namespace WindowsFormsApplication1
 
         private void DrawSquare(int x, int y)
         {
-            if (tile[x, y] > 0)
+    
+
+            if (!(tiles[tile[x, y]] == null) && tile[x, y] > 0)
                 g.DrawImage(tiles[tile[x, y]], new Point(point[x, y].X, point[x, y].Y));
             else
                 g.FillRectangle(new SolidBrush(bgcolour), new Rectangle(point[x, y].X, point[x, y].Y, WIDTH, HEIGHT));
@@ -789,8 +791,13 @@ namespace WindowsFormsApplication1
                 pictureBox18.Image = Other[7];
                 pictureBox19.Image = Other[8];
                 pictureBox20.Image = Other[9];
-                pictureBox20.Image = Other[10];
-                pictureBox20.Image = Other[11];
+                pictureBox21.Image = Other[10];
+                pictureBox22.Image = Other[11];
+
+                pictureBox23.Image = Other[31];
+                pictureBox24.Image = Other[32];
+                pictureBox25.Image = Other[33];
+
             }
 
             if (type == "TM")
@@ -1024,6 +1031,7 @@ namespace WindowsFormsApplication1
                 pictureBox1.Image = Scroller[1];
                 pictureBox2.Image = Scroller[2];
                 pictureBox3.Image = Scroller[3];
+                pictureBox4.Image = Scroller[4];
                 pictureBox17.Image = Other[30];
          //       pictureBox5.Image = Scroller[5];
            //     pictureBox6.Image = Scroller[6];
@@ -1060,7 +1068,7 @@ namespace WindowsFormsApplication1
             Characters = new Image[14];
             Enemies = new Image[22];
             Scroller = new Image[15];
-            Other = new Image[31];
+            Other = new Image[36];
 
             for (int i = 1; i <= 38; i++)
             {
@@ -1206,7 +1214,7 @@ namespace WindowsFormsApplication1
 
             }
 
-            for (int i = 1; i <= 30; i++)
+            for (int i = 1; i <= 33; i++)
             {
                 if (File.Exists(Application.StartupPath + @"/tiles/other/other" + i.ToString() + ".png"))
                 {

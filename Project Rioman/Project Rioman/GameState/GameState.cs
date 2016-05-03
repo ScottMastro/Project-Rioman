@@ -24,7 +24,7 @@ namespace Project_Rioman
         static GameState()
         {
             prevState = -1;
-            state = Constant.BUNNYMAN;
+            state = Constant.POSTERMAN;
             pause = false;
 
         }

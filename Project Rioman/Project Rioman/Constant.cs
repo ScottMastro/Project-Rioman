@@ -9,7 +9,7 @@ namespace Project_Rioman
     public static class Constant
     {
         private static int[] tileKey;
-        public static int NUMBER_OF_TILES = 351;
+        public static int NUMBER_OF_TILES = 356;
 
         public static Keys END_GAME { get { return Keys.Escape; } }
         public static Keys FULL_SCREEN { get { return Keys.F11; } }
@@ -109,6 +109,7 @@ namespace Project_Rioman
         public static int TILE_DOOR = 4;
         public static int TILE_DISAPPEAR = 5;
         public static int TILE_FUNCTION = 6;
+        public static int TILE_LASER = 7;
 
         public static int TileNumberToType(int tileNumber)
         {
@@ -261,22 +262,22 @@ namespace Project_Rioman
             tileKey[135] = -1;
             tileKey[136] = -1;
             tileKey[137] = -1;
-            tileKey[138] = -1;
-            tileKey[139] = -1;
-            tileKey[140] = -1;
-            tileKey[141] = -1;
-            tileKey[142] = -1;
-            tileKey[143] = -1;
-            tileKey[144] = -1;
-            tileKey[145] = -1;
-            tileKey[146] = -1;
-            tileKey[147] = -1;
-            tileKey[148] = -1;
-            tileKey[149] = -1;
-            tileKey[150] = -1;
-            tileKey[151] = -1;
-            tileKey[152] = -1;
-            tileKey[153] = -1;
+            tileKey[138] = 1;
+            tileKey[139] = 1;
+            tileKey[140] = 1;
+            tileKey[141] = 0;
+            tileKey[142] = 1;
+            tileKey[143] = 0;
+            tileKey[144] = 0;
+            tileKey[145] = 0;
+            tileKey[146] = 0;
+            tileKey[147] = 0;
+            tileKey[148] = 0;
+            tileKey[149] = 2;
+            tileKey[150] = 4;
+            tileKey[151] = 3;
+            tileKey[152] = 7;
+            tileKey[153] = 0;
             tileKey[154] = -1;
             tileKey[155] = -1;
             tileKey[156] = -1;
@@ -450,16 +451,16 @@ namespace Project_Rioman
             tileKey[324] = 2;
             tileKey[325] = 2;
             tileKey[326] = 2;
-            tileKey[327] = -1;
-            tileKey[328] = -1;
-            tileKey[329] = -1;
-            tileKey[330] = -1;
-            tileKey[331] = -1;
-            tileKey[332] = 2;
-            tileKey[333] = 2;
-            tileKey[334] = 2;
-            tileKey[335] = 2;
-            tileKey[336] = 2;
+            tileKey[327] = 2;
+            tileKey[328] = 2;
+            tileKey[329] = 2;
+            tileKey[330] = 7;
+            tileKey[331] = 7;
+            tileKey[332] = 7;
+            tileKey[333] = -1;
+            tileKey[334] = -1;
+            tileKey[335] = -1;
+            tileKey[336] = -1;
             tileKey[337] = -1;
             tileKey[338] = -1;
             tileKey[339] = -1;
@@ -475,7 +476,11 @@ namespace Project_Rioman
             tileKey[349] = -1;
             tileKey[350] = -1;
             tileKey[351] = 6;
-
+            tileKey[352] = 1;
+            tileKey[353] = 1;
+            tileKey[354] = 1;
+            tileKey[355] = 1;
+            tileKey[356] = 1;
 
 
         }
