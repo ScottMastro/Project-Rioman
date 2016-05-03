@@ -23,6 +23,11 @@ namespace Project_Rioman
         private int x;
         private int y;
 
+        private enum Direction { na, up, down, left, right};
+        private Direction direction;
+        private bool shooting;
+        private int range;
+
         private Texture2D[] frames;
         private int numFrames;
         private int currentFrame;
@@ -35,8 +40,8 @@ namespace Project_Rioman
         public Rectangle location;
         private Rectangle originalLocation;
 
-        public double fadeTime;
-        public double animationtime;
+        private double fadeTime;
+        private double animationTime;
 
         public bool isTop;
 
@@ -58,7 +63,11 @@ namespace Project_Rioman
             CheckLoadFrames(content);
             animateDir = 1;
             currentFrame = 0;
+
+            direction = GetDirection(tileType, tileNumber);
+            shooting = false;
         }
+
 
         private void CheckLoadFrames(ContentManager content)
         {
@@ -97,9 +106,9 @@ namespace Project_Rioman
             location.Y += y;
         }
 
-        public void Fade(GameTime gameTime)
+        public void FadeUpdate(double deltaTime)
         {
-            fadeTime -= gameTime.ElapsedGameTime.TotalSeconds;
+            fadeTime -= deltaTime;
 
             if (fadeTime <= -5)
             {
@@ -118,18 +127,51 @@ namespace Project_Rioman
                 sprite = frames[2];
         }
 
+        public void LaserUpdate(Rioman player, double deltaTime)
+        {
+            if (!shooting)
+            {
+                int buffer = 10;
+
+                if (player.Hitbox.Top - buffer < location.Center.Y &&
+                    player.Hitbox.Bottom + buffer > location.Center.Y)
+                {
+                    if (FacingRight() && player.Hitbox.Right > location.Center.X &&
+                        player.Hitbox.Left < location.Center.X + range)
+                        shooting = true;
+
+                    else if (FacingLeft() && player.Hitbox.Left < location.Center.X &&
+                        player.Hitbox.Right > location.Center.X - range)
+                        shooting = true;
+                }
+                else if (player.Hitbox.Left - buffer < location.Center.X &&
+                        player.Hitbox.Right + buffer > location.Center.X)
+                {
+                    if (FacingUp() && player.Hitbox.Top < location.Center.Y &&
+                        player.Hitbox.Bottom > location.Center.Y - range)
+                        shooting = true;
+                    else if (FacingDown() && player.Hitbox.Bottom > location.Center.Y &&
+                        player.Hitbox.Top < location.Center.Y + range)
+                        shooting = true;
+                }
+            }
+            else
+            {
+                animationTime = Math.Min(animationTime + deltaTime * 500, range);
+            }
+        }
 
         public void Animate(double deltaTime)
         {
 
-            if (numFrames == 1 || type == 5)
+            if (numFrames == 1 || type == Constant.TILE_DISAPPEAR || type == Constant.TILE_LASER)
                 return;
 
-            animationtime += deltaTime;
+            animationTime += deltaTime;
 
-            if (animationtime > 0.25)
+            if (animationTime > 0.25)
             {
-                animationtime = 0;
+                animationTime = 0;
                 currentFrame += animateDir;
 
                 if (currentFrame == 0)
@@ -146,7 +188,39 @@ namespace Project_Rioman
             if (type != Constant.TILE_FUNCTION && type != Constant.TILE_IGNORE)
                 spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, sprite.Width, sprite.Height), Color.White);
 
+            if (shooting && type == Constant.TILE_LASER)
+                DrawLaser(spriteBatch);
         }
+
+        private void DrawLaser(SpriteBatch spriteBatch)
+        {
+            int dist = (int)animationTime;
+            if (FacingLeft())
+            {
+                spriteBatch.Draw(frames[1], new Vector2(location.X-dist, location.Y), new Rectangle(0, 0,
+                    dist, frames[1].Height), Color.White);
+
+            }
+        }
+
+        private Direction GetDirection(int tileType, int tileNumber)
+        {
+            if (tileType != Constant.TILE_LASER)
+                return Direction.na;
+
+            if (tileNumber == 152)
+                return Direction.right;
+            else if (tileNumber == 330)
+                return Direction.down;
+            else if (tileNumber == 331)
+                return Direction.left;
+            else if (tileNumber == 332)
+                return Direction.up;
+
+            return Direction.na;
+
+        }
+
 
         public int X { get { return location.X; } }
         public int Y { get { return location.Y; } }
@@ -154,6 +228,14 @@ namespace Project_Rioman
         public int GridY { get { return y; } }
         public int Width { get { return location.Width; } }
         public void ChangeType(int newType) { type = newType; }
+
+        public bool FacingUp() { return direction == Direction.up; }
+        public bool FacingDown() { return direction == Direction.down; }
+        public bool FacingRight() { return direction == Direction.right; }
+        public bool FacingLeft() { return direction == Direction.left; }
+        public void SetRange(int x) { range = x; }
+
+        public void SetFadeTime(double x) { fadeTime = x; }
 
         public Rectangle Top { get { return new Rectangle(location.X, location.Y, location.Width, location.Height / 2); } }
         public Rectangle Floor { get { return new Rectangle(location.X + 12, location.Y, 16, 4); } }

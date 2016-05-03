@@ -643,3 +643,9 @@ Content\Video\tiles\160-2.xnb
 Content\Video\tiles\143-1.xnb
 Content\Video\tiles\143-2.xnb
 Content\Video\tiles\143-3.xnb
+Content\Video\tiles\152-1.xnb
+Content\Video\tiles\177-1.xnb
+Content\Video\tiles\178-1.xnb
+Content\Video\tiles\330-1.xnb
+Content\Video\tiles\331-1.xnb
+Content\Video\tiles\332-1.xnb

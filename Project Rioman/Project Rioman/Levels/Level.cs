@@ -118,6 +118,7 @@ namespace Project_Rioman
             OrganizeTiles();
             TileFader();
             LadderForm();
+            LaserForm();
             ResetEnemies();
             boss.Reset();
 
@@ -183,7 +184,10 @@ namespace Project_Rioman
                 tile.Animate(deltaTime);
 
             foreach (Tile tile in tileType(Constant.TILE_DISAPPEAR))
-                tile.Fade(gameTime);
+                tile.FadeUpdate(deltaTime);
+
+            foreach (Tile tile in tileType(Constant.TILE_LASER))
+                tile.LaserUpdate(player, deltaTime);
 
             foreach (Tile tile in tileType(Constant.TILE_SOLID)) {
 
@@ -275,7 +279,7 @@ namespace Project_Rioman
             tiles = new List<List<Tile>>();
             allTiles = new List<Tile>();
 
-            for (int i = 0; i <= 6; i++)
+            for (int i = 0; i <= 7; i++)
                 tiles.Add(new List<Tile>());
 
             for (int x = 0; x <= width; x++)
@@ -306,12 +310,51 @@ namespace Project_Rioman
             }
         }
 
+        public void LaserForm()
+        {
+            foreach (Tile tile in tileType(Constant.TILE_LASER))
+            {
+                int x = tile.GridX;
+                int y = tile.GridY;
+
+                int shift = 0;
+
+                while (true)
+                {
+                    if (tile.FacingUp())
+                    {
+                        if (y - shift < 0 || !(tileGrid[x, y - shift] == null) && tileGrid[x, y - shift].type == Constant.TILE_SOLID) { }
+                        break;
+                    }
+                    else if (tile.FacingDown())
+                    {
+                        if (y + shift >= height || !(tileGrid[x, y + shift] == null) && tileGrid[x, y + shift].type == Constant.TILE_SOLID)
+                            break;
+                    }
+                    else if (tile.FacingLeft())
+                    {
+                        if (x - shift < 0 || !(tileGrid[x - shift, y] == null) && tileGrid[x - shift, y].type == Constant.TILE_SOLID)
+                            break;
+                    }
+                    else if (tile.FacingRight())
+                    {
+                        if (x + shift >= width || !(tileGrid[x + shift, y] == null) && tileGrid[x + shift, y].type == Constant.TILE_SOLID)
+                            break;
+                    }
+
+                    shift++;
+                }
+
+                tile.SetRange(shift * Constant.TILE_SIZE);
+            }
+        }
+
         public void TileFader()
         {
             int num = 0;
             foreach (Tile tile in tileType(Constant.TILE_DISAPPEAR))
             {
-                tile.fadeTime = num;
+                tile.SetFadeTime(num);
                 num++;
             }
         }
