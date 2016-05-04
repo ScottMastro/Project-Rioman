@@ -340,15 +340,15 @@ namespace Project_Rioman
         private Rectangle Right() { return new Rectangle(location.X + drawRect.Width -10, location.Y + 10, 10, drawRect.Height / 4); }
         private Rectangle Top() { return new Rectangle(location.X, location.Y - 5, drawRect.Width, 10); }
 
-        public override void DetectTileCollision(Tile tile)
+        public override void DetectTileCollision(AbstractTile tile)
         {
-            if (tile.type == 1 || tile.type == 3 && tile.isTop)
+            if (tile.Type == 1 || tile.Type == 3 && tile.IsTop)
             {
                 if (GetCollisionRect().Intersects(tile.Floor))
-                    GroundCollision(tile.location.Y);
+                    GroundCollision(tile.Location.Y);
             }
 
-            if (tile.type == 1 ||  tile.type == 4)
+            if (tile.Type == 1 ||  tile.Type == 4)
             {
                 if (Top().Intersects(tile.Bottom))
                     BottomCollision();

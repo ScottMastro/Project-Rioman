@@ -13,27 +13,20 @@ namespace Project_Rioman
         Dictionary<string, int> letters = new Dictionary<string, int>();
 
         private Color backgroundColour;
-        private Texture2D[] tileSprites = new Texture2D[Constant.NUMBER_OF_TILES + 1];
+        private Texture2D[] tileSprites = new Texture2D[TileAttributes.NUMBER_OF_TILES + 1];
         private int width;
         private int height;
         private int[,] tilePos;
         private Point startPos;
 
-        private Tile[,] tiles;
+        private AbstractTile[,] tiles;
         private List<AbstractEnemy> enemies;
         private OldPickup[] pickups = new OldPickup[10];
         private AbstractBoss boss;
 
-        public LevelLoader() { }
-
-        public void LoadLevelContent(ContentManager content)
+        public LevelLoader()
         {
-
             SetLetters();
-
-            //load level resources
-            for (int i = 1; i <= Constant.NUMBER_OF_TILES; i++)
-                tileSprites[i] = content.Load<Texture2D>("Video\\tiles\\" + i.ToString());
 
         }
 
@@ -80,7 +73,7 @@ namespace Project_Rioman
 
                 //Step2: Convert string to tiles
 
-                tiles = new Tile[width + 1, height + 1];
+                tiles = new AbstractTile[width + 1, height + 1];
                 enemies = new List<AbstractEnemy>();
 
 
@@ -107,26 +100,23 @@ namespace Project_Rioman
             }
 
             //tile is player
-            if (value == 284)
+            if (value == 284) {
                 startPos = new Point(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE - Constant.TILE_SIZE);
-
+                return;
+            }
 
             //tile is a boss
-            if (value == 286)
+            if (value == 286) {
                 boss = new BunnyMan(x, y);
-      //      if (value == 289)
-        //        bosses[5].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
-          //  if (value == 285)
+                return;
+            }
+            //      if (value == 289)
+            //        bosses[5].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
+            //  if (value == 285)
             //    bosses[3].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
 
-            int type = Constant.TileNumberToType(value);
 
-            //tile is a tile
-            if (type >= 0)
-                tiles[x, y] = new Tile(tileSprites[value], value, type, x, y, content);
-
-            if (value == 323)
-                Console.WriteLine(type);
+            tiles[x, y] = TileAttributes.CreateTile(value, x, y);
         }
 
         private void CreateEnemy(int value, int x, int y)

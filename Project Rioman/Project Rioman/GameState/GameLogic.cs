@@ -25,8 +25,6 @@ namespace Project_Rioman
 
             LevelLoader levelLoader = new LevelLoader();
 
-            levelLoader.LoadLevelContent(content);
-
             for (int i = 0; i <= 8; i++)
                 levels[i] = levelLoader.Load(i + 1, content);
 

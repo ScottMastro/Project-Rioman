@@ -140,7 +140,7 @@ namespace Project_Rioman
             //do nothing
         }
 
-        public override void DetectTileCollision(Tile tile)
+        public override void DetectTileCollision(AbstractTile tile)
         {
             //do nothing
         }

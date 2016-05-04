@@ -268,7 +268,7 @@ namespace Project_Rioman
         public abstract Rectangle Right();
 
 
-        public abstract void DetectTileCollision(Tile tile);
+        public abstract void DetectTileCollision(AbstractTile tile);
 
         public bool FacingLeft()
         {

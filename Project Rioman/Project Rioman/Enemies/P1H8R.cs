@@ -171,10 +171,10 @@ namespace Project_Rioman
         private Rectangle Bottom() { return new Rectangle(location.X + 6, location.Y + drawRect.Height - 10, drawRect.Width - 12, 10); }
 
 
-        public override void DetectTileCollision(Tile tile)
+        public override void DetectTileCollision(AbstractTile tile)
         {
 
-            if (tile.type == 1 || tile.type == 3 && tile.isTop || tile.type == 4)
+            if (tile.Type == 1 || tile.Type == 3 && tile.IsTop || tile.Type == 4)
             {
                 if (Bottom().Intersects(tile.Floor))
                     stopDownMovement = true; 

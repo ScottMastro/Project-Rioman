@@ -209,15 +209,15 @@ namespace Project_Rioman
         }
 
 
-        public override void DetectTileCollision(Tile tile)
+        public override void DetectTileCollision(AbstractTile tile)
         {
-            if (tile.type == 1 || tile.type == 3 && tile.isTop)
+            if (tile.Type == 1 || tile.Type == 3 && tile.IsTop)
             {
                 if (Feet().Intersects(tile.Floor))
-                    GroundCollision(tile.location.Y);
+                    GroundCollision(tile.Location.Y);
             }
 
-            if (tile.type == 1 || tile.type == 4)
+            if (tile.Type == 1 || tile.Type == 4)
             {
                 if (Right().Intersects(tile.Left))
                     LeftCollision();

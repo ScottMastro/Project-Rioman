@@ -104,6 +104,10 @@
     <Compile Include="Boss\AbstractBoss.cs" />
     <Compile Include="Boss\BossAttributes.cs" />
     <Compile Include="Boss\BunnyMan.cs" />
+    <Compile Include="Levels\DisappearTile.cs" />
+    <Compile Include="Levels\LaserTile.cs" />
+    <Compile Include="Levels\Tile.cs" />
+    <Compile Include="Levels\TileAttributes.cs" />
     <Compile Include="Pickups\PowerUp.cs" />
     <Compile Include="Weapons\AuroraBullet.cs" />
     <Compile Include="Weapons\BulletAttributes.cs" />
@@ -154,7 +158,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Rioman\Rioman.cs" />
-    <Compile Include="Levels\Tile.cs" />
+    <Compile Include="Levels\AbstractTile.cs" />
     <Compile Include="Weapons\ToxicBullet.cs" />
     <Compile Include="Weapons\Weapons.cs" />
   </ItemGroup>

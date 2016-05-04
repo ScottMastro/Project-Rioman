@@ -142,12 +142,12 @@ namespace Project_Rioman
             }
         }
 
-        public void PickupUpdate(Tile tile)
+        public void PickupUpdate(AbstractTile tile)
         {
             if (tile.Floor.Intersects(location))
             {
                 onground = true;
-                location.Y = tile.location.Y - location.Height + 6;
+                location.Y = tile.Location.Y - location.Height + 6;
 
                 if (type <= 9)
                     location.Y += 12;

@@ -53,11 +53,11 @@ namespace Project_Rioman
             location.Y += y;
         }
 
-        public void DetectTileCollision(Tile tile)
+        public void DetectTileCollision(AbstractTile tile)
         {
             if (!onGround)
             {
-                if (tile.type == 1 || tile.type == 3 && tile.isTop)
+                if (tile.Type == 1 || tile.Type == 3 && tile.IsTop)
                     if (tile.Top.Intersects(GetCollisionRect()))
                         onGround = true;
 

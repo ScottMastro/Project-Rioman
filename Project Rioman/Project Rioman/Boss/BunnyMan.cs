@@ -384,12 +384,12 @@ namespace Project_Rioman
             return index;
         }
 
-        public override void DetectTileCollision(Tile tile)
+        public override void DetectTileCollision(AbstractTile tile)
         {
-            if (tile.type == 1)
+            if (tile.Type == 1)
             {
                 if (Feet().Intersects(tile.Floor))
-                    Stand(tile.location.Y);
+                    Stand(tile.Location.Y);
             }
         }
 

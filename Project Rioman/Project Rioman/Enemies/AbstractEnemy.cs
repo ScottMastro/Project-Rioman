@@ -235,7 +235,7 @@ namespace Project_Rioman
 
         public abstract Rectangle GetCollisionRect();
 
-        public abstract void DetectTileCollision(Tile tile);
+        public abstract void DetectTileCollision(AbstractTile tile);
 
         public bool Offscreen(Viewport viewport)
         {
