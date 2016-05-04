@@ -649,3 +649,7 @@ Content\Video\tiles\178-1.xnb
 Content\Video\tiles\330-1.xnb
 Content\Video\tiles\331-1.xnb
 Content\Video\tiles\332-1.xnb
+Content\Video\tiles\152-2.xnb
+Content\Video\tiles\330-2.xnb
+Content\Video\tiles\331-2.xnb
+Content\Video\tiles\332-2.xnb

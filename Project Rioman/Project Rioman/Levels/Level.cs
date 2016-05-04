@@ -317,8 +317,8 @@ namespace Project_Rioman
                 {
                     if (tile.FacingUp())
                     {
-                        if (y - shift < 0 || !(tileGrid[x, y - shift] == null) && tileGrid[x, y - shift].Type == Constant.TILE_SOLID) { }
-                        break;
+                        if (y - shift < 0 || !(tileGrid[x, y - shift] == null) && tileGrid[x, y - shift].Type == Constant.TILE_SOLID)
+                            break;
                     }
                     else if (tile.FacingDown())
                     {
@@ -339,7 +339,7 @@ namespace Project_Rioman
                     shift++;
                 }
 
-                tile.SetRange(shift * Constant.TILE_SIZE);
+                tile.SetRange((shift-1) * Constant.TILE_SIZE);
             }
         }
 
@@ -413,6 +413,18 @@ namespace Project_Rioman
                 }
             }
 
+            foreach (AbstractTile tile in tileType(Constant.TILE_KILL))
+            {
+                if (player.Hitbox.Intersects(tile.Center) && !player.IsInvincible())
+                    KillPlayer(player);
+            }
+
+            foreach (LaserTile tile in tileType(Constant.TILE_LASER))
+            {
+                if (player.Hitbox.Intersects(tile.GetLaserRect()) && !player.IsInvincible())
+                    KillPlayer(player);
+            }
+
             //open door
             foreach (AbstractTile tile in tileType(Constant.TILE_DOOR))
             {
@@ -460,11 +472,14 @@ namespace Project_Rioman
         public void CheckDeath(Viewport viewportrect, Rioman player)
         {
             if (player.Location.Y > viewportrect.Height + player.Location.Height + 10 || StatusBar.GetHealth() <= 0)
-            {
-                lifechange = -1;
-                player.Die();
-                respawn = true;
-            }
+                KillPlayer(player);
+        }
+
+        private void KillPlayer(Rioman player)
+        {
+            lifechange = -1;
+            player.Die();
+            respawn = true;
         }
 
         public bool CheckClimb(Rioman player, int climbloc, bool up, ref Rectangle location)
