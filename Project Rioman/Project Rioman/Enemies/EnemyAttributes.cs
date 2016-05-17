@@ -124,7 +124,7 @@ namespace Project_Rioman
             damage.Add(Constant.MMUSHMECH, 4);
             damage.Add(Constant.TMUSHMECH, 7);
             damage.Add(Constant.CHANCEBOMB, 2);
-            damage.Add(Constant.ZARROCCLONE, 2);
+            damage.Add(Constant.ZARROCCLONE, 4);
             damage.Add(Constant.DEUXKAMA, 5);
             damage.Add(Constant.SERVERBOT, 4);
             damage.Add(Constant.MEGAHOPPER, 5);

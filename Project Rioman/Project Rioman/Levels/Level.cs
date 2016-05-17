@@ -421,7 +421,7 @@ namespace Project_Rioman
 
             foreach (LaserTile tile in tileType(Constant.TILE_LASER))
             {
-                if (player.Hitbox.Intersects(tile.GetLaserRect()) && !player.IsInvincible())
+                if (player.Hitbox.Intersects(tile.GetLaserRect()))
                     KillPlayer(player);
             }
 

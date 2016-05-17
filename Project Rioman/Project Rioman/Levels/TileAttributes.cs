@@ -240,7 +240,7 @@ namespace Project_Rioman
             tileKey[150] = 4;
             tileKey[151] = 3;
             tileKey[152] = 7;
-            tileKey[153] = 0;
+            tileKey[153] = 1;
             tileKey[154] = -1;
             tileKey[155] = -1;
             tileKey[156] = -1;
