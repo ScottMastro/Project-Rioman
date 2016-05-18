@@ -29,7 +29,7 @@ namespace Project_Rioman
 
         private bool invincible;
         private double invincibleTime;
-        private const double MAX_INVINCIBLE_TIME = 2;
+        private const double MAX_INVINCIBLE_TIME = 1;
 
         private bool climbTop;
         private bool stopClimbingUp;

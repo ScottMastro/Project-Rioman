@@ -5939,7 +5939,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterman1.xnb</Output>
-      <Time>2016-05-16T23:20:34.0641608-04:00</Time>
+      <Time>2016-05-17T22:49:07.9416384-04:00</Time>
     </Item>
     <Item>
       <Source>Video\bosses\posterman2.png</Source>
@@ -5948,7 +5948,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterman2.xnb</Output>
-      <Time>2016-05-16T23:22:42.7814927-04:00</Time>
+      <Time>2016-05-17T22:48:58.0510554-04:00</Time>
     </Item>
     <Item>
       <Source>Video\bosses\posterman3.png</Source>
@@ -5976,6 +5976,24 @@
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\pickups\text6.xnb</Output>
       <Time>2016-05-17T21:15:34.0299333-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\bosses\posterbullet1.png</Source>
+      <Name>Video\bosses\posterbullet1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterbullet1.xnb</Output>
+      <Time>2016-05-17T22:57:21.5927648-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\bosses\posterbullet2.png</Source>
+      <Name>Video\bosses\posterbullet2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterbullet2.xnb</Output>
+      <Time>2016-05-17T22:57:54.6082108-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
