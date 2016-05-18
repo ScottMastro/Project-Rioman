@@ -797,6 +797,12 @@ namespace WindowsFormsApplication1
                 pictureBox23.Image = Other[31];
                 pictureBox24.Image = Other[32];
                 pictureBox25.Image = Other[33];
+                pictureBox26.Image = Other[34];
+                pictureBox27.Image = Other[35];
+                pictureBox28.Image = Other[36];
+                pictureBox29.Image = Other[37];
+                pictureBox30.Image = Other[38];
+                pictureBox31.Image = Other[39];
 
             }
 
@@ -1068,7 +1074,7 @@ namespace WindowsFormsApplication1
             Characters = new Image[14];
             Enemies = new Image[22];
             Scroller = new Image[15];
-            Other = new Image[36];
+            Other = new Image[40];
 
             for (int i = 1; i <= 38; i++)
             {
@@ -1214,7 +1220,7 @@ namespace WindowsFormsApplication1
 
             }
 
-            for (int i = 1; i <= 33; i++)
+            for (int i = 1; i <= 39; i++)
             {
                 if (File.Exists(Application.StartupPath + @"/tiles/other/other" + i.ToString() + ".png"))
                 {

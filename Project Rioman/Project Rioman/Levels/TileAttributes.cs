@@ -10,7 +10,7 @@ namespace Project_Rioman
     static class TileAttributes
     {
         private static int[] tileKey;
-        public static int NUMBER_OF_TILES = 356;
+        public static int NUMBER_OF_TILES = 360;
 
         private static Dictionary<int, Texture2D[]> tileSprites;
 
@@ -442,9 +442,12 @@ namespace Project_Rioman
             tileKey[352] = 1;
             tileKey[353] = 1;
             tileKey[354] = 1;
-            tileKey[355] = 1;
-            tileKey[356] = 1;
-
+            tileKey[355] = 0;
+            tileKey[356] = 0;
+            tileKey[357] = 0;
+            tileKey[358] = 0;
+            tileKey[359] = 0;
+            tileKey[360] = 0;
 
         }
     }

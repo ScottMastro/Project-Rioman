@@ -48,7 +48,7 @@ namespace Project_Rioman
         public AbstractBoss(int type, int x, int y)
         {
 
-            pose = BossAttributes.GetSprites(Constant.BUNNYMAN)[0];
+            pose = BossAttributes.GetSprites(type)[0];
             this.type = type;
 
             originalLocation = new Rectangle(x * Constant.TILE_SIZE, (y + 1) * Constant.TILE_SIZE, 0, 0);

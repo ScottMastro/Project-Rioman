@@ -35,6 +35,8 @@ namespace Project_Rioman
 
             sprites.Add(99, content.Load<Texture2D>("Video\\pickups\\textbg"));
             sprites.Add(100, content.Load<Texture2D>("Video\\pickups\\text0"));
+            sprites.Add(106, content.Load<Texture2D>("Video\\pickups\\text6"));
+
             sprites.Add(109, content.Load<Texture2D>("Video\\pickups\\text9"));
 
             riomanStand = content.Load<Texture2D>("Video\\rioman\\riomanstand");

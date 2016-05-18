@@ -110,6 +110,11 @@ namespace Project_Rioman
                 boss = new BunnyMan(x, y);
                 return;
             }
+            else if (value == 292)
+            {
+                boss = new PosterMan(x, y);
+                return;
+            }
             //      if (value == 289)
             //        bosses[5].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
             //  if (value == 285)
