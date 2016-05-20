@@ -368,7 +368,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\114.xnb</Output>
-      <Time>2016-05-16T00:14:43.9566169-04:00</Time>
+      <Time>2016-05-19T23:50:16.0370519-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\115.png</Source>
@@ -377,7 +377,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\115.xnb</Output>
-      <Time>2016-05-16T00:14:43.9566169-04:00</Time>
+      <Time>2016-05-19T23:50:30.6604748-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\116.png</Source>
@@ -386,7 +386,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\116.xnb</Output>
-      <Time>2016-05-16T00:14:43.957111-04:00</Time>
+      <Time>2016-05-19T23:50:00.9069988-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\117.png</Source>
@@ -395,7 +395,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\117.xnb</Output>
-      <Time>2016-05-16T00:14:43.9576115-04:00</Time>
+      <Time>2016-05-19T23:50:58.6103299-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\118.png</Source>
@@ -404,7 +404,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\118.xnb</Output>
-      <Time>2016-05-16T00:14:43.9591137-04:00</Time>
+      <Time>2016-05-19T23:49:21.6851882-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\119.png</Source>
@@ -413,7 +413,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\119.xnb</Output>
-      <Time>2016-05-16T00:14:43.9596178-04:00</Time>
+      <Time>2016-05-19T23:51:13.5199065-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\12.png</Source>
@@ -431,7 +431,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\120.xnb</Output>
-      <Time>2016-05-16T00:14:43.9626177-04:00</Time>
+      <Time>2016-05-19T23:48:25.2770986-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\121.png</Source>
@@ -440,7 +440,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\121.xnb</Output>
-      <Time>2016-05-16T00:14:43.9631181-04:00</Time>
+      <Time>2016-05-19T23:48:16.9296348-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\122.png</Source>
@@ -449,7 +449,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\122.xnb</Output>
-      <Time>2016-05-16T00:14:43.9636179-04:00</Time>
+      <Time>2016-05-19T23:47:56.4650355-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\123.png</Source>
@@ -458,7 +458,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\123.xnb</Output>
-      <Time>2016-05-16T00:14:43.9641183-04:00</Time>
+      <Time>2016-05-19T23:47:39.7621962-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\124.png</Source>
@@ -467,7 +467,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\124.xnb</Output>
-      <Time>2016-05-16T00:14:43.9646183-04:00</Time>
+      <Time>2016-05-19T23:46:47.275378-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\125.png</Source>
@@ -476,7 +476,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\125.xnb</Output>
-      <Time>2016-05-16T00:14:43.9651198-04:00</Time>
+      <Time>2016-05-19T23:46:40.5959243-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\126.png</Source>
@@ -485,7 +485,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\126.xnb</Output>
-      <Time>2016-05-16T00:14:43.967122-04:00</Time>
+      <Time>2016-05-19T23:46:34.4564117-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\127.png</Source>
@@ -494,7 +494,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\127.xnb</Output>
-      <Time>2016-05-16T00:14:43.9681235-04:00</Time>
+      <Time>2016-05-19T23:46:29.365038-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\128.png</Source>
@@ -503,7 +503,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\128.xnb</Output>
-      <Time>2016-05-16T00:14:43.9691247-04:00</Time>
+      <Time>2016-05-19T23:46:21.0854968-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\129.png</Source>
@@ -512,7 +512,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\129.xnb</Output>
-      <Time>2016-05-16T00:14:43.9691247-04:00</Time>
+      <Time>2016-05-19T23:46:13.7681198-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\13.png</Source>
@@ -530,7 +530,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\130.xnb</Output>
-      <Time>2016-05-16T00:14:43.9721272-04:00</Time>
+      <Time>2016-05-19T23:46:06.2151884-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\131.png</Source>
@@ -539,7 +539,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\131.xnb</Output>
-      <Time>2016-05-16T00:14:43.9721272-04:00</Time>
+      <Time>2016-05-19T23:52:22.8403286-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\132.png</Source>
@@ -548,7 +548,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\132.xnb</Output>
-      <Time>2016-05-16T00:14:43.9731297-04:00</Time>
+      <Time>2016-05-19T23:52:59.4764444-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\133.png</Source>
@@ -557,7 +557,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\133.xnb</Output>
-      <Time>2016-05-16T00:14:43.9741304-04:00</Time>
+      <Time>2016-05-19T23:52:31.5526911-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\134.png</Source>
@@ -566,7 +566,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\134.xnb</Output>
-      <Time>2016-05-16T00:14:43.9751362-04:00</Time>
+      <Time>2016-05-19T23:52:51.0025486-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\135.png</Source>
@@ -575,7 +575,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\135.xnb</Output>
-      <Time>2016-05-16T00:14:43.9751362-04:00</Time>
+      <Time>2016-05-19T23:53:32.5570379-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\136.png</Source>
@@ -584,7 +584,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\136.xnb</Output>
-      <Time>2016-05-16T00:14:43.9761321-04:00</Time>
+      <Time>2016-05-19T23:53:14.4884278-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\137.png</Source>
@@ -593,7 +593,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\137.xnb</Output>
-      <Time>2016-05-16T00:14:43.9761321-04:00</Time>
+      <Time>2016-05-19T23:53:21.4882137-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\138.png</Source>
@@ -5354,7 +5354,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\130-1.xnb</Output>
-      <Time>2016-05-16T00:14:43.9711275-04:00</Time>
+      <Time>2016-05-19T23:52:05.2425791-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\130-2.bmp</Source>
@@ -5363,7 +5363,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\130-2.xnb</Output>
-      <Time>2016-05-16T00:14:43.9721272-04:00</Time>
+      <Time>2016-05-19T23:52:13.5600114-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\160-1.png</Source>
