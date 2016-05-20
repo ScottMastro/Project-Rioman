@@ -14,9 +14,18 @@ namespace Project_Rioman
         private Texture2D bullet1;
         private Texture2D bullet2;
 
-        private const int BULLET1_DAMAGE = 5;
-        private const int BULLET2_DAMAGE = 4;
+        private const int BULLET1_DAMAGE = 7;
+        private const int BULLET2_DAMAGE = 6;
 
+        //out of 1000
+        private const int JUMP_PROB = 6;
+
+        private const int NUM_JUMP_BULLETS = 10;
+
+
+        private int shotsSinceLastJump;
+
+        private double jumpTime = 0;
         private double shootTime;
         private double betweenShotTime;
         private double standTime;
@@ -25,12 +34,15 @@ namespace Project_Rioman
         private int frame;
 
         private Point netMovement;
+        private const int JUMP_HEIGHT = 200;
         private const int MAX_LEFT = -260;
         private const int MAX_RIGHT = 210;
 
         private const int MOVE_SPEED = 6;
 
         private Bullet[] bullets;
+
+        private Random r; 
 
         struct Bullet
         {
@@ -41,19 +53,19 @@ namespace Project_Rioman
             public int type;
             public int x;
             public int y;
-            private int speed;
+            private int speedX;
+            private int speedY;
             private Texture2D sprite;
             private double frameTime;
             private double aliveTime;
             private int frame;
             private int direction;
-            private float floatAngle;
+            private float rotation;
 
-            public void MakeBullet(Texture2D sprite, int type, int x, int y, int speed, bool facingLeft)
+            public void MakeBullet(Texture2D sprite, int type, int x, int y, int speedX, int speedY, float rotation, bool facingLeft)
             {
                 frame = 0;
                 frameTime = 0;
-                floatAngle = 0;
                 aliveTime = 0;
 
                 isAlive = true;
@@ -61,7 +73,9 @@ namespace Project_Rioman
                 this.type = type;
                 this.x = x;
                 this.y = y;
-                this.speed = speed;
+                this.speedX = speedX;
+                this.speedY = speedY;
+                this.rotation = rotation;
                 direction = facingLeft ? -1 : 1;
             }
 
@@ -88,7 +102,13 @@ namespace Project_Rioman
                         }
                     }
 
-                    x += speed * direction;
+                    x += speedX * direction;
+
+                    if (type == 2)
+                    {
+                        y += speedY;
+
+                    }
                 }
             }
 
@@ -100,7 +120,7 @@ namespace Project_Rioman
                     float size = (type == 1) ? (float)Math.Min(aliveTime * 4, 1) : 1f;
                     Rectangle drawRect = new Rectangle(frame * boxWidth, 0, boxWidth, sprite.Height);
 
-                    spriteBatch.Draw(sprite, new Vector2(x, y), drawRect, Color.White, 0f, new Vector2(), size,
+                    spriteBatch.Draw(sprite, new Vector2(x, y), drawRect, Color.White, rotation, new Vector2(), size,
                         direction < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
                 }
@@ -148,10 +168,18 @@ namespace Project_Rioman
             frame = 0;
 
             betweenShotTime = 0;
+            jumpTime = 0;
             shootTime = 0;
             animateTime = 0;
             standTime = 0;
             netMovement = new Point(0, 0);
+            r = new Random();
+            shotsSinceLastJump = 0;
+
+            state = State.standing;
+            shooting = false;
+            sprite = defaultSprite;
+            drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
         }
 
         protected override void SubUpdate(Rioman player, AbstractBullet[] rioBullets, double deltaTime, Viewport viewport)
@@ -172,7 +200,7 @@ namespace Project_Rioman
                     if(betweenShotTime > 0.21)
                     {
                         betweenShotTime = 0;
-                        ShootBullet(1);
+                        ShootBullet(1, 0f);
                     }
 
                     if (shootTime > 1)
@@ -183,14 +211,59 @@ namespace Project_Rioman
                 else
                 {
                     standTime += deltaTime;
-                    if (standTime > 0.6)
+                    if (standTime > 0.4)
                         Run();
                 }
             }
 
-            if (IsRunning())
+            if (IsJumping())
             {
-                if (FacingLeft())
+                if(-netMovement.Y < JUMP_HEIGHT)
+                    MoveThis(0, -MOVE_SPEED);
+                else
+                {
+                    drawRect = new Rectangle(sprite.Width / 2, 0, sprite.Width / 2, sprite.Height);
+
+
+                    shootTime += deltaTime;
+                    betweenShotTime += deltaTime;
+
+                    if (shootTime > 1.5)
+                        Fall();
+
+                    if(betweenShotTime > 1.5 / NUM_JUMP_BULLETS)
+                    {
+                        betweenShotTime = 0;
+
+                        int bullet = (int)Math.Round(shootTime / (1.5 / NUM_JUMP_BULLETS)) - 1;
+                        float rotation = ((float)bullet / NUM_JUMP_BULLETS) * MathHelper.Pi;
+                        ShootBullet(2, rotation + MathHelper.PiOver4);
+
+                    }
+
+                }
+
+            }
+
+            if (IsFalling())
+            {
+                if (netMovement.Y > 0)
+                    Stand(player);
+                else
+                    MoveThis(0, MOVE_SPEED);
+            }
+
+                if (IsRunning())
+            {
+
+                jumpTime += deltaTime;
+
+                if (netMovement.X <= 3 && netMovement.X >= -3 && shotsSinceLastJump >= 2)
+                    Jump(player);
+                else if (jumpTime > 1.5 && r.Next(1000) < JUMP_PROB)
+                    Jump(player);
+                
+                else if (FacingLeft())
                 {
                     MoveThis(-MOVE_SPEED, 0);
                     if (netMovement.X < MAX_LEFT)
@@ -232,14 +305,42 @@ namespace Project_Rioman
 
         private void Shoot()
         {
+            if (!IsJumping())
+                shotsSinceLastJump++;
+
             shooting = true;
             shootTime = 0;
             betweenShotTime = 0;
         }
-        
+
+        private void Jump(Rioman player)
+        {
+            FacePlayer(player);
+            shooting = false;
+            state = State.jumping;
+            jumpTime = 0;
+            shootTime = 0;
+
+            sprite = jumpSprite;
+            drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
+            shotsSinceLastJump = 0;
+
+        }
+
+        private void Fall()
+        {
+            shooting = false;
+            state = State.falling;
+            shootTime = 0;
+
+            sprite = jumpSprite;
+            drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
+        }
+
+
         private void Stand(Rioman player)
         {
-
+            MoveThis(0, -netMovement.Y);
             FacePlayer(player);
             standTime = 0;
             state = State.standing;
@@ -268,7 +369,7 @@ namespace Project_Rioman
 
         }
 
-        private void ShootBullet(int type)
+        private void ShootBullet(int type, float rotation)
         {
             int index1 = -1;
             int index2 = -1;
@@ -292,15 +393,22 @@ namespace Project_Rioman
                 return;
 
             if (type == 1)
-                bullets[index1].MakeBullet(bullet1, type, location.Center.X, location.Center.Y - 14, 8, true);
+                bullets[index1].MakeBullet(bullet1, type, location.Center.X, location.Center.Y - 14, 8, 0, 0f, true);
             if (type == 2)
-                bullets[index1].MakeBullet(bullet2, type, location.Center.X, location.Center.Y , 8, FacingLeft());
+            {
+
+                int speedX = (int)(Math.Cos(rotation) * 8);
+                int speedY = (int)(Math.Sin(rotation) * 8);
+
+                bullets[index1].MakeBullet(bullet2, type, location.Center.X, location.Center.Y, speedX, speedY, rotation, false);
+
+            }
 
             if (index2 < 0)
                 return;
 
             if (type == 1)
-                bullets[index2].MakeBullet(bullet1, type, location.Center.X, location.Center.Y - 14, 8, false);
+                bullets[index2].MakeBullet(bullet1, type, location.Center.X, location.Center.Y - 14, 8, 0, 0f, false);
 
         }
 

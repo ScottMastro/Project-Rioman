@@ -43,7 +43,7 @@ namespace Project_Rioman
         protected bool wasAlive;
 
         protected int health;
-        protected const int TOUCH_DAMAGE = 4;
+        protected const int TOUCH_DAMAGE = 6;
 
         public AbstractBoss(int type, int x, int y)
         {
