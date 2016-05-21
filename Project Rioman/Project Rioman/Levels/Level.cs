@@ -273,16 +273,23 @@ namespace Project_Rioman
             tiles = new List<List<AbstractTile>>();
             allTiles = new List<AbstractTile>();
 
-            for (int i = 0; i <= 7; i++)
+            for (int i = 0; i <= 8; i++)
                 tiles.Add(new List<AbstractTile>());
 
             for (int x = 0; x <= width; x++)
                 for (int y = 0; y <= height; y++)
                 {
-                    if (tileGrid[x, y] != null)
+
+                    AbstractTile t = tileGrid[x, y];
+
+                    if (t != null)
                     {
-                        tiles[tileGrid[x, y].Type].Add(tileGrid[x, y]);
-                        allTiles.Add(tileGrid[x, y]);
+
+                        if (t.Type == 8)
+                            tiles[1].Add(t);
+
+                        tiles[t.Type].Add(t);
+                        allTiles.Add(t);
                     }
                 }
         }
@@ -443,7 +450,7 @@ namespace Project_Rioman
             foreach (AbstractTile tile in allTiles) {
 
                 if (tile.Type == 1 || (player.IsInvincible() && tile.Type == 2) || 
-                    tile.Type == 4 || tile.Type == 5 || tile.Type == 3 && tile.IsTop)
+                    tile.Type == 4 || tile.Type == 5 || tile.Type == 3 && tile.IsTop || tile.Type == 8)
                 {
 
                     if (!player.IsJumping() && player.Feet.Intersects(tile.Floor) &&

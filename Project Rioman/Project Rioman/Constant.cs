@@ -107,6 +107,8 @@ namespace Project_Rioman
         public static int TILE_DOOR = 4;
         public static int TILE_DISAPPEAR = 5;
         public static int TILE_FUNCTION = 6;
-        public static int TILE_LASER = 7;       
+        public static int TILE_LASER = 7;
+        public static int TILE_FALL = 8;
+
     }
 }

@@ -764,6 +764,10 @@ namespace WindowsFormsApplication1
                 pictureBox24.Image = LurkerMan[24];
                 pictureBox25.Image = Other[20];
                 pictureBox26.Image = Other[21];
+                pictureBox27.Image = Other[40];
+                pictureBox28.Image = Other[41];
+                pictureBox29.Image = Other[42];
+                pictureBox30.Image = Other[43];
             }
 
             if (type == "PM")
@@ -1074,7 +1078,7 @@ namespace WindowsFormsApplication1
             Characters = new Image[14];
             Enemies = new Image[22];
             Scroller = new Image[15];
-            Other = new Image[40];
+            Other = new Image[44];
 
             for (int i = 1; i <= 38; i++)
             {
@@ -1220,7 +1224,7 @@ namespace WindowsFormsApplication1
 
             }
 
-            for (int i = 1; i <= 39; i++)
+            for (int i = 1; i <= 43; i++)
             {
                 if (File.Exists(Application.StartupPath + @"/tiles/other/other" + i.ToString() + ".png"))
                 {

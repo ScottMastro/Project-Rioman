@@ -249,7 +249,12 @@ namespace Project_Rioman
 
         }
 
-
+        public void MoveWithGround(int x, int y)
+        {
+            if (state.Grounded())
+                Move(x, y);    
+        }
+        
         public void Hit(int damage)
         {
             if (!IsInvincible() && !state.IsLurking())

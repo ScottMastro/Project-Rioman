@@ -58,7 +58,6 @@ Content\Video\tiles\129.xnb
 Content\Video\tiles\13.xnb
 Content\Video\tiles\130.xnb
 Content\Video\tiles\131.xnb
-Content\Video\tiles\132.xnb
 Content\Video\tiles\133.xnb
 Content\Video\tiles\134.xnb
 Content\Video\tiles\135.xnb
@@ -664,3 +663,8 @@ Content\Video\bosses\postermanpose.xnb
 Content\Video\pickups\text6.xnb
 Content\Video\bosses\posterbullet1.xnb
 Content\Video\bosses\posterbullet2.xnb
+Content\Video\tiles\361.xnb
+Content\Video\tiles\362.xnb
+Content\Video\tiles\363.xnb
+Content\Video\tiles\364.xnb
+Content\Video\tiles\132.xnb

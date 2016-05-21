@@ -2547,3 +2547,7 @@ C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debu
 C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\pickups\text6.xnb
 C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterbullet1.xnb
 C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterbullet2.xnb
+C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\361.xnb
+C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\362.xnb
+C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\363.xnb
+C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\364.xnb

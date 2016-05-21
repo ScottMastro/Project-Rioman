@@ -10,7 +10,7 @@ namespace Project_Rioman
     static class TileAttributes
     {
         private static int[] tileKey;
-        public static int NUMBER_OF_TILES = 360;
+        public static int NUMBER_OF_TILES = 364;
 
         private static Dictionary<int, Texture2D[]> tileSprites;
 
@@ -20,10 +20,13 @@ namespace Project_Rioman
             if (tileKey[ID] == Constant.TILE_IGNORE)
                 return null;
 
-            if (tileKey[ID] == Constant.TILE_LASER)
+            else if (tileKey[ID] == Constant.TILE_FALL)
+                return new FallTile(ID, x, y);
+
+            else if (tileKey[ID] == Constant.TILE_LASER)
                 return new LaserTile(ID, x, y);
 
-            if (tileKey[ID] == Constant.TILE_DISAPPEAR)
+            else if (tileKey[ID] == Constant.TILE_DISAPPEAR)
                 return new DisappearTile(ID, x, y);
 
             return new Tile(ID, x, y);
@@ -220,7 +223,7 @@ namespace Project_Rioman
             tileKey[130] = 5;
             tileKey[131] = 1;
             tileKey[132] = 1;
-            tileKey[133] = 1;
+            tileKey[133] = 8;
             tileKey[134] = 1;
             tileKey[135] = 1;
             tileKey[136] = 1;
@@ -428,8 +431,8 @@ namespace Project_Rioman
             tileKey[338] = -1;
             tileKey[339] = -1;
             tileKey[340] = -1;
-            tileKey[341] = -1;
-            tileKey[342] = -1;
+            tileKey[341] = 1;
+            tileKey[342] = 1;
             tileKey[343] = -1;
             tileKey[344] = -1;
             tileKey[345] = -1;
@@ -448,7 +451,10 @@ namespace Project_Rioman
             tileKey[358] = 0;
             tileKey[359] = 0;
             tileKey[360] = 0;
-
+            tileKey[361] = 1;
+            tileKey[362] = 1;
+            tileKey[363] = 1;
+            tileKey[364] = 1;
         }
     }
 }
