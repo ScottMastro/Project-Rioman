@@ -768,6 +768,15 @@ namespace WindowsFormsApplication1
                 pictureBox28.Image = Other[41];
                 pictureBox29.Image = Other[42];
                 pictureBox30.Image = Other[43];
+
+                pictureBox31.Image = Other[44];
+                pictureBox32.Image = Other[45];
+                pictureBox33.Image = Other[46];
+                pictureBox34.Image = Other[47];
+
+                pictureBox35.Image = Other[48];
+                pictureBox36.Image = Other[49];
+                pictureBox37.Image = Other[50];
             }
 
             if (type == "PM")
@@ -1078,7 +1087,7 @@ namespace WindowsFormsApplication1
             Characters = new Image[14];
             Enemies = new Image[22];
             Scroller = new Image[15];
-            Other = new Image[44];
+            Other = new Image[200];
 
             for (int i = 1; i <= 38; i++)
             {
@@ -1224,7 +1233,7 @@ namespace WindowsFormsApplication1
 
             }
 
-            for (int i = 1; i <= 43; i++)
+            for (int i = 1; i <= 50; i++)
             {
                 if (File.Exists(Application.StartupPath + @"/tiles/other/other" + i.ToString() + ".png"))
                 {

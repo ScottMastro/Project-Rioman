@@ -10,7 +10,7 @@ namespace Project_Rioman
     static class TileAttributes
     {
         private static int[] tileKey;
-        public static int NUMBER_OF_TILES = 364;
+        public static int NUMBER_OF_TILES = 371;
 
         private static Dictionary<int, Texture2D[]> tileSprites;
 
@@ -22,6 +22,16 @@ namespace Project_Rioman
 
             else if (tileKey[ID] == Constant.TILE_FALL)
                 return new FallTile(ID, x, y);
+
+            else if (tileKey[ID] == Constant.TILE_CONVEYOR)
+            {
+                int dir = 1;
+
+                if (ID >= 365 && ID <= 367)
+                    dir = -1;
+
+                return new ConveyorTile(ID, x, y, dir);
+            }
 
             else if (tileKey[ID] == Constant.TILE_LASER)
                 return new LaserTile(ID, x, y);
@@ -455,6 +465,13 @@ namespace Project_Rioman
             tileKey[362] = 1;
             tileKey[363] = 1;
             tileKey[364] = 1;
+            tileKey[365] = 9;
+            tileKey[366] = 9;
+            tileKey[367] = 9;
+            tileKey[368] = 1;
+            tileKey[369] = 9;
+            tileKey[370] = 9;
+            tileKey[371] = 9;
         }
     }
 }

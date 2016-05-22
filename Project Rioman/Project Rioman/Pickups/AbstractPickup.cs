@@ -57,9 +57,8 @@ namespace Project_Rioman
         {
             if (!onGround)
             {
-                if (tile.Type == 1 || tile.Type == 3 && tile.IsTop)
-                    if (tile.Top.Intersects(GetCollisionRect()))
-                        onGround = true;
+                if (tile.Top.Intersects(GetCollisionRect()))
+                    onGround = true;
 
             }
 

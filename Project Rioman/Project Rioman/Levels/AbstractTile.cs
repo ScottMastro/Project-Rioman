@@ -16,7 +16,8 @@ namespace Project_Rioman
     //type 5 = disappearing
     //type 6 = functional
     //type 7 = laser
-    //type 7 = falling
+    //type 8 = falling
+    //type 9 = conveyer
 
 
     abstract class AbstractTile

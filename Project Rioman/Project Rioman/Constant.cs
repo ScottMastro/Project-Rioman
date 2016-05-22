@@ -109,6 +109,6 @@ namespace Project_Rioman
         public static int TILE_FUNCTION = 6;
         public static int TILE_LASER = 7;
         public static int TILE_FALL = 8;
-
+        public static int TILE_CONVEYOR = 9;
     }
 }

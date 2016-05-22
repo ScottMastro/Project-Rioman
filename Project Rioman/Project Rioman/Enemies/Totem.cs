@@ -243,10 +243,11 @@ namespace Project_Rioman
             totems = new TotemPart[numberOfTotems];
             bullets = new TotemBullet[numberOfTotems * 2];
 
+            Random r = new Random();
             for (int i = 0; i <= numberOfTotems - 1; i++)
-                totems[i].Init(new Random().Next(0, 5),
+                totems[i].Init(r.Next(0, 5),
                     location.X, location.Y + (numberOfTotems - i - 1) * drawRect.Height,
-                    sprite, new Random().Next(0, 100) / 10.0);
+                    sprite, r.Next(0, 100) / 10.0);
         }
 
 

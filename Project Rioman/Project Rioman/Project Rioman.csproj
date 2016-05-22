@@ -106,6 +106,7 @@
     <Compile Include="Boss\BunnyMan.cs" />
     <Compile Include="Boss\PosterMan.cs" />
     <Compile Include="Levels\DisappearTile.cs" />
+    <Compile Include="Levels\ConveyorTile.cs" />
     <Compile Include="Levels\FallTile.cs" />
     <Compile Include="Levels\LaserTile.cs" />
     <Compile Include="Levels\Tile.cs" />

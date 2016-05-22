@@ -273,7 +273,7 @@ namespace Project_Rioman
             tiles = new List<List<AbstractTile>>();
             allTiles = new List<AbstractTile>();
 
-            for (int i = 0; i <= 8; i++)
+            for (int i = 0; i <= 9; i++)
                 tiles.Add(new List<AbstractTile>());
 
             for (int x = 0; x <= width; x++)
@@ -285,7 +285,7 @@ namespace Project_Rioman
                     if (t != null)
                     {
 
-                        if (t.Type == 8)
+                        if (t.Type == 8 || t.Type == 9)
                             tiles[1].Add(t);
 
                         tiles[t.Type].Add(t);
@@ -449,8 +449,9 @@ namespace Project_Rioman
 
             foreach (AbstractTile tile in allTiles) {
 
-                if (tile.Type == 1 || (player.IsInvincible() && tile.Type == 2) || 
-                    tile.Type == 4 || tile.Type == 5 || tile.Type == 3 && tile.IsTop || tile.Type == 8)
+                if (tile.Type == 1 || (player.IsInvincible() && tile.Type == 2) ||
+                    tile.Type == 4 || tile.Type == 5 || tile.Type == 3 && tile.IsTop
+                    || tile.Type == 8 || tile.Type == 9)
                 {
 
                     if (!player.IsJumping() && player.Feet.Intersects(tile.Floor) &&
@@ -1001,7 +1002,7 @@ namespace Project_Rioman
         private void StartScroll(int magnitudeX, int magnitudeY, Viewport viewport)
         {
             scrollAmountX = (viewport.Width - Constant.TILE_SIZE / 2) * Math.Abs(magnitudeX);
-            scrollAmountY = (viewport.Height - Constant.TILE_SIZE / 2) * Math.Abs(magnitudeY);
+            scrollAmountY = (viewport.Height - Constant.TILE_SIZE / 2) * Math.Abs(magnitudeY) + 14;
             isScrolling = true;
             scrollSpeedX = magnitudeX * SCROLL_SPEED;
             scrollSpeedY = magnitudeY * SCROLL_SPEED;
