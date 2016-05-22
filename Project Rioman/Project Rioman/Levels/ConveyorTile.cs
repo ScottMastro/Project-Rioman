@@ -13,7 +13,7 @@ namespace Project_Rioman
     {
 
         private int direction;
-        private const int MOVE_SPEED = 1;
+        private const int MOVE_SPEED = 2;
 
 
         public ConveyorTile(int ID, int x, int y, int dir) : base(ID, x, y)
@@ -27,10 +27,14 @@ namespace Project_Rioman
 
         protected override void SubUpdate(Rioman player, double deltaTime)
         {
-            if (player.Feet.Intersects(Top))
-                player.MoveWithGround(MOVE_SPEED * direction, 0);          
+            if (player.Feet.Intersects(ConveyorTop()))
+                player.MoveWithGround(MOVE_SPEED * direction, 0, type);          
         }
 
+        private Rectangle ConveyorTop()
+        {
+            return new Rectangle(location.X - 16, location.Y, location.Width + 32, location.Height / 2); 
+        }
 
         protected override void SubDraw(SpriteBatch spriteBatch)
         {

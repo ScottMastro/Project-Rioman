@@ -35,7 +35,7 @@ namespace Project_Rioman
             if (type == 8 && falling)
             {
                 location.Y += FALL_SPEED;
-                player.MoveWithGround(0, FALL_SPEED);
+                player.MoveWithGround(0, FALL_SPEED, type);
             }
           
         }

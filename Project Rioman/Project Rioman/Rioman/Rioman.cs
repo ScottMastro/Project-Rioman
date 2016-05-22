@@ -31,6 +31,8 @@ namespace Project_Rioman
 
         private KeyboardState prevKeyboardState;
 
+        private bool movedByConveyor;
+
         public Rioman(ContentManager content)
         {
             state = new RiomanState(this);
@@ -43,6 +45,7 @@ namespace Project_Rioman
 
         public void Reset()
         {
+            state.Unfreeze();
             lastMove = new Vector2(0, 0);
             stopLeftMovement = false;
             stopRightMovement = false;
@@ -65,6 +68,7 @@ namespace Project_Rioman
         public void Update(double deltaTime, Level level, Viewport viewport, AbstractEnemy[] enemies)
         {
             lastMove = Vector2.Zero;
+            movedByConveyor = false;
 
             if (!state.IsFrozen())
             {
@@ -249,10 +253,13 @@ namespace Project_Rioman
 
         }
 
-        public void MoveWithGround(int x, int y)
+        public void MoveWithGround(int x, int y, int tileType)
         {
-            if (state.Grounded())
-                Move(x, y);    
+            if (state.Grounded() && (tileType != Constant.TILE_CONVEYOR || !movedByConveyor))
+                Move(x, y);
+
+            if (tileType == Constant.TILE_CONVEYOR)
+                movedByConveyor = true;
         }
         
         public void Hit(int damage)

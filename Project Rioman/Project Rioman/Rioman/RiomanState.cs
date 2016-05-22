@@ -311,6 +311,7 @@ namespace Project_Rioman
         public double GetFreezeTime() { return freezeTime; }
         public void UpdateFreezeTime(double deltaTime) { freezeTime -= deltaTime; }
         public bool IsFrozen() { return freezeTime > 0; }
+        public void Unfreeze() { freezeTime = 0; }
 
     }
 }
