@@ -118,6 +118,7 @@ namespace Project_Rioman
             OrganizeTiles();
             TileFader();
             LadderForm();
+            PistonForm();
             LaserForm();
             ResetEnemies();
             boss.Reset();
@@ -273,7 +274,7 @@ namespace Project_Rioman
             tiles = new List<List<AbstractTile>>();
             allTiles = new List<AbstractTile>();
 
-            for (int i = 0; i <= 9; i++)
+            for (int i = 0; i <= 10; i++)
                 tiles.Add(new List<AbstractTile>());
 
             for (int x = 0; x <= width; x++)
@@ -285,8 +286,8 @@ namespace Project_Rioman
                     if (t != null)
                     {
 
-                        if (t.Type == 8 || t.Type == 9)
-                            tiles[1].Add(t);
+                        if (TileAttributes.IsSolid(t))
+                            tiles[Constant.TILE_SOLID].Add(t);
 
                         tiles[t.Type].Add(t);
                         allTiles.Add(t);
@@ -308,6 +309,25 @@ namespace Project_Rioman
 
                 if(y <= 0 || tileGrid[x, y - 1] == null || tileGrid[x, y - 1].Type != Constant.TILE_CLIMB)
                     tile.SetTop();
+            }
+        }
+
+        public void PistonForm()
+        {
+            foreach (AbstractTile tile in tileType(Constant.TILE_PISTON))
+            {
+                int x = tile.GridX;
+                int y = tile.GridY;
+
+                while(y + 1 <= height)
+                {
+                    y++;
+                    if (TileAttributes.IsSolid(tileGrid[x, y]))
+                    {
+                        ((PistonTile)tile).SetCrushPoint(y);
+                        break;
+                    }
+                }
             }
         }
 
@@ -384,19 +404,15 @@ namespace Project_Rioman
             player.AllowClimingUp();
 
             //limit player motion against solid tiles
-            foreach (AbstractTile tile in tileType(Constant.TILE_SOLID)){
+            foreach (AbstractTile tile in tileType(Constant.TILE_SOLID))
+            {
 
                 if (player.Right.Intersects(tile.Left))
-                {
                     player.StopRightMovement();
-                    player.invincibledirection = 0;
-                }
 
                 if (player.Left.Intersects(tile.Right))
-                {
                     player.StopLeftMovement();
-                    player.invincibledirection = 0;
-                }
+
 
                 if (player.Head.Intersects(tile.Bottom))
                 {
@@ -410,7 +426,8 @@ namespace Project_Rioman
             }
 
             //kill player
-            foreach (AbstractTile tile in tileType(Constant.TILE_KILL)) {
+            foreach (AbstractTile tile in tileType(Constant.TILE_KILL))
+            {
 
                 if (player.Hitbox.Intersects(tile.Center) && !player.IsInvincible())
                 {
@@ -447,25 +464,47 @@ namespace Project_Rioman
                     player.OnLadder();
             }
 
-            foreach (AbstractTile tile in allTiles) {
+            List<AbstractTile> solids = tileType(Constant.TILE_SOLID);
+            if (player.IsInvincible())
+                solids.AddRange(tileType(Constant.TILE_KILL));
 
-                if (tile.Type == 1 || (player.IsInvincible() && tile.Type == 2) ||
-                    tile.Type == 4 || tile.Type == 5 || tile.Type == 3 && tile.IsTop
-                    || tile.Type == 8 || tile.Type == 9)
+            foreach (AbstractTile tile in solids)
+            {
+                if (!player.IsJumping() && player.Feet.Intersects(tile.Floor) &&
+                    !player.Feet.Intersects(tile.IgnoreFloor))
                 {
+                    onGround = true;
+                    player.MoveToY(tile.Y - player.GetSprite().Height + 8);
 
-                    if (!player.IsJumping() && player.Feet.Intersects(tile.Floor) &&
-                        !player.Feet.Intersects(tile.IgnoreFloor))
-                    {
-                        onGround = true;
-                        player.MoveToY(tile.Y - player.GetSprite().Height + 8);
-
-                        if (player.IsFalling() || player.IsClimbing())
-                            player.state.Stand();
-                        
-                    }
+                    if (player.IsFalling() || player.IsClimbing())
+                        player.state.Stand();
                 }
             }
+
+            foreach (AbstractTile t in tileType(Constant.TILE_PISTON))
+            {
+                PistonTile tile = (PistonTile)t;
+
+                if (tile.IsCrushing() && player.Head.Intersects(tile.Bottom))
+                {
+                    if (player.IsGrounded())
+                        KillPlayer(player);
+                    else
+                        player.MoveToY(tile.Bottom.Bottom);
+                }
+
+                if (player.Hitbox.Intersects(tile.CrushAboveRect()))
+                    KillPlayer(player);
+
+                if (player.Right.Intersects(tile.ArmLeft()))
+                    player.StopRightMovement();
+
+                if (player.Left.Intersects(tile.ArmRight()))
+                    player.StopLeftMovement();
+
+            }
+
+
 
             if (!onGround && !player.IsJumping() && !player.IsClimbing() && !player.IsOnEnemy())
                 player.state.Fall();

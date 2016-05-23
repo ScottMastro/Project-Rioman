@@ -3,10 +3,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-//Command line code
-//if exist "$(TargetPath).locked" del "$(TargetPath).locked"
-//if not exist "$(TargetPath).locked" move "$(TargetPath)" "$(TargetPath).locked"
-
+/*Command line code
+if exist "$(TargetPath).locked" del "$(TargetPath).locked"
+if not exist "$(TargetPath).locked" move "$(TargetPath)" "$(TargetPath).locked"
+*/
 
 namespace Project_Rioman
 {

@@ -109,6 +109,7 @@
     <Compile Include="Levels\ConveyorTile.cs" />
     <Compile Include="Levels\FallTile.cs" />
     <Compile Include="Levels\LaserTile.cs" />
+    <Compile Include="Levels\PistonTile.cs" />
     <Compile Include="Levels\Tile.cs" />
     <Compile Include="Levels\TileAttributes.cs" />
     <Compile Include="Pickups\PowerUp.cs" />
@@ -223,8 +224,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>if exist "$(TargetPath).locked" del "$(TargetPath).locked"
+if not exist "$(TargetPath).locked" move "$(TargetPath)" "$(TargetPath).locked"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

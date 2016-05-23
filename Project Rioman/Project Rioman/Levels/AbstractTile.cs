@@ -86,8 +86,6 @@ namespace Project_Rioman
             location.Y += y;
         }
 
-
-
         public void Update(Rioman player, double deltaTime)
         {
             SubUpdate(player, deltaTime);
@@ -121,7 +119,7 @@ namespace Project_Rioman
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (type != Constant.TILE_FUNCTION && type != Constant.TILE_IGNORE)
+            if (type != Constant.TILE_FUNCTION && type != Constant.TILE_IGNORE && type != Constant.TILE_PISTON)
                 spriteBatch.Draw(sprite, new Rectangle(location.X, location.Y, sprite.Width, sprite.Height), Color.White);
 
             SubDraw(spriteBatch);
@@ -137,8 +135,8 @@ namespace Project_Rioman
         public void ChangeType(int newtype) { type = newtype; }
 
         public Rectangle Top { get { return new Rectangle(location.X, location.Y, location.Width, location.Height / 2); } }
-        public Rectangle Floor { get { return new Rectangle(location.X + 12, location.Y, 16, 4); } }
-        public Rectangle IgnoreFloor { get { return new Rectangle(location.X, location.Y + 16, 32, 16); } }
+        public Rectangle Floor { get { return new Rectangle(location.X + 12, location.Y, location.Width -24, 4); } }
+        public Rectangle IgnoreFloor { get { return new Rectangle(location.X, location.Y + 16, location.Width, 16); } }
         public Rectangle Left { get { return new Rectangle(location.X, location.Y, location.Width / 2, location.Height); } }
         public Rectangle Right { get { return new Rectangle(location.X + location.Width / 2, location.Y, location.Width / 2, location.Height); } }
         public Rectangle Bottom { get { return new Rectangle(location.X, location.Y + location.Height / 2, location.Width, location.Height / 2); } }

@@ -14,8 +14,6 @@ namespace Project_Rioman
         private Rectangle location;
         private Vector2 lastMove;
 
-        public int invincibledirection;
-
         public bool climbDown;
 
         private int startPosX;
@@ -31,7 +29,7 @@ namespace Project_Rioman
 
         private KeyboardState prevKeyboardState;
 
-        private bool movedByConveyor;
+        private int movedByConveyor;
 
         public Rioman(ContentManager content)
         {
@@ -68,7 +66,7 @@ namespace Project_Rioman
         public void Update(double deltaTime, Level level, Viewport viewport, AbstractEnemy[] enemies)
         {
             lastMove = Vector2.Zero;
-            movedByConveyor = false;
+            movedByConveyor = 0;
 
             if (!state.IsFrozen())
             {
@@ -255,11 +253,17 @@ namespace Project_Rioman
 
         public void MoveWithGround(int x, int y, int tileType)
         {
-            if (state.Grounded() && (tileType != Constant.TILE_CONVEYOR || !movedByConveyor))
-                Move(x, y);
+            if (state.Grounded()) {
 
-            if (tileType == Constant.TILE_CONVEYOR)
-                movedByConveyor = true;
+                if(tileType != Constant.TILE_CONVEYOR)
+                    Move(x, y);
+
+                else if (movedByConveyor == 0 || (movedByConveyor > 0 && x < 0) || (movedByConveyor < 0 && x > 0))
+                {
+                    Move(x, y);
+                    movedByConveyor += x;
+                }
+            } 
         }
         
         public void Hit(int damage)
@@ -426,6 +430,7 @@ namespace Project_Rioman
         public bool IsFalling() { return state.IsFalling(); }
         public bool IsRunning() { return state.IsRunning(); }
         public bool IsClimbing() { return state.IsClimbing(); }
+        public bool IsGrounded() { return state.Grounded(); }
         public bool IsJumping() { return state.IsJumping(); }
         public bool IsInvincible() { return state.IsInvincible(); }
         public bool IsOnEnemy() { return state.IsOnEnemy(); }

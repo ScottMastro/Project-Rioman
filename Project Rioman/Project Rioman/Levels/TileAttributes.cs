@@ -14,6 +14,19 @@ namespace Project_Rioman
 
         private static Dictionary<int, Texture2D[]> tileSprites;
 
+        public static bool IsSolid(AbstractTile tile)
+        {
+            if (tile == null)
+                return false;
+
+            if (tile.Type == Constant.TILE_SOLID || tile.Type == Constant.TILE_DISAPPEAR ||
+                tile.Type == Constant.TILE_DOOR || tile.Type == Constant.TILE_CLIMB && tile.IsTop
+                || tile.Type == Constant.TILE_CONVEYOR || tile.Type == Constant.TILE_FALL || tile.Type == Constant.TILE_PISTON)
+                return true;
+
+            return false;
+        }
+
         public static AbstractTile CreateTile(int ID, int x, int y)
         {
 
@@ -39,6 +52,9 @@ namespace Project_Rioman
             else if (tileKey[ID] == Constant.TILE_DISAPPEAR)
                 return new DisappearTile(ID, x, y);
 
+            else if (tileKey[ID] == Constant.TILE_PISTON)
+                return new PistonTile(ID, x, y);
+
             return new Tile(ID, x, y);
 
         }
@@ -51,6 +67,18 @@ namespace Project_Rioman
 
             for (int i = 1; i <= NUMBER_OF_TILES; i++)
                 LoadFrames(content, i);
+
+            LoadPiston(content);
+
+        }
+
+        private static void LoadPiston(ContentManager content)
+        {
+            List<Texture2D> textures = new List<Texture2D>();
+            for (int i = 134; i <= 137; i++)
+                textures.Add(content.Load<Texture2D>("Video\\tiles\\" + i.ToString() ));
+
+            tileSprites.Add(-Constant.TILE_PISTON, textures.ToArray());
 
         }
 
@@ -222,7 +250,7 @@ namespace Project_Rioman
             tileKey[119] = 1;
             tileKey[120] = 4;
             tileKey[121] = 3;
-            tileKey[122] = 0;
+            tileKey[122] = 1;
             tileKey[123] = 2;
             tileKey[124] = 0;
             tileKey[125] = 0;
@@ -234,7 +262,7 @@ namespace Project_Rioman
             tileKey[131] = 1;
             tileKey[132] = 1;
             tileKey[133] = 8;
-            tileKey[134] = 1;
+            tileKey[134] = 10;
             tileKey[135] = 1;
             tileKey[136] = 1;
             tileKey[137] = 1;
