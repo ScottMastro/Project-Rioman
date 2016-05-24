@@ -115,11 +115,11 @@ namespace Project_Rioman
                 boss = new PosterMan(x, y);
                 return;
             }
-            //      if (value == 289)
-            //        bosses[5].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
-            //  if (value == 285)
-            //    bosses[3].SetBoss(x * Constant.TILE_SIZE, y * Constant.TILE_SIZE);
-
+            else if (value == 290)
+            {
+                boss = new LurkerMan(x, y);
+                return;
+            }
 
             tiles[x, y] = TileAttributes.CreateTile(value, x, y);
         }

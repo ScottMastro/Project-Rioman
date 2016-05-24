@@ -18,6 +18,7 @@ namespace Project_Rioman
         protected Rectangle hitbox;
 
         protected AbstractPickup droppedItem;
+        protected bool canDropItem;
 
         protected SpriteEffects direction;
         protected Texture2D sprite;
@@ -49,6 +50,7 @@ namespace Project_Rioman
             killExplosion = EnemyAttributes.GetKillSprite();
 
             blinkFrames = 0;
+            canDropItem = true;
 
             AbstractReset();
         }
@@ -97,40 +99,45 @@ namespace Project_Rioman
         {
             isAlive = false;
 
-            int n = new Random().Next(0, 100) + 1;
-            int x = GetCollisionRect().Center.X;
-            int y = GetCollisionRect().Center.Y;
+            if (!canDropItem)
+            {
+                int n = new Random().Next(0, 100) + 1;
+                int x = GetCollisionRect().Center.X;
+                int y = GetCollisionRect().Center.Y;
 
 
-            //drop small health
-            int dropProb = Constant.HEALTH_DROP_PERCENT_SMALL;
-            if (n < dropProb) {
-                droppedItem = new EnemyPickup(Constant.SMALL_HEALTH, x, y);
-                return;
+                //drop small health
+                int dropProb = Constant.HEALTH_DROP_PERCENT_SMALL;
+                if (n < dropProb)
+                {
+                    droppedItem = new EnemyPickup(Constant.SMALL_HEALTH, x, y);
+                    return;
+                }
+
+                //drop big health
+                dropProb += Constant.HEALTH_DROP_PERCENT_BIG;
+                if (n < dropProb)
+                {
+                    droppedItem = new EnemyPickup(Constant.BIG_HEALTH, x, y);
+                    return;
+                }
+
+                //drop small ammo
+                dropProb += Constant.AMMO_DROP_PERCENT_SMALL;
+                if (n < dropProb)
+                {
+                    droppedItem = new EnemyPickup(Constant.SMALL_AMMO, x, y);
+                    return;
+                }
+
+                //drop big ammo
+                dropProb += Constant.AMMO_DROP_PERCENT_BIG;
+                if (n < dropProb)
+                {
+                    droppedItem = new EnemyPickup(Constant.BIG_AMMO, x, y);
+                    return;
+                }
             }
-            
-            //drop big health
-            dropProb += Constant.HEALTH_DROP_PERCENT_BIG;
-            if (n < dropProb) {
-                droppedItem = new EnemyPickup(Constant.BIG_HEALTH, x, y);
-                return;
-            }
-
-            //drop small ammo
-            dropProb += Constant.AMMO_DROP_PERCENT_SMALL;
-            if (n < dropProb) {
-                droppedItem = new EnemyPickup(Constant.SMALL_AMMO, x, y);
-                return;
-            }
-
-            //drop big ammo
-            dropProb += Constant.AMMO_DROP_PERCENT_BIG;
-            if (n < dropProb) {
-                droppedItem = new EnemyPickup(Constant.BIG_AMMO, x, y);
-                return;
-            }
-
-
         }
 
         public void Move(int x, int y)
@@ -239,7 +246,7 @@ namespace Project_Rioman
 
         public bool Offscreen(Viewport viewport)
         {
-            int buffer = 50;
+            int buffer = Math.Max(location.Width, GetCollisionRect().Width) + 50;
 
             return (location.Right < -buffer || location.Left > viewport.Width + buffer ||
                     location.Bottom < -buffer || location.Top > viewport.Height + buffer);
@@ -247,7 +254,7 @@ namespace Project_Rioman
 
         private bool SpawnPointOffscreen(Viewport viewport)
         {
-            int buffer = 50;
+            int buffer = Math.Max(location.Width, GetCollisionRect().Width) + 50;
 
             return (originalLocation.X + netMovement.X < -buffer || originalLocation.X + netMovement.X > viewport.Width + buffer ||
                     originalLocation.Y + netMovement.Y < -buffer || originalLocation.Y + netMovement.Y > viewport.Height + buffer);

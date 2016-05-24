@@ -681,3 +681,7 @@ Content\Audio\soundeffects\shieldhit.xnb
 Content\Audio\soundeffects\heal.xnb
 Content\Audio\soundeffects\infernobullet.xnb
 Content\Audio\soundeffects\killboss.xnb
+Content\Video\bosses\lurkerman1.xnb
+Content\Video\bosses\lurkerman2.xnb
+Content\Video\bosses\lurkerman3.xnb
+Content\Video\bosses\lurkerman4.xnb

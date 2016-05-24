@@ -376,11 +376,14 @@ namespace Project_Rioman
 
         public void TileFader()
         {
+
             int num = 0;
             foreach (DisappearTile tile in tileType(Constant.TILE_DISAPPEAR))
             {
                 tile.SetFadeTime(num);
                 num++;
+                if (num > 5)
+                    num = 0;
             }
         }
         // ----------------------------------------------------------------------------------------------------------------
@@ -410,7 +413,7 @@ namespace Project_Rioman
             //limit player motion against solid tiles
             foreach (AbstractTile tile in tileType(Constant.TILE_SOLID))
             {
-                if (tile.Type != Constant.TILE_CLIMB) {
+                if (tile.Type != Constant.TILE_CLIMB && tile.Type != Constant.TILE_DOOR) {
                     if (player.Right.Intersects(tile.Left))
                         player.StopRightMovement();
 
@@ -647,7 +650,7 @@ namespace Project_Rioman
 
             while (true)
             {
-                if (y < height && tileGrid[x, y] != null && tileGrid[x, y].Type == 4)
+                if (y < height && tileGrid[x, y] != null && tileGrid[x, y].Type == Constant.TILE_DOOR)
                 {
                     if (tileGrid[x, y].Y > doorStopY)
                     {
@@ -997,7 +1000,8 @@ namespace Project_Rioman
 
                     if (scrollers[i].X < viewport.Width && scrollers[i].X > viewport.Width * 2 / 3 &&
                         player.GetLastXMovement() > 0)
-                        StartScroll(1, 0, viewport);
+                    StartScroll(1, 0, viewport);
+                    
 
                     if (scrollers[i].X > 0 && scrollers[i].X < viewport.Width * 1 / 3 &&
                             player.GetLastXMovement() < 0)
@@ -1007,11 +1011,11 @@ namespace Project_Rioman
 
                 else if (scrollers[i].IsHorizontal() && scrollers[i].IntersectsProjection(player.Hitbox))
                 {
-                    if (atTop && scrollers[i].Y > - viewport.Height * 1 / 3 && scrollers[i].Y < viewport.Height * 1 / 3 &&
+                    if (atTop && scrollers[i].Y > -viewport.Height * 1 / 3 && scrollers[i].Y < viewport.Height * 1 / 3 &&
                             player.GetLastYMovement() < 0)
                         StartScroll(0, -1, viewport);
 
-                    if (atBottom && scrollers[i].Y <  viewport.Height * 4 / 3 && scrollers[i].Y > viewport.Height * 2 / 3 &&
+                    if (atBottom && scrollers[i].Y < viewport.Height * 4 / 3 && scrollers[i].Y > viewport.Height * 2 / 3 &&
                             player.GetLastYMovement() > 0)
                         StartScroll(0, 1, viewport);
                 }
@@ -1046,6 +1050,9 @@ namespace Project_Rioman
         {
             scrollAmountX = (viewport.Width - Constant.TILE_SIZE / 2) * Math.Abs(magnitudeX);
             scrollAmountY = (viewport.Height - Constant.TILE_SIZE / 2) * Math.Abs(magnitudeY) + 14;
+            if (scrollAmountY <= 14)
+                scrollAmountY = 0;
+
             isScrolling = true;
             scrollSpeedX = magnitudeX * SCROLL_SPEED;
             scrollSpeedY = magnitudeY * SCROLL_SPEED;
@@ -1074,8 +1081,6 @@ namespace Project_Rioman
                 y = scrollSpeedY / Math.Abs(scrollSpeedY);
 
             player.Move(-scrollSpeedX + x, -scrollSpeedY + y);
-
-
 
             if (scrollAmountX <= 0 && scrollAmountY <= 0)
             {

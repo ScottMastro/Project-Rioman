@@ -467,7 +467,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\124.xnb</Output>
-      <Time>2016-05-19T23:46:47.275378-04:00</Time>
+      <Time>2016-05-24T00:19:07.6501803-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\125.png</Source>
@@ -476,7 +476,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\125.xnb</Output>
-      <Time>2016-05-19T23:46:40.5959243-04:00</Time>
+      <Time>2016-05-24T00:21:40.521731-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\126.png</Source>
@@ -485,7 +485,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\126.xnb</Output>
-      <Time>2016-05-19T23:46:34.4564117-04:00</Time>
+      <Time>2016-05-24T00:21:27.4172627-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\127.png</Source>
@@ -494,7 +494,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\127.xnb</Output>
-      <Time>2016-05-19T23:46:29.365038-04:00</Time>
+      <Time>2016-05-24T00:21:53.3858982-04:00</Time>
     </Item>
     <Item>
       <Source>Video\tiles\128.png</Source>
@@ -6147,6 +6147,42 @@
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\killboss.xnb</Output>
       <Time>2016-05-16T00:14:43.3257642-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\bosses\lurkerman1.png</Source>
+      <Name>Video\bosses\lurkerman1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\lurkerman1.xnb</Output>
+      <Time>2016-05-24T01:01:00.9432778-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\bosses\lurkerman2.png</Source>
+      <Name>Video\bosses\lurkerman2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\lurkerman2.xnb</Output>
+      <Time>2016-05-19T22:17:31.7849315-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\bosses\lurkerman3.png</Source>
+      <Name>Video\bosses\lurkerman3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\lurkerman3.xnb</Output>
+      <Time>2016-05-19T22:18:05.8557779-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\bosses\lurkerman4.png</Source>
+      <Name>Video\bosses\lurkerman4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\lurkerman4.xnb</Output>
+      <Time>2016-05-24T01:01:13.901632-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

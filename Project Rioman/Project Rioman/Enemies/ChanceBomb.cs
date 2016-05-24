@@ -10,6 +10,7 @@ namespace Project_Rioman
     class ChanceBomb : AbstractEnemy
     {
         private Texture2D explosion;
+        private Texture2D bomb;
 
         private bool hasExploded;
         private bool exploding;
@@ -26,8 +27,9 @@ namespace Project_Rioman
         {
             Texture2D[] sprites = EnemyAttributes.GetSprites(type);
 
-            sprite = sprites[0];
+            bomb = sprites[0];
             explosion = sprites[1];
+            canDropItem = false;
 
             SubReset();
         }
@@ -35,6 +37,7 @@ namespace Project_Rioman
 
         protected sealed override void SubReset()
         {
+            sprite = bomb;
             counter = 0;
             drawRect = new Rectangle(0, 0, sprite.Width / 6, sprite.Height);
             exploding = false;
@@ -43,6 +46,9 @@ namespace Project_Rioman
 
             isInvincible = true;
             hasExploded = false;
+            explosionFrame = 0;
+            explosionTime = 0;
+            countTime = 0;
         }
 
         protected override void SubUpdate(Rioman player, AbstractBullet[] rioBullets, double deltaTime, Viewport viewport)
@@ -83,7 +89,10 @@ namespace Project_Rioman
                             if (counter == 4)
                             {
                                 Die();
-                                //TODO:drop health if player is close
+
+                                if (Math.Abs(location.Center.X - player.Hitbox.Center.X) < 100 &&
+                                    (Math.Abs(location.Center.Y - player.Hitbox.Center.Y) < 100))
+                                    droppedItem = new EnemyPickup(Constant.BIG_HEALTH, location.Center.X + 16, location.Center.Y);
                             }
                             else if (counter == 5)
                                 exploding = true;

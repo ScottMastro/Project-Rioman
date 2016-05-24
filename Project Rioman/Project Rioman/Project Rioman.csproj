@@ -104,6 +104,7 @@
     <Compile Include="Boss\AbstractBoss.cs" />
     <Compile Include="Boss\BossAttributes.cs" />
     <Compile Include="Boss\BunnyMan.cs" />
+    <Compile Include="Boss\LurkerMan.cs" />
     <Compile Include="Boss\PosterMan.cs" />
     <Compile Include="Levels\DisappearTile.cs" />
     <Compile Include="Levels\ConveyorTile.cs" />

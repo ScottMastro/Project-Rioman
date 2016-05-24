@@ -28,6 +28,10 @@ namespace Project_Rioman
 
             sprites.Add(Constant.POSTERMAN, LoadSprites(c, new string[]
                 {"postermanpose", "posterman1", "posterman2", "posterman3", "posterbullet1", "posterbullet2" }));
+
+
+            sprites.Add(Constant.LURKERMAN, LoadSprites(c, new string[]
+                {"postermanpose", "lurkerman1", "lurkerman1", "lurkerman1", "lurkerman4" }));
         }
 
         private static Texture2D[] LoadSprites(ContentManager content, string[] location)
