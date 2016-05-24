@@ -28,7 +28,7 @@ namespace Project_Rioman
 
         }
 
-        protected override void SubReset()
+        protected sealed override void SubReset()
         {
             frame = 1;
 

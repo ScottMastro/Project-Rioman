@@ -41,10 +41,15 @@ namespace Project_Rioman
             state = State.neutral;
         }
 
+        protected override void SubMove(int x, int y)
+        {
+            armRect.X += x;
+            armRect.Y += y;
+        }
+
         protected override void SubUpdate(Rioman player, double deltaTime)
         {
-            armRect.X = location.X + Constant.TILE_SIZE;
-            armRect.Y = location.Y - moveDist;
+
 
             if (state == State.neutral)
             {

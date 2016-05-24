@@ -16,7 +16,7 @@ namespace Project_Rioman
         }
 
         protected override void SubDraw(SpriteBatch spriteBatch) { }
-        protected override void SubReset() { }
+        protected sealed override void SubReset() { }
 
         protected override void SubUpdate(Rioman player, double deltaTime)
         {
@@ -41,5 +41,9 @@ namespace Project_Rioman
 
         public void SetFadeTime(double x) { fadeTime = x; }
 
+        protected override void SubMove(int x, int y)
+        {
+            //do nothing
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace Project_Rioman
 
         }
 
-        private ZarrocBullet[] bullets = new ZarrocBullet[6];
+        private ZarrocBullet[] bullets;
 
         public ZarrocClone(int type, int x, int y) : base(type, x, y)
         {
@@ -40,8 +40,9 @@ namespace Project_Rioman
             SubReset();
         }
 
-        protected override void SubReset()
+        protected sealed override void SubReset()
         {
+            bullets = new ZarrocBullet[6];
             sprite = stand;
             drawRect = new Rectangle(0, 0, stand.Width, stand.Height);
 

@@ -23,7 +23,7 @@ namespace Project_Rioman
             SubReset();
         }
 
-        protected override void SubReset()
+        protected sealed override void SubReset()
         {
             frame = 0;
             fallTime = 0;

@@ -233,7 +233,7 @@ namespace Project_Rioman
             SubReset();
         }
 
-        protected override void SubReset() {
+        protected sealed override void SubReset() {
             isInvincible = true;
 
             drawRect = new Rectangle(0, 0, sprite.Width / 5, sprite.Height);

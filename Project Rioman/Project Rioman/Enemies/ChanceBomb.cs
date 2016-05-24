@@ -33,7 +33,7 @@ namespace Project_Rioman
         }
 
 
-        protected override void SubReset()
+        protected sealed override void SubReset()
         {
             counter = 0;
             drawRect = new Rectangle(0, 0, sprite.Width / 6, sprite.Height);

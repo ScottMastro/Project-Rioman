@@ -5492,6 +5492,267 @@
       <Time>2016-05-16T00:14:44.1458448-04:00</Time>
     </Item>
     <Item>
+      <Source>Video\tiles\357.png</Source>
+      <Name>Video\tiles\357</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\357.xnb</Output>
+      <Time>2016-05-16T22:40:26.422406-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\358.png</Source>
+      <Name>Video\tiles\358</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\358.xnb</Output>
+      <Time>2016-05-16T22:43:06.1915689-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\359.png</Source>
+      <Name>Video\tiles\359</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\359.xnb</Output>
+      <Time>2016-05-16T23:07:14.4573897-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\360.png</Source>
+      <Name>Video\tiles\360</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\360.xnb</Output>
+      <Time>2016-05-16T22:56:32.1104189-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\bosses\posterman1.png</Source>
+      <Name>Video\bosses\posterman1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterman1.xnb</Output>
+      <Time>2016-05-17T22:49:07.9416384-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\bosses\posterman2.png</Source>
+      <Name>Video\bosses\posterman2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterman2.xnb</Output>
+      <Time>2016-05-17T22:48:58.0510554-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\bosses\posterman3.png</Source>
+      <Name>Video\bosses\posterman3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterman3.xnb</Output>
+      <Time>2016-05-16T23:27:20.4900859-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\bosses\postermanpose.png</Source>
+      <Name>Video\bosses\postermanpose</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\postermanpose.xnb</Output>
+      <Time>2016-05-17T00:12:18.1902249-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\pickups\text6.png</Source>
+      <Name>Video\pickups\text6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\pickups\text6.xnb</Output>
+      <Time>2016-05-17T21:15:34.0299333-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\bosses\posterbullet1.png</Source>
+      <Name>Video\bosses\posterbullet1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterbullet1.xnb</Output>
+      <Time>2016-05-17T22:57:21.5927648-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\bosses\posterbullet2.png</Source>
+      <Name>Video\bosses\posterbullet2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterbullet2.xnb</Output>
+      <Time>2016-05-17T22:57:54.6082108-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\361.png</Source>
+      <Name>Video\tiles\361</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\361.xnb</Output>
+      <Time>2016-05-20T23:42:34.0488883-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\362.png</Source>
+      <Name>Video\tiles\362</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\362.xnb</Output>
+      <Time>2016-05-20T23:42:54.5711351-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\363.png</Source>
+      <Name>Video\tiles\363</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\363.xnb</Output>
+      <Time>2016-05-20T23:43:03.5740793-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\364.png</Source>
+      <Name>Video\tiles\364</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\364.xnb</Output>
+      <Time>2016-05-20T23:43:11.7679723-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\132.png</Source>
+      <Name>Video\tiles\132</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\132.xnb</Output>
+      <Time>2016-05-20T23:49:43.3123702-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\365-1.png</Source>
+      <Name>Video\tiles\365-1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\365-1.xnb</Output>
+      <Time>2016-05-22T14:39:12.2390238-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\365.png</Source>
+      <Name>Video\tiles\365</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\365.xnb</Output>
+      <Time>2016-05-22T14:26:02.2841937-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\366-1.png</Source>
+      <Name>Video\tiles\366-1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\366-1.xnb</Output>
+      <Time>2016-05-22T14:41:31.4981427-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\366.png</Source>
+      <Name>Video\tiles\366</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\366.xnb</Output>
+      <Time>2016-05-22T14:27:02.8696754-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\367-1.png</Source>
+      <Name>Video\tiles\367-1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\367-1.xnb</Output>
+      <Time>2016-05-22T14:40:17.0419769-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\367.png</Source>
+      <Name>Video\tiles\367</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\367.xnb</Output>
+      <Time>2016-05-22T14:27:39.4148789-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\368.png</Source>
+      <Name>Video\tiles\368</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\368.xnb</Output>
+      <Time>2016-05-22T14:22:17.5224668-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\369-1.png</Source>
+      <Name>Video\tiles\369-1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\369-1.xnb</Output>
+      <Time>2016-05-22T14:39:12.2390238-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\369.png</Source>
+      <Name>Video\tiles\369</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\369.xnb</Output>
+      <Time>2016-05-22T14:26:02.2841937-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\370-1.png</Source>
+      <Name>Video\tiles\370-1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\370-1.xnb</Output>
+      <Time>2016-05-22T14:41:31.4981427-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\370.png</Source>
+      <Name>Video\tiles\370</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\370.xnb</Output>
+      <Time>2016-05-22T14:27:02.8696754-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\371-1.png</Source>
+      <Name>Video\tiles\371-1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\371-1.xnb</Output>
+      <Time>2016-05-22T14:40:17.0419769-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Video\tiles\371.png</Source>
+      <Name>Video\tiles\371</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\371.xnb</Output>
+      <Time>2016-05-22T14:27:39.4148789-04:00</Time>
+    </Item>
+    <Item>
       <Source>Audio\auroraman.wav</Source>
       <Name>Audio\auroraman</Name>
       <Importer>WavImporter</Importer>
@@ -5886,267 +6147,6 @@
       <Options>None</Options>
       <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\killboss.xnb</Output>
       <Time>2016-05-16T00:14:43.3257642-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\357.png</Source>
-      <Name>Video\tiles\357</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\357.xnb</Output>
-      <Time>2016-05-16T22:40:26.422406-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\358.png</Source>
-      <Name>Video\tiles\358</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\358.xnb</Output>
-      <Time>2016-05-16T22:43:06.1915689-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\359.png</Source>
-      <Name>Video\tiles\359</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\359.xnb</Output>
-      <Time>2016-05-16T23:07:14.4573897-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\360.png</Source>
-      <Name>Video\tiles\360</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\360.xnb</Output>
-      <Time>2016-05-16T22:56:32.1104189-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\bosses\posterman1.png</Source>
-      <Name>Video\bosses\posterman1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterman1.xnb</Output>
-      <Time>2016-05-17T22:49:07.9416384-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\bosses\posterman2.png</Source>
-      <Name>Video\bosses\posterman2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterman2.xnb</Output>
-      <Time>2016-05-17T22:48:58.0510554-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\bosses\posterman3.png</Source>
-      <Name>Video\bosses\posterman3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterman3.xnb</Output>
-      <Time>2016-05-16T23:27:20.4900859-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\bosses\postermanpose.png</Source>
-      <Name>Video\bosses\postermanpose</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\postermanpose.xnb</Output>
-      <Time>2016-05-17T00:12:18.1902249-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\pickups\text6.png</Source>
-      <Name>Video\pickups\text6</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\pickups\text6.xnb</Output>
-      <Time>2016-05-17T21:15:34.0299333-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\bosses\posterbullet1.png</Source>
-      <Name>Video\bosses\posterbullet1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterbullet1.xnb</Output>
-      <Time>2016-05-17T22:57:21.5927648-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\bosses\posterbullet2.png</Source>
-      <Name>Video\bosses\posterbullet2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\bosses\posterbullet2.xnb</Output>
-      <Time>2016-05-17T22:57:54.6082108-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\361.png</Source>
-      <Name>Video\tiles\361</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\361.xnb</Output>
-      <Time>2016-05-20T23:42:34.0488883-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\362.png</Source>
-      <Name>Video\tiles\362</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\362.xnb</Output>
-      <Time>2016-05-20T23:42:54.5711351-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\363.png</Source>
-      <Name>Video\tiles\363</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\363.xnb</Output>
-      <Time>2016-05-20T23:43:03.5740793-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\364.png</Source>
-      <Name>Video\tiles\364</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\364.xnb</Output>
-      <Time>2016-05-20T23:43:11.7679723-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\132.png</Source>
-      <Name>Video\tiles\132</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\132.xnb</Output>
-      <Time>2016-05-20T23:49:43.3123702-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\365-1.png</Source>
-      <Name>Video\tiles\365-1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\365-1.xnb</Output>
-      <Time>2016-05-22T14:39:12.2390238-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\365.png</Source>
-      <Name>Video\tiles\365</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\365.xnb</Output>
-      <Time>2016-05-22T14:26:02.2841937-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\366-1.png</Source>
-      <Name>Video\tiles\366-1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\366-1.xnb</Output>
-      <Time>2016-05-22T14:41:31.4981427-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\366.png</Source>
-      <Name>Video\tiles\366</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\366.xnb</Output>
-      <Time>2016-05-22T14:27:02.8696754-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\367-1.png</Source>
-      <Name>Video\tiles\367-1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\367-1.xnb</Output>
-      <Time>2016-05-22T14:40:17.0419769-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\367.png</Source>
-      <Name>Video\tiles\367</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\367.xnb</Output>
-      <Time>2016-05-22T14:27:39.4148789-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\368.png</Source>
-      <Name>Video\tiles\368</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\368.xnb</Output>
-      <Time>2016-05-22T14:22:17.5224668-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\369-1.png</Source>
-      <Name>Video\tiles\369-1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\369-1.xnb</Output>
-      <Time>2016-05-22T14:39:12.2390238-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\369.png</Source>
-      <Name>Video\tiles\369</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\369.xnb</Output>
-      <Time>2016-05-22T14:26:02.2841937-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\370-1.png</Source>
-      <Name>Video\tiles\370-1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\370-1.xnb</Output>
-      <Time>2016-05-22T14:41:31.4981427-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\370.png</Source>
-      <Name>Video\tiles\370</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\370.xnb</Output>
-      <Time>2016-05-22T14:27:02.8696754-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\371-1.png</Source>
-      <Name>Video\tiles\371-1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\371-1.xnb</Output>
-      <Time>2016-05-22T14:40:17.0419769-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Video\tiles\371.png</Source>
-      <Name>Video\tiles\371</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\371.xnb</Output>
-      <Time>2016-05-22T14:27:39.4148789-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

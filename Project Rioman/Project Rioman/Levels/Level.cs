@@ -120,6 +120,7 @@ namespace Project_Rioman
             LadderForm();
             PistonForm();
             LaserForm();
+
             ResetEnemies();
             boss.Reset();
 
@@ -307,8 +308,11 @@ namespace Project_Rioman
                 int x = tile.GridX;
                 int y = tile.GridY;
 
-                if(y <= 0 || tileGrid[x, y - 1] == null || tileGrid[x, y - 1].Type != Constant.TILE_CLIMB)
+                if (y <= 0 || tileGrid[x, y - 1] == null || tileGrid[x, y - 1].Type != Constant.TILE_CLIMB)
+                {
                     tile.SetTop();
+                    tileType(Constant.TILE_SOLID).Add(tile);
+                }
             }
         }
 
@@ -406,23 +410,23 @@ namespace Project_Rioman
             //limit player motion against solid tiles
             foreach (AbstractTile tile in tileType(Constant.TILE_SOLID))
             {
+                if (tile.Type != Constant.TILE_CLIMB) {
+                    if (player.Right.Intersects(tile.Left))
+                        player.StopRightMovement();
 
-                if (player.Right.Intersects(tile.Left))
-                    player.StopRightMovement();
-
-                if (player.Left.Intersects(tile.Right))
-                    player.StopLeftMovement();
+                    if (player.Left.Intersects(tile.Right))
+                        player.StopLeftMovement();
 
 
-                if (player.Head.Intersects(tile.Bottom))
-                {
-                    if (!player.IsClimbing())
-                        player.state.Fall();
+                    if (player.Head.Intersects(tile.Bottom))
+                    {
+                        if (!player.IsClimbing())
+                            player.state.Fall();
+                    }
+
+                    if (player.Head.Intersects(tile.Center))
+                        player.StopClimingUp();
                 }
-
-                if (player.Head.Intersects(tile.Center))
-                    player.StopClimingUp();
-
             }
 
             //kill player
@@ -464,7 +468,7 @@ namespace Project_Rioman
                     player.OnLadder();
             }
 
-            List<AbstractTile> solids = tileType(Constant.TILE_SOLID);
+            List<AbstractTile> solids = new List<AbstractTile>(tileType(Constant.TILE_SOLID));
             if (player.IsInvincible())
                 solids.AddRange(tileType(Constant.TILE_KILL));
 

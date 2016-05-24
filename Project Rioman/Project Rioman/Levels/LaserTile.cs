@@ -44,7 +44,7 @@ namespace Project_Rioman
             return Direction.na;
 
         }
-        protected override void SubReset()
+        protected sealed override void SubReset()
         {
             direction = GetDirection(Type, tileID);
             shooting = false;
@@ -144,6 +144,11 @@ namespace Project_Rioman
             }
 
             return new Rectangle(0, 0, 0, 0);
+        }
+
+        protected override void SubMove(int x, int y)
+        {
+            //do nothing
         }
     }
 }

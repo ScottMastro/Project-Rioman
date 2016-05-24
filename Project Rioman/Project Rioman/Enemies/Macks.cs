@@ -70,7 +70,7 @@ namespace Project_Rioman
             SubReset();
         }
 
-        protected override void SubReset()
+        protected sealed override void SubReset()
         {
             drawRect = new Rectangle(0, 0, sprite.Width, sprite.Height);
             location.Y -= sprite.Height;

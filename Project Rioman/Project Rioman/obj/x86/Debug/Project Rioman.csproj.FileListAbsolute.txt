@@ -2532,7 +2532,6 @@ C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debu
 C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Audio\soundeffects\killboss.xnb
 C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Project Rioman.exe
 C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Project Rioman.pdb
-C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\obj\x86\Debug\Project Rioman.csprojResolveAssemblyReference.cache
 C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\obj\x86\Debug\Project Rioman.exe
 C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\obj\x86\Debug\Project Rioman.pdb
@@ -2564,3 +2563,4 @@ C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debu
 C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\370.xnb
 C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\371-1.xnb
 C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\bin\x86\Debug\Content\Video\tiles\371.xnb
+C:\Users\Scott\Desktop\Project-Rioman\Project Rioman\Project Rioman\obj\x86\Debug\Project Rioman.csprojResolveAssemblyReference.cache

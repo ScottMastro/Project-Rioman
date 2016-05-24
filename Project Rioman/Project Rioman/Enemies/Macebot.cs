@@ -38,7 +38,7 @@ namespace Project_Rioman
             SubReset();
         }
 
-        protected override void SubReset()
+        protected sealed override void SubReset()
         {
             sprite = macebot;
             location.Y -= sprite.Height;

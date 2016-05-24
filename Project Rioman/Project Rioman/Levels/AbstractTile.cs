@@ -84,7 +84,10 @@ namespace Project_Rioman
         {
             location.X += x;
             location.Y += y;
+            SubMove(x, y);
         }
+
+        protected abstract void SubMove(int x, int y);
 
         public void Update(Rioman player, double deltaTime)
         {

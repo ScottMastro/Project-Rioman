@@ -19,7 +19,7 @@ namespace Project_Rioman
         {
         }
 
-        protected override void SubReset()
+        protected sealed override void SubReset()
         {
             falling = false;
         }
@@ -42,6 +42,11 @@ namespace Project_Rioman
 
 
         protected override void SubDraw(SpriteBatch spriteBatch)
+        {
+            //do nothing
+        }
+
+        protected override void SubMove(int x, int y)
         {
             //do nothing
         }

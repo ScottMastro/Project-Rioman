@@ -253,6 +253,9 @@ namespace Project_Rioman
 
         public void MoveWithGround(int x, int y, int tileType)
         {
+            if ((x < 0 && stopLeftMovement) || (x > 0 && stopRightMovement))
+                return;
+
             if (state.Grounded()) {
 
                 if(tileType != Constant.TILE_CONVEYOR)
