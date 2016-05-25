@@ -685,3 +685,6 @@ Content\Video\bosses\lurkerman1.xnb
 Content\Video\bosses\lurkerman2.xnb
 Content\Video\bosses\lurkerman3.xnb
 Content\Video\bosses\lurkerman4.xnb
+Content\Video\bosses\lurkermanpose.xnb
+Content\Video\pickups\text3.xnb
+Content\Video\bosses\lurkermandrop.xnb

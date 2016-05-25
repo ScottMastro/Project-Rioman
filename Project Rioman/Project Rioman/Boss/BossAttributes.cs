@@ -31,7 +31,7 @@ namespace Project_Rioman
 
 
             sprites.Add(Constant.LURKERMAN, LoadSprites(c, new string[]
-                {"postermanpose", "lurkerman1", "lurkerman1", "lurkerman1", "lurkerman4" }));
+                {"lurkermanpose", "lurkerman1", "lurkerman2", "lurkerman3", "lurkerman4", "lurkermandrop"}));
         }
 
         private static Texture2D[] LoadSprites(ContentManager content, string[] location)

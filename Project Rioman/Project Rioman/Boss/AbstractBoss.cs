@@ -30,7 +30,7 @@ namespace Project_Rioman
 
         protected int blinkFrames;
 
-        protected enum State { standing, jumping, falling, running, crouching }
+        protected enum State { standing, jumping, falling, running, crouching, lurking, floating }
         protected bool shooting;
         protected State state;
 
@@ -300,5 +300,8 @@ namespace Project_Rioman
         protected bool IsJumping() { return state == State.jumping; }
         protected bool IsFalling() { return state == State.falling; }
         protected bool IsCrouching() { return state == State.crouching; }
+        protected bool IsLurking() { return state == State.lurking; }
+        protected bool IsFloating() { return state == State.floating; }
+
     }
 }
