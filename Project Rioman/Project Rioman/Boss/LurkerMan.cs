@@ -17,8 +17,11 @@ namespace Project_Rioman
 
         private int floatDist;
 
+        private Point[] standPoints;
 
-        private const int ATTACK_SPEED = 5;
+        private const int ATTACK_SPEED = 6;
+        private const int ATTACK_DISTANCE = 400;
+
         private Point attackDir;
 
         private bool fading;
@@ -27,7 +30,6 @@ namespace Project_Rioman
 
         int screenWidth;
         int screenHeight;
-
 
         public LurkerMan(int x, int y) : base(Constant.LURKERMAN, x, y)
         {
@@ -41,6 +43,13 @@ namespace Project_Rioman
 
             drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
             location = new Rectangle(x, y, drawRect.Width, drawRect.Height);
+
+            standPoints = new Point[5];
+            standPoints[0] = new Point(165, 198);
+            standPoints[1] = new Point(517, 198);
+            standPoints[2] = new Point(165, 326);
+            standPoints[3] = new Point(517, 326);
+            standPoints[4] = new Point(341, 390);
 
             Reset();
         }
@@ -56,12 +65,16 @@ namespace Project_Rioman
 
             lurkTime = 0;
             drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
-
+            location.X -= drawRect.Width / 4;
         }
 
         protected override void SubDrawBoss(SpriteBatch spriteBatch)
         {
-            if(!IsLurking() && (!fading || fadeTime > 0.1))
+
+            if (!IsLurking() && (!fading || fadeTime > 0.1))
+                spriteBatch.Draw(sprite, location, drawRect, Color.White, 0f, new Vector2(), direction, 0);
+
+            if (IsLurking() && fading && fadeTime < 0.1)
                 spriteBatch.Draw(sprite, location, drawRect, Color.White, 0f, new Vector2(), direction, 0);
 
             if (fading && fadeTime <= 0.2)
@@ -72,11 +85,10 @@ namespace Project_Rioman
                 if (IsFloating())
                     spriteBatch.Draw(floatSpriteFade, location, drawRect, Color.White, 0f, new Vector2(), direction, 0);
 
+                if (IsLurking())
+                    spriteBatch.Draw(sprite == defaultSprite ? defaultSpriteFade : floatSpriteFade,
+                        location, drawRect, Color.White, 0f, new Vector2(), direction, 0);
             }
-
-            //DebugDraw.DrawRect(spriteBatch, new Rectangle(80, 80, screenWidth - 160, screenHeight - 160), 0.15f);
-
-            DebugDraw.DrawRect(spriteBatch, new Rectangle(54, 40, screenWidth - 40 - 54, screenHeight - 40 - 40), 0.4f);
 
         }
 
@@ -101,7 +113,7 @@ namespace Project_Rioman
             {
                 lurkTime += deltaTime;
 
-                if (lurkTime > 1.5)
+                if (lurkTime > 1.2)
                 {
                     if (r.Next(100) < 25)
                         Stand(player);
@@ -120,13 +132,17 @@ namespace Project_Rioman
 
             if (IsFloating())
             {
-                location.X += attackDir.X;
-                location.Y += attackDir.Y;
+                if (fadeTime > 0.1 || !fading)
+                {
 
-                floatDist += attackDir.X + attackDir.Y;
+                    location.X += attackDir.X;
+                    location.Y += attackDir.Y;
 
-                if (floatDist > 50)
-                    Lurk();
+                    floatDist += (int)Math.Sqrt(Math.Abs(attackDir.X * attackDir.X) + Math.Abs(attackDir.Y * attackDir.Y));
+
+                    if (floatDist > ATTACK_DISTANCE)
+                        Lurk();
+                }
             }
 
         }
@@ -139,24 +155,33 @@ namespace Project_Rioman
       
         private void Stand(Rioman player)
         {
-            FacePlayer(player);
             if (!fading && IsLurking())
                 Fade();
             state = State.standing;
             sprite = defaultSprite;
+            drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
+
+            Point standLoc = standPoints[r.Next(0, 5)];
+
+            location.X = standLoc.X;
+            location.Y = standLoc.Y;
+
+            FacePlayer(player);
+
         }
 
         private void Float(Rioman player, Viewport viewport)
         {
             floatDist = 0;
+            Fade();
 
-            if (!fading && IsLurking())
-                Fade();
             state = State.floating;
             sprite = floatSprite;
+            drawRect = new Rectangle(0, 0, sprite.Width / 2, sprite.Height);
 
-            location.X = r.Next(80, viewport.Width - 80);
-            location.Y = r.Next(80, viewport.Height - 80);
+            Point spawn = GetValidSpawnPoint(player, viewport);
+            location.X = spawn.X;
+            location.Y = spawn.Y;
 
             FacePlayer(player);
 
@@ -167,6 +192,10 @@ namespace Project_Rioman
             int x = (int)(ATTACK_SPEED * diffX / dist);
             int y = (int)(ATTACK_SPEED * diffY / dist);
 
+            if(y+1 >= Math.Abs(x))
+                drawRect = new Rectangle(sprite.Width / 2, 0, sprite.Width / 2, sprite.Height);
+
+
             attackDir = new Point(x, y);
         }
 
@@ -174,6 +203,7 @@ namespace Project_Rioman
         {
             lurkTime = 0;
             state = State.lurking;
+            Fade();
         }
 
         private void Fade()
@@ -187,12 +217,52 @@ namespace Project_Rioman
 
         }
 
+        private Point GetValidSpawnPoint(Rioman player, Viewport viewport)
+        {
+            int x;
+            int y;
+
+            while (true)
+            {
+                x = r.Next(60, viewport.Width - 34);
+                y = r.Next(46, viewport.Height - 34);
+
+                if (Math.Abs(x - player.Hitbox.Center.X) < ATTACK_DISTANCE / 2 &&
+                   Math.Abs(y - player.Hitbox.Center.Y) < ATTACK_DISTANCE / 2)
+                    continue;
+                else if (Math.Abs(x - player.Hitbox.Center.X) > ATTACK_DISTANCE &&
+                   Math.Abs(y - player.Hitbox.Center.Y) > ATTACK_DISTANCE)
+                    continue;
+                else
+                    break;
+            }
+
+            return new Point(x, y);
+
+        }
+
+
         public override Rectangle GetCollisionRect()
         {
             if (IsLurking())
                 return new Rectangle(0, 0, 0, 0);
 
+            if (FacingLeft())
+            {
+                if(IsStanding())
+                    return new Rectangle(location.X + 20, location.Y, drawRect.Width - 20, drawRect.Height);
+                if(IsFloating())
+                    return new Rectangle(location.X, location.Y + 10, drawRect.Width - 20, drawRect.Height- 30);
+            }
+            else
+            {
+                if (IsStanding())
+                    return new Rectangle(location.X + 10, location.Y, drawRect.Width - 30, drawRect.Height);
+                if (IsFloating())
+                    return new Rectangle(location.X + 20, location.Y + 10, drawRect.Width - 20, drawRect.Height - 30);
+            }
             return new Rectangle(location.X + 10, location.Y, drawRect.Width - 20, drawRect.Height);
+
         }
 
         public override Rectangle Feet()
