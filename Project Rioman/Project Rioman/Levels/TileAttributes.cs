@@ -58,7 +58,7 @@ namespace Project_Rioman
             else if (tileKey[ID] == Constant.TILE_BOUNCE)
             {
                 if(ID == 88)
-                    return new BounceTile(ID, x, y, 10);
+                    return new BounceTile(ID, x, y, 15);
 
                 return new BounceTile(ID, x, y, 10);
 
