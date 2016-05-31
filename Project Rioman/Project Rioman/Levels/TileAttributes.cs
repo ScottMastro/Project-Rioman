@@ -57,11 +57,21 @@ namespace Project_Rioman
 
             else if (tileKey[ID] == Constant.TILE_BOUNCE)
             {
-                if(ID == 88)
+                if (ID == 88)
                     return new BounceTile(ID, x, y, 15);
 
                 return new BounceTile(ID, x, y, 10);
 
+            }
+
+            else if (tileKey[ID] == Constant.TILE_MOVING)
+            {
+                if (ID == 77)
+                    return new MovingTile(ID, x, y, true);
+                else if (ID == 78)
+                    return new MovingTile(ID, x, y, false);
+
+                return new MovingTile(ID, x, y, true);
             }
 
             return new Tile(ID, x, y);
@@ -214,12 +224,12 @@ namespace Project_Rioman
             tileKey[74] = 1;
             tileKey[75] = 4;
             tileKey[76] = 3;
-            tileKey[77] = 0;
-            tileKey[78] = 0;
-            tileKey[79] = 0;
-            tileKey[80] = 0;
-            tileKey[81] = 0;
-            tileKey[82] = 0;
+            tileKey[77] = 12;
+            tileKey[78] = 12;
+            tileKey[79] = 6;
+            tileKey[80] = 6;
+            tileKey[81] = 6;
+            tileKey[82] = 6;
             tileKey[83] = 2;
             tileKey[84] = 2;
             tileKey[85] = 1;

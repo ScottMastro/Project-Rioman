@@ -112,6 +112,7 @@ namespace Project_Rioman
         public static int TILE_CONVEYOR = 9;
         public static int TILE_PISTON = 10;
         public static int TILE_BOUNCE = 11;
+        public static int TILE_MOVING = 12;
 
     }
 }

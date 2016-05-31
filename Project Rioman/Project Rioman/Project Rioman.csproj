@@ -111,6 +111,7 @@
     <Compile Include="Levels\ConveyorTile.cs" />
     <Compile Include="Levels\FallTile.cs" />
     <Compile Include="Levels\LaserTile.cs" />
+    <Compile Include="Levels\MovingTile.cs" />
     <Compile Include="Levels\PistonTile.cs" />
     <Compile Include="Levels\Tile.cs" />
     <Compile Include="Levels\TileAttributes.cs" />

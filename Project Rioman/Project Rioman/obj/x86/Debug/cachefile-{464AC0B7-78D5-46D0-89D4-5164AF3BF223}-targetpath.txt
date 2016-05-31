@@ -318,11 +318,7 @@ Content\Video\tiles\75.xnb
 Content\Video\tiles\76.xnb
 Content\Video\tiles\77.xnb
 Content\Video\tiles\78.xnb
-Content\Video\tiles\79.xnb
 Content\Video\tiles\8.xnb
-Content\Video\tiles\80.xnb
-Content\Video\tiles\81.xnb
-Content\Video\tiles\82.xnb
 Content\Video\tiles\83.xnb
 Content\Video\tiles\84.xnb
 Content\Video\tiles\85.xnb
@@ -688,3 +684,7 @@ Content\Video\bosses\lurkerman4.xnb
 Content\Video\bosses\lurkermanpose.xnb
 Content\Video\pickups\text3.xnb
 Content\Video\bosses\lurkermandrop.xnb
+Content\Video\tiles\79.xnb
+Content\Video\tiles\80.xnb
+Content\Video\tiles\81.xnb
+Content\Video\tiles\82.xnb

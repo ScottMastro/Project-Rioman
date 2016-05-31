@@ -119,6 +119,7 @@ namespace Project_Rioman
             TileFader();
             LadderForm();
             PistonForm();
+            MovingTileLimits();
             LaserForm();
 
             ResetEnemies();
@@ -275,7 +276,7 @@ namespace Project_Rioman
             tiles = new List<List<AbstractTile>>();
             allTiles = new List<AbstractTile>();
 
-            for (int i = 0; i <= 11; i++)
+            for (int i = 0; i <= 12; i++)
                 tiles.Add(new List<AbstractTile>());
 
             for (int x = 0; x <= width; x++)
@@ -386,6 +387,72 @@ namespace Project_Rioman
                     num = 0;
             }
         }
+
+        public void MovingTileLimits()
+        {
+            foreach (MovingTile tile in tileType(Constant.TILE_MOVING))
+            {
+
+                int limit1 = 0;
+                int limit2 = 0;
+
+                int x = tile.GridX;
+                int y = tile.GridY;
+
+                if (tile.IsHorizontal())
+                {
+                    while(x > 0)
+                    {
+                        x--;
+
+                        if (tileGrid[x, y] != null && tileGrid[x, y].TileID == 79)
+                            break;
+                    }
+
+                    limit1 = x - tile.GridX;
+                    x = tile.GridX;
+
+                    while (x < width)
+                    {
+                        x++;
+
+                        if (tileGrid[x, y] != null && tileGrid[x, y].TileID == 80)
+                            break;
+                    }
+
+                    limit2 = x - tile.GridX;
+
+                }
+
+                else
+                {
+                    while (y > 0)
+                    {
+                        y--;
+
+                        if (tileGrid[x, y] != null && tileGrid[x, y].TileID == 81)
+                            break;
+                    }
+
+                    limit1 = y - tile.GridY;
+                    y = tile.GridY;
+
+                    while (y < height)
+                    {
+                        y++;
+
+                        if (tileGrid[x, y] != null && tileGrid[x, y].TileID == 82)
+                            break;
+                    }
+
+                    limit2 = y - tile.GridY;
+                }
+
+                tile.SetLimits(limit1, limit2);
+            }
+        }
+
+
         // ----------------------------------------------------------------------------------------------------------------
         // Player Logic
         // ----------------------------------------------------------------------------------------------------------------
@@ -488,7 +555,21 @@ namespace Project_Rioman
                 }
             }
 
-            foreach (AbstractTile t in tileType(Constant.TILE_PISTON))
+            foreach (MovingTile tile in tileType(Constant.TILE_MOVING))
+            {
+                if (!player.IsJumping() && player.Feet.Intersects(tile.SubFloor()) &&
+                    !player.Feet.Intersects(tile.SubIgnoreFloor()))
+                {
+                    onGround = true;
+                    player.MoveToY(tile.Y - player.GetSprite().Height + 16);
+
+                    if (player.IsFalling() || player.IsClimbing())
+                        player.state.Stand();
+                }
+            }
+
+
+                foreach (AbstractTile t in tileType(Constant.TILE_PISTON))
             {
                 PistonTile tile = (PistonTile)t;
 

@@ -20,8 +20,7 @@ namespace Project_Rioman
     //type 9 = conveyer
     //type 10 = piston
     //type 11 = bounce
-
-
+    //type 12 = moving
 
     abstract class AbstractTile
     {
