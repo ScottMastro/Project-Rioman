@@ -18,6 +18,9 @@ namespace Project_Rioman
     //type 7 = laser
     //type 8 = falling
     //type 9 = conveyer
+    //type 10 = piston
+    //type 11 = bounce
+
 
 
     abstract class AbstractTile

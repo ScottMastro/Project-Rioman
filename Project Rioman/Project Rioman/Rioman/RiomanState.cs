@@ -6,7 +6,7 @@ namespace Project_Rioman
     class RiomanState
     {
         private Rioman player;
-        private enum State { running, standing, jumping, falling, climbing, warping };
+        private enum State { running, standing, jumping, falling, climbing, warping, bouncing };
         private State state;
 
         private bool animateWarp;
@@ -16,6 +16,7 @@ namespace Project_Rioman
         private bool shooting;
         private double shootTime;
 
+        private double bounceTime;
         private double jumpTime;
         private double fallTime;
 
@@ -57,6 +58,7 @@ namespace Project_Rioman
             lives = 3;
             jumpTime = 0;
             fallTime = 0;
+            bounceTime = 0;
             freezeTime = 0;
             lurking = false;
         }
@@ -91,6 +93,10 @@ namespace Project_Rioman
                         Fall();
                     CheckJump(k);
                     break;
+                case State.bouncing:
+                    bounceTime += deltaTime;
+                    break;
+
             }
 
             shootTime += deltaTime;
@@ -188,6 +194,7 @@ namespace Project_Rioman
         public bool IsRunning() { return state == State.running; }
         public bool IsStanding() { return state == State.standing; }
         public bool IsJumping() { return state == State.jumping; }
+        public bool IsBouncing() { return state == State.bouncing; }
         public bool IsFalling() { return state == State.falling; }
         public bool IsClimbing() { return state == State.climbing; }
         public bool IsShooting() { return shooting; }
@@ -214,8 +221,6 @@ namespace Project_Rioman
                     Audio.PlayLand();
 
                 state = State.standing;
-
-
             }
         }
 
@@ -231,10 +236,25 @@ namespace Project_Rioman
             }
         }
 
+        public void Bounce()
+        {
+            if (!IsWarping())
+            {
+                bounceTime = 0;
+                state = State.bouncing;
+            }
+        }
+
         public void Fall() {
-            if(!onEnemy)
+            if(!onEnemy && !IsBouncing())
                 state = State.falling;
         }
+
+        public void StopBounce()
+        {
+            state = State.falling;
+        }
+
         public void Climb()
         {
             if (!IsWarping() && !IsHit())
@@ -264,6 +284,9 @@ namespace Project_Rioman
                 hit = true;
                 invincible = true;
                 Fall();
+
+                if (IsBouncing())
+                    StopBounce();
             }
 
             bool hitAfter = IsHit();
@@ -289,6 +312,7 @@ namespace Project_Rioman
 
         public double GetJumpTime() { return jumpTime; }
         public double GetFallTime() { return fallTime; }
+        public double GetBounceTime() { return bounceTime; }
 
         public bool IsClimbTop() { return climbTop == true; }
         public void SetClimbTopState(bool x) { climbTop = x; }
@@ -299,7 +323,7 @@ namespace Project_Rioman
         public void SetLurking(bool lurking) { this.lurking = lurking; }
         public bool IsInvincible() { return invincible; }
         public bool IsOnEnemy() { return onEnemy; }
-        public bool Airborne() { return IsFalling() || IsJumping(); }
+        public bool Airborne() { return IsFalling() || IsJumping() || IsBouncing(); }
         public bool Grounded() { return IsStanding() || IsRunning() || IsOnEnemy(); }
         public bool GetStopClimbUp() { return stopClimbingUp; }
         public void SetStopClimbUp(bool value) { stopClimbingUp = value; }

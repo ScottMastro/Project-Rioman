@@ -275,7 +275,7 @@ namespace Project_Rioman
             tiles = new List<List<AbstractTile>>();
             allTiles = new List<AbstractTile>();
 
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 11; i++)
                 tiles.Add(new List<AbstractTile>());
 
             for (int x = 0; x <= width; x++)

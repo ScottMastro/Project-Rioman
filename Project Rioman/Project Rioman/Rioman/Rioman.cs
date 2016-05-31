@@ -30,6 +30,7 @@ namespace Project_Rioman
         private KeyboardState prevKeyboardState;
 
         private int movedByConveyor;
+        private int bounceAmount;
 
         public Rioman(ContentManager content)
         {
@@ -48,6 +49,8 @@ namespace Project_Rioman
             stopLeftMovement = false;
             stopRightMovement = false;
             state.SetLurking(false);
+
+            bounceAmount = 0;
 
             KillBullets();
         }
@@ -79,6 +82,8 @@ namespace Project_Rioman
                     UpdateClimb(deltaTime, keyboardState, level);
                 else if (IsJumping())
                     UpdateJump(keyboardState, level);
+                else if (IsBouncing())
+                    UpdateBounce(keyboardState, level);
                 else if (IsFalling())
                     UpdateFall(deltaTime, keyboardState, level);
                 else if (IsRunning() || state.IsStanding())
@@ -185,6 +190,20 @@ namespace Project_Rioman
 
         }
 
+        private void UpdateBounce(KeyboardState keyboardState, Level level)
+        {
+
+            HorizontalMovement(keyboardState, level);
+            CheckClimb(keyboardState, level);
+
+            int yAmount = -Convert.ToInt32(bounceAmount - state.GetBounceTime() * 22);
+
+            if (yAmount < 0)
+                Move(0, yAmount);
+            else
+                state.StopBounce();
+        }
+
 
         private void HorizontalMovement(KeyboardState keyboardState, Level level)
         {
@@ -231,7 +250,7 @@ namespace Project_Rioman
             {
                 if (level.CheckClimb(this, location.X, true, ref location))
                 {
-                    if(!state.GetStopClimbUp())
+                    if (!state.GetStopClimbUp())
                         Move(0, -3);
                     state.Climb();
                     climbDown = false;
@@ -258,7 +277,7 @@ namespace Project_Rioman
 
             if (state.Grounded()) {
 
-                if(tileType != Constant.TILE_CONVEYOR)
+                if (tileType != Constant.TILE_CONVEYOR)
                     Move(x, y);
 
                 else if (movedByConveyor == 0 || (movedByConveyor > 0 && x < 0) || (movedByConveyor < 0 && x > 0))
@@ -266,9 +285,9 @@ namespace Project_Rioman
                     Move(x, y);
                     movedByConveyor += x;
                 }
-            } 
+            }
         }
-        
+
         public void Hit(int damage)
         {
             if (!IsInvincible() && !state.IsLurking())
@@ -355,8 +374,8 @@ namespace Project_Rioman
             {
                 int shiftX = 0;
 
-                if(state.IsClimbing())
-                    return new Rectangle(location.X -12, location.Y + 42, 20, 12);
+                if (state.IsClimbing())
+                    return new Rectangle(location.X - 12, location.Y + 42, 20, 12);
 
                 if (FacingRight())
                     shiftX = -22;
@@ -414,6 +433,12 @@ namespace Project_Rioman
             MoveToY(posY - GetSprite().Height + 8);
         }
 
+        public void Bounce(int bounceHeight)
+        {
+            bounceAmount = bounceHeight;
+            state.Bounce();
+        }
+
         public void StopRightMovement() { stopRightMovement = true; }
         public void StopLeftMovement() { stopLeftMovement = true; }
         public Texture2D GetSprite() { return anim.GetSprite(); }
@@ -435,6 +460,7 @@ namespace Project_Rioman
         public bool IsClimbing() { return state.IsClimbing(); }
         public bool IsGrounded() { return state.Grounded(); }
         public bool IsJumping() { return state.IsJumping(); }
+        public bool IsBouncing() { return state.IsBouncing(); }
         public bool IsInvincible() { return state.IsInvincible(); }
         public bool IsOnEnemy() { return state.IsOnEnemy(); }
 
