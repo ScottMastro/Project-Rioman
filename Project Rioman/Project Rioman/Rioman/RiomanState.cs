@@ -289,6 +289,15 @@ namespace Project_Rioman
                     StopBounce();
             }
 
+            if(IsHit() && !IsInvincible())
+            {
+
+                invincibleTime = 0;
+                invincible = true;
+
+            }
+
+
             bool hitAfter = IsHit();
 
             return !hitBefore && hitAfter;

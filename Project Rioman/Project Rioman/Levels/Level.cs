@@ -491,7 +491,10 @@ namespace Project_Rioman
                     if (player.Head.Intersects(tile.Bottom))
                     {
                         if (!player.IsClimbing())
+                        {
                             player.state.Fall();
+                            player.state.StopBounce();
+                        }
                     }
 
                     if (player.Head.Intersects(tile.Center))
